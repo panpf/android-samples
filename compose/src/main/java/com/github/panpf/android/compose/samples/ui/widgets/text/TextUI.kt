@@ -103,7 +103,7 @@ fun TextUI() {
                 overflow = TextOverflow.Visible,
             )
         }
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(170.dp))
 
         Title("关闭换行")
         Text(
