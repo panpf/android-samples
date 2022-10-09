@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
@@ -42,8 +44,13 @@ class LayoutsFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        LinkList(links) { index, link ->
-
+                        LinkList(links) { _, link ->
+                            val nav = link.nav
+                            if (nav is Int) {
+                                findNavController().navigate(nav)
+                            } else if (nav is NavDirections) {
+                                findNavController().navigate(nav)
+                            }
                         }
                     }
                 }

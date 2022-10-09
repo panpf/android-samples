@@ -26,9 +26,21 @@
 
     <fragment
         android:id="@+id/widgetsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.WidgetsFragment"/>
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.WidgetsFragment">
+        <action
+            android:id="@+id/action_widgets_textFragment"
+            app:destination="@id/textFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/layoutsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LayoutsFragment"/>
+        android:name="com.github.panpf.android.compose.samples.ui.layouts.LayoutsFragment" />
+
+    <fragment
+        android:id="@+id/textFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.text.TextFragment" />
 </navigation>

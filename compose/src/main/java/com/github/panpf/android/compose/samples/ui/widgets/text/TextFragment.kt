@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.widgets
+package com.github.panpf.android.compose.samples.ui.widgets.text
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,15 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
-import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class WidgetsFragment : ToolbarFragment() {
+class TextFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,14 +21,7 @@ class WidgetsFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Widgets"
-        val links = listOf(
-            Link("Text", R.id.action_widgets_textFragment),
-            Link("Button"),
-            Link("Image"),
-            Link("RadioButton"),
-            Link("Checkbox")
-        )
+        toolbar.title = "Text"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -41,14 +29,7 @@ class WidgetsFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        LinkList(links) { _, link ->
-                            val nav = link.nav
-                            if (nav is Int) {
-                                findNavController().navigate(nav)
-                            } else if (nav is NavDirections) {
-                                findNavController().navigate(nav)
-                            }
-                        }
+                        TextUI()
                     }
                 }
             }
