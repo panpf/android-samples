@@ -62,9 +62,9 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle.compose)
     implementation(libs.bundles.androidx.navigation.compose)
     implementation(libs.google.material)
-    implementation(libs.tools4a)
-    implementation(libs.tools4j)
-    implementation(libs.tools4k)
+    implementation(libs.panpf.tools4a)
+    implementation(libs.panpf.tools4j)
+    implementation(libs.panpf.tools4k)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
 }
