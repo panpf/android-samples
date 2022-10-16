@@ -34,9 +34,7 @@ fun LinkList(linkList: List<Link>, onClick: (Int, Link) -> Unit) {
             LinkItem(link) {
                 onClick(index, link)
             }
-            if (index < linkList.size - 1) {
-                MyDivider()
-            }
+            MyDivider()
         }
     }
 }
