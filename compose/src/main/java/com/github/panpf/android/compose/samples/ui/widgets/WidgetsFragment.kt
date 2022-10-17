@@ -29,10 +29,11 @@ class WidgetsFragment : ToolbarFragment() {
         toolbar.title = "Widgets"
         val links = listOf(
             Link("Text", R.id.action_widgets_textFragment),
-            Link("Button"),
+            Link("Button", R.id.action_widgets_buttonFragment),
             Link("Image"),
             Link("RadioButton"),
-            Link("Checkbox")
+            Link("Checkbox"),
+            Link("SliderBar"),
         )
         return ComposeView(inflater.context).apply {
             setContent {
