@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,7 +82,7 @@ fun ExpandableItem(
             .clickable {
                 selfExpand.value = !selfExpand.value
             }
-            .border(0.5f.dp, color = Color.Gray)
+            .border(width = DividerDefaults.Thickness, color = DividerDefaults.color)
             .padding(top = 20.dp, start = 16.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Text(

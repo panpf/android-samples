@@ -29,6 +29,7 @@ class WidgetsFragment : ToolbarFragment() {
         toolbar.title = "Widgets"
         val links = listOf(
             Link("Text", R.id.action_widgets_textFragment),
+            Link("TextField", R.id.action_widgets_textFragment),
             Link("Button", R.id.action_widgets_buttonFragment),
             Link("Image"),
             Link("RadioButton"),

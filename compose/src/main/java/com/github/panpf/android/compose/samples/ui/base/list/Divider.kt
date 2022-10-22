@@ -16,7 +16,6 @@ fun MyDivider() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = ListItemPaddingStart, end = ListItemPaddingStart),
-        thickness = 0.5.dp
     )
 }
 

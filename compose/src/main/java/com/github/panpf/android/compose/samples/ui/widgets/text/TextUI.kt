@@ -1,5 +1,7 @@
 package com.github.panpf.android.compose.samples.ui.widgets.text
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -33,257 +36,577 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.tools4a.toast.ktx.showLongToast
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-const val text =
+private const val text =
     "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。\n          ----摘自《盗墓笔记》 - 云顶天宫（下）第一章 五圣雪山，网址：http://www.daomubiji.com/yun-ding-tian-gong-15.html"
+private const val words = "《盗墓笔记》"
+private const val words1 = "http://www.daomubiji.com/yun-ding-tian-gong-15.html"
+private val wordsIndex = text.indexOf(words).apply { require(this != -1) }
+private val words1Index = text.indexOf(words1).apply { require(this != -1 && this > wordsIndex) }
 
 @Composable
 fun TextUI() {
     ExpandableLayout { allExpandFlow ->
-        Text(text = text)
+        DefaultTextSample()
+        ColorTextSample(allExpandFlow)
+        FontSizeTextSample(allExpandFlow)
+        FontStyleSample(allExpandFlow)
+        FontWeightTextSample(allExpandFlow)
+        FontFamilyTextSample(allExpandFlow)
+        LetterSpacingTextSample(allExpandFlow)
+        TextDecorationUnderlineTextSample(allExpandFlow)
+        TextDecorationLineThroughTextSample(allExpandFlow)
+        TextAlignStartTextSample(allExpandFlow)
+        TextAlignCenterTextSample(allExpandFlow)
+        TextAlignEndTextSample(allExpandFlow)
+        TextAlignJustifyTextSample(allExpandFlow)
+        LineHeightTextSample(allExpandFlow)
+        OverflowEllipsisTextSample(allExpandFlow)
+        OverflowClipTextSample(allExpandFlow)
+        OverflowVisibleTextSample(allExpandFlow)
+        SoftWrapTextSample(allExpandFlow)
+        MaxLinesTextSample(allExpandFlow)
+        BaselineShiftTextSample(allExpandFlow)
+        TextGeometricTransformTextSample(allExpandFlow)
+        BackgroundTextSample(allExpandFlow)
+        ShadowTextSample(allExpandFlow)
+        TextDirectionTextSample(allExpandFlow)
+        TextIndentTextSample(allExpandFlow)
+        AnnotatedStringTextSample(allExpandFlow)
+        ClickableAnnotatedStringTextSample(allExpandFlow)
+        SelectionTextSample(allExpandFlow)
+        // todo TextStyle(fontSynthesis:FontSynthesis)
+        // todo TextStyle(fontFeatureSettings:String)
+        // todo 自定义字体
+        // todo 可下载字体
+    }
+}
 
-        ExpandableItem("改为紫色", allExpandFlow) {
-            Text(text = text, color = Color.Magenta)
-        }
+//@Preview(showBackground = true)
+//@Composable
+//fun TextUIPreview() {
+//    TextUI()
+//}
 
-        ExpandableItem("字体加大", allExpandFlow) {
-            Text(text = text, fontSize = 18.sp)
-        }
 
-        ExpandableItem("改为斜体", allExpandFlow) {
-            Text(text = text, fontStyle = FontStyle.Italic)
-        }
+@Composable
+fun DefaultTextSample() {
+    Text(text = text)
+}
 
-        ExpandableItem("字重加大", allExpandFlow) {
-            Text(text = text, fontWeight = FontWeight.Bold)
-        }
+@Preview(showBackground = true)
+@Composable
+fun DefaultTextSamplePreview() {
+    DefaultTextSample()
+}
 
-        ExpandableItem("换个字体", allExpandFlow) {
-            Text(text = text, fontFamily = FontFamily.Cursive)
-        }
 
-        ExpandableItem("字间距加大", allExpandFlow) {
-            Text(text = text, letterSpacing = 8.sp)
-        }
+@Composable
+fun ColorTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("颜色（紫色）", allExpandFlow) {
+        Text(text = text, color = Color.Magenta)
+    }
+}
 
-        ExpandableItem("装饰（下划线）", allExpandFlow) {
-            Text(text = text, textDecoration = TextDecoration.Underline)
-        }
+@Preview(showBackground = true)
+@Composable
+fun ColorTextSamplePreview() {
+    ColorTextSample(remember { MutableStateFlow(true) })
+}
 
-        ExpandableItem("装饰（删除线）", allExpandFlow) {
-            Text(text = text, textDecoration = TextDecoration.LineThrough)
-        }
 
-        ExpandableItem("对齐（靠近头部）", allExpandFlow) {
-            Text(text = text, textAlign = TextAlign.Start)
-        }
+@Composable
+fun FontSizeTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("字体大小（20.sp）", allExpandFlow) {
+        Text(text = text, fontSize = 20.sp)
+    }
+}
 
-        ExpandableItem("对齐（居中）", allExpandFlow) {
-            Text(text = text, textAlign = TextAlign.Center)
-        }
+@Preview(showBackground = true)
+@Composable
+fun FontSizeTextSamplePreview() {
+    FontSizeTextSample(MutableStateFlow(true))
+}
 
-        ExpandableItem("对齐（靠近尾部）", allExpandFlow) {
-            Text(text = text, textAlign = TextAlign.End)
-        }
 
-        ExpandableItem("对齐（两端对齐）", allExpandFlow) {
-            Text(text = text, textAlign = TextAlign.Justify)
-        }
+@Composable
+fun FontStyleSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("字体样式（斜体）", allExpandFlow) {
+        Text(text = text, fontStyle = FontStyle.Italic)
+    }
+}
 
-        ExpandableItem("行高加大", allExpandFlow) {
-            Text(text = text, lineHeight = 28.sp)
-        }
+@Preview(showBackground = true)
+@Composable
+fun FontStyleSamplePreview() {
+    FontStyleSample(MutableStateFlow(true))
+}
 
-        ExpandableItem("内容溢出（...）", allExpandFlow) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                        .background(Color.Red)
-                ) {
-                    Text(
-                        text = text,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        text = "占位",
-                        overflow = TextOverflow.Clip,
-                    )
-                }
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-            }
-        }
 
-        ExpandableItem("内容溢出（裁剪）", allExpandFlow) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                        .background(Color.Red)
-                ) {
-                    Text(
-                        text = text,
-                        overflow = TextOverflow.Clip,
-                    )
-                }
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-            }
-        }
+@Composable
+fun FontWeightTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("字重（Bold-700）", allExpandFlow) {
+        Text(text = text, fontWeight = FontWeight.Bold)
+    }
+}
 
-        ExpandableItem("内容溢出（可见）", allExpandFlow) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                        .background(Color.Red)
-                ) {
-                    Text(
-                        text = text,
-                        overflow = TextOverflow.Visible,
-                    )
-                }
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-                Text(text = "内容溢出占位内容溢出占位内容溢出占位")
-            }
-        }
+@Preview(showBackground = true)
+@Composable
+fun FontWeightTextSamplePreview() {
+    FontWeightTextSample(MutableStateFlow(true))
+}
 
-        ExpandableItem("换行关闭", allExpandFlow) {
-            Text(
-                text = text,
-                softWrap = false,
-            )
-        }
 
-        ExpandableItem("最多两行（...）", allExpandFlow) {
-            Text(
-                text = text,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+@Composable
+fun FontFamilyTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("字体（Cursive）", allExpandFlow) {
+        Text(text = text, fontFamily = FontFamily.Cursive)
+    }
+}
 
-        // TextStyle(fontSynthesis:FontSynthesis)
-        // TextStyle(fontFeatureSettings:String)
+@Preview(showBackground = true)
+@Composable
+fun FontFamilyTextSamplePreview() {
+    FontFamilyTextSample(MutableStateFlow(true))
+}
 
-        ExpandableItem("基线偏移（2f）", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(baselineShift = BaselineShift(2f)),
-            )
-        }
 
-        ExpandableItem("变换（放大 2 倍并倾斜）", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(
-                    textGeometricTransform = TextGeometricTransform(
-                        scaleX = 2.0f,
-                        skewX = 2f
-                    )
-                ),
-            )
-        }
+@Composable
+fun LetterSpacingTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("字间距加大", allExpandFlow) {
+        Text(text = text, letterSpacing = 8.sp)
+    }
+}
 
-        ExpandableItem("背景", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(background = Color.Blue),
-            )
-        }
+@Preview(showBackground = true)
+@Composable
+fun LetterSpacingTextSamplePreview() {
+    LetterSpacingTextSample(MutableStateFlow(true))
+}
 
-        ExpandableItem("阴影", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(
-                    shadow = Shadow(
-                        Color.Black,
-                        offset = Offset(4f, 4f),
-                        blurRadius = 5f
-                    )
-                ),
-            )
-        }
 
-        ExpandableItem("方向（右到左）", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(textDirection = TextDirection.Rtl),
-            )
-        }
+@Composable
+fun TextDecorationUnderlineTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("装饰（下划线）", allExpandFlow) {
+        Text(text = text, textDecoration = TextDecoration.Underline)
+    }
+}
 
-        ExpandableItem("缩进", allExpandFlow) {
-            Text(
-                text = text,
-                style = TextStyle(textIndent = TextIndent(20.sp, restLine = 10.sp)),
-            )
-        }
+@Preview(showBackground = true)
+@Composable
+fun TextDecorationUnderlineTextSamplePreview() {
+    TextDecorationUnderlineTextSample(MutableStateFlow(true))
+}
 
-        val words = "《盗墓笔记》"
-        val wordsIndex = text.indexOf(words)
-        ExpandableItem("部分高亮", allExpandFlow) {
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle()) {
-                        append(text.substring(0, wordsIndex))
-                    }
-                    withStyle(SpanStyle(color = Color.Red)) {
-                        append(words)
-                    }
-                    withStyle(SpanStyle()) {
-                        append(text.substring(wordsIndex + words.length))
-                    }
-                },
-            )
-        }
 
-        val context = LocalContext.current
-        ExpandableItem("部分高亮（可点击）", allExpandFlow) {
-            ClickableText(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle()) {
-                        append(text.substring(0, wordsIndex))
-                    }
-                    withStyle(SpanStyle(color = Color.Red)) {
-                        append(words)
-                    }
-                    withStyle(SpanStyle()) {
-                        append(text.substring(wordsIndex + words.length))
-                    }
-                },
+@Composable
+fun TextDecorationLineThroughTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("装饰（删除线）", allExpandFlow) {
+        Text(text = text, textDecoration = TextDecoration.LineThrough)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextDecorationLineThroughTextSamplePreview() {
+    TextDecorationLineThroughTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextAlignStartTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("对齐（靠近头部）", allExpandFlow) {
+        Text(text = text, textAlign = TextAlign.Start)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextAlignStartTextSamplePreview() {
+    TextAlignStartTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextAlignCenterTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("对齐（居中）", allExpandFlow) {
+        Text(text = text, textAlign = TextAlign.Center)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextAlignCenterTextSamplePreview() {
+    TextAlignCenterTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextAlignEndTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("对齐（靠近尾部）", allExpandFlow) {
+        Text(text = text, textAlign = TextAlign.End)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextAlignEndTextSamplePreview() {
+    TextAlignEndTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextAlignJustifyTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("对齐（两端对齐）", allExpandFlow) {
+        Text(text = text, textAlign = TextAlign.Justify)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextAlignJustifyTextSamplePreview() {
+    TextAlignJustifyTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun LineHeightTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("行高加大", allExpandFlow) {
+        Text(text = text, lineHeight = 28.sp)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LineHeightTextSamplePreview() {
+    LineHeightTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun OverflowEllipsisTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("内容溢出（...）", allExpandFlow) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .background(Color.Red)
             ) {
-                if (it in wordsIndex until wordsIndex + words.length) {
-                    context.showLongToast("点击了盗墓笔记")
-                }
+                Text(
+                    text = text,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
         }
+    }
+}
 
-        ExpandableItem("可选择复制", allExpandFlow) {
-            SelectionContainer {
-                Text(text = text)
+@Preview(showBackground = true)
+@Composable
+fun OverflowEllipsisTextSamplePreview() {
+    OverflowEllipsisTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun OverflowClipTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("内容溢出（裁剪）", allExpandFlow) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .background(Color.Red)
+            ) {
+                Text(
+                    text = text,
+                    overflow = TextOverflow.Clip,
+                )
+            }
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OverflowClipTextSamplePreview() {
+    OverflowClipTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun OverflowVisibleTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("内容溢出（可见）", allExpandFlow) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .background(Color.Red)
+            ) {
+                Text(
+                    text = text,
+                    overflow = TextOverflow.Visible,
+                )
+            }
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+            Text(text = "内容溢出占位内容溢出占位内容溢出占位")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OverflowVisibleTextSamplePreview() {
+    OverflowVisibleTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun SoftWrapTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("换行关闭", allExpandFlow) {
+        Text(
+            text = text,
+            softWrap = false,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SoftWrapTextSamplePreview() {
+    SoftWrapTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun MaxLinesTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("最多两行（...）", allExpandFlow) {
+        Text(
+            text = text,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MaxLinesTextSamplePreview() {
+    MaxLinesTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun BaselineShiftTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("基线偏移（2f）", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(baselineShift = BaselineShift(2f)),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BaselineShiftTextSamplePreview() {
+    BaselineShiftTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextGeometricTransformTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("变换（放大 2 倍并倾斜）", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(
+                textGeometricTransform = TextGeometricTransform(
+                    scaleX = 2.0f,
+                    skewX = 2f
+                )
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextGeometricTransformTextSamplePreview() {
+    TextGeometricTransformTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun BackgroundTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("背景", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(background = Color.Blue),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BackgroundTextSamplePreview() {
+    BackgroundTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun ShadowTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("阴影", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(
+                shadow = Shadow(
+                    Color.Black,
+                    offset = Offset(4f, 8f),
+                    blurRadius = 5f
+                )
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ShadowTextSamplePreview() {
+    ShadowTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextDirectionTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("方向（右到左）", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(textDirection = TextDirection.Rtl),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextDirectionTextSamplePreview() {
+    TextDirectionTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun TextIndentTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("缩进", allExpandFlow) {
+        Text(
+            text = text,
+            style = TextStyle(textIndent = TextIndent(20.sp, restLine = 10.sp)),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextIndentTextSamplePreview() {
+    TextIndentTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun AnnotatedStringTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("部分高亮", allExpandFlow) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle()) {
+                    append(text.substring(0, wordsIndex))
+                }
+                withStyle(SpanStyle(color = Color.Red)) {
+                    append(words)
+                }
+                withStyle(SpanStyle()) {
+                    append(text.substring(wordsIndex + words.length, words1Index))
+                }
+                withStyle(SpanStyle(color = Color.Red)) {
+                    append(words1)
+                }
+            },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AnnotatedStringTextSamplePreview() {
+    AnnotatedStringTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun ClickableAnnotatedStringTextSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("部分高亮（可点击）", allExpandFlow) {
+        val annotatedText = buildAnnotatedString {
+            withStyle(SpanStyle()) {
+                append(text.substring(0, wordsIndex))
+            }
+
+            pushStringAnnotation(tag = "URL", annotation = "http://www.daomubiji.com")
+            withStyle(
+                SpanStyle(
+                    color = Color.Blue,
+                    textDecoration = TextDecoration.Underline
+                )
+            ) {
+                append(words)
+            }
+            pop()
+
+            withStyle(SpanStyle()) {
+                append(text.substring(wordsIndex + words.length, words1Index))
+            }
+
+            pushStringAnnotation(tag = "URL", annotation = words1)
+            withStyle(
+                SpanStyle(
+                    color = Color.Blue,
+                    textDecoration = TextDecoration.Underline
+                )
+            ) {
+                append(words1)
+            }
+            pop()
+        }
+        ClickableText(
+            text = annotatedText,
+        ) { offset ->
+            annotatedText.getStringAnnotations(tag = "URL", offset, offset).firstOrNull()?.let {
+                context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(it.item)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
             }
         }
     }
@@ -291,6 +614,22 @@ fun TextUI() {
 
 @Preview(showBackground = true)
 @Composable
-fun TextUIPreview() {
-    TextUI()
+fun ClickableAnnotatedStringTextSamplePreview() {
+    ClickableAnnotatedStringTextSample(MutableStateFlow(true))
+}
+
+
+@Composable
+fun SelectionTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("可选择复制", allExpandFlow) {
+        SelectionContainer {
+            Text(text = text)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SelectionTextSamplePreview() {
+    SelectionTextSample(MutableStateFlow(true))
 }
