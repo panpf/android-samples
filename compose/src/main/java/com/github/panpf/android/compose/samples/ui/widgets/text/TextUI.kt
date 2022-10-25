@@ -49,7 +49,7 @@ private val words1Index = text.indexOf(words1).apply { require(this != -1 && thi
 @Composable
 fun TextUI() {
     ExpandableLayout { allExpandFlow ->
-        DefaultTextSample()
+        DefaultTextSample(allExpandFlow)
         ColorTextSample(allExpandFlow)
         FontSizeTextSample(allExpandFlow)
         FontStyleSample(allExpandFlow)
@@ -92,14 +92,16 @@ fun TextUI() {
 
 
 @Composable
-fun DefaultTextSample() {
-    Text(text = text)
+fun DefaultTextSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("默认", allExpandFlow) {
+        Text(text = text)
+    }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun DefaultTextSamplePreview() {
-    DefaultTextSample()
+    DefaultTextSample(remember { MutableStateFlow(true) })
 }
 
 
