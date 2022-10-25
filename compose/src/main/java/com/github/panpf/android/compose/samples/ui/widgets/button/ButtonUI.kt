@@ -3,10 +3,15 @@ package com.github.panpf.android.compose.samples.ui.widgets.button
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -25,28 +30,31 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun ButtonUI() {
     ExpandableLayout { allExpandFlow ->
+        ButtonContentTextSample(allExpandFlow)
+        ButtonContentImageSample(allExpandFlow)
+        ButtonDisabledSample(allExpandFlow)
+        ButtonShapeSample(allExpandFlow)
+        ButtonColorSample(allExpandFlow)
+        ButtonElevationSample(allExpandFlow)
+        ButtonBorderSample(allExpandFlow)
+        ButtonContentPaddingSample(allExpandFlow)
+        ElevatedButtonSample(allExpandFlow)
+        FilledTonalButtonSample(allExpandFlow)
+        OutlinedButtonSample(allExpandFlow)
         TextButtonSample(allExpandFlow)
-        ImageButtonSample(allExpandFlow)
-        EnabledButtonSample(allExpandFlow)
-        ShapeButtonSample(allExpandFlow)
-        ColorButtonSample(allExpandFlow)
-        DisabledColorButtonSample(allExpandFlow)
-        ElevationButtonSample(allExpandFlow)
-        BorderButtonSample(allExpandFlow)
-        ContentPaddingButtonSample(allExpandFlow)
     }
 }
 
-//@Preview(showBackground = true)
+//@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 //@Composable
 //fun ButtonUIPreview() {
 //    ButtonUI()
 //}
 
 @Composable
-fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("文字按钮", allExpandFlow) {
+    ExpandableItem("Button（文字）", allExpandFlow) {
         Button(onClick = {
             context.showLongToast("你点了我！")
         }) {
@@ -55,219 +63,271 @@ fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun TextButtonSamplePreview() {
-    TextButtonSample(remember { MutableStateFlow(true) })
+fun ButtonContentTextSamplePreview() {
+    ButtonContentTextSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun ImageButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("图片按钮", allExpandFlow) {
-        Button(onClick = {
-            context.showLongToast("你点了我！")
-        }) {
+    ExpandableItem("Button（图片）", allExpandFlow) {
+        Button(onClick = { context.showLongToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageButtonSamplePreview() {
-    ImageButtonSample(remember { MutableStateFlow(true) })
+fun ButtonContentImageSamplePreview() {
+    ButtonContentImageSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun EnabledButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonDisabledSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("不可用", allExpandFlow) {
+    ExpandableItem("Button（不可用）", allExpandFlow) {
         Button(
             enabled = false,
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
+            onClick = { context.showLongToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun EnabledButtonSamplePreview() {
-    EnabledButtonSample(remember { MutableStateFlow(true) })
+fun ButtonDisabledSamplePreview() {
+    ButtonDisabledSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun ShapeButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("形状（圆角）", allExpandFlow) {
+    ExpandableItem("Button（形状 - 圆角)", allExpandFlow) {
         Button(
             shape = RoundedCornerShape(10.dp),
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
+            onClick = { context.showLongToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ShapeButtonSamplePreview() {
-    ShapeButtonSample(remember { MutableStateFlow(true) })
+fun ButtonShapeSamplePreview() {
+    ButtonShapeSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun ColorButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("颜色（可用）", allExpandFlow) {
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Cyan,
-                contentColor = Color.Black,
-                disabledContainerColor = Color.Gray,
-                disabledContentColor = Color.White,
-            ),
-            onClick = {
-                context.showLongToast("你点了我！")
+    ExpandableItem("Button（颜色 - 可用/不可用)", allExpandFlow) {
+        Row {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Cyan,
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+                onClick = { context.showLongToast("你点了我！") }
+            ) {
+                Image(
+                    painterResource(id = R.drawable.ic_expand_more),
+                    contentDescription = "",
+                )
             }
-        ) {
-            Image(
-                painterResource(id = R.drawable.ic_expand_more),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
-            )
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Cyan,
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.White,
+                ),
+                enabled = false,
+                onClick = { context.showLongToast("你点了我！") }
+            ) {
+                Image(
+                    painterResource(id = R.drawable.ic_expand_more),
+                    contentDescription = "",
+                )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColorButtonSamplePreview() {
-    ColorButtonSample(remember { MutableStateFlow(true) })
+fun ButtonColorSamplePreview() {
+    ButtonColorSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun DisabledColorButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("颜色（不可用）", allExpandFlow) {
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Cyan,
-                contentColor = Color.Black,
-                disabledContainerColor = Color.Gray,
-                disabledContentColor = Color.White,
-            ),
-            enabled = false,
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
-        ) {
-            Image(
-                painterResource(id = R.drawable.ic_expand_more),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DisabledColorButtonSamplePreview() {
-    DisabledColorButtonSample(remember { MutableStateFlow(true) })
-}
-
-@Composable
-fun ElevationButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("高度", allExpandFlow) {
+    ExpandableItem("Button（高度）", allExpandFlow) {
         Button(
             elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 10.dp,
                 pressedElevation = 0.dp
             ),
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
+            onClick = { context.showLongToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ElevationButtonSamplePreview() {
-    ElevationButtonSample(remember { MutableStateFlow(true) })
+fun ButtonElevationSamplePreview() {
+    ButtonElevationSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun BorderButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("描边", allExpandFlow) {
+    ExpandableItem("Button（描边）", allExpandFlow) {
         Button(
             border = BorderStroke(1.dp, Color.Cyan),
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
+            onClick = { context.showLongToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BorderButtonSamplePreview() {
-    BorderButtonSample(remember { MutableStateFlow(true) })
+fun ButtonBorderSamplePreview() {
+    ButtonBorderSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
-fun ContentPaddingButtonSample(allExpandFlow: Flow<Boolean>) {
+fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("内边距", allExpandFlow) {
+    ExpandableItem("Button（内边距）", allExpandFlow) {
         Button(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
-            onClick = {
-                context.showLongToast("你点了我！")
-            }
+            onClick = { context.showLongToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ContentPaddingButtonSamplePreview() {
-    ContentPaddingButtonSample(remember { MutableStateFlow(true) })
+fun ButtonContentPaddingSamplePreview() {
+    ButtonContentPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun ElevatedButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("ElevatedButton", allExpandFlow) {
+        ElevatedButton(onClick = { context.showLongToast("你点了我！") }) {
+            Image(
+                painterResource(id = R.drawable.ic_expand_more),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(Color.Red)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ElevatedButtonSamplePreview() {
+    ElevatedButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun FilledTonalButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("FilledTonalButton", allExpandFlow) {
+        FilledTonalButton(onClick = { context.showLongToast("你点了我！") }) {
+            Image(
+                painterResource(id = R.drawable.ic_expand_more),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(Color.Red)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun FilledTonalButtonSamplePreview() {
+    FilledTonalButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("OutlinedButton", allExpandFlow) {
+        OutlinedButton(onClick = { context.showLongToast("你点了我！") }) {
+            Image(
+                painterResource(id = R.drawable.ic_expand_more),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(Color.Red)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun OutlinedButtonSamplePreview() {
+    OutlinedButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("TextButton", allExpandFlow) {
+        TextButton(onClick = { context.showLongToast("你点了我！") }) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun TextButtonSamplePreview() {
+    TextButtonSample(remember { MutableStateFlow(true) })
 }

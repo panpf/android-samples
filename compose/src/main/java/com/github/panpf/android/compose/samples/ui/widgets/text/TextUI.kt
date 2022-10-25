@@ -84,7 +84,7 @@ fun TextUI() {
     }
 }
 
-//@Preview(showBackground = true)
+//@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 //@Composable
 //fun TextUIPreview() {
 //    TextUI()
@@ -96,7 +96,7 @@ fun DefaultTextSample() {
     Text(text = text)
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun DefaultTextSamplePreview() {
     DefaultTextSample()
@@ -110,7 +110,7 @@ fun ColorTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun ColorTextSamplePreview() {
     ColorTextSample(remember { MutableStateFlow(true) })
@@ -124,7 +124,7 @@ fun FontSizeTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun FontSizeTextSamplePreview() {
     FontSizeTextSample(MutableStateFlow(true))
@@ -138,7 +138,7 @@ fun FontStyleSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun FontStyleSamplePreview() {
     FontStyleSample(MutableStateFlow(true))
@@ -152,7 +152,7 @@ fun FontWeightTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun FontWeightTextSamplePreview() {
     FontWeightTextSample(MutableStateFlow(true))
@@ -166,7 +166,7 @@ fun FontFamilyTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun FontFamilyTextSamplePreview() {
     FontFamilyTextSample(MutableStateFlow(true))
@@ -180,7 +180,7 @@ fun LetterSpacingTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LetterSpacingTextSamplePreview() {
     LetterSpacingTextSample(MutableStateFlow(true))
@@ -194,7 +194,7 @@ fun TextDecorationUnderlineTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextDecorationUnderlineTextSamplePreview() {
     TextDecorationUnderlineTextSample(MutableStateFlow(true))
@@ -208,7 +208,7 @@ fun TextDecorationLineThroughTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextDecorationLineThroughTextSamplePreview() {
     TextDecorationLineThroughTextSample(MutableStateFlow(true))
@@ -222,7 +222,7 @@ fun TextAlignStartTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextAlignStartTextSamplePreview() {
     TextAlignStartTextSample(MutableStateFlow(true))
@@ -236,7 +236,7 @@ fun TextAlignCenterTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextAlignCenterTextSamplePreview() {
     TextAlignCenterTextSample(MutableStateFlow(true))
@@ -250,7 +250,7 @@ fun TextAlignEndTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextAlignEndTextSamplePreview() {
     TextAlignEndTextSample(MutableStateFlow(true))
@@ -264,7 +264,7 @@ fun TextAlignJustifyTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextAlignJustifyTextSamplePreview() {
     TextAlignJustifyTextSample(MutableStateFlow(true))
@@ -278,7 +278,7 @@ fun LineHeightTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LineHeightTextSamplePreview() {
     LineHeightTextSample(MutableStateFlow(true))
@@ -312,7 +312,7 @@ fun OverflowEllipsisTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun OverflowEllipsisTextSamplePreview() {
     OverflowEllipsisTextSample(MutableStateFlow(true))
@@ -346,7 +346,7 @@ fun OverflowClipTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun OverflowClipTextSamplePreview() {
     OverflowClipTextSample(MutableStateFlow(true))
@@ -380,7 +380,7 @@ fun OverflowVisibleTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun OverflowVisibleTextSamplePreview() {
     OverflowVisibleTextSample(MutableStateFlow(true))
@@ -397,7 +397,7 @@ fun SoftWrapTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SoftWrapTextSamplePreview() {
     SoftWrapTextSample(MutableStateFlow(true))
@@ -415,7 +415,7 @@ fun MaxLinesTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun MaxLinesTextSamplePreview() {
     MaxLinesTextSample(MutableStateFlow(true))
@@ -432,7 +432,7 @@ fun BaselineShiftTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun BaselineShiftTextSamplePreview() {
     BaselineShiftTextSample(MutableStateFlow(true))
@@ -454,7 +454,7 @@ fun TextGeometricTransformTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextGeometricTransformTextSamplePreview() {
     TextGeometricTransformTextSample(MutableStateFlow(true))
@@ -471,7 +471,7 @@ fun BackgroundTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun BackgroundTextSamplePreview() {
     BackgroundTextSample(MutableStateFlow(true))
@@ -494,7 +494,7 @@ fun ShadowTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun ShadowTextSamplePreview() {
     ShadowTextSample(MutableStateFlow(true))
@@ -511,7 +511,7 @@ fun TextDirectionTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextDirectionTextSamplePreview() {
     TextDirectionTextSample(MutableStateFlow(true))
@@ -528,7 +528,7 @@ fun TextIndentTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun TextIndentTextSamplePreview() {
     TextIndentTextSample(MutableStateFlow(true))
@@ -557,7 +557,7 @@ fun AnnotatedStringTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun AnnotatedStringTextSamplePreview() {
     AnnotatedStringTextSample(MutableStateFlow(true))
@@ -612,7 +612,7 @@ fun ClickableAnnotatedStringTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun ClickableAnnotatedStringTextSamplePreview() {
     ClickableAnnotatedStringTextSample(MutableStateFlow(true))
@@ -628,7 +628,7 @@ fun SelectionTextSample(allExpandFlow: Flow<Boolean>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SelectionTextSamplePreview() {
     SelectionTextSample(MutableStateFlow(true))

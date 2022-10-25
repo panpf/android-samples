@@ -29,11 +29,14 @@ class WidgetsFragment : ToolbarFragment() {
         toolbar.title = "Widgets"
         val links = listOf(
             Link("Text", R.id.action_widgets_textFragment),
-            Link("TextField", R.id.action_widgets_textFragment),
+            Link("TextField", R.id.action_widgets_textFieldFragment),
             Link("Button", R.id.action_widgets_buttonFragment),
-            Link("Image"),
+            Link("IconButton", R.id.action_widgets_iconButtonFragment),
+            Link("IconToggleButton", R.id.action_widgets_iconToggleButtonFragment),
+            Link("FloatingActionButton", R.id.action_widgets_floatingActionButtonFragment),
             Link("RadioButton"),
             Link("Checkbox"),
+            Link("Image"),
             Link("SliderBar"),
         )
         return ComposeView(inflater.context).apply {

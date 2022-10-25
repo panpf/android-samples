@@ -102,7 +102,7 @@ fun ExpandableItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun ExpandableLayoutPreview() {
     ExpandableLayout { allExpandFlow ->
@@ -115,7 +115,7 @@ fun ExpandableLayoutPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun ExpandableItemPreview() {
     val allExpandFlow = remember { MutableStateFlow(true) }

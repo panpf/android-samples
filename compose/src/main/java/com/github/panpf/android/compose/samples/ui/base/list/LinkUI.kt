@@ -17,7 +17,7 @@ fun LinkItem(link: Link, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LinkItemPreview() {
     MyTheme {
@@ -39,7 +39,7 @@ fun LinkList(linkList: List<Link>, onClick: (Int, Link) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LinkListPreview() {
     val links = listOf(

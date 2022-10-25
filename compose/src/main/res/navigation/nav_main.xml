@@ -41,6 +41,34 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_iconButtonFragment"
+            app:destination="@id/iconButtonFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_iconToggleButtonFragment"
+            app:destination="@id/iconToggleButtonFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_floatingActionButtonFragment"
+            app:destination="@id/floatingActionButtonFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_textFieldFragment"
+            app:destination="@id/textFieldFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -49,9 +77,25 @@
 
     <fragment
         android:id="@+id/textFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.text.TextFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
 
     <fragment
         android:id="@+id/buttonFragment"
         android:name="com.github.panpf.android.compose.samples.ui.widgets.button.ButtonFragment" />
+
+    <fragment
+        android:id="@+id/iconButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.iconbutton.IconButtonFragment" />
+
+    <fragment
+        android:id="@+id/iconToggleButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.icontogglebutton.IconToggleButtonFragment" />
+
+    <fragment
+        android:id="@+id/floatingActionButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.floatingactionbutton.FloatingActionButtonFragment" />
+
+    <fragment
+        android:id="@+id/textFieldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
 </navigation>

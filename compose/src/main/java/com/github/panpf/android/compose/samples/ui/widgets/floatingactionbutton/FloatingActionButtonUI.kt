@@ -1,0 +1,151 @@
+package com.github.panpf.android.compose.samples.ui.widgets.floatingactionbutton
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.tools4a.toast.ktx.showLongToast
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+
+@Composable
+fun FloatingActionButtonUI() {
+    ExpandableLayout { allExpandFlow ->
+        FloatingActionButtonSample(allExpandFlow)
+        FloatingActionButtonShapeSample(allExpandFlow)
+        FloatingActionButtonColorSample(allExpandFlow)
+        SmallFloatingActionButtonSample(allExpandFlow)
+        LargeFloatingActionButtonSample(allExpandFlow)
+        ExtendedFloatingActionButtonSample(allExpandFlow)
+    }
+}
+
+
+@Composable
+fun FloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("FloatingActionButton", allExpandFlow) {
+        FloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun FloatingActionButtonSamplePreview() {
+    FloatingActionButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun FloatingActionButtonShapeSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("FloatingActionButton（Shape）", allExpandFlow) {
+        FloatingActionButton(
+            shape = CircleShape,
+            onClick = { context.showLongToast("你点了我！") },
+        ) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun FloatingActionButtonShapeSamplePreview() {
+    FloatingActionButtonShapeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun FloatingActionButtonColorSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("FloatingActionButton（Color）", allExpandFlow) {
+        FloatingActionButton(
+            containerColor = Color.Cyan,
+            contentColor = Color.Magenta,
+            onClick = { context.showLongToast("你点了我！") },
+        ) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun FloatingActionButtonColorSamplePreview() {
+    FloatingActionButtonColorSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun SmallFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("SmallFloatingActionButton", allExpandFlow) {
+        SmallFloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun SmallFloatingActionButtonSamplePreview() {
+    SmallFloatingActionButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LargeFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem("LargeFloatingActionButton", allExpandFlow) {
+        LargeFloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
+            Text(text = "发送")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LargeFloatingActionButtonSamplePreview() {
+    LargeFloatingActionButtonSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("ExtendedFloatingActionButton", allExpandFlow) {
+        val expanded = remember { mutableStateOf(false) }
+        ExtendedFloatingActionButton(
+            expanded = expanded.value,
+            onClick = { expanded.value = !expanded.value },
+            text = { Text(text = "展开") },
+            icon = {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_expand_more),
+                    contentDescription = ""
+                )
+            }
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ExtendedFloatingActionButtonSamplePreview() {
+    ExtendedFloatingActionButtonSample(remember { MutableStateFlow(true) })
+}
