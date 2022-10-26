@@ -87,7 +87,7 @@ fun ExpandableItem(
         ) {
             Text(
                 text = title,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f)
             )

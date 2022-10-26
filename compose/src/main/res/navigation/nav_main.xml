@@ -77,7 +77,7 @@
 
     <fragment
         android:id="@+id/textFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.text.TextFragment" />
 
     <fragment
         android:id="@+id/buttonFragment"
