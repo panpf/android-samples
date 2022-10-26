@@ -170,10 +170,10 @@ fun ImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
                 ContentScale.None to "None",
                 ContentScale.Inside to "Inside",
                 ContentScale.Crop to "Crop",
-                ContentScale.Fit to "Fit",
                 ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillHeight to "FillHeight",
                 ContentScale.FillWidth to "FillWidth",
+                ContentScale.FillHeight to "FillHeight",
+                ContentScale.Fit to "Fit",
             ).forEach { contentScale ->
                 Column {
                     Text(
@@ -212,10 +212,10 @@ fun ImageContentScaleLargeSample(allExpandFlow: Flow<Boolean>) {
                 ContentScale.None to "None",
                 ContentScale.Inside to "Inside",
                 ContentScale.Crop to "Crop",
-                ContentScale.Fit to "Fit",
                 ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillHeight to "FillHeight",
                 ContentScale.FillWidth to "FillWidth",
+                ContentScale.FillHeight to "FillHeight",
+                ContentScale.Fit to "Fit",
             ).forEach { contentScale ->
                 Column {
                     Text(
