@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -30,8 +32,10 @@ fun SliderUI() {
         SliderSample(allExpandFlow)
         SliderValueSample(allExpandFlow)
         SliderEnabledFalseSample(allExpandFlow)
+        SliderValueRangeSample(allExpandFlow)
         SliderStepsSample(allExpandFlow)
         SliderColorsSample(allExpandFlow)
+        RangeSliderSample(allExpandFlow)
     }
 }
 
@@ -128,6 +132,39 @@ fun SliderEnabledFalseSamplePreview() {
 
 
 @Composable
+fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
+    val value = remember { mutableStateOf(0f) }
+    val valueRange = 0.2f..0.8f
+    ExpandableItem(title = "Slider（valueRange）", allExpandFlow, padding = 20.dp) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.weight(1f)) {
+                Slider(
+                    value = value.value,
+                    onValueChange = { value.value = it },
+                    valueRange = valueRange,
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            val finalValue = if (value.value == 0f) valueRange.start else value.value;
+            Text(
+                text = "${(finalValue * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(45.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun SliderValueRangeSamplePreview() {
+    SliderValueRangeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
 fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     ExpandableItem(title = "Slider（steps）", allExpandFlow, padding = 20.dp) {
@@ -193,4 +230,35 @@ fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun SliderColorsSamplePreview() {
     SliderColorsSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
+    val value = remember { mutableStateOf(0.4f..0.8f) }
+    ExpandableItem(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.weight(1f)) {
+                RangeSlider(
+                    value = value.value,
+                    onValueChange = { value.value = it },
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(100.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun RangeSliderSamplePreview() {
+    RangeSliderSample(remember { MutableStateFlow(true) })
 }
