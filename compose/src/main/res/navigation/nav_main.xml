@@ -69,6 +69,55 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_asyncImageFragment"
+            app:destination="@id/asyncImageFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_checkboxFragment"
+            app:destination="@id/checkboxFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_iconFragment"
+            app:destination="@id/iconFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_radioButtonFragment"
+            app:destination="@id/radioButtonFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_sliderBarFragment"
+            app:destination="@id/sliderBarFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_switchFragment"
+            app:destination="@id/switchFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -98,4 +147,32 @@
     <fragment
         android:id="@+id/textFieldFragment"
         android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
+
+    <fragment
+        android:id="@+id/asyncImageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.AsyncImageFragment" />
+
+    <fragment
+        android:id="@+id/checkboxFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.checkbox.CheckboxFragment" />
+
+    <fragment
+        android:id="@+id/iconFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.icon.IconFragment" />
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.image.ImageFragment" />
+
+    <fragment
+        android:id="@+id/radioButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.radiobutton.RadioButtonFragment" />
+
+    <fragment
+        android:id="@+id/sliderBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.sliderbar.SliderBarFragment" />
+
+    <fragment
+        android:id="@+id/switchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.switch.SwitchFragment" />
 </navigation>

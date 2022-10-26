@@ -34,10 +34,13 @@ class WidgetsFragment : ToolbarFragment() {
             Link("IconButton", R.id.action_widgets_iconButtonFragment),
             Link("IconToggleButton", R.id.action_widgets_iconToggleButtonFragment),
             Link("FloatingActionButton", R.id.action_widgets_floatingActionButtonFragment),
-            Link("RadioButton"),
-            Link("Checkbox"),
-            Link("Image"),
-            Link("SliderBar"),
+            Link("RadioButton", R.id.action_widgets_radioButtonFragment),
+            Link("Checkbox", R.id.action_widgets_checkboxFragment),
+            Link("Switch", R.id.action_widgets_switchFragment),
+            Link("Icon", R.id.action_widgets_iconFragment),
+            Link("Image", R.id.action_widgets_imageFragment),
+            Link("AsyncImage", R.id.action_widgets_asyncImageFragment),
+            Link("SliderBar", R.id.action_widgets_sliderBarFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

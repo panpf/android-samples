@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
@@ -29,7 +30,7 @@ fun IconToggleButtonUI() {
 
 @Composable
 fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("IconToggleButton", allExpandFlow) {
+    ExpandableItem("IconToggleButton", allExpandFlow, padding = 20.dp) {
         val checked = remember { mutableStateOf(false) }
         IconToggleButton(
             checked = checked.value,
@@ -54,7 +55,7 @@ fun IconToggleButtonSamplePreview() {
 
 @Composable
 fun FilledIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("FilledIconToggleButton", allExpandFlow) {
+    ExpandableItem("FilledIconToggleButton", allExpandFlow, padding = 20.dp) {
         val checked = remember { mutableStateOf(false) }
         FilledIconToggleButton(
             checked = checked.value,
@@ -79,7 +80,7 @@ fun FilledIconToggleButtonSamplePreview() {
 
 @Composable
 fun FilledTonalIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("FilledTonalIconToggleButton", allExpandFlow) {
+    ExpandableItem("FilledTonalIconToggleButton", allExpandFlow, padding = 20.dp) {
         val checked = remember { mutableStateOf(false) }
         FilledTonalIconToggleButton(
             checked = checked.value,
@@ -104,7 +105,7 @@ fun FilledTonalIconToggleButtonSamplePreview() {
 
 @Composable
 fun OutlinedIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("OutlinedIconToggleButton", allExpandFlow) {
+    ExpandableItem("OutlinedIconToggleButton", allExpandFlow, padding = 20.dp) {
         val checked = remember { mutableStateOf(false) }
         OutlinedIconToggleButton(
             checked = checked.value,

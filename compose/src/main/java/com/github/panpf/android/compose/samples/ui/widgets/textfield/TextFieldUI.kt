@@ -2,9 +2,7 @@ package com.github.panpf.android.compose.samples.ui.widgets.textfield
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -72,18 +70,12 @@ fun TextFieldUI() {
 @Composable
 fun TextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it }
-            )
-        }
+    ExpandableItem(title = "TextField", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it }
+        )
     }
 }
 
@@ -98,18 +90,12 @@ fun TextFieldSamplePreview() {
 @Composable
 fun TextFieldDefaultValueSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（value）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it }
-            )
-        }
+    ExpandableItem(title = "TextField（value）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it }
+        )
     }
 }
 
@@ -124,19 +110,13 @@ fun TextFieldDefaultValueSamplePreview() {
 @Composable
 fun TextFieldEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（enabled - false）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                enabled = false,
-            )
-        }
+    ExpandableItem(title = "TextField（enabled - false）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            enabled = false,
+        )
     }
 }
 
@@ -151,19 +131,13 @@ fun TextFieldEnabledFalseSamplePreview() {
 @Composable
 fun TextFieldReadOnlySample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（readOnly）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                readOnly = true,
-            )
-        }
+    ExpandableItem(title = "TextField（readOnly）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            readOnly = true,
+        )
     }
 }
 
@@ -178,19 +152,13 @@ fun TextFieldReadOnlySamplePreview() {
 @Composable
 fun TextFieldTextStyleColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（textStyle - color）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                textStyle = TextStyle(color = Color.Magenta),
-            )
-        }
+    ExpandableItem(title = "TextField（textStyle - color）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            textStyle = TextStyle(color = Color.Magenta),
+        )
     }
 }
 
@@ -205,19 +173,13 @@ fun TextFieldTextStyleColorSamplePreview() {
 @Composable
 fun TextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（label）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                label = { Text(text = "请输入你想对 TA 说的话") }
-            )
-        }
+    ExpandableItem(title = "TextField（label）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            label = { Text(text = "请输入你想对 TA 说的话") }
+        )
     }
 }
 
@@ -232,19 +194,13 @@ fun TextFieldLabelSamplePreview() {
 @Composable
 fun TextFieldPlaceholderSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（placeholder）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                placeholder = { Text(text = "请输入你想对 TA 说的话") }
-            )
-        }
+    ExpandableItem(title = "TextField（placeholder）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            placeholder = { Text(text = "请输入你想对 TA 说的话") }
+        )
     }
 }
 
@@ -259,24 +215,18 @@ fun TextFieldPlaceholderSamplePreview() {
 @Composable
 fun TextFieldLeadingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（leadingIcon）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                leadingIcon = {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_phone),
-                        contentDescription = ""
-                    )
-                }
-            )
-        }
+    ExpandableItem(title = "TextField（leadingIcon）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            leadingIcon = {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_phone),
+                    contentDescription = ""
+                )
+            }
+        )
     }
 }
 
@@ -291,27 +241,21 @@ fun TextFieldLeadingIconSamplePreview() {
 @Composable
 fun TextFieldTrailingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（trailingIcon）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                trailingIcon = {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = "",
-                        modifier = Modifier.clickable {
-                            inputText.value = ""
-                        }
-                    )
-                }
-            )
-        }
+    ExpandableItem(title = "TextField（trailingIcon）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            trailingIcon = {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_close),
+                    contentDescription = "",
+                    modifier = Modifier.clickable {
+                        inputText.value = ""
+                    }
+                )
+            }
+        )
     }
 }
 
@@ -327,23 +271,17 @@ fun TextFieldTrailingIconSamplePreview() {
 fun TextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    ExpandableItem(title = "TextField（isError）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = {
-                    inputText.value = it
-                    isError.value = it.any { char -> !char.isDigit() }
-                },
-                label = { Text(text = "请输入手机号") },
-                isError = isError.value,
-            )
-        }
+    ExpandableItem(title = "TextField（isError）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = {
+                inputText.value = it
+                isError.value = it.any { char -> !char.isDigit() }
+            },
+            label = { Text(text = "请输入手机号") },
+            isError = isError.value,
+        )
     }
 }
 
@@ -358,20 +296,14 @@ fun TextFieldIsErrorSamplePreview() {
 @Composable
 fun TextFieldVisualTransformationSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（visualTransformation）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                label = { Text(text = "请输入密码") },
-                visualTransformation = PasswordVisualTransformation(),
-            )
-        }
+    ExpandableItem(title = "TextField（visualTransformation）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            label = { Text(text = "请输入密码") },
+            visualTransformation = PasswordVisualTransformation(),
+        )
     }
 }
 
@@ -386,19 +318,17 @@ fun TextFieldVisualTransformationSamplePreview() {
 @Composable
 fun TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（keyboardOptions - 只能输入数字）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-        }
+    ExpandableItem(
+        title = "TextField（keyboardOptions - 只能输入数字）",
+        allExpand = allExpandFlow,
+        20.dp
+    ) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        )
     }
 }
 
@@ -413,19 +343,13 @@ fun TextFieldKeyboardOptionsKeyboardTypeSamplePreview() {
 @Composable
 fun TextFieldKeyboardOptionsImeActionSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（keyboardOptions - 搜索）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            )
-        }
+    ExpandableItem(title = "TextField（keyboardOptions - 搜索）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        )
     }
 }
 
@@ -441,20 +365,14 @@ fun TextFieldKeyboardOptionsImeActionSamplePreview() {
 fun TextFieldKeyboardActionsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（keyboardActions）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { context.showLongToast("点击了完成！") }),
-            )
-        }
+    ExpandableItem(title = "TextField（keyboardActions）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { context.showLongToast("点击了完成！") }),
+        )
     }
 }
 
@@ -469,19 +387,13 @@ fun TextFieldKeyboardActionsSamplePreview() {
 @Composable
 fun TextFieldSingleLineSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（singleLine）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                singleLine = true
-            )
-        }
+    ExpandableItem(title = "TextField（singleLine）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            singleLine = true
+        )
     }
 }
 
@@ -496,19 +408,13 @@ fun TextFieldSingleLineSamplePreview() {
 @Composable
 fun TextFieldMaxLinesSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（maxLines - 2）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                maxLines = 2
-            )
-        }
+    ExpandableItem(title = "TextField（maxLines - 2）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            maxLines = 2
+        )
     }
 }
 
@@ -523,19 +429,13 @@ fun TextFieldMaxLinesSamplePreview() {
 @Composable
 fun TextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（shape）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                shape = RoundedCornerShape(size = 100.dp),
-            )
-        }
+    ExpandableItem(title = "TextField（shape）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            shape = RoundedCornerShape(size = 100.dp),
+        )
     }
 }
 
@@ -550,19 +450,13 @@ fun TextFieldShapeSamplePreview() {
 @Composable
 fun TextFieldColorsContainerColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（colors - containerColor）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                colors = TextFieldDefaults.textFieldColors(containerColor = Color.Gray),
-            )
-        }
+    ExpandableItem(title = "TextField（colors - containerColor）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Gray),
+        )
     }
 }
 
@@ -577,19 +471,13 @@ fun TextFieldColorsContainerColorSamplePreview() {
 @Composable
 fun TextFieldColorsCursorColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（colors - cursorColor）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                colors = TextFieldDefaults.textFieldColors(cursorColor = Color.Cyan),
-            )
-        }
+    ExpandableItem(title = "TextField（colors - cursorColor）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            colors = TextFieldDefaults.textFieldColors(cursorColor = Color.Cyan),
+        )
     }
 }
 
@@ -604,18 +492,12 @@ fun TextFieldColorsCursorColorSamplePreview() {
 @Composable
 fun OutlinedTextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "OutlinedTextField", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it }
-            )
-        }
+    ExpandableItem(title = "OutlinedTextField", allExpandFlow, padding = 20.dp) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it }
+        )
     }
 }
 
@@ -630,19 +512,13 @@ fun OutlinedTextFieldSamplePreview() {
 @Composable
 fun OutlinedTextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "OutlinedTextField（label）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                label = { Text(text = "请输入你想对 TA 说的话") }
-            )
-        }
+    ExpandableItem(title = "OutlinedTextField（label）", allExpandFlow, padding = 20.dp) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            label = { Text(text = "请输入你想对 TA 说的话") }
+        )
     }
 }
 
@@ -658,24 +534,18 @@ fun OutlinedTextFieldLabelSamplePreview() {
 fun OutlinedTextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    ExpandableItem(title = "OutlinedTextField（isError）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = {
-                    inputText.value = it
-                    isError.value = it.any { char -> !char.isDigit() }
-                },
-                label = { Text(text = "请输入手机号") },
-                isError = isError.value,
-                colors = TextFieldDefaults.outlinedTextFieldColors(errorBorderColor = Color.Red)
-            )
-        }
+    ExpandableItem(title = "OutlinedTextField（isError）", allExpandFlow, padding = 20.dp) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = {
+                inputText.value = it
+                isError.value = it.any { char -> !char.isDigit() }
+            },
+            label = { Text(text = "请输入手机号") },
+            isError = isError.value,
+            colors = TextFieldDefaults.outlinedTextFieldColors(errorBorderColor = Color.Red)
+        )
     }
 }
 
@@ -690,19 +560,13 @@ fun OutlinedTextFieldIsErrorSamplePreview() {
 @Composable
 fun OutlinedTextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "OutlinedTextField（shape）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                shape = RoundedCornerShape(size = 100.dp),
-            )
-        }
+    ExpandableItem(title = "OutlinedTextField（shape）", allExpandFlow, padding = 20.dp) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            shape = RoundedCornerShape(size = 100.dp),
+        )
     }
 }
 
@@ -721,18 +585,12 @@ fun OutlinedTextFieldColorsContainerColorSample(allExpandFlow: Flow<Boolean>) {
         title = "OutlinedTextField（colors - containerColor）",
         allExpand = allExpandFlow
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.Gray),
-            )
-        }
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.Gray),
+        )
     }
 }
 
@@ -747,22 +605,20 @@ fun OutlinedTextFieldColorsContainerColorSamplePreview() {
 @Composable
 fun OutlinedTextFieldColorsBorderColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "OutlinedTextField（colors - borderColor）", allExpand = allExpandFlow) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = inputText.value,
-                onValueChange = { inputText.value = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Green,
-                    focusedBorderColor = Color.Yellow
-                ),
-            )
-        }
+    ExpandableItem(
+        title = "OutlinedTextField（colors - borderColor）",
+        allExpand = allExpandFlow,
+        20.dp
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = Color.Green,
+                focusedBorderColor = Color.Yellow
+            ),
+        )
     }
 }
 

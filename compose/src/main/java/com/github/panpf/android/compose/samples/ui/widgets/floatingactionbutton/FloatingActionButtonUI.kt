@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
@@ -37,7 +38,7 @@ fun FloatingActionButtonUI() {
 @Composable
 fun FloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("FloatingActionButton", allExpandFlow) {
+    ExpandableItem("FloatingActionButton", allExpandFlow, padding = 20.dp) {
         FloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
             Text(text = "发送")
         }
@@ -54,7 +55,7 @@ fun FloatingActionButtonSamplePreview() {
 @Composable
 fun FloatingActionButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("FloatingActionButton（Shape）", allExpandFlow) {
+    ExpandableItem("FloatingActionButton（Shape）", allExpandFlow, padding = 20.dp) {
         FloatingActionButton(
             shape = CircleShape,
             onClick = { context.showLongToast("你点了我！") },
@@ -74,7 +75,7 @@ fun FloatingActionButtonShapeSamplePreview() {
 @Composable
 fun FloatingActionButtonColorSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("FloatingActionButton（Color）", allExpandFlow) {
+    ExpandableItem("FloatingActionButton（Color）", allExpandFlow, padding = 20.dp) {
         FloatingActionButton(
             containerColor = Color.Cyan,
             contentColor = Color.Magenta,
@@ -95,7 +96,7 @@ fun FloatingActionButtonColorSamplePreview() {
 @Composable
 fun SmallFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("SmallFloatingActionButton", allExpandFlow) {
+    ExpandableItem("SmallFloatingActionButton", allExpandFlow, padding = 20.dp) {
         SmallFloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
             Text(text = "发送")
         }
@@ -112,7 +113,7 @@ fun SmallFloatingActionButtonSamplePreview() {
 @Composable
 fun LargeFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("LargeFloatingActionButton", allExpandFlow) {
+    ExpandableItem("LargeFloatingActionButton", allExpandFlow, padding = 20.dp) {
         LargeFloatingActionButton(onClick = { context.showLongToast("你点了我！") }) {
             Text(text = "发送")
         }
@@ -128,7 +129,7 @@ fun LargeFloatingActionButtonSamplePreview() {
 
 @Composable
 fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("ExtendedFloatingActionButton", allExpandFlow) {
+    ExpandableItem("ExtendedFloatingActionButton", allExpandFlow, padding = 20.dp) {
         val expanded = remember { mutableStateOf(false) }
         ExtendedFloatingActionButton(
             expanded = expanded.value,

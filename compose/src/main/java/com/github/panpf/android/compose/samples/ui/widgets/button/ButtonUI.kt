@@ -4,6 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -14,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
@@ -54,7 +58,7 @@ fun ButtonUI() {
 @Composable
 fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（文字）", allExpandFlow) {
+    ExpandableItem("Button（文字）", allExpandFlow, padding = 20.dp) {
         Button(onClick = {
             context.showLongToast("你点了我！")
         }) {
@@ -73,7 +77,7 @@ fun ButtonContentTextSamplePreview() {
 @Composable
 fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（图片）", allExpandFlow) {
+    ExpandableItem("Button（图片）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { context.showLongToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -93,7 +97,7 @@ fun ButtonContentImageSamplePreview() {
 @Composable
 fun ButtonDisabledSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（不可用）", allExpandFlow) {
+    ExpandableItem("Button（不可用）", allExpandFlow, padding = 20.dp) {
         Button(
             enabled = false,
             onClick = { context.showLongToast("你点了我！") }
@@ -116,7 +120,7 @@ fun ButtonDisabledSamplePreview() {
 @Composable
 fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（形状 - 圆角)", allExpandFlow) {
+    ExpandableItem("Button（形状 - 圆角)", allExpandFlow, padding = 20.dp) {
         Button(
             shape = RoundedCornerShape(10.dp),
             onClick = { context.showLongToast("你点了我！") }
@@ -139,7 +143,7 @@ fun ButtonShapeSamplePreview() {
 @Composable
 fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（颜色 - 可用/不可用)", allExpandFlow) {
+    ExpandableItem("Button（颜色 - 可用/不可用)", allExpandFlow, padding = 20.dp) {
         Row {
             Button(
                 colors = ButtonDefaults.buttonColors(
@@ -155,6 +159,7 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "",
                 )
             }
+            Spacer(modifier = Modifier.width(16.dp).height(10.dp))
             Button(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Cyan,
@@ -184,7 +189,7 @@ fun ButtonColorSamplePreview() {
 @Composable
 fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（高度）", allExpandFlow) {
+    ExpandableItem("Button（高度）", allExpandFlow, padding = 20.dp) {
         Button(
             elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 10.dp,
@@ -210,7 +215,7 @@ fun ButtonElevationSamplePreview() {
 @Composable
 fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（描边）", allExpandFlow) {
+    ExpandableItem("Button（描边）", allExpandFlow, padding = 20.dp) {
         Button(
             border = BorderStroke(1.dp, Color.Cyan),
             onClick = { context.showLongToast("你点了我！") }
@@ -233,7 +238,7 @@ fun ButtonBorderSamplePreview() {
 @Composable
 fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（内边距）", allExpandFlow) {
+    ExpandableItem("Button（内边距）", allExpandFlow, padding = 20.dp) {
         Button(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
             onClick = { context.showLongToast("你点了我！") }
@@ -256,7 +261,7 @@ fun ButtonContentPaddingSamplePreview() {
 @Composable
 fun ElevatedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("ElevatedButton", allExpandFlow) {
+    ExpandableItem("ElevatedButton", allExpandFlow, padding = 20.dp) {
         ElevatedButton(onClick = { context.showLongToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -277,7 +282,7 @@ fun ElevatedButtonSamplePreview() {
 @Composable
 fun FilledTonalButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("FilledTonalButton", allExpandFlow) {
+    ExpandableItem("FilledTonalButton", allExpandFlow, padding = 20.dp) {
         FilledTonalButton(onClick = { context.showLongToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -298,7 +303,7 @@ fun FilledTonalButtonSamplePreview() {
 @Composable
 fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("OutlinedButton", allExpandFlow) {
+    ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
         OutlinedButton(onClick = { context.showLongToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -319,7 +324,7 @@ fun OutlinedButtonSamplePreview() {
 @Composable
 fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("TextButton", allExpandFlow) {
+    ExpandableItem("TextButton", allExpandFlow, padding = 20.dp) {
         TextButton(onClick = { context.showLongToast("你点了我！") }) {
             Text(text = "发送")
         }

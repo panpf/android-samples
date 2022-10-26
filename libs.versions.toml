@@ -91,6 +91,7 @@ androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefre
 
 # google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
+google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "google-accompanist" }
 
 # panpf
 panpf-assemblyadapter4 = { module = "io.github.panpf.assemblyadapter4:assemblyadapter", version.ref = "panpf-assemblyadapter4" }
@@ -112,6 +113,7 @@ androidx-compose = [
     "androidx-compose-foundation",
     "androidx-compose-material",
     "androidx-compose-material3",
+    "google-accompanist-flowlayout",
 ]
 androidx-compose-debug = [
     "androidx-compose-ui-tooling",
