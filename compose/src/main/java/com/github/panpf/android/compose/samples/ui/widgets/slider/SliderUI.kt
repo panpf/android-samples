@@ -237,7 +237,7 @@ fun SliderColorsSamplePreview() {
 @Composable
 fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f..0.8f) }
-    ExpandableItem(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem(title = "RangeSlider", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 RangeSlider(
