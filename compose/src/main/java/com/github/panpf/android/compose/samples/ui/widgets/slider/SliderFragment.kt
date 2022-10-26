@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.widgets.sliderbar
+package com.github.panpf.android.compose.samples.ui.widgets.slider
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.ComposeView
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class SliderBarFragment : ToolbarFragment() {
+class SliderFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -21,7 +21,7 @@ class SliderBarFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "SliderBar"
+        toolbar.title = "Slider"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -29,7 +29,7 @@ class SliderBarFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SliderBarUI()
+                        SliderUI()
                     }
                 }
             }

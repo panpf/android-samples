@@ -105,8 +105,8 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_sliderBarFragment"
-            app:destination="@id/sliderBarFragment"
+            android:id="@+id/action_widgets_sliderFragment"
+            app:destination="@id/sliderFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -169,8 +169,8 @@
         android:name="com.github.panpf.android.compose.samples.ui.widgets.radiobutton.RadioButtonFragment" />
 
     <fragment
-        android:id="@+id/sliderBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.sliderbar.SliderBarFragment" />
+        android:id="@+id/sliderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.slider.SliderFragment" />
 
     <fragment
         android:id="@+id/switchFragment"

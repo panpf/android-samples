@@ -96,6 +96,7 @@ google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-f
 # panpf
 panpf-assemblyadapter4 = { module = "io.github.panpf.assemblyadapter4:assemblyadapter", version.ref = "panpf-assemblyadapter4" }
 panpf-sketch3 = { module = "io.github.panpf.sketch3:sketch", version.ref = "panpf-sketch3" }
+panpf-sketch3-compose = { module = "io.github.panpf.sketch3:sketch-compose", version.ref = "panpf-sketch3" }
 panpf-tools4j = { module = "io.github.panpf.tools4j:tools4j-ktx", version.ref = "panpf-tools4j" }
 panpf-tools4a = { module = "io.github.panpf.tools4a:tools4a-ktx", version.ref = "panpf-tools4a" }
 panpf-tools4k = { module = "io.github.panpf.tools4k:tools4k", version.ref = "panpf-tools4k" }
@@ -114,6 +115,7 @@ androidx-compose = [
     "androidx-compose-material",
     "androidx-compose-material3",
     "google-accompanist-flowlayout",
+    "panpf-sketch3-compose",
 ]
 androidx-compose-debug = [
     "androidx-compose-ui-tooling",

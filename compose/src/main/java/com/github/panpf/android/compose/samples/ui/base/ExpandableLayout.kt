@@ -53,6 +53,12 @@ fun ExpandableLayout(
         )
     ) {
         content(allExpandFlow)
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(DividerDefaults.Thickness)
+                .padding(start = 20.dp, end = 20.dp)
+        )
     }
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
@@ -85,13 +91,22 @@ fun ExpandableItem(
         }
         val expand = selfExpand.value
 
+        if (!expand) {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(DividerDefaults.Thickness)
+                    .padding(start = 20.dp, end = 20.dp)
+            )
+        }
+
         Row(modifier = Modifier
             .fillMaxWidth()
-            .background(if (expand) Purple40.copy(alpha = 0.5f) else Color.Transparent)
             .clickable {
                 selfExpand.value = !selfExpand.value
             }
-            .padding(start = 20.dp, top = 16.dp, end = 20.dp, bottom = 16.dp)
+            .background(if (expand) Purple40.copy(alpha = 0.3f) else Color.Transparent)
+            .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 20.dp)
         ) {
             Text(
                 text = title,
@@ -114,11 +129,14 @@ fun ExpandableItem(
             }
         }
 
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(DividerDefaults.Thickness)
-        )
+//        if (!expand) {
+//            Divider(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(DividerDefaults.Thickness)
+//                    .padding(start = 20.dp, end = 20.dp)
+//            )
+//        }
     }
 }
 

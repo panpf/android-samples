@@ -4,10 +4,14 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Text
@@ -15,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -42,7 +47,8 @@ fun ImageUI() {
         ImageContentScaleSmallSample(allExpandFlow)
         ImageContentScaleLargeSample(allExpandFlow)
         ImageAlphaSample(allExpandFlow)
-        ImageTintSample(allExpandFlow)
+        ImageColorFilterSample(allExpandFlow)
+        ImageClipSample(allExpandFlow)
     }
 }
 
@@ -51,7 +57,7 @@ fun ImageUI() {
 fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image2),
+            painter = painterResource(id = R.drawable.image),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -95,7 +101,7 @@ fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
     val imageBitmap = remember {
         (ResourcesCompat.getDrawable(
             context.resources,
-            R.drawable.image,
+            R.drawable.image2,
             null
         ) as BitmapDrawable).bitmap.asImageBitmap()
     }
@@ -139,7 +145,7 @@ fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.image),
+                        painter = painterResource(id = R.drawable.image2),
                         contentDescription = "",
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
@@ -181,10 +187,10 @@ fun ImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.image),
+                        painter = painterResource(id = R.drawable.image2),
                         contentDescription = "",
                         modifier = Modifier
-                            .fillMaxWidth(0.3f)
+                            .fillMaxWidth(0.315f)
                             .aspectRatio(1f)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
@@ -193,7 +199,6 @@ fun ImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
         }
-
     }
 }
 
@@ -223,10 +228,10 @@ fun ImageContentScaleLargeSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.image2),
+                        painter = painterResource(id = R.drawable.image),
                         contentDescription = "",
                         modifier = Modifier
-                            .fillMaxWidth(0.3f)
+                            .fillMaxWidth(0.315f)
                             .aspectRatio(1f)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
@@ -249,7 +254,7 @@ fun ImageContentScaleLargeSamplePreview() {
 fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image2),
+            painter = painterResource(id = R.drawable.image),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -268,10 +273,10 @@ fun ImageAlphaSamplePreview() {
 
 
 @Composable
-fun ImageTintSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（tint）", allExpandFlow, padding = 20.dp) {
+fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image2),
+            painter = painterResource(id = R.drawable.image),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -293,6 +298,40 @@ fun ImageTintSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageTintSamplePreview() {
-    ImageTintSample(remember { MutableStateFlow(true) })
+fun ImageColorFilterSamplePreview() {
+    ImageColorFilterSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.image),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(160.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop,
+            )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.image),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(160.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ImageClipSamplePreview() {
+    ImageClipSample(remember { MutableStateFlow(true) })
 }
