@@ -160,7 +160,7 @@ fun SliderStepsSamplePreview() {
 
 @Composable
 fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0f) }
+    val value = remember { mutableStateOf(0.4f) }
     ExpandableItem(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
