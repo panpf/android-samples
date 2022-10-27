@@ -44,8 +44,7 @@ fun ImageUI() {
         ImageVectorSample(allExpandFlow)
         ImageBitmapSample(allExpandFlow)
         ImageAlignmentSample(allExpandFlow)
-        ImageContentScaleSmallSample(allExpandFlow)
-        ImageContentScaleLargeSample(allExpandFlow)
+        ImageContentScaleSample(allExpandFlow)
         ImageAlphaSample(allExpandFlow)
         ImageColorFilterSample(allExpandFlow)
         ImageClipSample(allExpandFlow)
@@ -57,7 +56,7 @@ fun ImageUI() {
 fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image),
+            painter = painterResource(id = R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -101,7 +100,7 @@ fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
     val imageBitmap = remember {
         (ResourcesCompat.getDrawable(
             context.resources,
-            R.drawable.image2,
+            R.drawable.image_hor_small,
             null
         ) as BitmapDrawable).bitmap.asImageBitmap()
     }
@@ -145,7 +144,7 @@ fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.image2),
+                        painter = painterResource(id = R.drawable.image_hor_small),
                         contentDescription = "",
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
@@ -167,35 +166,58 @@ fun ImageAlignmentSamplePreview() {
     ImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
+data class ContentScaleItem(
+    val contentScale: ContentScale,
+    val name: String,
+    val sampleResList: List<Pair<Int, String>>
+)
 
 @Composable
-fun ImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（contentScale - Small）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
+fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+    val hor = R.drawable.image_hor to "横向图片"
+    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
+    val ver = R.drawable.image_ver to "纵向图片"
+    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
+    val items = listOf(
+        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
+        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
+    )
+    ExpandableItem(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
+        Column {
+            items.forEachIndexed { index, items ->
+                if (index != 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                Row {
                     Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        text = items.name,
+                        modifier = Modifier.size(80.dp),
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.image2),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth(0.315f)
-                            .aspectRatio(1f)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+                        items.sampleResList.forEach { res ->
+                            Column {
+                                Text(
+                                    text = res.second,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                )
+                                Image(
+                                    painter = painterResource(id = res.first),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(110.dp)
+                                        .background(Color.Red.copy(alpha = 0.5f))
+                                        .padding(2.dp),
+                                    contentScale = items.contentScale,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -204,49 +226,8 @@ fun ImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageContentScaleSmallSamplePreview() {
-    ImageContentScaleSmallSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun ImageContentScaleLargeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（contentScale - Large）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
-                    Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.image),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth(0.315f)
-                            .aspectRatio(1f)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun ImageContentScaleLargeSamplePreview() {
-    ImageContentScaleLargeSample(remember { MutableStateFlow(true) })
+fun ImageContentScaleSamplePreview() {
+    ImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -254,7 +235,7 @@ fun ImageContentScaleLargeSamplePreview() {
 fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image),
+            painter = painterResource(id = R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -276,7 +257,7 @@ fun ImageAlphaSamplePreview() {
 fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image),
+            painter = painterResource(id = R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -308,7 +289,7 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
-                painter = painterResource(id = R.drawable.image),
+                painter = painterResource(id = R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(160.dp)
@@ -319,7 +300,7 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.image),
+                painter = painterResource(id = R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(160.dp)

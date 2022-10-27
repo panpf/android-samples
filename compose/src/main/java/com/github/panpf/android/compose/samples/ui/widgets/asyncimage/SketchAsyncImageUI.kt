@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
 import com.github.panpf.sketch.fetch.newAssetUri
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.google.accompanist.flowlayout.FlowRow
@@ -37,8 +38,7 @@ fun SketchAsyncImageUI() {
         SketchAsyncImageAssetSample(allExpandFlow)
         SketchAsyncImageHttpSample(allExpandFlow)
         SketchAsyncImageAlignmentSample(allExpandFlow)
-        SketchAsyncImageContentScaleSmallSample(allExpandFlow)
-        SketchAsyncImageContentScaleLargeSample(allExpandFlow)
+        SketchAsyncImageContentScaleSample(allExpandFlow)
         SketchAsyncImageAlphaSample(allExpandFlow)
         SketchAsyncImageColorFilterSample(allExpandFlow)
         SketchAsyncImageClipSample(allExpandFlow)
@@ -50,7 +50,7 @@ fun SketchAsyncImageUI() {
 fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            imageUri = newResourceUri(R.drawable.image),
+            imageUri = newResourceUri(R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -136,7 +136,7 @@ fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     SketchAsyncImage(
-                        imageUri = newResourceUri(R.drawable.image2),
+                        imageUri = newResourceUri(R.drawable.image_hor_small),
                         contentDescription = "",
                         modifier = Modifier
                             .size(110.dp)
@@ -163,39 +163,54 @@ fun SketchAsyncImageAlignmentSamplePreview() {
 
 
 @Composable
-fun SketchAsyncImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
-        title = "SketchAsyncImage（contentScale - Small）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
+fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+    val hor = R.drawable.image_hor to "横向图片"
+    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
+    val ver = R.drawable.image_ver to "纵向图片"
+    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
+    val items = listOf(
+        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
+        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
+    )
+    ExpandableItem(title = "SketchAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
+        Column {
+            items.forEachIndexed { index, items ->
+                if (index != 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                Row {
                     Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        text = items.name,
+                        modifier = Modifier.size(80.dp),
                     )
-                    SketchAsyncImage(
-                        imageUri = newResourceUri(R.drawable.image2),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                        // SketchAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                        resizeSize(10000, 10000)
+                    Spacer(modifier = Modifier.size(10.dp))
+                    FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+                        items.sampleResList.forEach { res ->
+                            Column {
+                                Text(
+                                    text = res.second,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                )
+                                SketchAsyncImage(
+                                    imageUri = newResourceUri(res.first),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(110.dp)
+                                        .background(Color.Red.copy(alpha = 0.5f))
+                                        .padding(2.dp),
+                                    contentScale = items.contentScale,
+                                ) {
+                                    placeholder(R.drawable.im_placeholder)
+                                    // SketchAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
+                                    resizeSize(10000, 10000)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -205,56 +220,8 @@ fun SketchAsyncImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageContentScaleSmallSamplePreview() {
-    SketchAsyncImageContentScaleSmallSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun SketchAsyncImageContentScaleLargeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
-        title = "SketchAsyncImage（contentScale - Large）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
-                    Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    SketchAsyncImage(
-                        imageUri = newResourceUri(R.drawable.image),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                        // SketchAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                        resizeSize(10000, 10000)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun SketchAsyncImageContentScaleLargeSamplePreview() {
-    SketchAsyncImageContentScaleLargeSample(remember { MutableStateFlow(true) })
+fun SketchAsyncImageContentScaleSamplePreview() {
+    SketchAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -262,7 +229,7 @@ fun SketchAsyncImageContentScaleLargeSamplePreview() {
 fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            imageUri = newResourceUri(R.drawable.image),
+            imageUri = newResourceUri(R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -286,7 +253,7 @@ fun SketchAsyncImageAlphaSamplePreview() {
 fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            imageUri = newResourceUri(R.drawable.image),
+            imageUri = newResourceUri(R.drawable.image_hor),
             contentDescription = "",
             modifier = Modifier
                 .size(200.dp)
@@ -320,7 +287,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             SketchAsyncImage(
-                imageUri = newResourceUri(R.drawable.image),
+                imageUri = newResourceUri(R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(160.dp)
@@ -333,7 +300,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             SketchAsyncImage(
-                imageUri = newResourceUri(R.drawable.image),
+                imageUri = newResourceUri(R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(160.dp)

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,8 +41,7 @@ fun CoilAsyncImageUI() {
         CoilAsyncImageAssetSample(allExpandFlow)
         CoilAsyncImageHttpSample(allExpandFlow)
         CoilAsyncImageAlignmentSample(allExpandFlow)
-        CoilAsyncImageContentScaleSmallSample(allExpandFlow)
-        CoilAsyncImageContentScaleLargeSample(allExpandFlow)
+        CoilAsyncImageContentScaleSample(allExpandFlow)
         CoilAsyncImageAlphaSample(allExpandFlow)
         CoilAsyncImageColorFilterSample(allExpandFlow)
         CoilAsyncImageClipSample(allExpandFlow)
@@ -55,7 +55,7 @@ fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image))
+                .data(context.newCoilResourceUri(R.drawable.image_hor))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -147,7 +147,7 @@ fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     )
                     CoilAsyncImage(
                         model = CoilImageRequest.Builder(context)
-                            .data(context.newCoilResourceUri(R.drawable.image2))
+                            .data(context.newCoilResourceUri(R.drawable.image_hor_small))
                             .placeholder(R.drawable.im_placeholder)
                             // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
                             .size(10000, 10000)
@@ -174,38 +174,57 @@ fun CoilAsyncImageAlignmentSamplePreview() {
 
 
 @Composable
-fun CoilAsyncImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
+fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（contentScale - Small）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
+    val hor = R.drawable.image_hor to "横向图片"
+    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
+    val ver = R.drawable.image_ver to "纵向图片"
+    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
+    val items = listOf(
+        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
+        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
+        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
+    )
+    ExpandableItem(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
+        Column {
+            items.forEachIndexed { index, items ->
+                if (index != 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                Row {
                     Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        text = items.name,
+                        modifier = Modifier.size(80.dp),
                     )
-                    CoilAsyncImage(
-                        model = CoilImageRequest.Builder(context)
-                            .data(context.newCoilResourceUri(R.drawable.image2))
-                            .placeholder(R.drawable.im_placeholder)
-                            // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                            .size(10000, 10000)
-                            .build(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+                        items.sampleResList.forEach { res ->
+                            Column {
+                                Text(
+                                    text = res.second,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                )
+                                CoilAsyncImage(
+                                    model = CoilImageRequest.Builder(context)
+                                        .data(context.newCoilResourceUri(res.first))
+                                        .placeholder(R.drawable.im_placeholder)
+                                        // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
+                                        .size(10000, 10000)
+                                        .build(),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(110.dp)
+                                        .background(Color.Red.copy(alpha = 0.5f))
+                                        .padding(2.dp),
+                                    contentScale = items.contentScale,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -214,54 +233,8 @@ fun CoilAsyncImageContentScaleSmallSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageContentScaleSmallSamplePreview() {
-    CoilAsyncImageContentScaleSmallSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun CoilAsyncImageContentScaleLargeSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（contentScale - Large）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                ContentScale.None to "None",
-                ContentScale.Inside to "Inside",
-                ContentScale.Crop to "Crop",
-                ContentScale.FillBounds to "FillBounds",
-                ContentScale.FillWidth to "FillWidth",
-                ContentScale.FillHeight to "FillHeight",
-                ContentScale.Fit to "Fit",
-            ).forEach { contentScale ->
-                Column {
-                    Text(
-                        text = contentScale.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    CoilAsyncImage(
-                        model = CoilImageRequest.Builder(context)
-                            .data(context.newCoilResourceUri(R.drawable.image))
-                            .placeholder(R.drawable.im_placeholder)
-                            // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                            .size(10000, 10000)
-                            .build(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .padding(2.dp),
-                        contentScale = contentScale.first,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun CoilAsyncImageContentScaleLargeSamplePreview() {
-    CoilAsyncImageContentScaleLargeSample(remember { MutableStateFlow(true) })
+fun CoilAsyncImageContentScaleSamplePreview() {
+    CoilAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -271,7 +244,7 @@ fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image))
+                .data(context.newCoilResourceUri(R.drawable.image_hor))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -297,7 +270,7 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image))
+                .data(context.newCoilResourceUri(R.drawable.image_hor))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -333,7 +306,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
         Row {
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image))
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -347,7 +320,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image))
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
