@@ -39,7 +39,8 @@ class WidgetsFragment : ToolbarFragment() {
             Link("Switch", R.id.action_widgets_switchFragment),
             Link("Icon", R.id.action_widgets_iconFragment),
             Link("Image", R.id.action_widgets_imageFragment),
-            Link("AsyncImage", R.id.action_widgets_asyncImageFragment),
+            Link("AsyncImage - Sketch", R.id.action_widgets_sketchAsyncImageFragment),
+            Link("AsyncImage - Coil", R.id.action_widgets_coilAsyncImageFragment),
             Link("Slider", R.id.action_widgets_sliderFragment),
         )
         return ComposeView(inflater.context).apply {

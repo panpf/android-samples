@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="placeholder_bg">#393939</color>
-    <color name="placeholder_icon">#676767</color>
+    <color name="placeholder_bg">#AFAFAF</color>
+    <color name="placeholder_icon">#E4E4E4</color>
 </resources>

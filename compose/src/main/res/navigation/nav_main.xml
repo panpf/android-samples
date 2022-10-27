@@ -70,8 +70,15 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_asyncImageFragment"
-            app:destination="@id/asyncImageFragment"
+            android:id="@+id/action_widgets_sketchAsyncImageFragment"
+            app:destination="@id/sketchAsyncImageFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_coilAsyncImageFragment"
+            app:destination="@id/coilAsyncImageFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -149,8 +156,12 @@
         android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
 
     <fragment
-        android:id="@+id/asyncImageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.AsyncImageFragment" />
+        android:id="@+id/sketchAsyncImageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.SketchAsyncImageFragment" />
+
+    <fragment
+        android:id="@+id/coilAsyncImageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.CoilAsyncImageFragment" />
 
     <fragment
         android:id="@+id/checkboxFragment"

@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.ComposeView
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class AsyncImageFragment : ToolbarFragment() {
+class SketchAsyncImageFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -21,7 +21,7 @@ class AsyncImageFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "AsyncImage"
+        toolbar.title = "AsyncImage - Sketch"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -29,7 +29,7 @@ class AsyncImageFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        AsyncImageUI()
+                        SketchAsyncImageUI()
                     }
                 }
             }
