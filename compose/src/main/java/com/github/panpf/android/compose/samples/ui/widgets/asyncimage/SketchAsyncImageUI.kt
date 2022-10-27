@@ -2,6 +2,7 @@ package com.github.panpf.android.compose.samples.ui.widgets.asyncimage
 
 import com.github.panpf.sketch.compose.AsyncImage as SketchAsyncImage
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -25,6 +29,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
+import com.github.panpf.android.compose.samples.ui.widgets.image.SquashedOval
 import com.github.panpf.sketch.fetch.newAssetUri
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.google.accompanist.flowlayout.FlowRow
@@ -40,8 +45,10 @@ fun SketchAsyncImageUI() {
         SketchAsyncImageAlignmentSample(allExpandFlow)
         SketchAsyncImageContentScaleSample(allExpandFlow)
         SketchAsyncImageAlphaSample(allExpandFlow)
-        SketchAsyncImageColorFilterSample(allExpandFlow)
         SketchAsyncImageClipSample(allExpandFlow)
+        SketchAsyncImageBorderSample(allExpandFlow)
+        SketchAsyncImageColorFilterSample(allExpandFlow)
+        SketchAsyncImageBlurSample(allExpandFlow)
     }
 }
 
@@ -52,10 +59,7 @@ fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
         SketchAsyncImage(
             imageUri = newResourceUri(R.drawable.image_hor),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         ) {
             placeholder(R.drawable.im_placeholder)
         }
@@ -75,10 +79,7 @@ fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
         SketchAsyncImage(
             imageUri = newAssetUri("image3.jpg"),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         ) {
             placeholder(R.drawable.im_placeholder)
         }
@@ -98,10 +99,7 @@ fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
         SketchAsyncImage(
             imageUri = "https://images.unsplash.com/photo-1431440869543-efaf3388c585?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=8b00971a3e4a84fb43403797126d1991%22",
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         ) {
             placeholder(R.drawable.im_placeholder)
         }
@@ -233,10 +231,7 @@ fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
         SketchAsyncImage(
             imageUri = newResourceUri(R.drawable.image_hor),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
             alpha = 0.5f
         ) {
             placeholder(R.drawable.im_placeholder)
@@ -252,39 +247,6 @@ fun SketchAsyncImageAlphaSamplePreview() {
 
 
 @Composable
-fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
-        SketchAsyncImage(
-            imageUri = newResourceUri(R.drawable.image_hor),
-            contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
-            colorFilter = ColorFilter.colorMatrix(
-                ColorMatrix(
-                    floatArrayOf(
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0f, 0f, 0f, 1f, 0f
-                    )
-                )
-            )
-        ) {
-            placeholder(R.drawable.im_placeholder)
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun SketchAsyncImageColorFilterSamplePreview() {
-    SketchAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
         Row {
@@ -292,7 +254,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
                 imageUri = newResourceUri(R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(100.dp)
                     .clip(RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
             ) {
@@ -305,7 +267,87 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
                 imageUri = newResourceUri(R.drawable.image_hor),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            ) {
+                placeholder(R.drawable.im_placeholder)
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            SketchAsyncImage(
+                imageUri = newResourceUri(R.drawable.image_hor),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(SquashedOval()),
+                contentScale = ContentScale.Crop,
+            ) {
+                placeholder(R.drawable.im_placeholder)
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun SketchAsyncImageClipSamplePreview() {
+    SketchAsyncImageClipSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "SketchAsyncImage（border）", allExpandFlow, padding = 20.dp) {
+        Row {
+            SketchAsyncImage(
+                imageUri = newResourceUri(R.drawable.image_hor),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, Color.Magenta),
+                contentScale = ContentScale.Crop,
+            ) {
+                placeholder(R.drawable.im_placeholder)
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            SketchAsyncImage(
+                imageUri = newResourceUri(R.drawable.image_hor),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, Color.Magenta, RoundedCornerShape(20.dp))
+                    .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop,
+            ) {
+                placeholder(R.drawable.im_placeholder)
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            val rainbowColorsBrush = remember {
+                Brush.sweepGradient(
+                    listOf(
+                        Color(0xFF9575CD),
+                        Color(0xFFBA68C8),
+                        Color(0xFFE57373),
+                        Color(0xFFFFB74D),
+                        Color(0xFFFFF176),
+                        Color(0xFFAED581),
+                        Color(0xFF4DD0E1),
+                        Color(0xFF9575CD)
+                    )
+                )
+            }
+            SketchAsyncImage(
+                imageUri = newResourceUri(R.drawable.image_hor),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, rainbowColorsBrush, CircleShape)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop,
             ) {
@@ -317,6 +359,116 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AsyncSketchAsyncImageClipSamplePreview() {
-    SketchAsyncImageClipSample(remember { MutableStateFlow(true) })
+fun SketchAsyncImageBorderSamplePreview() {
+    SketchAsyncImageBorderSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
+        Row {
+            Column {
+                Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
+                SketchAsyncImage(
+                    imageUri = newResourceUri(R.drawable.image_hor),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                ) {
+                    placeholder(R.drawable.im_placeholder)
+                }
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            val colorMatrix = floatArrayOf(
+                -1f, 0f, 0f, 0f, 255f,
+                0f, -1f, 0f, 0f, 255f,
+                0f, 0f, -1f, 0f, 255f,
+                0f, 0f, 0f, 1f, 0f
+            )
+            Column {
+                Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
+                SketchAsyncImage(
+                    imageUri = newResourceUri(R.drawable.image_hor),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix))
+                ) {
+                    placeholder(R.drawable.im_placeholder)
+                }
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Column {
+                Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
+                val contrast = 2f // 0f..10f (1 should be default)
+                val brightness = -180f // -255f..255f (0 should be default)
+                val colorMatrix1 = floatArrayOf(
+                    contrast, 0f, 0f, 0f, brightness,
+                    0f, contrast, 0f, 0f, brightness,
+                    0f, 0f, contrast, 0f, brightness,
+                    0f, 0f, 0f, 1f, 0f
+                )
+                SketchAsyncImage(
+                    imageUri = newResourceUri(R.drawable.image_hor),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix1))
+                ) {
+                    placeholder(R.drawable.im_placeholder)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun SketchAsyncImageColorFilterSamplePreview() {
+    SketchAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "SketchAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
+        Column {
+            Text(text = "仅支持 Android 12 以上版本")
+            Spacer(modifier = Modifier.size(10.dp))
+            Row {
+                SketchAsyncImage(
+                    imageUri = newResourceUri(R.drawable.image_hor),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .blur(
+                            radius = 5.dp,
+                            edgeTreatment = BlurredEdgeTreatment.Rectangle
+                        ),
+                ) {
+                    placeholder(R.drawable.im_placeholder)
+                }
+                Spacer(modifier = Modifier.size(10.dp))
+                SketchAsyncImage(
+                    imageUri = newResourceUri(R.drawable.image_hor),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .blur(
+                            radius = 5.dp,
+                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                        ),
+                ) {
+                    placeholder(R.drawable.im_placeholder)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun SketchAsyncImageBlurSamplePreview() {
+    SketchAsyncImageBlurSample(remember { MutableStateFlow(true) })
 }

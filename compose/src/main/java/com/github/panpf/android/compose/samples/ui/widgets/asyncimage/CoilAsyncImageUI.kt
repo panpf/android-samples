@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -30,6 +34,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
+import com.github.panpf.android.compose.samples.ui.widgets.image.SquashedOval
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,8 +48,10 @@ fun CoilAsyncImageUI() {
         CoilAsyncImageAlignmentSample(allExpandFlow)
         CoilAsyncImageContentScaleSample(allExpandFlow)
         CoilAsyncImageAlphaSample(allExpandFlow)
-        CoilAsyncImageColorFilterSample(allExpandFlow)
         CoilAsyncImageClipSample(allExpandFlow)
+        CoilAsyncImageBorderSample(allExpandFlow)
+        CoilAsyncImageColorFilterSample(allExpandFlow)
+        CoilAsyncImageBlurSample(allExpandFlow)
     }
 }
 
@@ -59,10 +66,7 @@ fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         )
     }
 }
@@ -84,10 +88,7 @@ fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         )
     }
 }
@@ -109,10 +110,7 @@ fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
         )
     }
 }
@@ -250,10 +248,7 @@ fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
+            modifier = Modifier.size(200.dp),
             alpha = 0.5f
         )
     }
@@ -263,41 +258,6 @@ fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun CoilAsyncImageAlphaSamplePreview() {
     CoilAsyncImageAlphaSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
-        CoilAsyncImage(
-            model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image_hor))
-                .placeholder(R.drawable.im_placeholder)
-                .build(),
-            contentDescription = "",
-            modifier = Modifier
-                .size(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
-                .padding(2.dp),
-            colorFilter = ColorFilter.colorMatrix(
-                ColorMatrix(
-                    floatArrayOf(
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0.33F, 0.59F, 0.11F, 0f, 0f,
-                        0f, 0f, 0f, 1f, 0f
-                    )
-                )
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun CoilAsyncImageColorFilterSamplePreview() {
-    CoilAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -313,7 +273,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
                     .build(),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(100.dp)
                     .clip(RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
             )
@@ -327,7 +287,92 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
                     .build(),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            CoilAsyncImage(
+                model = CoilImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(SquashedOval()),
+                contentScale = ContentScale.Crop,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun CoilAsyncImageClipSamplePreview() {
+    CoilAsyncImageClipSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "CoilAsyncImage（border）", allExpandFlow, padding = 20.dp) {
+        Row {
+            CoilAsyncImage(
+                model = CoilImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, Color.Magenta),
+                contentScale = ContentScale.Crop,
+            )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            CoilAsyncImage(
+                model = CoilImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, Color.Magenta, RoundedCornerShape(20.dp))
+                    .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop,
+            )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            val rainbowColorsBrush = remember {
+                Brush.sweepGradient(
+                    listOf(
+                        Color(0xFF9575CD),
+                        Color(0xFFBA68C8),
+                        Color(0xFFE57373),
+                        Color(0xFFFFB74D),
+                        Color(0xFFFFF176),
+                        Color(0xFFAED581),
+                        Color(0xFF4DD0E1),
+                        Color(0xFF9575CD)
+                    )
+                )
+            }
+            CoilAsyncImage(
+                model = CoilImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(2.dp, rainbowColorsBrush, CircleShape)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop,
             )
@@ -337,8 +382,125 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AsyncCoilAsyncImageClipSamplePreview() {
-    CoilAsyncImageClipSample(remember { MutableStateFlow(true) })
+fun CoilAsyncImageBorderSamplePreview() {
+    CoilAsyncImageBorderSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
+        Row {
+            Column {
+                Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
+                CoilAsyncImage(
+                    model = CoilImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            val colorMatrix = floatArrayOf(
+                -1f, 0f, 0f, 0f, 255f,
+                0f, -1f, 0f, 0f, 255f,
+                0f, 0f, -1f, 0f, 255f,
+                0f, 0f, 0f, 1f, 0f
+            )
+            Column {
+                Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
+                CoilAsyncImage(
+                    model = CoilImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix))
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Column {
+                Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
+                val contrast = 2f // 0f..10f (1 should be default)
+                val brightness = -180f // -255f..255f (0 should be default)
+                val colorMatrix1 = floatArrayOf(
+                    contrast, 0f, 0f, 0f, brightness,
+                    0f, contrast, 0f, 0f, brightness,
+                    0f, 0f, contrast, 0f, brightness,
+                    0f, 0f, 0f, 1f, 0f
+                )
+                CoilAsyncImage(
+                    model = CoilImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
+                    contentDescription = "",
+                    modifier = Modifier.size(100.dp),
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix1))
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun CoilAsyncImageColorFilterSamplePreview() {
+    CoilAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "CoilAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
+        Column {
+            Text(text = "仅支持 Android 12 以上版本")
+            Spacer(modifier = Modifier.size(10.dp))
+            Row {
+                CoilAsyncImage(
+                    model = CoilImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .blur(
+                            radius = 5.dp,
+                            edgeTreatment = BlurredEdgeTreatment.Rectangle
+                        ),
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                CoilAsyncImage(
+                    model = CoilImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .blur(
+                            radius = 5.dp,
+                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                        ),
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun CoilAsyncImageBlurSamplePreview() {
+    CoilAsyncImageBlurSample(remember { MutableStateFlow(true) })
 }
 
 private fun Context.newCoilResourceUri(@DrawableRes id: Int): Uri {
