@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.widgets.asyncimage
 
-import com.github.panpf.sketch.compose.AsyncImage as SketchAsyncImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -18,25 +17,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
+import com.github.panpf.android.compose.samples.ui.widgets.image.PhotoItem
 import com.github.panpf.android.compose.samples.ui.widgets.image.SquashedOval
+import com.github.panpf.android.compose.samples.ui.widgets.image.blackWhiteColorFilter
+import com.github.panpf.android.compose.samples.ui.widgets.image.horPhoto
+import com.github.panpf.android.compose.samples.ui.widgets.image.inversionOfNegativeColorFilter
+import com.github.panpf.android.compose.samples.ui.widgets.image.newColorFilterByContrastAndBrightness
+import com.github.panpf.android.compose.samples.ui.widgets.image.rainbowColorsBrush
+import com.github.panpf.android.compose.samples.ui.widgets.image.verPhoto
 import com.github.panpf.sketch.fetch.newAssetUri
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.github.panpf.sketch.request.DisplayRequest
+import com.github.panpf.sketch.resize.Precision.EXACTLY
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.github.panpf.sketch.compose.AsyncImage as SketchAsyncImage
 
 @Composable
 fun SketchAsyncImageUI() {
@@ -120,6 +126,7 @@ fun SketchAsyncImageHttpSamplePreview() {
 
 @Composable
 fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    val photo = horPhoto
     ExpandableItem(title = "SketchAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -138,18 +145,20 @@ fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         text = alignment.second,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
+                    val viewSize = 110.dp
+                    val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                    val targetSize = photo.calculateTargetSize(viewSizePx.toInt(), false)
                     SketchAsyncImage(
                         request = DisplayRequest(
                             LocalContext.current,
-                            newResourceUri(R.drawable.image_hor_small)
+                            newResourceUri(photo.resId)
                         ) {
                             placeholder(R.drawable.im_placeholder)
-                            // SketchAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                            resizeSize(10000, 10000)
+                            resize(targetSize.width.toInt(), targetSize.height.toInt(), EXACTLY)
                         },
                         contentDescription = "",
                         modifier = Modifier
-                            .size(110.dp)
+                            .size(viewSize)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
                         contentScale = ContentScale.None,
@@ -170,19 +179,25 @@ fun SketchAsyncImageAlignmentSamplePreview() {
 
 @Composable
 fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
-    val hor = R.drawable.image_hor to "横向图片"
-    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
-    val ver = R.drawable.image_ver to "纵向图片"
-    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
-    val items = listOf(
-        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
-        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
-    )
+    val items = remember {
+        val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
+        val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
+        val verBig = PhotoItem(verPhoto, "纵向图片 - 大", true)
+        val verSmall = PhotoItem(verPhoto, "纵向图片 - 小", false)
+        listOf(
+            ContentScaleItem(ContentScale.Fit, "Fit", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.Crop, "Crop", listOf(horBig, verBig)),
+            ContentScaleItem(
+                ContentScale.Inside,
+                "Inside",
+                listOf(horBig, verBig, horSmall, verSmall)
+            ),
+            ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
+        )
+    }
     ExpandableItem(title = "SketchAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
@@ -198,24 +213,31 @@ fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                        items.sampleResList.forEach { res ->
+                        items.sampleResList.forEach { photoItem ->
                             Column {
                                 Text(
-                                    text = res.second,
+                                    text = photoItem.name,
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
                                 )
+                                val viewSize = 110.dp
+                                val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                                val targetSize = photoItem.photo
+                                    .calculateTargetSize(viewSizePx.toInt(), photoItem.big)
                                 SketchAsyncImage(
                                     request = DisplayRequest(
                                         LocalContext.current,
-                                        newResourceUri(res.first)
+                                        newResourceUri(photoItem.photo.resId)
                                     ) {
                                         placeholder(R.drawable.im_placeholder)
-                                        // SketchAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                                        resizeSize(10000, 10000)
+                                        resize(
+                                            targetSize.width.toInt(),
+                                            targetSize.height.toInt(),
+                                            EXACTLY
+                                        )
                                     },
                                     contentDescription = "",
                                     modifier = Modifier
-                                        .size(110.dp)
+                                        .size(viewSize)
                                         .background(Color.Red.copy(alpha = 0.5f))
                                         .padding(2.dp),
                                     contentScale = items.contentScale,
@@ -354,20 +376,6 @@ fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            val rainbowColorsBrush = remember {
-                Brush.sweepGradient(
-                    listOf(
-                        Color(0xFF9575CD),
-                        Color(0xFFBA68C8),
-                        Color(0xFFE57373),
-                        Color(0xFFFFB74D),
-                        Color(0xFFFFF176),
-                        Color(0xFFAED581),
-                        Color(0xFF4DD0E1),
-                        Color(0xFF9575CD)
-                    )
-                )
-            }
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
@@ -408,16 +416,10 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                     },
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                    colorFilter = blackWhiteColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
-            val colorMatrix = floatArrayOf(
-                -1f, 0f, 0f, 0f, 255f,
-                0f, -1f, 0f, 0f, 255f,
-                0f, 0f, -1f, 0f, 255f,
-                0f, 0f, 0f, 1f, 0f
-            )
             Column {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 SketchAsyncImage(
@@ -429,20 +431,12 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                     },
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix))
+                    colorFilter = inversionOfNegativeColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
             Column {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
-                val contrast = 2f // 0f..10f (1 should be default)
-                val brightness = -180f // -255f..255f (0 should be default)
-                val colorMatrix1 = floatArrayOf(
-                    contrast, 0f, 0f, 0f, brightness,
-                    0f, contrast, 0f, 0f, brightness,
-                    0f, 0f, contrast, 0f, brightness,
-                    0f, 0f, 0f, 1f, 0f
-                )
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
@@ -452,7 +446,7 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                     },
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix1))
+                    colorFilter = newColorFilterByContrastAndBrightness()
                 )
             }
         }

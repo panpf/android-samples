@@ -49,6 +49,7 @@ leakcanary = "2.9.1"
 okhttp3 = "3.12.0"   # 3.12.9 是最后一个支持 Android 5.0 以下的版本
 retrofit2 = "2.6.4"
 retrofit2-kotlinxSerializationConverter = "0.8.0"
+coil = "2.2.2"
 
 [libraries]
 
@@ -107,6 +108,7 @@ okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
 okhttp3-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 retrofit2-kotlinxSerializationConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinxSerializationConverter" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 [bundles]
 androidx-compose = [
@@ -116,6 +118,7 @@ androidx-compose = [
     "androidx-compose-material3",
     "google-accompanist-flowlayout",
     "panpf-sketch3-compose",
+    "coil-compose",
 ]
 androidx-compose-debug = [
     "androidx-compose-ui-tooling",

@@ -7,8 +7,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -23,22 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
@@ -105,11 +94,8 @@ fun ImageVectorSamplePreview() {
 fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val imageBitmap = remember {
-        (ResourcesCompat.getDrawable(
-            context.resources,
-            R.drawable.image_hor_small,
-            null
-        ) as BitmapDrawable).bitmap.asImageBitmap()
+        ResourcesCompat.getDrawable(context.resources, R.drawable.image_hor_small, null)
+            .let { it as BitmapDrawable }.bitmap.asImageBitmap()
     }
     ExpandableItem(title = "Image（Bitmap）", allExpandFlow, padding = 20.dp) {
         Image(
@@ -129,6 +115,10 @@ fun ImageBitmapSamplePreview() {
 
 @Composable
 fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    val horSmall = remember {
+        PhotoItem(horPhoto, "横向图片 - 小", false)
+    }
     ExpandableItem(title = "Image（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -147,12 +137,14 @@ fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         text = alignment.second,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
+                    val viewSize = 110.dp
+                    val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                    val bitmap = horSmall.getBitmap(context, viewSizePx.toInt())
                     Image(
-                        painter = painterResource(id = R.drawable.image_hor_small),
+                        bitmap = bitmap.asImageBitmap(),
                         contentDescription = "",
                         modifier = Modifier
-                            .fillMaxWidth(0.3f)
-                            .aspectRatio(1f)
+                            .size(viewSize)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
                         contentScale = ContentScale.None,
@@ -170,27 +162,29 @@ fun ImageAlignmentSamplePreview() {
     ImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
-data class ContentScaleItem(
-    val contentScale: ContentScale,
-    val name: String,
-    val sampleResList: List<Pair<Int, String>>
-)
 
 @Composable
 fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
-    val hor = R.drawable.image_hor to "横向图片"
-    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
-    val ver = R.drawable.image_ver to "纵向图片"
-    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
-    val items = listOf(
-        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
-        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
-    )
+    val context = LocalContext.current
+    val items = remember {
+        val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
+        val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
+        val verBig = PhotoItem(verPhoto, "纵向图片 - 大", true)
+        val verSmall = PhotoItem(verPhoto, "纵向图片 - 小", false)
+        listOf(
+            ContentScaleItem(ContentScale.Fit, "Fit", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.Crop, "Crop", listOf(horBig, verBig)),
+            ContentScaleItem(
+                ContentScale.Inside,
+                "Inside",
+                listOf(horBig, verBig, horSmall, verSmall)
+            ),
+            ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
+        )
+    }
     ExpandableItem(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
@@ -206,17 +200,20 @@ fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                        items.sampleResList.forEach { res ->
+                        items.sampleResList.forEach { photoItem ->
                             Column {
                                 Text(
-                                    text = res.second,
+                                    text = photoItem.name,
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
                                 )
+                                val viewSize = 110.dp
+                                val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                                val bitmap = photoItem.getBitmap(context, viewSizePx.toInt())
                                 Image(
-                                    painter = painterResource(id = res.first),
+                                    bitmap = bitmap.asImageBitmap(),
                                     contentDescription = "",
                                     modifier = Modifier
-                                        .size(110.dp)
+                                        .size(viewSize)
                                         .background(Color.Red.copy(alpha = 0.5f))
                                         .padding(2.dp),
                                     contentScale = items.contentScale,
@@ -300,27 +297,6 @@ fun ImageClipSamplePreview() {
     ImageClipSample(remember { MutableStateFlow(true) })
 }
 
-class SquashedOval : Shape {
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        val path = Path().apply {
-            // We create an Oval that starts at ¼ of the width, and ends at ¾ of the width of the container.
-            addOval(
-                Rect(
-                    left = size.width / 4f,
-                    top = 0f,
-                    right = size.width * 3 / 4f,
-                    bottom = size.height
-                )
-            )
-        }
-        return Outline.Generic(path = path)
-    }
-}
-
 
 @Composable
 fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
@@ -349,20 +325,6 @@ fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            val rainbowColorsBrush = remember {
-                Brush.sweepGradient(
-                    listOf(
-                        Color(0xFF9575CD),
-                        Color(0xFFBA68C8),
-                        Color(0xFFE57373),
-                        Color(0xFFFFB74D),
-                        Color(0xFFFFF176),
-                        Color(0xFFAED581),
-                        Color(0xFF4DD0E1),
-                        Color(0xFF9575CD)
-                    )
-                )
-            }
             Image(
                 painter = painterResource(id = R.drawable.image_hor),
                 contentDescription = "",
@@ -393,41 +355,27 @@ fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                     painter = painterResource(id = R.drawable.image_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                    colorFilter = blackWhiteColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
-            val colorMatrix = floatArrayOf(
-                -1f, 0f, 0f, 0f, 255f,
-                0f, -1f, 0f, 0f, 255f,
-                0f, 0f, -1f, 0f, 255f,
-                0f, 0f, 0f, 1f, 0f
-            )
             Column {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 Image(
                     painter = painterResource(id = R.drawable.image_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix))
+                    colorFilter = inversionOfNegativeColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
             Column {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
-                val contrast = 2f // 0f..10f (1 should be default)
-                val brightness = -180f // -255f..255f (0 should be default)
-                val colorMatrix1 = floatArrayOf(
-                    contrast, 0f, 0f, 0f, brightness,
-                    0f, contrast, 0f, 0f, brightness,
-                    0f, 0f, contrast, 0f, brightness,
-                    0f, 0f, 0f, 1f, 0f
-                )
                 Image(
                     painter = painterResource(id = R.drawable.image_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix1))
+                    colorFilter = newColorFilterByContrastAndBrightness()
                 )
             }
         }

@@ -68,5 +68,4 @@ dependencies {
     implementation(libs.panpf.tools4k)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
-    implementation("io.coil-kt:coil-compose:2.2.2")
 }

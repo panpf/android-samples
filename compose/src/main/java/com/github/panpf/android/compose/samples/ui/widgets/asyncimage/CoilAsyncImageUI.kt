@@ -22,19 +22,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.size.Precision.EXACT
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.widgets.image.ContentScaleItem
+import com.github.panpf.android.compose.samples.ui.widgets.image.PhotoItem
 import com.github.panpf.android.compose.samples.ui.widgets.image.SquashedOval
+import com.github.panpf.android.compose.samples.ui.widgets.image.blackWhiteColorFilter
+import com.github.panpf.android.compose.samples.ui.widgets.image.horPhoto
+import com.github.panpf.android.compose.samples.ui.widgets.image.inversionOfNegativeColorFilter
+import com.github.panpf.android.compose.samples.ui.widgets.image.newColorFilterByContrastAndBrightness
+import com.github.panpf.android.compose.samples.ui.widgets.image.rainbowColorsBrush
+import com.github.panpf.android.compose.samples.ui.widgets.image.verPhoto
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -125,6 +131,7 @@ fun CoilAsyncImageHttpSamplePreview() {
 @Composable
 fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
+    val photo = horPhoto
     ExpandableItem(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -143,12 +150,15 @@ fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         text = alignment.second,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
+                    val viewSize = 110.dp
+                    val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                    val targetSize = photo.calculateTargetSize(viewSizePx.toInt(), false)
                     CoilAsyncImage(
                         model = CoilImageRequest.Builder(context)
-                            .data(context.newCoilResourceUri(R.drawable.image_hor_small))
+                            .data(context.newCoilResourceUri(photo.resId))
                             .placeholder(R.drawable.im_placeholder)
-                            // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                            .size(10000, 10000)
+                            .size(targetSize.width.toInt(), targetSize.height.toInt())
+                            .precision(EXACT)
                             .build(),
                         contentDescription = "",
                         modifier = Modifier
@@ -174,19 +184,25 @@ fun CoilAsyncImageAlignmentSamplePreview() {
 @Composable
 fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    val hor = R.drawable.image_hor to "横向图片"
-    val horSmall = R.drawable.image_hor_small to "横向图片 - 小"
-    val ver = R.drawable.image_ver to "纵向图片"
-    val verSmall = R.drawable.image_ver_small to "纵向图片 - 小"
-    val items = listOf(
-        ContentScaleItem(ContentScale.Fit, "Fit", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Crop, "Crop", listOf(hor, ver)),
-        ContentScaleItem(ContentScale.Inside, "Inside", listOf(hor, ver, horSmall, verSmall)),
-        ContentScaleItem(ContentScale.None, "None", listOf(hor, ver, horSmall, verSmall)),
-    )
+    val items = remember {
+        val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
+        val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
+        val verBig = PhotoItem(verPhoto, "纵向图片 - 大", true)
+        val verSmall = PhotoItem(verPhoto, "纵向图片 - 小", false)
+        listOf(
+            ContentScaleItem(ContentScale.Fit, "Fit", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(horBig, verBig)),
+            ContentScaleItem(ContentScale.Crop, "Crop", listOf(horBig, verBig)),
+            ContentScaleItem(
+                ContentScale.Inside,
+                "Inside",
+                listOf(horBig, verBig, horSmall, verSmall)
+            ),
+            ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
+        )
+    }
     ExpandableItem(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
@@ -202,18 +218,22 @@ fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                        items.sampleResList.forEach { res ->
+                        items.sampleResList.forEach { photoItem ->
                             Column {
                                 Text(
-                                    text = res.second,
+                                    text = photoItem.name,
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
                                 )
+                                val viewSize = 110.dp
+                                val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                                val targetSize = photoItem.photo
+                                    .calculateTargetSize(viewSizePx.toInt(), photoItem.big)
                                 CoilAsyncImage(
                                     model = CoilImageRequest.Builder(context)
-                                        .data(context.newCoilResourceUri(res.first))
+                                        .data(context.newCoilResourceUri(photoItem.photo.resId))
                                         .placeholder(R.drawable.im_placeholder)
-                                        // CoilAsyncImage 默认会根据 SketchAsyncImage 的大小调整图片尺寸，主动将 resize 设置为很大的值可以避免缩小图片
-                                        .size(10000, 10000)
+                                        .size(targetSize.width.toInt(), targetSize.height.toInt())
+                                        .precision(EXACT)
                                         .build(),
                                     contentDescription = "",
                                     modifier = Modifier
@@ -350,20 +370,6 @@ fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            val rainbowColorsBrush = remember {
-                Brush.sweepGradient(
-                    listOf(
-                        Color(0xFF9575CD),
-                        Color(0xFFBA68C8),
-                        Color(0xFFE57373),
-                        Color(0xFFFFB74D),
-                        Color(0xFFFFF176),
-                        Color(0xFFAED581),
-                        Color(0xFF4DD0E1),
-                        Color(0xFF9575CD)
-                    )
-                )
-            }
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
                     .data(context.newCoilResourceUri(R.drawable.image_hor))
@@ -401,16 +407,10 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                         .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                    colorFilter = blackWhiteColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
-            val colorMatrix = floatArrayOf(
-                -1f, 0f, 0f, 0f, 255f,
-                0f, -1f, 0f, 0f, 255f,
-                0f, 0f, -1f, 0f, 255f,
-                0f, 0f, 0f, 1f, 0f
-            )
             Column {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 CoilAsyncImage(
@@ -420,20 +420,12 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                         .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix))
+                    colorFilter = inversionOfNegativeColorFilter
                 )
             }
             Spacer(modifier = Modifier.size(10.dp))
             Column {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
-                val contrast = 2f // 0f..10f (1 should be default)
-                val brightness = -180f // -255f..255f (0 should be default)
-                val colorMatrix1 = floatArrayOf(
-                    contrast, 0f, 0f, 0f, brightness,
-                    0f, contrast, 0f, 0f, brightness,
-                    0f, 0f, contrast, 0f, brightness,
-                    0f, 0f, 0f, 1f, 0f
-                )
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
                         .data(context.newCoilResourceUri(R.drawable.image_hor))
@@ -441,7 +433,7 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                         .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix1))
+                    colorFilter = newColorFilterByContrastAndBrightness()
                 )
             }
         }
@@ -507,6 +499,6 @@ private fun Context.newCoilResourceUri(@DrawableRes id: Int): Uri {
     return Uri.parse("android.resource://${packageName}/${id}")
 }
 
-private fun newCoilAssetUri(path: String): Uri {
+private fun newCoilAssetUri(@Suppress("SameParameterValue") path: String): Uri {
     return Uri.parse("file://filled/android_asset/$path")
 }
