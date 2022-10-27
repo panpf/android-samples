@@ -5,7 +5,6 @@ import com.github.panpf.sketch.cache.MemoryCache as SketchMemoryCache
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import coil.util.DebugLogger
 import com.github.panpf.sketch.Sketch
 import com.github.panpf.sketch.SketchFactory
 import com.github.panpf.sketch.util.Logger
@@ -16,7 +15,7 @@ class MyApplication : Application(), SketchFactory, ImageLoaderFactory {
         return Sketch.Builder(this)
             // 因为集成了多个图片加载框架，如果都开启内存缓存的话内存占用会很高
             .memoryCache(EmptySketchMemoryCache())
-            .logger(Logger(Logger.Level.DEBUG))
+//            .logger(Logger(Logger.Level.DEBUG))
             .build()
     }
 
@@ -24,7 +23,7 @@ class MyApplication : Application(), SketchFactory, ImageLoaderFactory {
         return ImageLoader.Builder(this)
             // 因为集成了多个图片加载框架，如果都开启内存缓存的话内存占用会很高
             .memoryCache(EmptyCoilMemoryCache())
-            .logger(DebugLogger())
+//            .logger(DebugLogger())
             .build()
     }
 

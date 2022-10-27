@@ -198,7 +198,9 @@ fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                 Row {
                     Text(
                         text = items.name,
-                        modifier = Modifier.size(80.dp),
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(top = 18.dp),
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
