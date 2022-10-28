@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
@@ -27,31 +28,28 @@ class LayoutsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Layouts"
         val links = listOf(
-            Link("Row"),
-            Link("Column"),
-            Link("Box"),
-            Link("Pager"),
-            Link("LazyRaw"),
-            Link("LazyColumn"),
-            Link("LazyList"),
-            Link("LazyGrid"),
-            Link("Constraint"),
-            Link("Card"),
-            Link("BottomAppBar"),
-            Link("Drawer"),
-            Link("Menu"),
-            Link("NavigationBar"),
-            Link("NavigationDrawer"),
-            Link("NavigationRail"),
-            Link("Scaffold"),
-            Link("Backdrop"),
-            Link("AppBar"),
-            Link("BottomNavigation"),
-            Link("DataTable"),
-            Link("Surface"),
-            Link("Tabs"),
-            Link("BottomSheet"),
-            Link("BottomSheet"),
+            Link("Row", R.id.action_layouts_rowFragment),
+            Link("Column", R.id.action_layouts_columnFragment),
+            Link("Box", R.id.action_layouts_boxFragment),
+            Link("Pager", R.id.action_layouts_pagerFragment),
+            Link("LazyRaw", R.id.action_layouts_lazyRawFragment),
+            Link("LazyColumn", R.id.action_layouts_lazyColumnFragment),
+            Link("LazyList", R.id.action_layouts_lazyListFragment),
+            Link("LazyGrid", R.id.action_layouts_lazyGridFragment),
+            Link("ConstraintLayout", R.id.action_layouts_constraintLayoutFragment),
+            Link("Card", R.id.action_layouts_cardFragment),
+            Link("Drawer", R.id.action_layouts_drawerFragment),
+            Link("NavigationBar", R.id.action_layouts_navigationBarFragment),
+            Link("NavigationDrawer", R.id.action_layouts_navigationDrawerFragment),
+            Link("NavigationRail", R.id.action_layouts_navigationRailFragment),
+            Link("Scaffold", R.id.action_layouts_scaffoldFragment),
+            Link("Backdrop", R.id.action_layouts_backdropFragment),
+            Link("AppBar", R.id.action_layouts_appBarFragment),
+            Link("BottomAppBar", R.id.action_layouts_bottomAppBarFragment),
+            Link("BottomNavigation", R.id.action_layouts_bottomNavigationFragment),
+            Link("Surface", R.id.action_layouts_surfaceFragment),
+            Link("TabRow", R.id.action_layouts_tabRowFragment),
+            Link("BottomSheet", R.id.action_layouts_bottomSheetFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

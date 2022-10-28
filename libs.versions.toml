@@ -119,6 +119,7 @@ androidx-compose = [
     "google-accompanist-flowlayout",
     "panpf-sketch3-compose",
     "coil-compose",
+    "androidx-constraintlayout-compose",
 ]
 androidx-compose-debug = [
     "androidx-compose-ui-tooling",
