@@ -58,7 +58,7 @@ fun ImageUI() {
 fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image_hor),
+            painter = painterResource(id = R.drawable.dog_hor),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
         )
@@ -94,7 +94,7 @@ fun ImageVectorSamplePreview() {
 fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val imageBitmap = remember {
-        ResourcesCompat.getDrawable(context.resources, R.drawable.image_hor_small, null)
+        ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)
             .let { it as BitmapDrawable }.bitmap.asImageBitmap()
     }
     ExpandableItem(title = "Image（Bitmap）", allExpandFlow, padding = 20.dp) {
@@ -238,7 +238,7 @@ fun ImageContentScaleSamplePreview() {
 fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
         Image(
-            painter = painterResource(id = R.drawable.image_hor),
+            painter = painterResource(id = R.drawable.dog_hor),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
             alpha = 0.5f
@@ -258,7 +258,7 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -269,7 +269,7 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -280,7 +280,7 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -303,7 +303,7 @@ fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Image（border）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -314,7 +314,7 @@ fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -326,7 +326,7 @@ fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.image_hor),
+                painter = painterResource(id = R.drawable.dog_hor),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -352,7 +352,7 @@ fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
                 Image(
-                    painter = painterResource(id = R.drawable.image_hor),
+                    painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = blackWhiteColorFilter
@@ -362,7 +362,7 @@ fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 Image(
-                    painter = painterResource(id = R.drawable.image_hor),
+                    painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = inversionOfNegativeColorFilter
@@ -372,7 +372,7 @@ fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
                 Image(
-                    painter = painterResource(id = R.drawable.image_hor),
+                    painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = newColorFilterByContrastAndBrightness()
@@ -397,7 +397,7 @@ fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
             Row {
                 Image(
-                    painter = painterResource(id = R.drawable.image_hor),
+                    painter = painterResource(id = R.drawable.dog_hor),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
                     modifier = Modifier
@@ -409,7 +409,7 @@ fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
                 )
                 Spacer(modifier = Modifier.size(10.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.image_hor),
+                    painter = painterResource(id = R.drawable.dog_hor),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
                     modifier = Modifier

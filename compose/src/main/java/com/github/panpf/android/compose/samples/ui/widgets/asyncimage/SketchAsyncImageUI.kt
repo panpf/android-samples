@@ -43,6 +43,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import com.github.panpf.sketch.compose.AsyncImage as SketchAsyncImage
+import com.github.panpf.android.compose.samples.ui.widgets.image.httpPhotoUrl
 
 @Composable
 fun SketchAsyncImageUI() {
@@ -65,7 +66,7 @@ fun SketchAsyncImageUI() {
 fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.image_hor)) {
+            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
                 placeholder(R.drawable.im_placeholder)
             },
             contentDescription = "",
@@ -85,7 +86,7 @@ fun SketchAsyncImageResourceSamplePreview() {
 fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            request = DisplayRequest(LocalContext.current, newAssetUri("image3.jpg")) {
+            request = DisplayRequest(LocalContext.current, newAssetUri("dog.jpg")) {
                 placeholder(R.drawable.im_placeholder)
             },
             contentDescription = "",
@@ -105,10 +106,7 @@ fun SketchAsyncImageAssetSamplePreview() {
 fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            request = DisplayRequest(
-                LocalContext.current,
-                "https://images.unsplash.com/photo-1431440869543-efaf3388c585?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=8b00971a3e4a84fb43403797126d1991%22"
-            ) {
+            request = DisplayRequest(LocalContext.current, httpPhotoUrl) {
                 placeholder(R.drawable.im_placeholder)
             },
             contentDescription = "",
@@ -262,7 +260,7 @@ fun SketchAsyncImageContentScaleSamplePreview() {
 fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "SketchAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         SketchAsyncImage(
-            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.image_hor)) {
+            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
                 placeholder(R.drawable.im_placeholder)
             },
             contentDescription = "",
@@ -286,7 +284,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -302,7 +300,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -318,7 +316,7 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -346,7 +344,7 @@ fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -362,7 +360,7 @@ fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -379,7 +377,7 @@ fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             SketchAsyncImage(
                 request = DisplayRequest(
                     LocalContext.current,
-                    newResourceUri(R.drawable.image_hor)
+                    newResourceUri(R.drawable.dog_hor)
                 ) {
                     placeholder(R.drawable.im_placeholder)
                 },
@@ -410,7 +408,7 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
-                        newResourceUri(R.drawable.image_hor)
+                        newResourceUri(R.drawable.dog_hor)
                     ) {
                         placeholder(R.drawable.im_placeholder)
                     },
@@ -425,7 +423,7 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
-                        newResourceUri(R.drawable.image_hor)
+                        newResourceUri(R.drawable.dog_hor)
                     ) {
                         placeholder(R.drawable.im_placeholder)
                     },
@@ -440,7 +438,7 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
-                        newResourceUri(R.drawable.image_hor)
+                        newResourceUri(R.drawable.dog_hor)
                     ) {
                         placeholder(R.drawable.im_placeholder)
                     },
@@ -470,7 +468,7 @@ fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
-                        newResourceUri(R.drawable.image_hor)
+                        newResourceUri(R.drawable.dog_hor)
                     ) {
                         placeholder(R.drawable.im_placeholder)
                     },
@@ -487,7 +485,7 @@ fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
                 SketchAsyncImage(
                     request = DisplayRequest(
                         LocalContext.current,
-                        newResourceUri(R.drawable.image_hor)
+                        newResourceUri(R.drawable.dog_hor)
                     ) {
                         placeholder(R.drawable.im_placeholder)
                     },

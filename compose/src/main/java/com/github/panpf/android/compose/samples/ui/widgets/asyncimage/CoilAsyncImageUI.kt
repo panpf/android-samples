@@ -37,6 +37,7 @@ import com.github.panpf.android.compose.samples.ui.widgets.image.PhotoItem
 import com.github.panpf.android.compose.samples.ui.widgets.image.SquashedOval
 import com.github.panpf.android.compose.samples.ui.widgets.image.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.widgets.image.horPhoto
+import com.github.panpf.android.compose.samples.ui.widgets.image.httpPhotoUrl
 import com.github.panpf.android.compose.samples.ui.widgets.image.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.widgets.image.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.widgets.image.rainbowColorsBrush
@@ -68,7 +69,7 @@ fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image_hor))
+                .data(context.newCoilResourceUri(R.drawable.dog_hor))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -90,7 +91,7 @@ fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(newCoilAssetUri("image3.jpg"))
+                .data(newCoilAssetUri("dog.jpg"))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -112,7 +113,7 @@ fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data("https://images.unsplash.com/photo-1431440869543-efaf3388c585?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=8b00971a3e4a84fb43403797126d1991%22")
+                .data(httpPhotoUrl)
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -264,7 +265,7 @@ fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CoilAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         CoilAsyncImage(
             model = CoilImageRequest.Builder(context)
-                .data(context.newCoilResourceUri(R.drawable.image_hor))
+                .data(context.newCoilResourceUri(R.drawable.dog_hor))
                 .placeholder(R.drawable.im_placeholder)
                 .build(),
             contentDescription = "",
@@ -288,7 +289,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
         Row {
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -302,7 +303,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -316,7 +317,7 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -343,7 +344,7 @@ fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
         Row {
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -357,7 +358,7 @@ fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -372,7 +373,7 @@ fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
             CoilAsyncImage(
                 model = CoilImageRequest.Builder(context)
-                    .data(context.newCoilResourceUri(R.drawable.image_hor))
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
                     .placeholder(R.drawable.im_placeholder)
                     .build(),
                 contentDescription = "",
@@ -402,7 +403,7 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
-                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
                         .placeholder(R.drawable.im_placeholder)
                         .build(),
                     contentDescription = "",
@@ -415,7 +416,7 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
-                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
                         .placeholder(R.drawable.im_placeholder)
                         .build(),
                     contentDescription = "",
@@ -428,7 +429,7 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
-                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
                         .placeholder(R.drawable.im_placeholder)
                         .build(),
                     contentDescription = "",
@@ -457,7 +458,7 @@ fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
             Row {
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
-                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
                         .placeholder(R.drawable.im_placeholder)
                         .build(),
                     contentScale = ContentScale.Crop,
@@ -472,7 +473,7 @@ fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
                 Spacer(modifier = Modifier.size(10.dp))
                 CoilAsyncImage(
                     model = CoilImageRequest.Builder(context)
-                        .data(context.newCoilResourceUri(R.drawable.image_hor))
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
                         .placeholder(R.drawable.im_placeholder)
                         .build(),
                     contentScale = ContentScale.Crop,
