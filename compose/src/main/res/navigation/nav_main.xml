@@ -70,15 +70,15 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_sketchAsyncImageFragment"
-            app:destination="@id/sketchAsyncImageFragment"
+            android:id="@+id/action_widgets_asyncImageSketchFragment"
+            app:destination="@id/asyncImageSketchFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_coilAsyncImageFragment"
-            app:destination="@id/coilAsyncImageFragment"
+            android:id="@+id/action_widgets_asyncImageCoilFragment"
+            app:destination="@id/asyncImageCoilFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -168,77 +168,77 @@
 
     <fragment
         android:id="@+id/textFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.text.TextFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.TextFragment" />
 
     <fragment
         android:id="@+id/buttonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.button.ButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.ButtonFragment" />
 
     <fragment
         android:id="@+id/iconButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.iconbutton.IconButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconButtonFragment" />
 
     <fragment
         android:id="@+id/iconToggleButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.icontogglebutton.IconToggleButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconToggleButtonFragment" />
 
     <fragment
         android:id="@+id/floatingActionButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.floatingactionbutton.FloatingActionButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.FloatingActionButtonFragment" />
 
     <fragment
         android:id="@+id/textFieldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.textfield.TextFieldFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.TextFieldFragment" />
 
     <fragment
-        android:id="@+id/sketchAsyncImageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.SketchAsyncImageFragment" />
+        android:id="@+id/asyncImageSketchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.AsyncImageSketchFragment" />
 
     <fragment
-        android:id="@+id/coilAsyncImageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.asyncimage.CoilAsyncImageFragment" />
+        android:id="@+id/asyncImageCoilFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.AsyncImageCoilFragment" />
 
     <fragment
         android:id="@+id/checkboxFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.checkbox.CheckboxFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.CheckboxFragment" />
 
     <fragment
         android:id="@+id/iconFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.icon.IconFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconFragment" />
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.image.ImageFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.ImageFragment" />
 
     <fragment
         android:id="@+id/radioButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.radiobutton.RadioButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.RadioButtonFragment" />
 
     <fragment
         android:id="@+id/sliderFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.slider.SliderFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.SliderFragment" />
 
     <fragment
         android:id="@+id/switchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.switch.SwitchFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.SwitchFragment" />
 
     <fragment
         android:id="@+id/badgeFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.badge.BadgeFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.BadgeFragment" />
 
     <fragment
         android:id="@+id/chipFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.chip.ChipFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.ChipFragment" />
 
     <fragment
         android:id="@+id/dividerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.divider.DividerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.DividerFragment" />
 
     <fragment
         android:id="@+id/progressIndicatorFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.progressindicator.ProgressIndicatorFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.ProgressIndicatorFragment" />
 
     <fragment
         android:id="@+id/snackbarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.snackbar.SnackbarFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.SnackbarFragment" />
 </navigation>
