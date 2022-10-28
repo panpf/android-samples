@@ -44,23 +44,18 @@ class SnackbarFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SnackbarUI()
+                        ExpandableLayout { allExpandFlow ->
+                            SnackbarSample(allExpandFlow)
+                            SnackbarActionSample(allExpandFlow)
+                            SnackbarActionOnNewLineSample(allExpandFlow)
+                            SnackbarShapeSample(allExpandFlow)
+                            SnackbarContainerColorSample(allExpandFlow)
+                            SnackbarContentColorSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SnackbarUI() {
-    ExpandableLayout { allExpandFlow ->
-        SnackbarSample(allExpandFlow)
-        SnackbarActionSample(allExpandFlow)
-        SnackbarActionOnNewLineSample(allExpandFlow)
-        SnackbarShapeSample(allExpandFlow)
-        SnackbarContainerColorSample(allExpandFlow)
-        SnackbarContentColorSample(allExpandFlow)
     }
 }
 

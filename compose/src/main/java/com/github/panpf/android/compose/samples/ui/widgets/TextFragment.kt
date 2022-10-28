@@ -66,7 +66,40 @@ class TextFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        TextUI()
+                        ExpandableLayout { allExpandFlow ->
+                            DefaultTextSample(allExpandFlow)
+                            ColorTextSample(allExpandFlow)
+                            FontSizeTextSample(allExpandFlow)
+                            FontStyleSample(allExpandFlow)
+                            FontWeightTextSample(allExpandFlow)
+                            FontFamilyTextSample(allExpandFlow)
+                            LetterSpacingTextSample(allExpandFlow)
+                            TextDecorationUnderlineTextSample(allExpandFlow)
+                            TextDecorationLineThroughTextSample(allExpandFlow)
+                            TextAlignStartTextSample(allExpandFlow)
+                            TextAlignCenterTextSample(allExpandFlow)
+                            TextAlignEndTextSample(allExpandFlow)
+                            TextAlignJustifyTextSample(allExpandFlow)
+                            LineHeightTextSample(allExpandFlow)
+                            OverflowEllipsisTextSample(allExpandFlow)
+                            OverflowClipTextSample(allExpandFlow)
+                            OverflowVisibleTextSample(allExpandFlow)
+                            SoftWrapTextSample(allExpandFlow)
+                            MaxLinesTextSample(allExpandFlow)
+                            BaselineShiftTextSample(allExpandFlow)
+                            TextGeometricTransformTextSample(allExpandFlow)
+                            BackgroundTextSample(allExpandFlow)
+                            ShadowTextSample(allExpandFlow)
+                            TextDirectionTextSample(allExpandFlow)
+                            TextIndentTextSample(allExpandFlow)
+                            AnnotatedStringTextSample(allExpandFlow)
+                            ClickableAnnotatedStringTextSample(allExpandFlow)
+                            SelectionTextSample(allExpandFlow)
+                            // todo TextStyle(fontSynthesis:FontSynthesis)
+                            // todo TextStyle(fontFeatureSettings:String)
+                            // todo 自定义字体
+                            // todo 可下载字体
+                        }
                     }
                 }
             }
@@ -80,44 +113,6 @@ private const val words = "《盗墓笔记》"
 private const val words1 = "http://www.daomubiji.com/yun-ding-tian-gong-15.html"
 private val wordsIndex = text.indexOf(words).apply { require(this != -1) }
 private val words1Index = text.indexOf(words1).apply { require(this != -1 && this > wordsIndex) }
-
-@Composable
-fun TextUI() {
-    ExpandableLayout { allExpandFlow ->
-        DefaultTextSample(allExpandFlow)
-        ColorTextSample(allExpandFlow)
-        FontSizeTextSample(allExpandFlow)
-        FontStyleSample(allExpandFlow)
-        FontWeightTextSample(allExpandFlow)
-        FontFamilyTextSample(allExpandFlow)
-        LetterSpacingTextSample(allExpandFlow)
-        TextDecorationUnderlineTextSample(allExpandFlow)
-        TextDecorationLineThroughTextSample(allExpandFlow)
-        TextAlignStartTextSample(allExpandFlow)
-        TextAlignCenterTextSample(allExpandFlow)
-        TextAlignEndTextSample(allExpandFlow)
-        TextAlignJustifyTextSample(allExpandFlow)
-        LineHeightTextSample(allExpandFlow)
-        OverflowEllipsisTextSample(allExpandFlow)
-        OverflowClipTextSample(allExpandFlow)
-        OverflowVisibleTextSample(allExpandFlow)
-        SoftWrapTextSample(allExpandFlow)
-        MaxLinesTextSample(allExpandFlow)
-        BaselineShiftTextSample(allExpandFlow)
-        TextGeometricTransformTextSample(allExpandFlow)
-        BackgroundTextSample(allExpandFlow)
-        ShadowTextSample(allExpandFlow)
-        TextDirectionTextSample(allExpandFlow)
-        TextIndentTextSample(allExpandFlow)
-        AnnotatedStringTextSample(allExpandFlow)
-        ClickableAnnotatedStringTextSample(allExpandFlow)
-        SelectionTextSample(allExpandFlow)
-        // todo TextStyle(fontSynthesis:FontSynthesis)
-        // todo TextStyle(fontFeatureSettings:String)
-        // todo 自定义字体
-        // todo 可下载字体
-    }
-}
 
 //@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 //@Composable

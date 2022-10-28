@@ -58,37 +58,26 @@ class ButtonFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        ButtonUI()
+                        ExpandableLayout { allExpandFlow ->
+                            ButtonContentTextSample(allExpandFlow)
+                            ButtonContentImageSample(allExpandFlow)
+                            ButtonDisabledSample(allExpandFlow)
+                            ButtonShapeSample(allExpandFlow)
+                            ButtonColorSample(allExpandFlow)
+                            ButtonElevationSample(allExpandFlow)
+                            ButtonBorderSample(allExpandFlow)
+                            ButtonContentPaddingSample(allExpandFlow)
+                            ElevatedButtonSample(allExpandFlow)
+                            FilledTonalButtonSample(allExpandFlow)
+                            OutlinedButtonSample(allExpandFlow)
+                            TextButtonSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
     }
 }
-
-@Composable
-fun ButtonUI() {
-    ExpandableLayout { allExpandFlow ->
-        ButtonContentTextSample(allExpandFlow)
-        ButtonContentImageSample(allExpandFlow)
-        ButtonDisabledSample(allExpandFlow)
-        ButtonShapeSample(allExpandFlow)
-        ButtonColorSample(allExpandFlow)
-        ButtonElevationSample(allExpandFlow)
-        ButtonBorderSample(allExpandFlow)
-        ButtonContentPaddingSample(allExpandFlow)
-        ElevatedButtonSample(allExpandFlow)
-        FilledTonalButtonSample(allExpandFlow)
-        OutlinedButtonSample(allExpandFlow)
-        TextButtonSample(allExpandFlow)
-    }
-}
-
-//@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-//@Composable
-//fun ButtonUIPreview() {
-//    ButtonUI()
-//}
 
 @Composable
 fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {

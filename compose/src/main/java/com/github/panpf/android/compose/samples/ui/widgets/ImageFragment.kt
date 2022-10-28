@@ -64,27 +64,22 @@ class ImageFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        ImageUI()
+                        ExpandableLayout { allExpandFlow ->
+                            ImageResourceSample(allExpandFlow)
+                            ImageVectorSample(allExpandFlow)
+                            ImageBitmapSample(allExpandFlow)
+                            ImageAlignmentSample(allExpandFlow)
+                            ImageContentScaleSample(allExpandFlow)
+                            ImageAlphaSample(allExpandFlow)
+                            ImageClipSample(allExpandFlow)
+                            ImageBorderSample(allExpandFlow)
+                            ImageColorFilterSample(allExpandFlow)
+                            ImageBlurSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ImageUI() {
-    ExpandableLayout { allExpandFlow ->
-        ImageResourceSample(allExpandFlow)
-        ImageVectorSample(allExpandFlow)
-        ImageBitmapSample(allExpandFlow)
-        ImageAlignmentSample(allExpandFlow)
-        ImageContentScaleSample(allExpandFlow)
-        ImageAlphaSample(allExpandFlow)
-        ImageClipSample(allExpandFlow)
-        ImageBorderSample(allExpandFlow)
-        ImageColorFilterSample(allExpandFlow)
-        ImageBlurSample(allExpandFlow)
     }
 }
 

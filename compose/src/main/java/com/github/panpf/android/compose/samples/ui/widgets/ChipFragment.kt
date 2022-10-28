@@ -57,26 +57,21 @@ class ChipFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        ChipUI()
+                        ExpandableLayout { allExpandFlow ->
+                            AssistChipSample(allExpandFlow)
+                            AssistChipShapeSample(allExpandFlow)
+                            ElevatedAssistChipSample(allExpandFlow)
+                            FilterChipSample(allExpandFlow)
+                            ElevatedFilterChipSample(allExpandFlow)
+                            InputChipSample(allExpandFlow)
+                    //        InputChipTextFieldSample(allExpandFlow)
+                            SuggestionChipSample(allExpandFlow)
+                            ElevatedSuggestionChipSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ChipUI() {
-    ExpandableLayout { allExpandFlow ->
-        AssistChipSample(allExpandFlow)
-        AssistChipShapeSample(allExpandFlow)
-        ElevatedAssistChipSample(allExpandFlow)
-        FilterChipSample(allExpandFlow)
-        ElevatedFilterChipSample(allExpandFlow)
-        InputChipSample(allExpandFlow)
-//        InputChipTextFieldSample(allExpandFlow)
-        SuggestionChipSample(allExpandFlow)
-        ElevatedSuggestionChipSample(allExpandFlow)
     }
 }
 

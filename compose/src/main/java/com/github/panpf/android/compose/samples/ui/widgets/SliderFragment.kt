@@ -53,24 +53,19 @@ class SliderFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SliderUI()
+                        ExpandableLayout { allExpandFlow ->
+                            SliderSample(allExpandFlow)
+                            SliderValueSample(allExpandFlow)
+                            SliderEnabledFalseSample(allExpandFlow)
+                            SliderValueRangeSample(allExpandFlow)
+                            SliderStepsSample(allExpandFlow)
+                            SliderColorsSample(allExpandFlow)
+                            RangeSliderSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SliderUI() {
-    ExpandableLayout { allExpandFlow ->
-        SliderSample(allExpandFlow)
-        SliderValueSample(allExpandFlow)
-        SliderEnabledFalseSample(allExpandFlow)
-        SliderValueRangeSample(allExpandFlow)
-        SliderStepsSample(allExpandFlow)
-        SliderColorsSample(allExpandFlow)
-        RangeSliderSample(allExpandFlow)
     }
 }
 

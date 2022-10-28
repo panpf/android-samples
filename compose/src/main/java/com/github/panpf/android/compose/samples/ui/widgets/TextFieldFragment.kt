@@ -58,7 +58,33 @@ class TextFieldFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        TextFieldUI()
+                        ExpandableLayout { allExpandFlow ->
+                            TextFieldSample(allExpandFlow)
+                            TextFieldDefaultValueSample(allExpandFlow)
+                            TextFieldEnabledFalseSample(allExpandFlow)
+                            TextFieldReadOnlySample(allExpandFlow)
+                            TextFieldTextStyleColorSample(allExpandFlow)
+                            TextFieldLabelSample(allExpandFlow)
+                            TextFieldPlaceholderSample(allExpandFlow)
+                            TextFieldLeadingIconSample(allExpandFlow)
+                            TextFieldTrailingIconSample(allExpandFlow)
+                            TextFieldIsErrorSample(allExpandFlow)
+                            TextFieldVisualTransformationSample(allExpandFlow)
+                            TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow)
+                            TextFieldKeyboardOptionsImeActionSample(allExpandFlow)
+                            TextFieldKeyboardActionsSample(allExpandFlow)
+                            TextFieldSingleLineSample(allExpandFlow)
+                            TextFieldMaxLinesSample(allExpandFlow)
+                            TextFieldShapeSample(allExpandFlow)
+                            TextFieldColorsContainerColorSample(allExpandFlow)
+                            TextFieldColorsCursorColorSample(allExpandFlow)
+                            OutlinedTextFieldSample(allExpandFlow)
+                            OutlinedTextFieldLabelSample(allExpandFlow)
+                            OutlinedTextFieldIsErrorSample(allExpandFlow)
+                            OutlinedTextFieldShapeSample(allExpandFlow)
+                            OutlinedTextFieldColorsContainerColorSample(allExpandFlow)
+                            OutlinedTextFieldColorsBorderColorSample(allExpandFlow)
+                        }
                     }
                 }
             }
@@ -68,37 +94,6 @@ class TextFieldFragment : ToolbarFragment() {
 
 private const val novel =
     "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。"
-
-@Composable
-fun TextFieldUI() {
-    ExpandableLayout { allExpandFlow ->
-        TextFieldSample(allExpandFlow)
-        TextFieldDefaultValueSample(allExpandFlow)
-        TextFieldEnabledFalseSample(allExpandFlow)
-        TextFieldReadOnlySample(allExpandFlow)
-        TextFieldTextStyleColorSample(allExpandFlow)
-        TextFieldLabelSample(allExpandFlow)
-        TextFieldPlaceholderSample(allExpandFlow)
-        TextFieldLeadingIconSample(allExpandFlow)
-        TextFieldTrailingIconSample(allExpandFlow)
-        TextFieldIsErrorSample(allExpandFlow)
-        TextFieldVisualTransformationSample(allExpandFlow)
-        TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow)
-        TextFieldKeyboardOptionsImeActionSample(allExpandFlow)
-        TextFieldKeyboardActionsSample(allExpandFlow)
-        TextFieldSingleLineSample(allExpandFlow)
-        TextFieldMaxLinesSample(allExpandFlow)
-        TextFieldShapeSample(allExpandFlow)
-        TextFieldColorsContainerColorSample(allExpandFlow)
-        TextFieldColorsCursorColorSample(allExpandFlow)
-        OutlinedTextFieldSample(allExpandFlow)
-        OutlinedTextFieldLabelSample(allExpandFlow)
-        OutlinedTextFieldIsErrorSample(allExpandFlow)
-        OutlinedTextFieldShapeSample(allExpandFlow)
-        OutlinedTextFieldColorsContainerColorSample(allExpandFlow)
-        OutlinedTextFieldColorsBorderColorSample(allExpandFlow)
-    }
-}
 
 
 @OptIn(ExperimentalMaterial3Api::class)

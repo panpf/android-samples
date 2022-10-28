@@ -47,21 +47,16 @@ class CheckboxFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        CheckboxUI()
+                        ExpandableLayout { allExpandFlow ->
+                            CheckboxSample(allExpandFlow)
+                            CheckboxEnabledFalseSample(allExpandFlow)
+                            CheckboxColorsSample(allExpandFlow)
+                            CheckboxGroupSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun CheckboxUI() {
-    ExpandableLayout { allExpandFlow ->
-        CheckboxSample(allExpandFlow)
-        CheckboxEnabledFalseSample(allExpandFlow)
-        CheckboxColorsSample(allExpandFlow)
-        CheckboxGroupSample(allExpandFlow)
     }
 }
 

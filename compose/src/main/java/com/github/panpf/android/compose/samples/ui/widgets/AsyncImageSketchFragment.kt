@@ -62,27 +62,22 @@ class AsyncImageSketchFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SketchAsyncImageUI()
+                        ExpandableLayout { allExpandFlow ->
+                            SketchAsyncImageResourceSample(allExpandFlow)
+                            SketchAsyncImageAssetSample(allExpandFlow)
+                            SketchAsyncImageHttpSample(allExpandFlow)
+                            SketchAsyncImageAlignmentSample(allExpandFlow)
+                            SketchAsyncImageContentScaleSample(allExpandFlow)
+                            SketchAsyncImageAlphaSample(allExpandFlow)
+                            SketchAsyncImageClipSample(allExpandFlow)
+                            SketchAsyncImageBorderSample(allExpandFlow)
+                            SketchAsyncImageColorFilterSample(allExpandFlow)
+                            SketchAsyncImageBlurSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SketchAsyncImageUI() {
-    ExpandableLayout { allExpandFlow ->
-        SketchAsyncImageResourceSample(allExpandFlow)
-        SketchAsyncImageAssetSample(allExpandFlow)
-        SketchAsyncImageHttpSample(allExpandFlow)
-        SketchAsyncImageAlignmentSample(allExpandFlow)
-        SketchAsyncImageContentScaleSample(allExpandFlow)
-        SketchAsyncImageAlphaSample(allExpandFlow)
-        SketchAsyncImageClipSample(allExpandFlow)
-        SketchAsyncImageBorderSample(allExpandFlow)
-        SketchAsyncImageColorFilterSample(allExpandFlow)
-        SketchAsyncImageBlurSample(allExpandFlow)
     }
 }
 

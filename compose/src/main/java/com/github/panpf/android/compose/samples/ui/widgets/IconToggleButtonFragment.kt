@@ -45,21 +45,16 @@ class IconToggleButtonFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        IconToggleButtonUI()
+                        ExpandableLayout { allExpandFlow ->
+                            IconToggleButtonSample(allExpandFlow)
+                            FilledIconToggleButtonSample(allExpandFlow)
+                            FilledTonalIconToggleButtonSample(allExpandFlow)
+                            OutlinedIconToggleButtonSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun IconToggleButtonUI() {
-    ExpandableLayout { allExpandFlow ->
-        IconToggleButtonSample(allExpandFlow)
-        FilledIconToggleButtonSample(allExpandFlow)
-        FilledTonalIconToggleButtonSample(allExpandFlow)
-        OutlinedIconToggleButtonSample(allExpandFlow)
     }
 }
 

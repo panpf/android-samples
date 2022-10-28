@@ -63,27 +63,22 @@ class AsyncImageCoilFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        CoilAsyncImageUI()
+                        ExpandableLayout { allExpandFlow ->
+                            CoilAsyncImageResourceSample(allExpandFlow)
+                            CoilAsyncImageAssetSample(allExpandFlow)
+                            CoilAsyncImageHttpSample(allExpandFlow)
+                            CoilAsyncImageAlignmentSample(allExpandFlow)
+                            CoilAsyncImageContentScaleSample(allExpandFlow)
+                            CoilAsyncImageAlphaSample(allExpandFlow)
+                            CoilAsyncImageClipSample(allExpandFlow)
+                            CoilAsyncImageBorderSample(allExpandFlow)
+                            CoilAsyncImageColorFilterSample(allExpandFlow)
+                            CoilAsyncImageBlurSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun CoilAsyncImageUI() {
-    ExpandableLayout { allExpandFlow ->
-        CoilAsyncImageResourceSample(allExpandFlow)
-        CoilAsyncImageAssetSample(allExpandFlow)
-        CoilAsyncImageHttpSample(allExpandFlow)
-        CoilAsyncImageAlignmentSample(allExpandFlow)
-        CoilAsyncImageContentScaleSample(allExpandFlow)
-        CoilAsyncImageAlphaSample(allExpandFlow)
-        CoilAsyncImageClipSample(allExpandFlow)
-        CoilAsyncImageBorderSample(allExpandFlow)
-        CoilAsyncImageColorFilterSample(allExpandFlow)
-        CoilAsyncImageBlurSample(allExpandFlow)
     }
 }
 

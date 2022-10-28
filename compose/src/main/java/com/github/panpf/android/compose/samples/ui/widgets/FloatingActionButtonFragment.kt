@@ -50,23 +50,18 @@ class FloatingActionButtonFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        FloatingActionButtonUI()
+                        ExpandableLayout { allExpandFlow ->
+                            FloatingActionButtonSample(allExpandFlow)
+                            FloatingActionButtonShapeSample(allExpandFlow)
+                            FloatingActionButtonColorSample(allExpandFlow)
+                            SmallFloatingActionButtonSample(allExpandFlow)
+                            LargeFloatingActionButtonSample(allExpandFlow)
+                            ExtendedFloatingActionButtonSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun FloatingActionButtonUI() {
-    ExpandableLayout { allExpandFlow ->
-        FloatingActionButtonSample(allExpandFlow)
-        FloatingActionButtonShapeSample(allExpandFlow)
-        FloatingActionButtonColorSample(allExpandFlow)
-        SmallFloatingActionButtonSample(allExpandFlow)
-        LargeFloatingActionButtonSample(allExpandFlow)
-        ExtendedFloatingActionButtonSample(allExpandFlow)
     }
 }
 

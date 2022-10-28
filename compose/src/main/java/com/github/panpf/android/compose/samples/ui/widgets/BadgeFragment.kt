@@ -45,22 +45,17 @@ class BadgeFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        BadgeUI()
+                        ExpandableLayout { allExpandFlow ->
+                            BadgeSample(allExpandFlow)
+                            BadgeContainerColorSample(allExpandFlow)
+                            BadgeContentColorSample(allExpandFlow)
+                            BadgeImageSample(allExpandFlow)
+                            BadgePointSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BadgeUI() {
-    ExpandableLayout { allExpandFlow ->
-        BadgeSample(allExpandFlow)
-        BadgeContainerColorSample(allExpandFlow)
-        BadgeContentColorSample(allExpandFlow)
-        BadgeImageSample(allExpandFlow)
-        BadgePointSample(allExpandFlow)
     }
 }
 

@@ -49,28 +49,23 @@ class ProgressIndicatorFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        ProgressIndicatorUI()
+                        ExpandableLayout { allExpandFlow ->
+                            CircularProgressIndicatorSample(allExpandFlow)
+                            CircularProgressIndicatorSizeSample(allExpandFlow)
+                            CircularProgressIndicatorColorSample(allExpandFlow)
+                            LinearProgressIndicatorIndeterminateSample(allExpandFlow)
+                            LinearProgressIndicatorIndeterminateSizeSample(allExpandFlow)
+                            LinearProgressIndicatorIndeterminateColorSample(allExpandFlow)
+                            LinearProgressIndicatorIndeterminateClipSample(allExpandFlow)
+                            LinearProgressIndicatorDeterminateSample(allExpandFlow)
+                            LinearProgressIndicatorDeterminateSizeSample(allExpandFlow)
+                            LinearProgressIndicatorDeterminateColorSample(allExpandFlow)
+                            LinearProgressIndicatorDeterminateClipSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ProgressIndicatorUI() {
-    ExpandableLayout { allExpandFlow ->
-        CircularProgressIndicatorSample(allExpandFlow)
-        CircularProgressIndicatorSizeSample(allExpandFlow)
-        CircularProgressIndicatorColorSample(allExpandFlow)
-        LinearProgressIndicatorIndeterminateSample(allExpandFlow)
-        LinearProgressIndicatorIndeterminateSizeSample(allExpandFlow)
-        LinearProgressIndicatorIndeterminateColorSample(allExpandFlow)
-        LinearProgressIndicatorIndeterminateClipSample(allExpandFlow)
-        LinearProgressIndicatorDeterminateSample(allExpandFlow)
-        LinearProgressIndicatorDeterminateSizeSample(allExpandFlow)
-        LinearProgressIndicatorDeterminateColorSample(allExpandFlow)
-        LinearProgressIndicatorDeterminateClipSample(allExpandFlow)
     }
 }
 

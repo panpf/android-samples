@@ -39,21 +39,16 @@ class DividerFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        DividerUI()
+                        ExpandableLayout { allExpandFlow ->
+                            DividerSample(allExpandFlow)
+                            DividerColorSample(allExpandFlow)
+                            DividerThicknessSample(allExpandFlow)
+//        DividerStartIndentSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun DividerUI() {
-    ExpandableLayout { allExpandFlow ->
-        DividerSample(allExpandFlow)
-        DividerColorSample(allExpandFlow)
-        DividerThicknessSample(allExpandFlow)
-//        DividerStartIndentSample(allExpandFlow)
     }
 }
 

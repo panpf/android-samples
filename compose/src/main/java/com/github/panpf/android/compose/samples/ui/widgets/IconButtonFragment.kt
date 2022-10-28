@@ -46,21 +46,16 @@ class IconButtonFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        IconButtonUI()
+                        ExpandableLayout { allExpandFlow ->
+                            IconButtonSample(allExpandFlow)
+                            FilledIconButtonSample(allExpandFlow)
+                            FilledTonalIconButtonSample(allExpandFlow)
+                            OutlinedIconButtonSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun IconButtonUI() {
-    ExpandableLayout { allExpandFlow ->
-        IconButtonSample(allExpandFlow)
-        FilledIconButtonSample(allExpandFlow)
-        FilledTonalIconButtonSample(allExpandFlow)
-        OutlinedIconButtonSample(allExpandFlow)
     }
 }
 

@@ -50,22 +50,17 @@ class SwitchFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SwitchUI()
+                        ExpandableLayout { allExpandFlow ->
+                            SwitchSample(allExpandFlow)
+                            SwitchEnabledFalseSample(allExpandFlow)
+                            SwitchColorsSample(allExpandFlow)
+                            SwitchGroupSingleSample(allExpandFlow)
+                            SwitchGroupMultiSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SwitchUI() {
-    ExpandableLayout { allExpandFlow ->
-        SwitchSample(allExpandFlow)
-        SwitchEnabledFalseSample(allExpandFlow)
-        SwitchColorsSample(allExpandFlow)
-        SwitchGroupSingleSample(allExpandFlow)
-        SwitchGroupMultiSample(allExpandFlow)
     }
 }
 

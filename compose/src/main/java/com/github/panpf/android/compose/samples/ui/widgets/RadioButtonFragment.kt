@@ -47,21 +47,16 @@ class RadioButtonFragment : ToolbarFragment() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        RadioButtonUI()
+                        ExpandableLayout { allExpandFlow ->
+                            RadioButtonSample(allExpandFlow)
+                            RadioButtonEnabledFalseSample(allExpandFlow)
+                            RadioButtonColorsSample(allExpandFlow)
+                            RadioButtonGroupSample(allExpandFlow)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun RadioButtonUI() {
-    ExpandableLayout { allExpandFlow ->
-        RadioButtonSample(allExpandFlow)
-        RadioButtonEnabledFalseSample(allExpandFlow)
-        RadioButtonColorsSample(allExpandFlow)
-        RadioButtonGroupSample(allExpandFlow)
     }
 }
 
