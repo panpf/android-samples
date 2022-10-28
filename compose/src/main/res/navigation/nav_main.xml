@@ -125,6 +125,41 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_badgeFragment"
+            app:destination="@id/badgeFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_chipFragment"
+            app:destination="@id/chipFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_dividerFragment"
+            app:destination="@id/dividerFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_progressIndicatorFragment"
+            app:destination="@id/progressIndicatorFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_widgets_snackbarFragment"
+            app:destination="@id/snackbarFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -186,4 +221,24 @@
     <fragment
         android:id="@+id/switchFragment"
         android:name="com.github.panpf.android.compose.samples.ui.widgets.switch.SwitchFragment" />
+
+    <fragment
+        android:id="@+id/badgeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.badge.BadgeFragment" />
+
+    <fragment
+        android:id="@+id/chipFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.chip.ChipFragment" />
+
+    <fragment
+        android:id="@+id/dividerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.divider.DividerFragment" />
+
+    <fragment
+        android:id="@+id/progressIndicatorFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.progressindicator.ProgressIndicatorFragment" />
+
+    <fragment
+        android:id="@+id/snackbarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.snackbar.SnackbarFragment" />
 </navigation>

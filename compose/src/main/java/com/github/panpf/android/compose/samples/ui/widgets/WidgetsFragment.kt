@@ -42,6 +42,11 @@ class WidgetsFragment : ToolbarFragment() {
             Link("AsyncImage - Sketch", R.id.action_widgets_sketchAsyncImageFragment),
             Link("AsyncImage - Coil", R.id.action_widgets_coilAsyncImageFragment),
             Link("Slider", R.id.action_widgets_sliderFragment),
+            Link("ProgressIndicator", R.id.action_widgets_progressIndicatorFragment),
+            Link("Badge", R.id.action_widgets_badgeFragment),
+            Link("Divider", R.id.action_widgets_dividerFragment),
+            Link("Snackbar", R.id.action_widgets_snackbarFragment),
+            Link("Chip", R.id.action_widgets_chipFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

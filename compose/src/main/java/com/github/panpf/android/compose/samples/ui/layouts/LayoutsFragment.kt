@@ -36,6 +36,22 @@ class LayoutsFragment : ToolbarFragment() {
             Link("LazyList"),
             Link("LazyGrid"),
             Link("Constraint"),
+            Link("Card"),
+            Link("BottomAppBar"),
+            Link("Drawer"),
+            Link("Menu"),
+            Link("NavigationBar"),
+            Link("NavigationDrawer"),
+            Link("NavigationRail"),
+            Link("Scaffold"),
+            Link("Backdrop"),
+            Link("AppBar"),
+            Link("BottomNavigation"),
+            Link("DataTable"),
+            Link("Surface"),
+            Link("Tabs"),
+            Link("BottomSheet"),
+            Link("BottomSheet"),
         )
         return ComposeView(inflater.context).apply {
             setContent {

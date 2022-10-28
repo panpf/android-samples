@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.tools4a.toast.ktx.showLongToast
+import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -371,7 +371,7 @@ fun TextFieldKeyboardActionsSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = { context.showLongToast("点击了完成！") }),
+            keyboardActions = KeyboardActions(onDone = { context.showShortToast("点击了完成！") }),
         )
     }
 }

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.tools4a.toast.ktx.showLongToast
+import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -33,7 +33,7 @@ fun IconButtonUI() {
 fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
-        IconButton(onClick = { context.showLongToast("你点了我！") }) {
+        IconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -53,7 +53,7 @@ fun IconButtonSamplePreview() {
 fun FilledIconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FilledIconButton", allExpandFlow, padding = 20.dp) {
-        FilledIconButton(onClick = { context.showLongToast("你点了我！") }) {
+        FilledIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -73,7 +73,7 @@ fun FilledIconButtonSamplePreview() {
 fun FilledTonalIconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FilledTonalIconButton", allExpandFlow, padding = 20.dp) {
-        FilledTonalIconButton(onClick = { context.showLongToast("你点了我！") }) {
+        FilledTonalIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -93,7 +93,7 @@ fun FilledTonalIconButtonSamplePreview() {
 fun OutlinedIconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedIconButton", allExpandFlow, padding = 20.dp) {
-        OutlinedIconButton(onClick = { context.showLongToast("你点了我！") }) {
+        OutlinedIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",

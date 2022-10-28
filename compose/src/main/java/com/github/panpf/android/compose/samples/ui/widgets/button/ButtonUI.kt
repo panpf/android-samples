@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.tools4a.toast.ktx.showLongToast
+import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -60,7 +60,7 @@ fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（文字）", allExpandFlow, padding = 20.dp) {
         Button(onClick = {
-            context.showLongToast("你点了我！")
+            context.showShortToast("你点了我！")
         }) {
             Text(text = "按钮2")
         }
@@ -78,7 +78,7 @@ fun ButtonContentTextSamplePreview() {
 fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（图片）", allExpandFlow, padding = 20.dp) {
-        Button(onClick = { context.showLongToast("你点了我！") }) {
+        Button(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -100,7 +100,7 @@ fun ButtonDisabledSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（不可用）", allExpandFlow, padding = 20.dp) {
         Button(
             enabled = false,
-            onClick = { context.showLongToast("你点了我！") }
+            onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -123,7 +123,7 @@ fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（形状 - 圆角)", allExpandFlow, padding = 20.dp) {
         Button(
             shape = RoundedCornerShape(10.dp),
-            onClick = { context.showLongToast("你点了我！") }
+            onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -152,7 +152,7 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = Color.White,
                 ),
-                onClick = { context.showLongToast("你点了我！") }
+                onClick = { context.showShortToast("你点了我！") }
             ) {
                 Image(
                     painterResource(id = R.drawable.ic_expand_more),
@@ -168,7 +168,7 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                     disabledContentColor = Color.White,
                 ),
                 enabled = false,
-                onClick = { context.showLongToast("你点了我！") }
+                onClick = { context.showShortToast("你点了我！") }
             ) {
                 Image(
                     painterResource(id = R.drawable.ic_expand_more),
@@ -195,7 +195,7 @@ fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
                 defaultElevation = 10.dp,
                 pressedElevation = 0.dp
             ),
-            onClick = { context.showLongToast("你点了我！") }
+            onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -218,7 +218,7 @@ fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（描边）", allExpandFlow, padding = 20.dp) {
         Button(
             border = BorderStroke(1.dp, Color.Cyan),
-            onClick = { context.showLongToast("你点了我！") }
+            onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -241,7 +241,7 @@ fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（内边距）", allExpandFlow, padding = 20.dp) {
         Button(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
-            onClick = { context.showLongToast("你点了我！") }
+            onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
@@ -262,7 +262,7 @@ fun ButtonContentPaddingSamplePreview() {
 fun ElevatedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("ElevatedButton", allExpandFlow, padding = 20.dp) {
-        ElevatedButton(onClick = { context.showLongToast("你点了我！") }) {
+        ElevatedButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -283,7 +283,7 @@ fun ElevatedButtonSamplePreview() {
 fun FilledTonalButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FilledTonalButton", allExpandFlow, padding = 20.dp) {
-        FilledTonalButton(onClick = { context.showLongToast("你点了我！") }) {
+        FilledTonalButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -304,7 +304,7 @@ fun FilledTonalButtonSamplePreview() {
 fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
-        OutlinedButton(onClick = { context.showLongToast("你点了我！") }) {
+        OutlinedButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
                 painterResource(id = R.drawable.ic_expand_more),
                 contentDescription = "",
@@ -325,7 +325,7 @@ fun OutlinedButtonSamplePreview() {
 fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("TextButton", allExpandFlow, padding = 20.dp) {
-        TextButton(onClick = { context.showLongToast("你点了我！") }) {
+        TextButton(onClick = { context.showShortToast("你点了我！") }) {
             Text(text = "发送")
         }
     }
