@@ -174,8 +174,22 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
+            android:id="@+id/action_layouts_flowRowFragment"
+            app:destination="@id/flowRowFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
             android:id="@+id/action_layouts_columnFragment"
             app:destination="@id/columnFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_layouts_flowColumnFragment"
+            app:destination="@id/flowColumnFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -403,8 +417,16 @@
         android:name="com.github.panpf.android.compose.samples.ui.layouts.RowFragment" />
 
     <fragment
+        android:id="@+id/flowRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.layouts.FlowRowFragment" />
+
+    <fragment
         android:id="@+id/columnFragment"
         android:name="com.github.panpf.android.compose.samples.ui.layouts.ColumnFragment" />
+
+    <fragment
+        android:id="@+id/flowColumnFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.layouts.FlowColumnFragment" />
 
     <fragment
         android:id="@+id/boxFragment"

@@ -29,7 +29,9 @@ class LayoutsFragment : ToolbarFragment() {
         toolbar.title = "Layouts"
         val links = listOf(
             Link("Row", R.id.action_layouts_rowFragment),
+            Link("FlowRow", R.id.action_layouts_flowRowFragment),
             Link("Column", R.id.action_layouts_columnFragment),
+            Link("FlowColumn", R.id.action_layouts_flowColumnFragment),
             Link("Box", R.id.action_layouts_boxFragment),
             Link("Pager", R.id.action_layouts_pagerFragment),
             Link("LazyRaw", R.id.action_layouts_lazyRawFragment),

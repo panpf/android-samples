@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Chip
+import androidx.compose.material.ChipDefaults
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.ElevatedAssistChip
@@ -58,13 +62,20 @@ class ChipFragment : ToolbarFragment() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
+                            ChipSample(allExpandFlow)
+                            ChipShapeSample(allExpandFlow)
+                            ChipBorderSample(allExpandFlow)
+                            ChipColorsSample(allExpandFlow)
+                            ChipLeadingIconSample(allExpandFlow)
                             AssistChipSample(allExpandFlow)
                             AssistChipShapeSample(allExpandFlow)
+                            AssistChipColorsSample(allExpandFlow)
+                            AssistChipBorderSample(allExpandFlow)
                             ElevatedAssistChipSample(allExpandFlow)
                             FilterChipSample(allExpandFlow)
                             ElevatedFilterChipSample(allExpandFlow)
                             InputChipSample(allExpandFlow)
-                    //        InputChipTextFieldSample(allExpandFlow)
+                            //        InputChipTextFieldSample(allExpandFlow)
                             SuggestionChipSample(allExpandFlow)
                             ElevatedSuggestionChipSample(allExpandFlow)
                         }
@@ -73,6 +84,136 @@ class ChipFragment : ToolbarFragment() {
             }
         }
     }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ChipSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "Chip", allExpandFlow, padding = 20.dp) {
+        FlowRow(mainAxisSpacing = 10.dp) {
+            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+                Chip(onClick = { context.showShortToast(it) }) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ChipSamplePreview() {
+    ChipSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ChipShapeSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "Chip（shape）", allExpandFlow, padding = 20.dp) {
+        FlowRow(mainAxisSpacing = 10.dp) {
+            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+                Chip(
+                    onClick = { context.showShortToast(it) },
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ChipShapeSamplePreview() {
+    ChipShapeSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ChipBorderSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "Chip（border）", allExpandFlow, padding = 20.dp) {
+        FlowRow(mainAxisSpacing = 10.dp) {
+            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+                Chip(
+                    onClick = { context.showShortToast(it) },
+                    border = BorderStroke(1.dp, Color.Red)
+                ) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ChipBorderSamplePreview() {
+    ChipBorderSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ChipColorsSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "Chip（colors）", allExpandFlow, padding = 20.dp) {
+        FlowRow(mainAxisSpacing = 10.dp) {
+            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+                Chip(
+                    onClick = { context.showShortToast(it) },
+                    colors = ChipDefaults.chipColors(
+                        backgroundColor = Color.Red,
+                        contentColor = Color.Cyan,
+                    )
+                ) {
+                    Text(text = it, color = Color.White)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ChipColorsSamplePreview() {
+    ChipColorsSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ChipLeadingIconSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem(title = "Chip（leadingIcon）", allExpandFlow, padding = 20.dp) {
+        FlowRow(mainAxisSpacing = 10.dp) {
+            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+                Chip(
+                    onClick = { context.showShortToast(it) },
+                    leadingIcon = {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_games),
+                            contentDescription = null
+                        )
+                    }
+                ) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ChipLeadingIconSamplePreview() {
+    ChipLeadingIconSample(remember { MutableStateFlow(true) })
 }
 
 
