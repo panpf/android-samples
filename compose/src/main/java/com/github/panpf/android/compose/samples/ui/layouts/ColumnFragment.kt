@@ -129,7 +129,12 @@ fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.SpaceEvenly to "Space\nEvenly",
             ).forEach { (arrangement, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     Column(
                         modifier = Modifier
                             .height(200.dp)
@@ -166,7 +171,12 @@ fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 Alignment.End to "End",
             ).forEach { (alignment, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     Column(
                         modifier = Modifier
                             .height(200.dp)
@@ -242,7 +252,12 @@ fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
                 Alignment.End to "End",
             ).forEach { (alignment, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     Column(
                         modifier = Modifier
                             .height(200.dp)

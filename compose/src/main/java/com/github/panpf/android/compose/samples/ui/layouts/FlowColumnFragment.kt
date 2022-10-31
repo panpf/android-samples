@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -134,7 +135,12 @@ fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
                     Spacer(modifier = Modifier.size(10.dp))
                 }
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     FlowColumn(
                         modifier = Modifier.background(Color.Red.copy(alpha = 0.5f)),
                         mainAxisSize = sizeMode
@@ -172,7 +178,12 @@ fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowMainAxisAlignment.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     FlowColumn(
                         modifier = Modifier
                             .height(200.dp)
@@ -239,7 +250,12 @@ fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowCrossAxisAlignment.End to "End",
             ).forEach { (alignment, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     FlowColumn(
                         modifier = Modifier
                             .height(200.dp)
@@ -310,7 +326,12 @@ fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowMainAxisAlignment.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                    Text(
+                        text = name,
+                        modifier = Modifier
+                            .height(46.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
                     FlowColumn(
                         modifier = Modifier
                             .height(200.dp)
