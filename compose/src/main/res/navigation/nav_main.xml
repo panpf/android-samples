@@ -229,8 +229,8 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_advancedLayouts_lazyRawFragment"
-            app:destination="@id/lazyRawFragment"
+            android:id="@+id/action_advancedLayouts_lazyRowFragment"
+            app:destination="@id/lazyRowFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -450,8 +450,8 @@
         android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.PagerFragment" />
 
     <fragment
-        android:id="@+id/lazyRawFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyRawFragment" />
+        android:id="@+id/lazyRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyRowFragment" />
 
     <fragment
         android:id="@+id/lazyColumnFragment"

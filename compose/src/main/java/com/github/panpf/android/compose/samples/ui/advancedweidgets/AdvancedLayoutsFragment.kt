@@ -28,7 +28,7 @@ class AdvancedLayoutsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Layouts"
         val links = listOf(
-            Link("LazyRaw", R.id.action_advancedLayouts_lazyRawFragment),
+            Link("LazyRow", R.id.action_advancedLayouts_lazyRowFragment),
             Link("LazyColumn", R.id.action_advancedLayouts_lazyColumnFragment),
             Link("LazyList", R.id.action_advancedLayouts_lazyListFragment),
             Link("LazyGrid", R.id.action_advancedLayouts_lazyGridFragment),
