@@ -8,16 +8,24 @@
         android:id="@+id/homeFragment"
         android:name="com.github.panpf.android.compose.samples.ui.HomeFragment">
         <action
-            android:id="@+id/action_home_widgetsFragment"
-            app:destination="@id/widgetsFragment"
+            android:id="@+id/action_home_basicWidgetsFragment"
+            app:destination="@id/basicWidgetsFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
 
         <action
-            android:id="@+id/action_home_layoutsFragment"
-            app:destination="@id/layoutsFragment"
+            android:id="@+id/action_home_basicLayoutsFragment"
+            app:destination="@id/basicLayoutsFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+
+        <action
+            android:id="@+id/action_home_advancedLayoutsFragment"
+            app:destination="@id/advancedLayoutsFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -25,136 +33,136 @@
     </fragment>
 
     <fragment
-        android:id="@+id/widgetsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.WidgetsFragment">
+        android:id="@+id/basicWidgetsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.BasicWidgetsFragment">
         <action
-            android:id="@+id/action_widgets_textFragment"
+            android:id="@+id/action_basicWidgets_textFragment"
             app:destination="@id/textFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_buttonFragment"
+            android:id="@+id/action_basicWidgets_buttonFragment"
             app:destination="@id/buttonFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_iconButtonFragment"
+            android:id="@+id/action_basicWidgets_iconButtonFragment"
             app:destination="@id/iconButtonFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_iconToggleButtonFragment"
+            android:id="@+id/action_basicWidgets_iconToggleButtonFragment"
             app:destination="@id/iconToggleButtonFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_floatingActionButtonFragment"
+            android:id="@+id/action_basicWidgets_floatingActionButtonFragment"
             app:destination="@id/floatingActionButtonFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_textFieldFragment"
+            android:id="@+id/action_basicWidgets_textFieldFragment"
             app:destination="@id/textFieldFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_asyncImageSketchFragment"
+            android:id="@+id/action_basicWidgets_asyncImageSketchFragment"
             app:destination="@id/asyncImageSketchFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_asyncImageCoilFragment"
+            android:id="@+id/action_basicWidgets_asyncImageCoilFragment"
             app:destination="@id/asyncImageCoilFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_checkboxFragment"
+            android:id="@+id/action_basicWidgets_checkboxFragment"
             app:destination="@id/checkboxFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_iconFragment"
+            android:id="@+id/action_basicWidgets_iconFragment"
             app:destination="@id/iconFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_imageFragment"
+            android:id="@+id/action_basicWidgets_imageFragment"
             app:destination="@id/imageFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_radioButtonFragment"
+            android:id="@+id/action_basicWidgets_radioButtonFragment"
             app:destination="@id/radioButtonFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_sliderFragment"
+            android:id="@+id/action_basicWidgets_sliderFragment"
             app:destination="@id/sliderFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_switchFragment"
+            android:id="@+id/action_basicWidgets_switchFragment"
             app:destination="@id/switchFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_badgeFragment"
+            android:id="@+id/action_basicWidgets_badgeFragment"
             app:destination="@id/badgeFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_chipFragment"
+            android:id="@+id/action_basicWidgets_chipFragment"
             app:destination="@id/chipFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_dividerFragment"
+            android:id="@+id/action_basicWidgets_dividerFragment"
             app:destination="@id/dividerFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_progressIndicatorFragment"
+            android:id="@+id/action_basicWidgets_progressIndicatorFragment"
             app:destination="@id/progressIndicatorFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_widgets_snackbarFragment"
+            android:id="@+id/action_basicWidgets_snackbarFragment"
             app:destination="@id/snackbarFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
@@ -163,172 +171,177 @@
     </fragment>
 
     <fragment
-        android:id="@+id/layoutsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LayoutsFragment" >
+        android:id="@+id/basicLayoutsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.BasicLayoutsFragment" >
 
         <action
-            android:id="@+id/action_layouts_rowFragment"
+            android:id="@+id/action_basicLayouts_rowFragment"
             app:destination="@id/rowFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_flowRowFragment"
+            android:id="@+id/action_basicLayouts_flowRowFragment"
             app:destination="@id/flowRowFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_columnFragment"
+            android:id="@+id/action_basicLayouts_columnFragment"
             app:destination="@id/columnFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_flowColumnFragment"
+            android:id="@+id/action_basicLayouts_flowColumnFragment"
             app:destination="@id/flowColumnFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_boxFragment"
+            android:id="@+id/action_basicLayouts_boxFragment"
             app:destination="@id/boxFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_pagerFragment"
+            android:id="@+id/action_basicLayouts_constraintLayoutFragment"
+            app:destination="@id/constraintLayoutFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/advancedLayoutsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.AdvancedLayoutsFragment" >
+        <action
+            android:id="@+id/action_advancedLayouts_pagerFragment"
             app:destination="@id/pagerFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_lazyRawFragment"
+            android:id="@+id/action_advancedLayouts_lazyRawFragment"
             app:destination="@id/lazyRawFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_lazyColumnFragment"
+            android:id="@+id/action_advancedLayouts_lazyColumnFragment"
             app:destination="@id/lazyColumnFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_lazyListFragment"
+            android:id="@+id/action_advancedLayouts_lazyListFragment"
             app:destination="@id/lazyListFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_lazyGridFragment"
+            android:id="@+id/action_advancedLayouts_lazyGridFragment"
             app:destination="@id/lazyGridFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_constraintLayoutFragment"
-            app:destination="@id/constraintLayoutFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_layouts_cardFragment"
+            android:id="@+id/action_advancedLayouts_cardFragment"
             app:destination="@id/cardFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_drawerFragment"
+            android:id="@+id/action_advancedLayouts_drawerFragment"
             app:destination="@id/drawerFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_navigationBarFragment"
+            android:id="@+id/action_advancedLayouts_navigationBarFragment"
             app:destination="@id/navigationBarFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_navigationDrawerFragment"
+            android:id="@+id/action_advancedLayouts_navigationDrawerFragment"
             app:destination="@id/navigationDrawerFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_navigationRailFragment"
+            android:id="@+id/action_advancedLayouts_navigationRailFragment"
             app:destination="@id/navigationRailFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_scaffoldFragment"
+            android:id="@+id/action_advancedLayouts_scaffoldFragment"
             app:destination="@id/scaffoldFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_backdropFragment"
+            android:id="@+id/action_advancedLayouts_backdropFragment"
             app:destination="@id/backdropFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_appBarFragment"
+            android:id="@+id/action_advancedLayouts_appBarFragment"
             app:destination="@id/appBarFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_bottomAppBarFragment"
+            android:id="@+id/action_advancedLayouts_bottomAppBarFragment"
             app:destination="@id/bottomAppBarFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_bottomNavigationFragment"
+            android:id="@+id/action_advancedLayouts_bottomNavigationFragment"
             app:destination="@id/bottomNavigationFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_surfaceFragment"
+            android:id="@+id/action_advancedLayouts_surfaceFragment"
             app:destination="@id/surfaceFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_tabRowFragment"
+            android:id="@+id/action_advancedLayouts_tabRowFragment"
             app:destination="@id/tabRowFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_layouts_bottomSheetFragment"
+            android:id="@+id/action_advancedLayouts_bottomSheetFragment"
             app:destination="@id/bottomSheetFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
@@ -338,173 +351,173 @@
 
     <fragment
         android:id="@+id/textFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.TextFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.TextFragment" />
 
     <fragment
         android:id="@+id/buttonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.ButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.ButtonFragment" />
 
     <fragment
         android:id="@+id/iconButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.IconButtonFragment" />
 
     <fragment
         android:id="@+id/iconToggleButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconToggleButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.IconToggleButtonFragment" />
 
     <fragment
         android:id="@+id/floatingActionButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.FloatingActionButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.FloatingActionButtonFragment" />
 
     <fragment
         android:id="@+id/textFieldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.TextFieldFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.TextFieldFragment" />
 
     <fragment
         android:id="@+id/asyncImageSketchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.AsyncImageSketchFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.AsyncImageSketchFragment" />
 
     <fragment
         android:id="@+id/asyncImageCoilFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.AsyncImageCoilFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.AsyncImageCoilFragment" />
 
     <fragment
         android:id="@+id/checkboxFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.CheckboxFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.CheckboxFragment" />
 
     <fragment
         android:id="@+id/iconFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.IconFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.IconFragment" />
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.ImageFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.ImageFragment" />
 
     <fragment
         android:id="@+id/radioButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.RadioButtonFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.RadioButtonFragment" />
 
     <fragment
         android:id="@+id/sliderFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.SliderFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.SliderFragment" />
 
     <fragment
         android:id="@+id/switchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.SwitchFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.SwitchFragment" />
 
     <fragment
         android:id="@+id/badgeFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.BadgeFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.BadgeFragment" />
 
     <fragment
         android:id="@+id/chipFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.ChipFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.ChipFragment" />
 
     <fragment
         android:id="@+id/dividerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.DividerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.DividerFragment" />
 
     <fragment
         android:id="@+id/progressIndicatorFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.ProgressIndicatorFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.ProgressIndicatorFragment" />
 
     <fragment
         android:id="@+id/snackbarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.SnackbarFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basicwidgets.SnackbarFragment" />
 
     <fragment
         android:id="@+id/rowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.RowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.RowFragment" />
 
     <fragment
         android:id="@+id/flowRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.FlowRowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.FlowRowFragment" />
 
     <fragment
         android:id="@+id/columnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.ColumnFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.ColumnFragment" />
 
     <fragment
         android:id="@+id/flowColumnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.FlowColumnFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.FlowColumnFragment" />
 
     <fragment
         android:id="@+id/boxFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.BoxFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.BoxFragment" />
 
     <fragment
         android:id="@+id/pagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.PagerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.PagerFragment" />
 
     <fragment
         android:id="@+id/lazyRawFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LazyRawFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyRawFragment" />
 
     <fragment
         android:id="@+id/lazyColumnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LazyColumnFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyColumnFragment" />
 
     <fragment
         android:id="@+id/lazyListFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LazyListFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyListFragment" />
 
     <fragment
         android:id="@+id/lazyGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.LazyGridFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyGridFragment" />
 
     <fragment
         android:id="@+id/constraintLayoutFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.ConstraintLayoutFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.ConstraintLayoutFragment" />
 
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.CardFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.CardFragment" />
 
     <fragment
         android:id="@+id/drawerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.DrawerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.DrawerFragment" />
 
     <fragment
         android:id="@+id/navigationBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.NavigationBarFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.NavigationBarFragment" />
 
     <fragment
         android:id="@+id/navigationDrawerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.NavigationDrawerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.NavigationDrawerFragment" />
 
     <fragment
         android:id="@+id/navigationRailFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.NavigationRailFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.NavigationRailFragment" />
 
     <fragment
         android:id="@+id/scaffoldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.ScaffoldFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.ScaffoldFragment" />
 
     <fragment
         android:id="@+id/backdropFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.BackdropFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.BackdropFragment" />
 
     <fragment
         android:id="@+id/appBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.AppBarFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.AppBarFragment" />
 
     <fragment
         android:id="@+id/bottomAppBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.BottomAppBarFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.BottomAppBarFragment" />
 
     <fragment
         android:id="@+id/bottomNavigationFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.BottomNavigationFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.BottomNavigationFragment" />
 
     <fragment
         android:id="@+id/surfaceFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.SurfaceFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.SurfaceFragment" />
 
     <fragment
         android:id="@+id/tabRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.TabRowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.TabRowFragment" />
 
     <fragment
         android:id="@+id/bottomSheetFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.layouts.BottomSheetFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.BottomSheetFragment" />
 </navigation>

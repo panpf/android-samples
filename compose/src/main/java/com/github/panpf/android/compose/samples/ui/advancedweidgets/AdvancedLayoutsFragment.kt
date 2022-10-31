@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui
+package com.github.panpf.android.compose.samples.ui.advancedweidgets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class AdvancedLayoutsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,17 +26,26 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Layouts"
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Advanced Layouts", R.id.action_home_advancedLayoutsFragment),
-            Link("Animation"),
-            Link("Theme"),
-            Link("TouchEvent"),
-            Link("Navigation"),
-            Link("Custom"),
+            Link("LazyRaw", R.id.action_advancedLayouts_lazyRawFragment),
+            Link("LazyColumn", R.id.action_advancedLayouts_lazyColumnFragment),
+            Link("LazyList", R.id.action_advancedLayouts_lazyListFragment),
+            Link("LazyGrid", R.id.action_advancedLayouts_lazyGridFragment),
+            Link("Card", R.id.action_advancedLayouts_cardFragment),
+            Link("Pager", R.id.action_advancedLayouts_pagerFragment),
+            Link("Drawer", R.id.action_advancedLayouts_drawerFragment),
+            Link("NavigationBar", R.id.action_advancedLayouts_navigationBarFragment),
+            Link("NavigationDrawer", R.id.action_advancedLayouts_navigationDrawerFragment),
+            Link("NavigationRail", R.id.action_advancedLayouts_navigationRailFragment),
+            Link("Scaffold", R.id.action_advancedLayouts_scaffoldFragment),
+            Link("Backdrop", R.id.action_advancedLayouts_backdropFragment),
+            Link("AppBar", R.id.action_advancedLayouts_appBarFragment),
+            Link("BottomAppBar", R.id.action_advancedLayouts_bottomAppBarFragment),
+            Link("BottomNavigation", R.id.action_advancedLayouts_bottomNavigationFragment),
+            Link("Surface", R.id.action_advancedLayouts_surfaceFragment),
+            Link("TabRow", R.id.action_advancedLayouts_tabRowFragment),
+            Link("BottomSheet", R.id.action_advancedLayouts_bottomSheetFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {
