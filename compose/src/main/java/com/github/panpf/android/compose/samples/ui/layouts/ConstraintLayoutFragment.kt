@@ -50,10 +50,9 @@ class ConstraintLayoutFragment : ToolbarFragment() {
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             ConstraintLayoutConstrainAsSample(allExpandFlow)
-                            // todo 约束
-                            // 引导线
-                            // 屏蔽线
-                            // 链
+                            ConstraintLayoutBarrierSample(allExpandFlow)
+                            ConstraintLayoutGuideLineSample(allExpandFlow)
+                            ConstraintLayoutChainSample(allExpandFlow)
                         }
                     }
                 }
