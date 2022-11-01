@@ -883,7 +883,7 @@ fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem(title = "LazyVerticalGrid（span）", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
