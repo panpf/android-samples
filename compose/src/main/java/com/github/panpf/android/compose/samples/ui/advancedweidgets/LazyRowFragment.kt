@@ -77,6 +77,7 @@ class LazyRowFragment : ToolbarFragment() {
                             LazyRowAnimateScrollToItemSample(allExpandFlow)
                             LazyRowMultiTypeSample(allExpandFlow)
                             LazyRowAnimateItemPlacementSample(allExpandFlow)
+                            LazyRowLayoutInfoSample(allExpandFlow)
                             // todo stickyHeader
                         }
                     }
@@ -87,7 +88,7 @@ class LazyRowFragment : ToolbarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -103,7 +104,7 @@ fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
                 .background(Color.Red.copy(alpha = 0.5f))
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }, modifier = Modifier.animateItemPlacement()) {
+                Chip(onClick = { }) {
                     Text(text = "$index:$item")
                 }
             }
@@ -579,4 +580,71 @@ fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyRowAnimateItemPlacementSamplePreview() {
     LazyRowAnimateItemPlacementSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    val lazyListState = rememberLazyListState()
+    val layoutInfoState = remember { derivedStateOf { lazyListState.layoutInfo } }
+    ExpandableItem(title = "LazyRow（layoutInfo）", allExpandFlow, padding = 20.dp) {
+        Column {
+            LazyRow(
+                state = lazyListState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Red.copy(alpha = 0.5f))
+            ) {
+                itemsIndexed(list) { index, item ->
+                    Chip(onClick = { }) {
+                        Text(text = "$index:$item")
+                    }
+                }
+            }
+            Text(text = layoutInfoState.let { listLayoutInfoState ->
+                buildString {
+                    append("visibleItemsInfo: ")
+                    listLayoutInfoState.value.visibleItemsInfo.forEach { itemInfo ->
+                        appendLine()
+                        append("        ")
+                        append("index=${itemInfo.index}, offset=${itemInfo.offset}, size=${itemInfo.size}")
+                    }
+
+                    appendLine()
+                    append("viewportStartOffset: ${listLayoutInfoState.value.viewportStartOffset}")
+
+                    appendLine()
+                    append("viewportEndOffset: ${listLayoutInfoState.value.viewportEndOffset}")
+
+                    appendLine()
+                    append("totalItemsCount: ${listLayoutInfoState.value.totalItemsCount}")
+
+                    appendLine()
+                    append("viewportSize: ${listLayoutInfoState.value.viewportSize}")
+
+                    appendLine()
+                    append("reverseLayout: ${listLayoutInfoState.value.reverseLayout}")
+
+                    appendLine()
+                    append("beforeContentPadding: ${listLayoutInfoState.value.beforeContentPadding}")
+
+                    appendLine()
+                    append("afterContentPadding: ${listLayoutInfoState.value.afterContentPadding}")
+                }
+            })
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyRowLayoutInfoSamplePreview() {
+    LazyRowLayoutInfoSample(remember { MutableStateFlow(true) })
 }

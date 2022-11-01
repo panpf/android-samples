@@ -76,6 +76,7 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnAnimateScrollToItemSample(allExpandFlow)
                             LazyColumnMultiTypeSample(allExpandFlow)
                             LazyColumnAnimateItemPlacementSample(allExpandFlow)
+                            LazyColumnLayoutInfoSample(allExpandFlow)
                             // todo stickyHeader
                         }
                     }
@@ -587,4 +588,72 @@ fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnAnimateItemPlacementSamplePreview() {
     LazyColumnAnimateItemPlacementSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    val lazyListState = rememberLazyListState()
+    val layoutInfoState = remember { derivedStateOf { lazyListState.layoutInfo } }
+    ExpandableItem(title = "LazyColumn（layoutInfo）", allExpandFlow, padding = 20.dp) {
+        Column {
+            LazyColumn(
+                state = lazyListState,
+                modifier = Modifier
+                    .height(240.dp)
+                    .width(100.dp)
+                    .background(Color.Red.copy(alpha = 0.5f))
+            ) {
+                itemsIndexed(list) { index, item ->
+                    Chip(onClick = { }) {
+                        Text(text = "$index:$item")
+                    }
+                }
+            }
+            Text(text = layoutInfoState.let { listLayoutInfoState ->
+                buildString {
+                    append("visibleItemsInfo: ")
+                    listLayoutInfoState.value.visibleItemsInfo.forEach { itemInfo ->
+                        appendLine()
+                        append("        ")
+                        append("index=${itemInfo.index}, offset=${itemInfo.offset}, size=${itemInfo.size}")
+                    }
+
+                    appendLine()
+                    append("viewportStartOffset: ${listLayoutInfoState.value.viewportStartOffset}")
+
+                    appendLine()
+                    append("viewportEndOffset: ${listLayoutInfoState.value.viewportEndOffset}")
+
+                    appendLine()
+                    append("totalItemsCount: ${listLayoutInfoState.value.totalItemsCount}")
+
+                    appendLine()
+                    append("viewportSize: ${listLayoutInfoState.value.viewportSize}")
+
+                    appendLine()
+                    append("reverseLayout: ${listLayoutInfoState.value.reverseLayout}")
+
+                    appendLine()
+                    append("beforeContentPadding: ${listLayoutInfoState.value.beforeContentPadding}")
+
+                    appendLine()
+                    append("afterContentPadding: ${listLayoutInfoState.value.afterContentPadding}")
+                }
+            })
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnLayoutInfoSamplePreview() {
+    LazyColumnLayoutInfoSample(remember { MutableStateFlow(true) })
 }

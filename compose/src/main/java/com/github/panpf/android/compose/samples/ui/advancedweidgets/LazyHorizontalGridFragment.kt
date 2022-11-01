@@ -86,6 +86,7 @@ class LazyHorizontalGridFragment : ToolbarFragment() {
                             LazyHorizontalGridMultiTypeSample(allExpandFlow)
                             LazyHorizontalGridSpanSample(allExpandFlow)
                             LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
+                            LazyHorizontalGridLayoutInfoSample(allExpandFlow)
                         }
                     }
                 }
@@ -1003,4 +1004,89 @@ fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
     LazyHorizontalGridAnimateItemPlacementSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
+    val lazyGridState = rememberLazyGridState()
+    val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
+    ExpandableItem(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
+        Column {
+            LazyHorizontalGrid(
+                state = lazyGridState,
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .background(Color.Red.copy(alpha = 0.5f))
+                    .padding(2.dp)
+            ) {
+                itemsIndexed(items) { index, item ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .background(colors[index % colors.size])
+                    ) {
+                        Text(
+                            text = item,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+            Text(text = layoutInfoState.let { listLayoutInfoState ->
+                buildString {
+                    append("visibleItemsInfo: ")
+                    listLayoutInfoState.value.visibleItemsInfo.forEach { itemInfo ->
+                        appendLine()
+                        append("        ")
+                        append("index=${itemInfo.index}, offset=${itemInfo.offset}, size=${itemInfo.size}")
+                    }
+
+                    appendLine()
+                    append("viewportStartOffset: ${listLayoutInfoState.value.viewportStartOffset}")
+
+                    appendLine()
+                    append("viewportEndOffset: ${listLayoutInfoState.value.viewportEndOffset}")
+
+                    appendLine()
+                    append("totalItemsCount: ${listLayoutInfoState.value.totalItemsCount}")
+
+                    appendLine()
+                    append("viewportSize: ${listLayoutInfoState.value.viewportSize}")
+
+                    appendLine()
+                    append("reverseLayout: ${listLayoutInfoState.value.reverseLayout}")
+
+                    appendLine()
+                    append("beforeContentPadding: ${listLayoutInfoState.value.beforeContentPadding}")
+
+                    appendLine()
+                    append("afterContentPadding: ${listLayoutInfoState.value.afterContentPadding}")
+                }
+            })
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyHorizontalGridLayoutInfoSamplePreview() {
+    LazyHorizontalGridLayoutInfoSample(remember { MutableStateFlow(true) })
 }
