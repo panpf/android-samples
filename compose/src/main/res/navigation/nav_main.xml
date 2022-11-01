@@ -243,15 +243,15 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_advancedLayouts_lazyListFragment"
-            app:destination="@id/lazyListFragment"
+            android:id="@+id/action_advancedLayouts_lazyHorizontalGridFragment"
+            app:destination="@id/lazyHorizontalGridFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_advancedLayouts_lazyGridFragment"
-            app:destination="@id/lazyGridFragment"
+            android:id="@+id/action_advancedLayouts_lazyVerticalGridFragment"
+            app:destination="@id/lazyVerticalGridFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -458,12 +458,12 @@
         android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyColumnFragment" />
 
     <fragment
-        android:id="@+id/lazyListFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyListFragment" />
+        android:id="@+id/lazyHorizontalGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyHorizontalGridFragment" />
 
     <fragment
-        android:id="@+id/lazyGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyGridFragment" />
+        android:id="@+id/lazyVerticalGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyVerticalGridFragment" />
 
     <fragment
         android:id="@+id/constraintLayoutFragment"

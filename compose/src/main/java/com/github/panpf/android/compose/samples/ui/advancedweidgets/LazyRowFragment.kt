@@ -71,6 +71,9 @@ class LazyRowFragment : ToolbarFragment() {
                             LazyRowUserVisibleItemIndexSample(allExpandFlow)
                             LazyRowScrollInProgressSample(allExpandFlow)
                             LazyRowAnimateScrollToItemSample(allExpandFlow)
+                            // todo contentType
+                            // todo key
+                            // todo paging
                         }
                     }
                 }
@@ -387,7 +390,6 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val lazyListState = rememberLazyListState()
-    val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "LazyRow（animateScrollToItem）", allExpandFlow, padding = 20.dp) {
         Row {
@@ -400,11 +402,11 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                         }
                     }
                 },
-                enabled = itemIndexState.value > 0
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = "back"
+                    painter = painterResource(id = R.drawable.ic_navigate_before),
+                    contentDescription = "before"
                 )
             }
             LazyRow(
@@ -412,7 +414,6 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                     .fillMaxWidth()
                     .background(Color.Red.copy(alpha = 0.5f))
                     .weight(1f),
-                userScrollEnabled = false,
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -434,11 +435,11 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                         }
                     }
                 },
-                enabled = itemIndexState.value < list.size - 1
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_forward),
-                    contentDescription = "forward",
+                    painter = painterResource(id = R.drawable.ic_navigate_next),
+                    contentDescription = "next",
                 )
             }
         }

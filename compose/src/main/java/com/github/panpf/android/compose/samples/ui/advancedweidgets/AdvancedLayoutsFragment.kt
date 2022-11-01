@@ -30,8 +30,8 @@ class AdvancedLayoutsFragment : ToolbarFragment() {
         val links = listOf(
             Link("LazyRow", R.id.action_advancedLayouts_lazyRowFragment),
             Link("LazyColumn", R.id.action_advancedLayouts_lazyColumnFragment),
-            Link("LazyList", R.id.action_advancedLayouts_lazyListFragment),
-            Link("LazyGrid", R.id.action_advancedLayouts_lazyGridFragment),
+            Link("LazyHorizontalGrid", R.id.action_advancedLayouts_lazyHorizontalGridFragment),
+            Link("LazyVerticalGrid", R.id.action_advancedLayouts_lazyVerticalGridFragment),
             Link("Card", R.id.action_advancedLayouts_cardFragment),
             Link("Pager", R.id.action_advancedLayouts_pagerFragment),
             Link("Drawer", R.id.action_advancedLayouts_drawerFragment),
