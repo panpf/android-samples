@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -82,6 +84,7 @@ class LazyVerticalGridFragment : ToolbarFragment() {
                             LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
                             LazyVerticalGridMultiTypeSample(allExpandFlow)
                             LazyVerticalGridSpanSample(allExpandFlow)
+                            LazyVerticalGridAnimateItemPlacementSample(allExpandFlow)
                         }
                     }
                 }
@@ -925,4 +928,75 @@ fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyVerticalGridSpanSamplePreview() {
     LazyVerticalGridSpanSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        mutableStateOf(
+            buildList {
+                repeat(49) {
+                    add((it + 1).toString())
+                }
+            }
+        )
+    }
+    ExpandableItem(
+        title = "LazyVerticalGrid（animateItemPlacement）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "点击 item 删除它，然后触发动画")
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(360.dp)
+                    .background(Color.Red.copy(alpha = 0.5f))
+                    .padding(2.dp)
+            ) {
+                itemsIndexed(
+                    items = items.value,
+                    key = { _, item -> item }
+                ) { index, item ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .background(colors[index % colors.size])
+                            .animateItemPlacement()
+                            .clickable {
+                                items.value = items.value
+                                    .toMutableList()
+                                    .apply {
+                                        remove(item)
+                                    }
+                                    .toList()
+                            },
+                    ) {
+                        Text(
+                            text = item,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridAnimateItemPlacementSamplePreview() {
+    LazyVerticalGridAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }

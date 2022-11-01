@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +27,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -72,6 +75,8 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnScrollInProgressSample(allExpandFlow)
                             LazyColumnAnimateScrollToItemSample(allExpandFlow)
                             LazyColumnMultiTypeSample(allExpandFlow)
+                            LazyColumnAnimateItemPlacementSample(allExpandFlow)
+                            // todo stickyHeader
                         }
                     }
                 }
@@ -535,4 +540,51 @@ fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnMultiTypeSamplePreview() {
     LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        mutableStateOf(
+            listOf(
+                "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+                "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+            ).mapIndexed { index, item -> "$index:$item" }
+        )
+    }
+    ExpandableItem(title = "LazyColumn（animateItemPlacement）", allExpandFlow, padding = 20.dp) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "点击 item 删除它，然后触发动画")
+            LazyColumn(
+                modifier = Modifier
+                    .height(240.dp)
+                    .width(100.dp)
+                    .background(Color.Red.copy(alpha = 0.5f))
+            ) {
+                itemsIndexed(
+                    items = list.value,
+                    key = { _, item -> item }
+                ) { _, item ->
+                    Chip(
+                        onClick = {
+                            list.value = list.value.toMutableList().apply {
+                                remove(item)
+                            }.toList()
+                        },
+                        modifier = Modifier.animateItemPlacement()
+                    ) {
+                        Text(text = item)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnAnimateItemPlacementSamplePreview() {
+    LazyColumnAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }
