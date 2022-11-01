@@ -73,6 +73,7 @@ class LazyHorizontalGridFragment : ToolbarFragment() {
                             LazyHorizontalGridSample(allExpandFlow)
                             LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
                             LazyHorizontalGridContentPaddingSample(allExpandFlow)
+                            LazyHorizontalGridItemSpacedSample(allExpandFlow)
                             LazyHorizontalGridReverseLayoutSample(allExpandFlow)
                             LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
                             LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
@@ -272,6 +273,61 @@ fun LazyHorizontalGridContentPaddingSamplePreview() {
 
 
 @Composable
+fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
+    ExpandableItem(
+        title = "LazyHorizontalGrid（ItemSpaced）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(Color.Red.copy(alpha = 0.5f))
+                .padding(2.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            itemsIndexed(items) { index, item ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = item,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyHorizontalGridItemSpacedSamplePreview() {
+    LazyHorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
 fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(
@@ -366,7 +422,6 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
-                        verticalArrangement = arrangement?.let { Arrangement.Top } ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(

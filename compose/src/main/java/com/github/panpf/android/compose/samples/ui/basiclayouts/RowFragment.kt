@@ -53,6 +53,7 @@ class RowFragment : ToolbarFragment() {
                         ExpandableLayout { allExpandFlow ->
                             RowSample(allExpandFlow)
                             RowFullSample(allExpandFlow)
+                            RowItemSpacedSample(allExpandFlow)
                             RowHorizontalArrangementSample(allExpandFlow)
                             RowVerticalAlignmentSample(allExpandFlow)
                             RowWeightSample(allExpandFlow)
@@ -114,6 +115,32 @@ fun RowFullSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun RowFullSamplePreview() {
     RowFullSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Red.copy(alpha = 0.5f)),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
+                Chip(onClick = { }) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun RowItemSpacedSamplePreview() {
+    RowItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

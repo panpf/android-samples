@@ -51,6 +51,7 @@ class ColumnFragment : ToolbarFragment() {
                         ExpandableLayout { allExpandFlow ->
                             ColumnSample(allExpandFlow)
                             ColumnFullSample(allExpandFlow)
+                            ColumnItemSpacedSample(allExpandFlow)
                             ColumnVerticalArrangementSample(allExpandFlow)
                             ColumnHorizontalAlignmentSample(allExpandFlow)
                             ColumnWeightSample(allExpandFlow)
@@ -112,6 +113,32 @@ fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun ColumnFullSamplePreview() {
     ColumnFullSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+        Column(
+            modifier = Modifier
+                .height(200.dp)
+                .background(Color.Red.copy(alpha = 0.5f)),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技", "健\n身", "游\n戏", "文\n学").forEach {
+                Chip(onClick = { }) {
+                    Text(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ColumnItemSpacedSamplePreview() {
+    ColumnItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

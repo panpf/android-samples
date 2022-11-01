@@ -65,6 +65,7 @@ class LazyRowFragment : ToolbarFragment() {
                         ExpandableLayout { allExpandFlow ->
                             LazyRowSample(allExpandFlow)
                             LazyRowContentPaddingSample(allExpandFlow)
+                            LazyRowItemSpacedSample(allExpandFlow)
                             LazyRowReverseLayoutSample(allExpandFlow)
                             LazyRowHorizontalArrangementSample(allExpandFlow)
                             LazyRowVerticalAlignmentSample(allExpandFlow)
@@ -142,6 +143,38 @@ fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyRowContentPaddingSamplePreview() {
     LazyRowContentPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    ExpandableItem(title = "LazyRow（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Red.copy(alpha = 0.5f)),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            itemsIndexed(list) { index, item ->
+                Chip(onClick = { }) {
+                    Text(text = "$index:$item")
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyRowItemSpacedSamplePreview() {
+    LazyRowItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

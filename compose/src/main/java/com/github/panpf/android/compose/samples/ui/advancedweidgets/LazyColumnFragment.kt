@@ -63,6 +63,7 @@ class LazyColumnFragment : ToolbarFragment() {
                         ExpandableLayout { allExpandFlow ->
                             LazyColumnSample(allExpandFlow)
                             LazyColumnContentPaddingSample(allExpandFlow)
+                            LazyColumnItemSpacedSample(allExpandFlow)
                             LazyColumnReverseLayoutSample(allExpandFlow)
                             LazyColumnVerticalArrangementSample(allExpandFlow)
                             LazyColumnHorizontalAlignmentSample(allExpandFlow)
@@ -142,6 +143,39 @@ fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnContentPaddingSamplePreview() {
     LazyColumnContentPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    ExpandableItem(title = "LazyColumn（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+        LazyColumn(
+            modifier = Modifier
+                .height(240.dp)
+                .width(100.dp)
+                .background(Color.Red.copy(alpha = 0.5f)),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            itemsIndexed(list) { index, item ->
+                Chip(onClick = { }) {
+                    Text(text = "$index:$item")
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnItemSpacedSamplePreview() {
+    LazyColumnItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
