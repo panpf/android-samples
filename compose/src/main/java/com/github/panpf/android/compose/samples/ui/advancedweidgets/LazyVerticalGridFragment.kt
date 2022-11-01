@@ -20,9 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -48,6 +50,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.ceil
 
 class LazyVerticalGridFragment : ToolbarFragment() {
 
@@ -76,9 +79,8 @@ class LazyVerticalGridFragment : ToolbarFragment() {
                             LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow)
                             LazyVerticalGridScrollInProgressSample(allExpandFlow)
                             LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
-                            // todo contentType
-                            // todo key
-                            // todo span
+                            LazyVerticalGridMultiTypeSample(allExpandFlow)
+                            LazyVerticalGridSpanSample(allExpandFlow)
                             // todo paging
                         }
                     }
@@ -681,4 +683,147 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyVerticalGridAnimateScrollToItemSamplePreview() {
     LazyVerticalGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+    val colors = listOf(
+        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+        Color.Yellow, Color.Blue, Color.Green, Color.Gray
+    ).map { it.copy(alpha = 0.5f) }
+    val items = buildList<Any> {
+        repeat(50) {
+            add(it.toString())
+        }
+    }.toMutableList().apply {
+        set(1, R.drawable.ic_navigate_before)
+        set(3, R.drawable.ic_add)
+        set(10, R.drawable.ic_games)
+        set(17, R.drawable.ic_expand_more)
+        set(18, R.drawable.ic_check)
+        set(40, R.drawable.ic_info)
+    }.toList()
+    ExpandableItem(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .background(Color.Red.copy(alpha = 0.5f))
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items = items,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        is Int -> 1
+                        else -> 2
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                                .background(colors[index % colors.size])
+                        ) {
+                            Text(
+                                text = item,
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                    is Int -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                        ) {
+                            FilledTonalIconButton(
+                                onClick = { },
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = item),
+                                    contentDescription = "icon"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridMultiTypeSamplePreview() {
+    LazyVerticalGridMultiTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
+    val colors = listOf(
+        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+        Color.Yellow, Color.Blue, Color.Green, Color.Gray
+    ).map { it.copy(alpha = 0.5f) }
+    val items = buildList {
+        repeat(50) {
+            add(it.toString())
+        }
+    }
+    ExpandableItem(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .background(Color.Red.copy(alpha = 0.5f))
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items,
+                span = { index, _ ->
+                    when (index) {
+                        3 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        7 -> GridItemSpan(maxLineSpan)
+                        15 -> GridItemSpan(maxLineSpan)
+                        24 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        35 -> GridItemSpan(maxLineSpan)
+                        36 -> GridItemSpan(maxLineSpan)
+                        43 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        44 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        else -> GridItemSpan(1)
+                    }
+                }
+            ) { index, item ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = item,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridSpanSamplePreview() {
+    LazyVerticalGridSpanSample(remember { MutableStateFlow(true) })
 }

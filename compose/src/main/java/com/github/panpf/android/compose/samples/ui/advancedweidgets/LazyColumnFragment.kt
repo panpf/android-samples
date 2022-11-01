@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -69,8 +70,7 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnUserVisibleItemIndexSample(allExpandFlow)
                             LazyColumnScrollInProgressSample(allExpandFlow)
                             LazyColumnAnimateScrollToItemSample(allExpandFlow)
-                            // todo contentType
-                            // todo key
+                            LazyColumnMultiTypeSample(allExpandFlow)
                             // todo paging
                         }
                     }
@@ -449,4 +449,56 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnAnimateScrollToItemSamplePreview() {
     LazyColumnAnimateScrollToItemSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf<Any>(
+            "数码", R.drawable.ic_navigate_before, "汽车", "摄影", R.drawable.ic_navigate_next,
+            R.drawable.ic_expand_more, "舞蹈", R.drawable.ic_check, "二次元", "音乐", "科技", "健身",
+            "游戏", R.drawable.ic_clear, "文学", R.drawable.ic_close, "运动", "生活", "美食", "动物",
+            R.drawable.ic_games, "时尚"
+        )
+    }
+    ExpandableItem(title = "LazyColumn（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyColumn(
+            modifier = Modifier
+                .height(240.dp)
+                .width(100.dp)
+                .background(Color.Red.copy(alpha = 0.5f)),
+        ) {
+            itemsIndexed(
+                items = list,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        is Int -> 1
+                        else -> 2
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Chip(onClick = { }) {
+                            Text(text = "$index:$item")
+                        }
+                    }
+                    is Int -> {
+                        FilledTonalIconButton(onClick = { }) {
+                            Image(painter = painterResource(id = item), contentDescription = "icon")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnMultiTypeSamplePreview() {
+    LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
 }
