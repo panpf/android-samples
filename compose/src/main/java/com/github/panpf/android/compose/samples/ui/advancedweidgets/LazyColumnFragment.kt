@@ -71,7 +71,6 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnScrollInProgressSample(allExpandFlow)
                             LazyColumnAnimateScrollToItemSample(allExpandFlow)
                             LazyColumnMultiTypeSample(allExpandFlow)
-                            // todo paging
                         }
                     }
                 }

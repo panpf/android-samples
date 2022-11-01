@@ -94,13 +94,17 @@ class LazyHorizontalGridFragment : ToolbarFragment() {
 
 @Composable
 fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem(title = "LazyHorizontalGrid", allExpandFlow, padding = 20.dp) {
@@ -139,13 +143,17 @@ fun LazyHorizontalGridSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     val gridHeight = remember { mutableStateOf(200.dp) }
@@ -211,13 +219,17 @@ fun LazyHorizontalGridHorizontalGridsDynamicCellsSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem(
@@ -261,13 +273,17 @@ fun LazyHorizontalGridContentPaddingSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem(
@@ -311,13 +327,15 @@ fun LazyHorizontalGridReverseLayoutSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
     val items = buildList {
         repeat(9) {
-            add(it.toString())
+            add((it + 1).toString())
         }
     }
     ExpandableItem(
@@ -378,13 +396,15 @@ fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
     val items = buildList {
         repeat(9) {
-            add(it.toString())
+            add((it + 1).toString())
         }
     }
     ExpandableItem(
@@ -444,13 +464,17 @@ fun LazyHorizontalGridVerticalArrangementSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem(
@@ -494,13 +518,17 @@ fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     val lazyListState = rememberLazyGridState(3)
@@ -551,13 +579,17 @@ fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     val lazyListState = rememberLazyGridState(3)
@@ -606,13 +638,17 @@ fun LazyHorizontalGridScrollInProgressSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     val lazyListState = rememberLazyGridState(3)
@@ -692,13 +728,15 @@ fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
     val items = buildList<Any> {
-        repeat(50) {
-            add(it.toString())
+        repeat(49) {
+            add((it + 1).toString())
         }
     }.toMutableList().apply {
         set(1, R.drawable.ic_navigate_before)
@@ -775,13 +813,17 @@ fun LazyHorizontalGridMultiTypeSamplePreview() {
 
 @Composable
 fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
-    val colors = listOf(
-        Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
-        Color.Yellow, Color.Blue, Color.Green, Color.Gray
-    ).map { it.copy(alpha = 0.5f) }
-    val items = buildList {
-        repeat(50) {
-            add(it.toString())
+    val colors = remember {
+        listOf(
+            Color.Red, Color.Black, Color.White, Color.Magenta, Color.Cyan,
+            Color.Yellow, Color.Blue, Color.Green, Color.Gray
+        ).map { it.copy(alpha = 0.5f) }
+    }
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {

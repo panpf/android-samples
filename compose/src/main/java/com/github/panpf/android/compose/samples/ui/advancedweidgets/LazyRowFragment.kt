@@ -73,7 +73,6 @@ class LazyRowFragment : ToolbarFragment() {
                             LazyRowScrollInProgressSample(allExpandFlow)
                             LazyRowAnimateScrollToItemSample(allExpandFlow)
                             LazyRowMultiTypeSample(allExpandFlow)
-                            // todo paging
                         }
                     }
                 }
