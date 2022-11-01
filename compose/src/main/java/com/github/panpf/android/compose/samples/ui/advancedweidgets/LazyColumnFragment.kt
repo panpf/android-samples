@@ -190,6 +190,7 @@ fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
+                null to "Space",
                 Arrangement.SpaceBetween to "Space\nBetween",
                 Arrangement.SpaceAround to "Space\nAround",
                 Arrangement.SpaceEvenly to "Space\nEvenly",
@@ -200,7 +201,7 @@ fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(240.dp)
                             .background(Color.Red.copy(alpha = 0.5f)),
-                        verticalArrangement = arrangement
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
                             Chip(onClick = { }) {

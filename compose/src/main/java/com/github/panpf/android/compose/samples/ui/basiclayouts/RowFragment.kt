@@ -126,6 +126,7 @@ fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
+                null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -138,7 +139,7 @@ fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Red.copy(alpha = 0.5f)),
-                    horizontalArrangement = arrangement
+                    horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                         Chip(onClick = { }) {

@@ -350,6 +350,7 @@ fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
+                null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -363,7 +364,8 @@ fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                             .height(200.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
-                        verticalArrangement = arrangement
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = arrangement?.let { Arrangement.Start } ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(
@@ -416,6 +418,7 @@ fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
+                null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -429,7 +432,7 @@ fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                             .height(200.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
-                        horizontalArrangement = arrangement
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(

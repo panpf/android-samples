@@ -348,6 +348,7 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
+                null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -364,7 +365,8 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
                             .height(110.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
-                        horizontalArrangement = arrangement
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
+                        verticalArrangement = arrangement?.let { Arrangement.Top } ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(
@@ -417,6 +419,7 @@ fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
+                null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -433,7 +436,7 @@ fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                             .height(110.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
                             .padding(2.dp),
-                        verticalArrangement = arrangement
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(
