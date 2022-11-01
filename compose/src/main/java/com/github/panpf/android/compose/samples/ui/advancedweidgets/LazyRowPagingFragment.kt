@@ -55,7 +55,7 @@ class LazyRowPagingFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "LazyRowPaging"
+        toolbar.title = "LazyRow - Paging"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -66,48 +66,6 @@ class LazyRowPagingFragment : ToolbarFragment() {
                         LazyRowPagingSample(viewModel.pagingFlow)
                     }
                 }
-            }
-        }
-    }
-}
-
-class LazyRowPagingViewModel(application: Application) : AndroidViewModel(application) {
-    val pagingFlow = Pager(
-        config = PagingConfig(
-            pageSize = 40,
-            initialLoadSize = 80,
-            enablePlaceholders = false,
-        ),
-        initialKey = 0,
-        pagingSourceFactory = {
-            LazyRowPagingPagingSource()
-        }
-    ).flow.cachedIn(viewModelScope)
-
-    private class LazyRowPagingPagingSource : PagingSource<Int, String>() {
-        override fun getRefreshKey(state: PagingState<Int, String>): Int {
-            return 0
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
-            return withContext(Dispatchers.IO) {
-                delay(2000)
-                val start = params.key ?: 0
-                val loadSize = params.loadSize
-                val time = SimpleDateFormat("HH:mm:ss").format(Date())
-                val list = buildList {
-                    repeat(loadSize) {
-                        val index = start + it
-                        if (index < 199) {
-                            add("${(index + 1)}. $time")
-                        }
-                    }
-                }
-                val nextKey = (start + loadSize).let {
-                    if (it < 199) it else null
-                }
-                LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
             }
         }
     }
@@ -173,4 +131,46 @@ fun LazyRowPagingItem(item: String, bgColor: Color) {
 @Composable
 fun LazyRowPagingItemPreview() {
     LazyRowPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
+}
+
+class LazyRowPagingViewModel(application: Application) : AndroidViewModel(application) {
+    val pagingFlow = Pager(
+        config = PagingConfig(
+            pageSize = 40,
+            initialLoadSize = 80,
+            enablePlaceholders = false,
+        ),
+        initialKey = 0,
+        pagingSourceFactory = {
+            LazyRowPagingPagingSource()
+        }
+    ).flow.cachedIn(viewModelScope)
+
+    private class LazyRowPagingPagingSource : PagingSource<Int, String>() {
+        override fun getRefreshKey(state: PagingState<Int, String>): Int {
+            return 0
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
+            return withContext(Dispatchers.IO) {
+                delay(2000)
+                val start = params.key ?: 0
+                val loadSize = params.loadSize
+                val time = SimpleDateFormat("HH:mm:ss").format(Date())
+                val list = buildList {
+                    repeat(loadSize) {
+                        val index = start + it
+                        if (index < 199) {
+                            add("${(index + 1)}. $time")
+                        }
+                    }
+                }
+                val nextKey = (start + loadSize).let {
+                    if (it < 199) it else null
+                }
+                LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
+            }
+        }
+    }
 }

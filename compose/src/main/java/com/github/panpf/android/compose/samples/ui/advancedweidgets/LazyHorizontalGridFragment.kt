@@ -83,7 +83,6 @@ class LazyHorizontalGridFragment : ToolbarFragment() {
                             LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
                             LazyHorizontalGridMultiTypeSample(allExpandFlow)
                             LazyHorizontalGridSpanSample(allExpandFlow)
-                            // todo paging
                         }
                     }
                 }

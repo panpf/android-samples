@@ -56,7 +56,6 @@ class ColumnFragment : ToolbarFragment() {
                             ColumnHorizontalAlignmentSample(allExpandFlow)
                             ColumnWeightSample(allExpandFlow)
                             ColumnAlignSample(allExpandFlow)
-                            // todo alignBy
                         }
                     }
                 }

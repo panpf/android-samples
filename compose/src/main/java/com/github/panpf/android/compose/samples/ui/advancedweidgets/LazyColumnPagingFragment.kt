@@ -57,7 +57,7 @@ class LazyColumnPagingFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "LazyColumnPaging"
+        toolbar.title = "LazyColumn - Paging"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -72,49 +72,6 @@ class LazyColumnPagingFragment : ToolbarFragment() {
         }
     }
 }
-
-class LazyColumnPagingViewModel(application: Application) : AndroidViewModel(application) {
-    val pagingFlow = Pager(
-        config = PagingConfig(
-            pageSize = 40,
-            initialLoadSize = 80,
-            enablePlaceholders = false,
-        ),
-        initialKey = 0,
-        pagingSourceFactory = {
-            LazyColumnPagingPagingSource()
-        }
-    ).flow.cachedIn(viewModelScope)
-
-    private class LazyColumnPagingPagingSource : PagingSource<Int, String>() {
-        override fun getRefreshKey(state: PagingState<Int, String>): Int {
-            return 0
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
-            return withContext(Dispatchers.IO) {
-                delay(2000)
-                val start = params.key ?: 0
-                val loadSize = params.loadSize
-                val time = SimpleDateFormat("HH:mm:ss").format(Date())
-                val list = buildList {
-                    repeat(loadSize) {
-                        val index = start + it
-                        if (index < 199) {
-                            add("${(index + 1)}. $time")
-                        }
-                    }
-                }
-                val nextKey = (start + loadSize).let {
-                    if (it < 199) it else null
-                }
-                LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
-            }
-        }
-    }
-}
-
 
 @Composable
 fun LazyColumnPagingSample(pagingFlow: Flow<PagingData<String>>) {
@@ -173,4 +130,46 @@ fun LazyColumnPagingItem(item: String, bgColor: Color) {
 @Composable
 fun LazyColumnPagingItemPreview() {
     LazyColumnPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
+}
+
+class LazyColumnPagingViewModel(application: Application) : AndroidViewModel(application) {
+    val pagingFlow = Pager(
+        config = PagingConfig(
+            pageSize = 40,
+            initialLoadSize = 80,
+            enablePlaceholders = false,
+        ),
+        initialKey = 0,
+        pagingSourceFactory = {
+            LazyColumnPagingPagingSource()
+        }
+    ).flow.cachedIn(viewModelScope)
+
+    private class LazyColumnPagingPagingSource : PagingSource<Int, String>() {
+        override fun getRefreshKey(state: PagingState<Int, String>): Int {
+            return 0
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
+            return withContext(Dispatchers.IO) {
+                delay(2000)
+                val start = params.key ?: 0
+                val loadSize = params.loadSize
+                val time = SimpleDateFormat("HH:mm:ss").format(Date())
+                val list = buildList {
+                    repeat(loadSize) {
+                        val index = start + it
+                        if (index < 199) {
+                            add("${(index + 1)}. $time")
+                        }
+                    }
+                }
+                val nextKey = (start + loadSize).let {
+                    if (it < 199) it else null
+                }
+                LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
+            }
+        }
+    }
 }

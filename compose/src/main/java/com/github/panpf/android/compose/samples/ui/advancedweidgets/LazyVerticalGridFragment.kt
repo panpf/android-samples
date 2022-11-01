@@ -82,7 +82,6 @@ class LazyVerticalGridFragment : ToolbarFragment() {
                             LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
                             LazyVerticalGridMultiTypeSample(allExpandFlow)
                             LazyVerticalGridSpanSample(allExpandFlow)
-                            // todo paging
                         }
                     }
                 }
