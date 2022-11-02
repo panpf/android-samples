@@ -37,6 +37,7 @@ class HomeFragment : ToolbarFragment() {
             Link("TouchEvent"),
             Link("Navigation"),
             Link("Custom"),
+            Link("Cases"),  // banner, swipe refresh
         )
         return ComposeView(inflater.context).apply {
             setContent {

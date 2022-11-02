@@ -75,10 +75,8 @@ class LazyRowPagingFragment : ToolbarFragment() {
 @Composable
 fun LazyRowPagingSample(pagingFlow: Flow<PagingData<String>>) {
     val colors = remember {
-        listOf(
-            Color.Red, Color.Black, Color.Magenta, Color.Cyan,
-            Color.Yellow, Color.Blue, Color.Green, Color.Gray
-        ).map { it.copy(alpha = 0.5f) }
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
     }
     val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
 //    val swipeRefreshState =

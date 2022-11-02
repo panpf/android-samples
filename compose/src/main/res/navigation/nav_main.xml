@@ -222,8 +222,15 @@
         android:id="@+id/advancedLayoutsFragment"
         android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.AdvancedLayoutsFragment">
         <action
-            android:id="@+id/action_advancedLayouts_pagerFragment"
-            app:destination="@id/pagerFragment"
+            android:id="@+id/action_advancedLayouts_horizontalPagerFragment"
+            app:destination="@id/horizontalPagerFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_advancedLayouts_verticalPagerFragment"
+            app:destination="@id/verticalPagerFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -474,8 +481,12 @@
         android:name="com.github.panpf.android.compose.samples.ui.basiclayouts.BoxFragment" />
 
     <fragment
-        android:id="@+id/pagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.PagerFragment" />
+        android:id="@+id/horizontalPagerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.HorizontalPagerFragment" />
+
+    <fragment
+        android:id="@+id/verticalPagerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.VerticalPagerFragment" />
 
     <fragment
         android:id="@+id/lazyRowFragment"
