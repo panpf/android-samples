@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -104,7 +106,8 @@ fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             itemsIndexed(list) { index, item ->
                 Chip(onClick = { }) {
@@ -135,7 +138,8 @@ fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
@@ -161,7 +165,8 @@ fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
@@ -193,7 +198,8 @@ fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             reverseLayout = true
         ) {
             itemsIndexed(list) { index, item ->
@@ -237,7 +243,8 @@ fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     LazyRow(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
@@ -284,7 +291,8 @@ fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         verticalAlignment = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
@@ -319,7 +327,8 @@ fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             userScrollEnabled = false,
             state = rememberLazyListState()
         ) {
@@ -357,7 +366,8 @@ fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -394,7 +404,8 @@ fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -447,7 +458,8 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp)
                     .weight(1f),
                 state = lazyListState
             ) {
@@ -503,7 +515,8 @@ fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
         ) {
             itemsIndexed(
                 items = list,
@@ -556,7 +569,8 @@ fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 contentPadding = PaddingValues(10.dp)
             ) {
                 itemsIndexed(
@@ -603,7 +617,8 @@ fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 state = lazyListState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp)
             ) {
                 itemsIndexed(list) { index, item ->
                     Chip(onClick = { }) {
@@ -671,7 +686,8 @@ fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             groupList.forEachIndexed { groupIndex, group ->
                 stickyHeader {

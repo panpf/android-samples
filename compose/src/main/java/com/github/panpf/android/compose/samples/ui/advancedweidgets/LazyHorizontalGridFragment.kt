@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -115,7 +116,7 @@ fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(items) { index, item ->
@@ -179,7 +180,7 @@ fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Bool
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(gridHeight.value)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 itemsIndexed(items) { index, item ->
@@ -240,7 +241,7 @@ fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
@@ -292,7 +293,7 @@ fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -345,7 +346,7 @@ fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             reverseLayout = true
         ) {
@@ -410,7 +411,7 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
                     ) {
@@ -478,7 +479,7 @@ fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(110.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
                             .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
@@ -532,7 +533,7 @@ fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             userScrollEnabled = false
         ) {
@@ -589,7 +590,7 @@ fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -646,7 +647,7 @@ fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -719,7 +720,7 @@ fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .weight(1f)
                     .height(200.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -789,7 +790,7 @@ fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(
@@ -867,7 +868,7 @@ fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(
@@ -938,7 +939,7 @@ fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 itemsIndexed(
@@ -1002,7 +1003,7 @@ fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 itemsIndexed(items) { index, item ->

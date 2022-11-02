@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Chip
@@ -79,7 +80,8 @@ fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数\n码", "汽\n车", "摄\n影").forEach {
                 Chip(onClick = { }) {
@@ -104,7 +106,8 @@ fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技").forEach {
                 Chip(onClick = { }) {
@@ -142,7 +145,9 @@ fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
                             .align(Alignment.CenterHorizontally)
                     )
                     FlowColumn(
-                        modifier = Modifier.background(Color.Red.copy(alpha = 0.5f)),
+                        modifier = Modifier
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         mainAxisSize = sizeMode
                     ) {
                         listOf("数\n码", "汽\n车", "摄\n影").forEach {
@@ -187,7 +192,8 @@ fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     FlowColumn(
                         modifier = Modifier
                             .height(200.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         mainAxisAlignment = alignment
                     ) {
                         listOf(
@@ -220,7 +226,8 @@ fun FlowColumnMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             mainAxisSpacing = 10.dp
         ) {
             listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐").forEach {
@@ -260,7 +267,8 @@ fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(200.dp)
                             .width(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         crossAxisAlignment = alignment  // todo 无效
                     ) {
                         listOf("数\n码", "汽\n车", "摄\n影").forEach {
@@ -289,7 +297,8 @@ fun FlowColumnCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             crossAxisSpacing = 16.dp
         ) {
             listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐").forEach {
@@ -335,7 +344,8 @@ fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     FlowColumn(
                         modifier = Modifier
                             .height(200.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         lastLineMainAxisAlignment = alignment
                     ) {
                         listOf(

@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
@@ -76,7 +77,8 @@ fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                 Chip(onClick = { }) {
@@ -101,7 +103,8 @@ fun FlowRowFullSample(allExpandFlow: Flow<Boolean>) {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
                 Chip(onClick = { }) {
@@ -133,7 +136,8 @@ fun FlowRowMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
                 }
                 Text(text = name)
                 FlowRow(
-                    modifier = Modifier.background(Color.Red.copy(alpha = 0.5f)),
+                    modifier = Modifier.border(2.dp, Color.Red)
+                        .padding(2.dp),
                     mainAxisSize = sizeMode
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
@@ -174,7 +178,8 @@ fun FlowRowMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Red.copy(alpha = 0.5f)),
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp),
                     mainAxisAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
@@ -202,7 +207,8 @@ fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             mainAxisSpacing = 10.dp
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
@@ -239,7 +245,8 @@ fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(80.dp)
-                        .background(Color.Red.copy(alpha = 0.5f)),
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp),
                     crossAxisAlignment = alignment  // todo 无效
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
@@ -267,7 +274,8 @@ fun FlowRowCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             crossAxisSpacing = 16.dp
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
@@ -306,7 +314,8 @@ fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Red.copy(alpha = 0.5f)),
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp),
                     lastLineMainAxisAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {

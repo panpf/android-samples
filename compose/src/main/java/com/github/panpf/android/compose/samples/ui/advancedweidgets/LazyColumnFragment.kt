@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -102,7 +103,8 @@ fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             itemsIndexed(list) { index, item ->
                 Chip(onClick = { }) {
@@ -134,7 +136,8 @@ fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
@@ -167,7 +170,8 @@ fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
@@ -200,7 +204,8 @@ fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             reverseLayout = true
         ) {
             itemsIndexed(list) { index, item ->
@@ -241,7 +246,8 @@ fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     LazyColumn(
                         modifier = Modifier
                             .height(240.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
@@ -282,7 +288,8 @@ fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(240.dp)
                             .width(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         horizontalAlignment = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
@@ -322,7 +329,8 @@ fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             userScrollEnabled = false,
             state = rememberLazyListState()
         ) {
@@ -361,7 +369,8 @@ fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -399,7 +408,8 @@ fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -453,7 +463,8 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f)),
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -509,7 +520,8 @@ fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
         ) {
             itemsIndexed(
                 items = list,
@@ -563,7 +575,8 @@ fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp)
             ) {
                 itemsIndexed(
                     items = list.value,
@@ -610,7 +623,8 @@ fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp)
             ) {
                 itemsIndexed(list) { index, item ->
                     Chip(onClick = { }) {
@@ -678,7 +692,8 @@ fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             groupList.forEachIndexed { groupIndex, group ->
                 stickyHeader {

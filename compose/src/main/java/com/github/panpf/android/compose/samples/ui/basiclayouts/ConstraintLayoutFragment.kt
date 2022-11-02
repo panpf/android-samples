@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -71,7 +73,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Text(
@@ -135,7 +138,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Text(
@@ -192,7 +196,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Text(
@@ -224,7 +229,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Text(
@@ -256,7 +262,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Text(
@@ -288,7 +295,8 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Text(
@@ -362,7 +370,8 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     val (text1, text2, text3, text4) = createRefs()
                     Text(
@@ -471,7 +480,8 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                     ConstraintLayout(
                         modifier = Modifier
                             .size(160.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp)
                     ) {
                         val guideLine = if ("start" == it) {
                             createGuidelineFromStart(0.3f)
@@ -530,7 +540,8 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                     ConstraintLayout(
                         modifier = Modifier
                             .size(160.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp)
                     ) {
                         val guideLine = if ("top" == it) {
                             createGuidelineFromTop(0.3f)
@@ -611,7 +622,8 @@ fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
                         ConstraintLayout(
                             modifier = Modifier
                                 .size(160.dp)
-                                .background(Color.Red.copy(alpha = 0.5f))
+                                .border(2.dp, Color.Red)
+                                .padding(2.dp)
                         ) {
                             val (action1, action2, action3, action4) = createRefs()
                             if (direction == "Vertical") {

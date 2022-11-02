@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -69,7 +70,7 @@ fun BoxSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 Text(
@@ -82,7 +83,7 @@ fun BoxSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 Text(
@@ -101,7 +102,7 @@ fun BoxSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 Text(
@@ -120,7 +121,7 @@ fun BoxSample(allExpandFlow: Flow<Boolean>) {
                     text = "",
                     modifier = Modifier
                         .size(20.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .background(Color.Magenta.copy(alpha = 0.5f))
                 )
             }
         }
@@ -154,7 +155,7 @@ fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
                             .padding(2.dp),
                         contentAlignment = alignment
                     ) {
@@ -174,7 +175,7 @@ fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             text = "",
                             modifier = Modifier
                                 .size(20.dp)
-                                .background(Color.Red.copy(alpha = 0.5f))
+                                .background(Color.Magenta.copy(alpha = 0.5f))
                         )
                     }
                 }
@@ -213,7 +214,7 @@ fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .background(Color.Red.copy(alpha = 0.5f))
+                                .border(2.dp, Color.Red)
                                 .padding(2.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -233,7 +234,7 @@ fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
                                 text = "",
                                 modifier = Modifier
                                     .size(20.dp)
-                                    .background(Color.Red.copy(alpha = 0.5f))
+                                    .background(Color.Magenta.copy(alpha = 0.5f))
                                     .align(alignment)
                             )
                         }
@@ -261,7 +262,7 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -275,7 +276,7 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
 
                 Box(
                     modifier = Modifier
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -294,7 +295,7 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -307,7 +308,7 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
                 }
                 Box(
                     modifier = Modifier
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
                         .height(100.dp)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center

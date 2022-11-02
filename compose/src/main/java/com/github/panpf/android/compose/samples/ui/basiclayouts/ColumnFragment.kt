@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
@@ -72,7 +73,8 @@ fun ColumnSample(allExpandFlow: Flow<Boolean>) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数\n码", "汽\n车", "摄\n影").forEach {
                 Chip(onClick = { }) {
@@ -97,7 +99,8 @@ fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技", "健\n身", "游\n戏", "文\n学").forEach {
                 Chip(onClick = { }) {
@@ -122,7 +125,8 @@ fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技", "健\n身", "游\n戏", "文\n学").forEach {
@@ -165,7 +169,8 @@ fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     Column(
                         modifier = Modifier
                             .height(200.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         listOf("数\n码", "汽\n车", "摄\n影").forEach {
@@ -208,7 +213,8 @@ fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(200.dp)
                             .width(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f)),
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp),
                         horizontalAlignment = alignment
                     ) {
                         listOf("数\n码", "汽\n车", "摄\n影").forEach {
@@ -243,7 +249,8 @@ fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
                 Column(
                     modifier = Modifier
                         .height(200.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     list.forEach { (tag, weight) ->
                         Chip(
@@ -289,7 +296,8 @@ fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(200.dp)
                             .width(100.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
+                            .padding(2.dp)
                     ) {
                         Chip(
                             onClick = { },

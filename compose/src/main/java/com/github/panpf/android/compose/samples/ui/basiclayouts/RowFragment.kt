@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
@@ -74,7 +75,8 @@ fun RowSample(allExpandFlow: Flow<Boolean>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                 Chip(onClick = { }) {
@@ -99,7 +101,8 @@ fun RowFullSample(allExpandFlow: Flow<Boolean>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
                 Chip(onClick = { }) {
@@ -124,7 +127,8 @@ fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red.copy(alpha = 0.5f)),
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
@@ -164,7 +168,8 @@ fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Red.copy(alpha = 0.5f)),
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp),
                     horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
@@ -203,7 +208,8 @@ fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
-                        .background(Color.Red.copy(alpha = 0.5f)),
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp),
                     verticalAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
@@ -241,7 +247,8 @@ fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     list.forEach { (tag, weight) ->
                         Chip(
@@ -284,7 +291,8 @@ fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(70.dp)
-                        .background(Color.Red.copy(alpha = 0.5f))
+                        .border(2.dp, Color.Red)
+                        .padding(2.dp)
                 ) {
                     Chip(
                         onClick = { },

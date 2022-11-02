@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -114,7 +115,7 @@ fun LazyVerticalGridSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(items) { index, item ->
@@ -167,7 +168,7 @@ fun LazyVerticalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolea
                 modifier = Modifier
                     .width(gridHeight.value)
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
@@ -242,7 +243,7 @@ fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
@@ -294,7 +295,7 @@ fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -347,7 +348,7 @@ fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             reverseLayout = true
         ) {
@@ -409,7 +410,7 @@ fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(110.dp)
                             .height(200.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
                             .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
                     ) {
@@ -474,7 +475,7 @@ fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(110.dp)
                             .height(200.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .border(2.dp, Color.Red)
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
@@ -528,7 +529,7 @@ fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp),
             userScrollEnabled = false
         ) {
@@ -585,7 +586,7 @@ fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -642,7 +643,7 @@ fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -715,7 +716,7 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -785,7 +786,7 @@ fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(
@@ -863,7 +864,7 @@ fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .background(Color.Red.copy(alpha = 0.5f))
+                .border(2.dp, Color.Red)
                 .padding(2.dp)
         ) {
             itemsIndexed(
@@ -934,7 +935,8 @@ fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp)
                     .padding(2.dp)
             ) {
                 itemsIndexed(
@@ -998,7 +1000,7 @@ fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .border(2.dp, Color.Red)
                     .padding(2.dp)
             ) {
                 itemsIndexed(items) { index, item ->
