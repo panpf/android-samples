@@ -9,14 +9,17 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -78,7 +81,7 @@ class LazyRowFragment : ToolbarFragment() {
                             LazyRowMultiTypeSample(allExpandFlow)
                             LazyRowAnimateItemPlacementSample(allExpandFlow)
                             LazyRowLayoutInfoSample(allExpandFlow)
-                            // todo stickyHeader
+                            LazyRowStickerHeaderSample(allExpandFlow)
                         }
                     }
                 }
@@ -647,4 +650,52 @@ fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyRowLayoutInfoSamplePreview() {
     LazyRowLayoutInfoSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
+    val groupList = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        ).chunked(5).mapIndexed { index, strings ->
+            val start = (index * 5) + 1
+            val groupName = "$start - ${start + strings.size - 1}"
+            groupName to strings
+        }
+    }
+    ExpandableItem(title = "LazyRow（stickyHeader）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color.Red.copy(alpha = 0.5f))
+        ) {
+            groupList.forEachIndexed { groupIndex, group ->
+                stickyHeader {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(70.dp)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
+                    ) {
+                        Text(text = group.first, modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+                itemsIndexed(group.second) { itemIndex, item ->
+                    Chip(onClick = { }) {
+                        Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyRowStickerHeaderSamplePreview() {
+    LazyRowStickerHeaderSample(remember { MutableStateFlow(true) })
 }

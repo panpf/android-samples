@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -77,7 +78,7 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnMultiTypeSample(allExpandFlow)
                             LazyColumnAnimateItemPlacementSample(allExpandFlow)
                             LazyColumnLayoutInfoSample(allExpandFlow)
-                            // todo stickyHeader
+                            LazyColumnStickerHeaderSample(allExpandFlow)
                         }
                     }
                 }
@@ -656,4 +657,51 @@ fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnLayoutInfoSamplePreview() {
     LazyColumnLayoutInfoSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
+    val groupList = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        ).chunked(5).mapIndexed { index, strings ->
+            val start = (index * 5) + 1
+            val groupName = "$start - ${start + strings.size - 1}"
+            groupName to strings
+        }
+    }
+    ExpandableItem(title = "LazyColumn（stickyHeader）", allExpandFlow, padding = 20.dp) {
+        LazyColumn(
+            modifier = Modifier
+                .height(240.dp)
+                .width(100.dp)
+                .background(Color.Red.copy(alpha = 0.5f))
+        ) {
+            groupList.forEachIndexed { groupIndex, group ->
+                stickyHeader {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
+                    ) {
+                        Text(text = group.first, modifier = Modifier.padding(10.dp))
+                    }
+                }
+                itemsIndexed(group.second) { itemIndex, item ->
+                    Chip(onClick = { }) {
+                        Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnStickerHeaderSamplePreview() {
+    LazyColumnStickerHeaderSample(remember { MutableStateFlow(true) })
 }
