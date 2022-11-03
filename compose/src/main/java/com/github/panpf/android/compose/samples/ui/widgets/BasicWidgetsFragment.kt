@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui
+package com.github.panpf.android.compose.samples.ui.widgets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class BasicWidgetsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,27 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Basic Widgets"
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Senior Widgets", R.id.action_home_seniorWidgetsFragment),
-            Link("Senior Layouts", R.id.action_home_seniorLayoutsFragment),
-            Link("Animation"),
-            Link("Theme"),
-            Link("TouchEvent"),
-            Link("Navigation"),
-            Link("Custom"),
-            Link("Cases"),  // banner, swipe refresh
+            Link("Text", R.id.action_basicWidgets_textFragment),
+            Link("TextField", R.id.action_basicWidgets_textFieldFragment),
+            Link("Button", R.id.action_basicWidgets_buttonFragment),
+            Link("IconButton", R.id.action_basicWidgets_iconButtonFragment),
+            Link("IconToggleButton", R.id.action_basicWidgets_iconToggleButtonFragment),
+            Link("FloatingActionButton", R.id.action_basicWidgets_floatingActionButtonFragment),
+            Link("RadioButton", R.id.action_basicWidgets_radioButtonFragment),
+            Link("Checkbox", R.id.action_basicWidgets_checkboxFragment),
+            Link("Switch", R.id.action_basicWidgets_switchFragment),
+            Link("Icon", R.id.action_basicWidgets_iconFragment),
+            Link("Image", R.id.action_basicWidgets_imageFragment),
+            Link("AsyncImage - Coil", R.id.action_basicWidgets_asyncImageCoilFragment),
+            Link("AsyncImage - Sketch", R.id.action_basicWidgets_asyncImageSketchFragment),
+            Link("Slider", R.id.action_basicWidgets_sliderFragment),
+            Link("ProgressIndicator", R.id.action_basicWidgets_progressIndicatorFragment),
+            Link("Badge", R.id.action_basicWidgets_badgeFragment),
+            Link("Divider", R.id.action_basicWidgets_dividerFragment),
+            Link("Snackbar", R.id.action_basicWidgets_snackbarFragment),
+            Link("Chip", R.id.action_basicWidgets_chipFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

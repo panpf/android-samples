@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui
+package com.github.panpf.android.compose.samples.ui.layouts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class SeniorLayoutsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,15 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Senior Layouts"
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Senior Widgets", R.id.action_home_seniorWidgetsFragment),
-            Link("Senior Layouts", R.id.action_home_seniorLayoutsFragment),
-            Link("Animation"),
-            Link("Theme"),
-            Link("TouchEvent"),
-            Link("Navigation"),
-            Link("Custom"),
-            Link("Cases"),  // banner, swipe refresh
+            Link("LazyRow", R.id.action_seniorLayouts_lazyRowFragment),
+            Link("LazyColumn", R.id.action_seniorLayouts_lazyColumnFragment),
+            Link("LazyHorizontalGrid", R.id.action_seniorLayouts_lazyHorizontalGridFragment),
+            Link("LazyVerticalGrid", R.id.action_seniorLayouts_lazyVerticalGridFragment),
+            Link("HorizontalPager", R.id.action_seniorLayouts_horizontalPagerFragment),
+            Link("VerticalPager", R.id.action_seniorLayouts_verticalPagerFragment),
+            Link("Drawer", R.id.action_seniorLayouts_drawerFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

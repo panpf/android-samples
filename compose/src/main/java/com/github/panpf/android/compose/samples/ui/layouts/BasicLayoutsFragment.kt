@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui
+package com.github.panpf.android.compose.samples.ui.layouts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class BasicLayoutsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,14 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Basic Layouts"
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Senior Widgets", R.id.action_home_seniorWidgetsFragment),
-            Link("Senior Layouts", R.id.action_home_seniorLayoutsFragment),
-            Link("Animation"),
-            Link("Theme"),
-            Link("TouchEvent"),
-            Link("Navigation"),
-            Link("Custom"),
-            Link("Cases"),  // banner, swipe refresh
+            Link("Row", R.id.action_basicLayouts_rowFragment),
+            Link("FlowRow", R.id.action_basicLayouts_flowRowFragment),
+            Link("Column", R.id.action_basicLayouts_columnFragment),
+            Link("FlowColumn", R.id.action_basicLayouts_flowColumnFragment),
+            Link("Box", R.id.action_basicLayouts_boxFragment),
+            Link("ConstraintLayout", R.id.action_basicLayouts_constraintLayoutFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

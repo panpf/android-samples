@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui
+package com.github.panpf.android.compose.samples.ui.widgets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class SeniorWidgetsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,19 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Senior Layouts"
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Senior Widgets", R.id.action_home_seniorWidgetsFragment),
-            Link("Senior Layouts", R.id.action_home_seniorLayoutsFragment),
-            Link("Animation"),
-            Link("Theme"),
-            Link("TouchEvent"),
-            Link("Navigation"),
-            Link("Custom"),
-            Link("Cases"),  // banner, swipe refresh
+            Link("Card", R.id.action_seniorLayouts_cardFragment),
+            Link("NavigationBar", R.id.action_seniorLayouts_navigationBarFragment),
+            Link("NavigationDrawer", R.id.action_seniorLayouts_navigationDrawerFragment),
+            Link("NavigationRail", R.id.action_seniorLayouts_navigationRailFragment),
+            Link("Scaffold", R.id.action_seniorLayouts_scaffoldFragment),
+            Link("Backdrop", R.id.action_seniorLayouts_backdropFragment),
+            Link("AppBar", R.id.action_seniorLayouts_appBarFragment),
+            Link("BottomAppBar", R.id.action_seniorLayouts_bottomAppBarFragment),
+            Link("BottomNavigation", R.id.action_seniorLayouts_bottomNavigationFragment),
+            Link("Surface", R.id.action_seniorLayouts_surfaceFragment),
+            Link("BottomSheet", R.id.action_seniorLayouts_bottomSheetFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {
