@@ -39,8 +39,6 @@ class AdvancedLayoutsFragment : ToolbarFragment() {
             Link("Card", R.id.action_advancedLayouts_cardFragment),
             Link("HorizontalPager", R.id.action_advancedLayouts_horizontalPagerFragment),
             Link("VerticalPager", R.id.action_advancedLayouts_verticalPagerFragment),
-            Link("HorizontalPagerIndicator"),
-            Link("VerticalPagerIndicator"),
             Link("Drawer", R.id.action_advancedLayouts_drawerFragment),
             Link("NavigationBar", R.id.action_advancedLayouts_navigationBarFragment),
             Link("NavigationDrawer", R.id.action_advancedLayouts_navigationDrawerFragment),
@@ -51,7 +49,6 @@ class AdvancedLayoutsFragment : ToolbarFragment() {
             Link("BottomAppBar", R.id.action_advancedLayouts_bottomAppBarFragment),
             Link("BottomNavigation", R.id.action_advancedLayouts_bottomNavigationFragment),
             Link("Surface", R.id.action_advancedLayouts_surfaceFragment),
-            Link("TabRow", R.id.action_advancedLayouts_tabRowFragment),
             Link("BottomSheet", R.id.action_advancedLayouts_bottomSheetFragment),
         )
         return ComposeView(inflater.context).apply {

@@ -21,9 +21,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -44,6 +49,8 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,6 +82,9 @@ class HorizontalPagerFragment : ToolbarFragment() {
                             HorizontalPagerAnimateScrollToPageSample(allExpandFlow)
                             HorizontalPagerScrollInProgressSample(allExpandFlow)
                             HorizontalPagerCurrentPageSample(allExpandFlow)
+                            HorizontalPagerIndicatorSample(allExpandFlow)
+                            HorizontalPagerTabRowSample(allExpandFlow)
+                            HorizontalPagerScrollableTabRowSample(allExpandFlow)
                         }
                     }
                 }
@@ -594,4 +604,252 @@ fun HorizontalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun HorizontalPagerCurrentPageSamplePreview() {
     HorizontalPagerCurrentPageSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    ExpandableItem(title = "HorizontalPager（Indicator）", allExpandFlow, padding = 20.dp) {
+        Box {
+            HorizontalPager(
+                count = items.size,
+                state = pagerState,
+                modifier = Modifier
+                    .height(200.dp)
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+            ) {
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                Spacer(modifier = Modifier.size(10.dp))
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    activeColor = Color.Red,
+                    inactiveColor = Color.Red.copy(alpha = 0.3f),
+                )
+
+                Spacer(modifier = Modifier.size(10.dp))
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    indicatorWidth = 10.dp,
+                    indicatorHeight = 4.dp,
+                    indicatorShape = RoundedCornerShape(50)
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun HorizontalPagerIndicatorSamplePreview() {
+    HorizontalPagerIndicatorSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+    ExpandableItem(title = "HorizontalPager（TabRow）", allExpandFlow, padding = 20.dp) {
+        Column {
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item)
+                    }
+                }
+            }
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        height = 4.dp,
+                        color = Color.Green
+                    )
+                },
+                backgroundColor = Color.Transparent,
+                divider = {
+                    TabRowDefaults.Divider(thickness = 2.dp, color = Color.Cyan)
+                }
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item)
+                    }
+                }
+            }
+            HorizontalPager(
+                count = items.size,
+                state = pagerState,
+                modifier = Modifier
+                    .height(200.dp)
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun HorizontalPagerTabRowSamplePreview() {
+    HorizontalPagerTabRowSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+    ExpandableItem(title = "HorizontalPager（ScrollableTabRow）", allExpandFlow, padding = 20.dp) {
+        Column {
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
+                    }
+                }
+            }
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        height = 4.dp,
+                        color = Color.Green
+                    )
+                },
+                backgroundColor = Color.Transparent,
+                divider = {
+                    TabRowDefaults.Divider(thickness = 2.dp, color = Color.Cyan)
+                },
+                edgePadding = 0.dp
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
+                    }
+                }
+            }
+            HorizontalPager(
+                count = items.size,
+                state = pagerState,
+                modifier = Modifier
+                    .height(200.dp)
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun HorizontalPagerScrollableTabRowSamplePreview() {
+    HorizontalPagerScrollableTabRowSample(remember { MutableStateFlow(true) })
 }

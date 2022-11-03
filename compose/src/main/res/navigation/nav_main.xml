@@ -341,13 +341,6 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_advancedLayouts_tabRowFragment"
-            app:destination="@id/tabRowFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
             android:id="@+id/action_advancedLayouts_bottomSheetFragment"
             app:destination="@id/bottomSheetFragment"
             app:enterAnim="@anim/nav_enter"
@@ -551,10 +544,6 @@
     <fragment
         android:id="@+id/surfaceFragment"
         android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.SurfaceFragment" />
-
-    <fragment
-        android:id="@+id/tabRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.TabRowFragment" />
 
     <fragment
         android:id="@+id/bottomSheetFragment"

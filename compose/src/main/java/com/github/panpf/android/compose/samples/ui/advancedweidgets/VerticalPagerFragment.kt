@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -45,6 +46,7 @@ import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
+import com.google.accompanist.pager.VerticalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -76,6 +78,7 @@ class VerticalPagerFragment : ToolbarFragment() {
                             VerticalPagerAnimateScrollToPageSample(allExpandFlow)
                             VerticalPagerScrollInProgressSample(allExpandFlow)
                             VerticalPagerCurrentPageSample(allExpandFlow)
+                            VerticalPagerIndicatorSample(allExpandFlow)
                         }
                     }
                 }
@@ -614,3 +617,79 @@ fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
 fun VerticalPagerCurrentPageSamplePreview() {
     VerticalPagerCurrentPageSample(remember { MutableStateFlow(true) })
 }
+
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    ExpandableItem(title = "VerticalPager（Indicator）", allExpandFlow, padding = 20.dp) {
+        Box {
+            VerticalPager(
+                count = items.size,
+                state = pagerState,
+                modifier = Modifier
+                    .width(160.dp)
+                    .height(260.dp)
+                    .border(2.dp, Color.Red)
+                    .padding(2.dp),
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(16.dp)
+            ) {
+                VerticalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                )
+
+                Spacer(modifier = Modifier.size(10.dp))
+                VerticalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically),
+                    activeColor = Color.Red,
+                    inactiveColor = Color.Red.copy(alpha = 0.3f),
+                )
+
+                Spacer(modifier = Modifier.size(10.dp))
+                VerticalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically),
+                    indicatorWidth = 4.dp,
+                    indicatorHeight = 10.dp,
+                    indicatorShape = RoundedCornerShape(50)
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun VerticalPagerIndicatorSamplePreview() {
+    VerticalPagerIndicatorSample(remember { MutableStateFlow(true) })
+}
+
+// todo TabColumn
