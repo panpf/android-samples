@@ -69,7 +69,7 @@ fun ExpandableLayout(
         ) {
             val allExpand by allExpandFlow.collectAsState()
             val iconId =
-                if (allExpand) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                if (allExpand) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(painterResource(id = iconId), contentDescription = "")
         }
     }
@@ -115,7 +115,7 @@ fun ExpandableItem(
                 modifier = Modifier.weight(1f)
             )
 
-            val iconId = if (expand) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+            val iconId = if (expand) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(painterResource(id = iconId), contentDescription = "")
         }
 

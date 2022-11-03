@@ -347,34 +347,6 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_advancedLayouts_lazyColumnPagingFragment"
-            app:destination="@id/lazyColumnPagingFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_advancedLayouts_lazyRowPagingFragment"
-            app:destination="@id/lazyRowPagingFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_advancedLayouts_lazyHorizontalGridPagingFragment"
-            app:destination="@id/lazyHorizontalGridPagingFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_advancedLayouts_lazyVerticalGridPagingFragment"
-            app:destination="@id/lazyVerticalGridPagingFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -548,20 +520,4 @@
     <fragment
         android:id="@+id/bottomSheetFragment"
         android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.BottomSheetFragment" />
-
-    <fragment
-        android:id="@+id/lazyColumnPagingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyColumnPagingFragment" />
-
-    <fragment
-        android:id="@+id/lazyRowPagingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyRowPagingFragment" />
-
-    <fragment
-        android:id="@+id/lazyHorizontalGridPagingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyHorizontalGridPagingFragment" />
-
-    <fragment
-        android:id="@+id/lazyVerticalGridPagingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.advancedweidgets.LazyVerticalGridPagingFragment" />
 </navigation>

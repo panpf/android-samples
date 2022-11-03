@@ -337,7 +337,7 @@ fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxHeight()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_navigate_before),
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
                         contentDescription = "before"
                     )
                 }
@@ -376,7 +376,7 @@ fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxHeight()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_navigate_next),
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
                         contentDescription = "next",
                     )
                 }
@@ -440,7 +440,7 @@ fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxHeight()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_navigate_before),
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
                         contentDescription = "before"
                     )
                 }
@@ -479,7 +479,7 @@ fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxHeight()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_navigate_next),
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
                         contentDescription = "next",
                     )
                 }

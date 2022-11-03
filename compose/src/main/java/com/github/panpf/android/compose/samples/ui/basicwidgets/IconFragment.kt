@@ -64,7 +64,7 @@ class IconFragment : ToolbarFragment() {
 @Composable
 fun IconResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Icon（Resource）", allExpandFlow, padding = 20.dp) {
-        Icon(painter = painterResource(id = R.drawable.ic_expand_more), contentDescription = "")
+        Icon(painter = painterResource(id = R.drawable.ic_arrow_down), contentDescription = "")
     }
 }
 

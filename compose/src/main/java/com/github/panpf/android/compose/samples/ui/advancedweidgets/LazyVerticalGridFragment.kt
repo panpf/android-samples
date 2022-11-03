@@ -42,14 +42,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.list.HorizontalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -83,10 +91,11 @@ class LazyVerticalGridFragment : ToolbarFragment() {
                             LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow)
                             LazyVerticalGridScrollInProgressSample(allExpandFlow)
                             LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
-                            LazyVerticalGridMultiTypeSample(allExpandFlow)
                             LazyVerticalGridSpanSample(allExpandFlow)
                             LazyVerticalGridAnimateItemPlacementSample(allExpandFlow)
                             LazyVerticalGridLayoutInfoSample(allExpandFlow)
+                            LazyVerticalGridMultiTypeSample(allExpandFlow)
+                            LazyVerticalGridPagingSample(allExpandFlow)
                         }
                     }
                 }
@@ -707,7 +716,7 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_expand_less),
+                    painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "before"
                 )
             }
@@ -747,7 +756,7 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_expand_more),
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "next",
                 )
             }
@@ -759,89 +768,6 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyVerticalGridAnimateScrollToItemSamplePreview() {
     LazyVerticalGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
-    val items = buildList<Any> {
-        repeat(49) {
-            add((it + 1).toString())
-        }
-    }.toMutableList().apply {
-        set(1, R.drawable.ic_navigate_before)
-        set(3, R.drawable.ic_add)
-        set(10, R.drawable.ic_games)
-        set(17, R.drawable.ic_expand_more)
-        set(18, R.drawable.ic_check)
-        set(40, R.drawable.ic_info)
-    }.toList()
-    ExpandableItem(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(360.dp)
-                .border(2.dp, Color.Red)
-                .padding(2.dp)
-        ) {
-            itemsIndexed(
-                items = items,
-                contentType = { _, item ->
-                    when (item) {
-                        is String -> 0
-                        is Int -> 1
-                        else -> 2
-                    }
-                }
-            ) { index, item ->
-                when (item) {
-                    is String -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
-                                .background(colors[index % colors.size])
-                        ) {
-                            Text(
-                                text = item,
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            )
-                        }
-                    }
-                    is Int -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
-                        ) {
-                            FilledTonalIconButton(
-                                onClick = { },
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = item),
-                                    contentDescription = "icon"
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyVerticalGridMultiTypeSamplePreview() {
-    LazyVerticalGridMultiTypeSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -1057,4 +983,179 @@ fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyVerticalGridLayoutInfoSamplePreview() {
     LazyVerticalGridLayoutInfoSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val items = buildList<Any> {
+        repeat(49) {
+            add((it + 1).toString())
+        }
+    }.toMutableList().apply {
+        set(1, R.drawable.ic_arrow_left)
+        set(3, R.drawable.ic_add)
+        set(10, R.drawable.ic_games)
+        set(17, R.drawable.ic_arrow_down)
+        set(18, R.drawable.ic_check)
+        set(40, R.drawable.ic_info)
+    }.toList()
+    ExpandableItem(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items = items,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        is Int -> 1
+                        else -> 2
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                                .background(colors[index % colors.size])
+                        ) {
+                            Text(
+                                text = item,
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                    is Int -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                        ) {
+                            FilledTonalIconButton(
+                                onClick = { },
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = item),
+                                    contentDescription = "icon"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridMultiTypeSamplePreview() {
+    LazyVerticalGridMultiTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyVerticalGridPagingSample(allExpandFlow: Flow<Boolean>) {
+    val pagingFlow = remember {
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                initialLoadSize = 20,
+                enablePlaceholders = false,
+            ),
+            initialKey = 0,
+            pagingSourceFactory = {
+                MyPagingSource()
+            }
+        ).flow
+    }
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
+    val swipeRefreshState =
+        rememberSwipeRefreshState(lazyPagingItems.loadState.refresh is LoadState.Loading).apply {
+            isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
+        }
+    ExpandableItem(title = "LazyVerticalGrid（Paging）", allExpandFlow, padding = 20.dp) {
+        SwipeRefresh(
+            state = swipeRefreshState,
+            onRefresh = { lazyPagingItems.refresh() },
+            modifier = Modifier
+                .width(200.dp)
+                .height(300.dp)
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(80.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(
+                    count = lazyPagingItems.itemCount,
+                    key = { lazyPagingItems.peek(it) ?: "" },
+                    contentType = { 0 },
+                ) { index ->
+                    LazyVerticalGridPagingItem(
+                        lazyPagingItems[index] ?: "",
+                        colors[index % colors.size]
+                    )
+                }
+
+                if (lazyPagingItems.itemCount > 0) {
+                    item(
+                        key = "AppendState",
+                        contentType = 1,
+                        span = { GridItemSpan(maxLineSpan) }
+                    ) {
+                        HorizontalAppendStateUI(lazyPagingItems.loadState.append) {
+                            lazyPagingItems.retry()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridPagingSamplePreview() {
+    LazyVerticalGridPagingSample(remember { MutableStateFlow(true) })
+}
+
+@Composable
+fun LazyVerticalGridPagingItem(item: String, bgColor: Color) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .background(bgColor)
+    ) {
+        Text(
+            text = item,
+            modifier = Modifier.align(Alignment.Center),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyVerticalGridPagingItemPreview() {
+    LazyVerticalGridPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
 }

@@ -68,7 +68,7 @@ fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
             onCheckedChange = { checked.value = it }
         ) {
             val iconResId =
-                if (checked.value) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(
                 painterResource(id = iconResId),
                 contentDescription = "",
@@ -93,7 +93,7 @@ fun FilledIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
             onCheckedChange = { checked.value = it }
         ) {
             val iconResId =
-                if (checked.value) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(
                 painterResource(id = iconResId),
                 contentDescription = "",
@@ -118,7 +118,7 @@ fun FilledTonalIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
             onCheckedChange = { checked.value = it }
         ) {
             val iconResId =
-                if (checked.value) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(
                 painterResource(id = iconResId),
                 contentDescription = "",
@@ -143,7 +143,7 @@ fun OutlinedIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
             onCheckedChange = { checked.value = it }
         ) {
             val iconResId =
-                if (checked.value) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Image(
                 painterResource(id = iconResId),
                 contentDescription = "",

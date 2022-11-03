@@ -104,7 +104,7 @@ fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（图片）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -127,7 +127,7 @@ fun ButtonDisabledSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -150,7 +150,7 @@ fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -179,7 +179,7 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                 onClick = { context.showShortToast("你点了我！") }
             ) {
                 Image(
-                    painterResource(id = R.drawable.ic_expand_more),
+                    painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "",
                 )
             }
@@ -195,7 +195,7 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                 onClick = { context.showShortToast("你点了我！") }
             ) {
                 Image(
-                    painterResource(id = R.drawable.ic_expand_more),
+                    painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "",
                 )
             }
@@ -222,7 +222,7 @@ fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -245,7 +245,7 @@ fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -268,7 +268,7 @@ fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("你点了我！") }
         ) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -288,7 +288,7 @@ fun ElevatedButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("ElevatedButton", allExpandFlow, padding = 20.dp) {
         ElevatedButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(Color.Red)
             )
@@ -309,7 +309,7 @@ fun FilledTonalButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("FilledTonalButton", allExpandFlow, padding = 20.dp) {
         FilledTonalButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(Color.Red)
             )
@@ -330,7 +330,7 @@ fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
         OutlinedButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(Color.Red)
             )

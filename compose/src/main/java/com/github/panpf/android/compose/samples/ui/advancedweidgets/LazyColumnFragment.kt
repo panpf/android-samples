@@ -1,5 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.advancedweidgets
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,15 +41,29 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.list.HorizontalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class LazyColumnFragment : ToolbarFragment() {
 
@@ -76,10 +92,11 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnUserVisibleItemIndexSample(allExpandFlow)
                             LazyColumnScrollInProgressSample(allExpandFlow)
                             LazyColumnAnimateScrollToItemSample(allExpandFlow)
-                            LazyColumnMultiTypeSample(allExpandFlow)
                             LazyColumnAnimateItemPlacementSample(allExpandFlow)
                             LazyColumnLayoutInfoSample(allExpandFlow)
                             LazyColumnStickerHeaderSample(allExpandFlow)
+                            LazyColumnMultiTypeSample(allExpandFlow)
+                            LazyColumnPagingSample(allExpandFlow)
                         }
                     }
                 }
@@ -455,7 +472,7 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_expand_less),
+                    painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "back"
                 )
             }
@@ -489,7 +506,7 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_expand_more),
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "forward",
                 )
             }
@@ -501,59 +518,6 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnAnimateScrollToItemSamplePreview() {
     LazyColumnAnimateScrollToItemSample(remember { MutableStateFlow(true) })
-}
-
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
-    val list = remember {
-        listOf<Any>(
-            "数码", R.drawable.ic_navigate_before, "汽车", "摄影", R.drawable.ic_navigate_next,
-            R.drawable.ic_expand_more, "舞蹈", R.drawable.ic_check, "二次元", "音乐", "科技", "健身",
-            "游戏", R.drawable.ic_clear, "文学", R.drawable.ic_close, "运动", "生活", "美食", "动物",
-            R.drawable.ic_games, "时尚"
-        )
-    }
-    ExpandableItem(title = "LazyColumn（MultiType）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
-            modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
-                .border(2.dp, Color.Red)
-                .padding(2.dp),
-        ) {
-            itemsIndexed(
-                items = list,
-                contentType = { _, item ->
-                    when (item) {
-                        is String -> 0
-                        is Int -> 1
-                        else -> 2
-                    }
-                }
-            ) { index, item ->
-                when (item) {
-                    is String -> {
-                        Chip(onClick = { }) {
-                            Text(text = "$index:$item")
-                        }
-                    }
-                    is Int -> {
-                        FilledTonalIconButton(onClick = { }) {
-                            Image(painter = painterResource(id = item), contentDescription = "icon")
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyColumnMultiTypeSamplePreview() {
-    LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -719,4 +683,175 @@ fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnStickerHeaderSamplePreview() {
     LazyColumnStickerHeaderSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf<Any>(
+            "数码", R.drawable.ic_arrow_left, "汽车", "摄影", R.drawable.ic_arrow_right,
+            R.drawable.ic_arrow_down, "舞蹈", R.drawable.ic_check, "二次元", "音乐", "科技", "健身",
+            "游戏", R.drawable.ic_clear, "文学", R.drawable.ic_close, "运动", "生活", "美食", "动物",
+            R.drawable.ic_games, "时尚"
+        )
+    }
+    ExpandableItem(title = "LazyColumn（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyColumn(
+            modifier = Modifier
+                .height(240.dp)
+                .width(100.dp)
+                .border(2.dp, Color.Red)
+                .padding(2.dp),
+        ) {
+            itemsIndexed(
+                items = list,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        is Int -> 1
+                        else -> 2
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Chip(onClick = { }) {
+                            Text(text = "$index:$item")
+                        }
+                    }
+                    is Int -> {
+                        FilledTonalIconButton(onClick = { }) {
+                            Image(painter = painterResource(id = item), contentDescription = "icon")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnMultiTypeSamplePreview() {
+    LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyColumnPagingSample(allExpandFlow: Flow<Boolean>) {
+    val pagingFlow = remember {
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                initialLoadSize = 20,
+                enablePlaceholders = false,
+            ),
+            initialKey = 0,
+            pagingSourceFactory = {
+                MyPagingSource()
+            }
+        ).flow
+    }
+    val colors = remember {
+        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
+            .map { it.copy(alpha = 0.5f) }
+    }
+    val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
+    val swipeRefreshState =
+        rememberSwipeRefreshState(lazyPagingItems.loadState.refresh is LoadState.Loading).apply {
+            isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
+        }
+    ExpandableItem(title = "LazyColumn（Paging）", allExpandFlow, padding = 20.dp) {
+        SwipeRefresh(
+            state = swipeRefreshState,
+            onRefresh = { lazyPagingItems.refresh() },
+            modifier = Modifier
+                .width(200.dp)
+                .height(300.dp)
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(
+                    count = lazyPagingItems.itemCount,
+                    key = { lazyPagingItems.peek(it) ?: "" },
+                    contentType = { 0 },
+                ) { index ->
+                    LazyColumnPagingItem(
+                        lazyPagingItems[index] ?: "",
+                        colors[index % colors.size]
+                    )
+                }
+
+                if (lazyPagingItems.itemCount > 0) {
+                    item(
+                        key = "AppendState",
+                        contentType = 1
+                    ) {
+                        HorizontalAppendStateUI(lazyPagingItems.loadState.append) {
+                            lazyPagingItems.retry()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnPagingSamplePreview() {
+    LazyColumnPagingSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun LazyColumnPagingItem(item: String, bgColor: Color) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .background(bgColor)
+    ) {
+        Text(
+            text = item,
+            modifier = Modifier
+                .align(Alignment.Center)
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyColumnPagingItemPreview() {
+    LazyColumnPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
+}
+
+class MyPagingSource : PagingSource<Int, String>() {
+
+    override fun getRefreshKey(state: PagingState<Int, String>): Int {
+        return 0
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
+        return withContext(Dispatchers.IO) {
+            delay(2000)
+            val start = params.key ?: 0
+            val loadSize = params.loadSize
+            val time = SimpleDateFormat("HH:mm:ss").format(Date())
+            val list = buildList {
+                repeat(loadSize) {
+                    val index = start + it
+                    if (index < 199) {
+                        add("${(index + 1)}. $time")
+                    }
+                }
+            }
+            val nextKey = (start + loadSize).let {
+                if (it < 199) it else null
+            }
+            LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
+        }
+    }
 }

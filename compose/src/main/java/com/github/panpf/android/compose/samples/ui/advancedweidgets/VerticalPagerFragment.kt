@@ -339,7 +339,7 @@ fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_expand_less),
+                        painter = painterResource(id = R.drawable.ic_arrow_up),
                         contentDescription = "before"
                     )
                 }
@@ -378,7 +378,7 @@ fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_expand_more),
+                        painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "next",
                     )
                 }
@@ -447,7 +447,7 @@ fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_expand_less),
+                        painter = painterResource(id = R.drawable.ic_arrow_up),
                         contentDescription = "before"
                     )
                 }
@@ -486,7 +486,7 @@ fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_expand_more),
+                        painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "next",
                     )
                 }

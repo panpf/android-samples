@@ -66,7 +66,7 @@ fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
         IconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -86,7 +86,7 @@ fun FilledIconButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("FilledIconButton", allExpandFlow, padding = 20.dp) {
         FilledIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -106,7 +106,7 @@ fun FilledTonalIconButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("FilledTonalIconButton", allExpandFlow, padding = 20.dp) {
         FilledTonalIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }
@@ -126,7 +126,7 @@ fun OutlinedIconButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("OutlinedIconButton", allExpandFlow, padding = 20.dp) {
         OutlinedIconButton(onClick = { context.showShortToast("你点了我！") }) {
             Image(
-                painterResource(id = R.drawable.ic_expand_more),
+                painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
             )
         }

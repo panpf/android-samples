@@ -168,7 +168,7 @@ fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
             text = { Text(text = "展开") },
             icon = {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_expand_more),
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = ""
                 )
             }

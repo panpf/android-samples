@@ -3,7 +3,7 @@ package com.github.panpf.android.compose.samples.ui.base.list
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,13 +40,13 @@ fun VerticalAppendStateUI(loadState: LoadState, onClick: () -> Unit) {
         }
     }
     Box(modifier = Modifier
-        .width(50.dp)
         .fillMaxHeight()
+        .padding(20.dp)
         .clickable { click?.invoke() }
     ) {
         Text(
             text = message,
-            modifier = Modifier.width(10.dp).align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center),
             fontSize = 12.sp,
             textAlign = TextAlign.Center
         )
