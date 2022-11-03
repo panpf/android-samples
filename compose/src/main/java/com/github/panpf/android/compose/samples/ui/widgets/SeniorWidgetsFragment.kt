@@ -26,7 +26,7 @@ class SeniorWidgetsFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Senior Layouts"
+        toolbar.title = "Senior Widgets"
         val links = listOf(
             Link("Card", R.id.action_seniorLayouts_cardFragment),
             Link("NavigationBar", R.id.action_seniorLayouts_navigationBarFragment),
