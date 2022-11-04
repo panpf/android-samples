@@ -196,8 +196,6 @@ fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
         ) {
             Text(text = "与 Box 相比 Surface 会拦截触摸事件导致它下面的所有节点都无法点击")
             Spacer(modifier = Modifier.size(10.dp))
-            Text(text = "例如在 Fragment 中")
-            Spacer(modifier = Modifier.size(10.dp))
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
                 mainAxisSpacing = 10.dp,
