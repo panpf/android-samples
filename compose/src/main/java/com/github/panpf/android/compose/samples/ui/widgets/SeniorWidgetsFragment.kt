@@ -28,17 +28,15 @@ class SeniorWidgetsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Senior Widgets"
         val links = listOf(
-            Link("Card", R.id.action_seniorLayouts_cardFragment),
-            Link("NavigationBar", R.id.action_seniorLayouts_navigationBarFragment),
-            Link("NavigationDrawer", R.id.action_seniorLayouts_navigationDrawerFragment),
-            Link("NavigationRail", R.id.action_seniorLayouts_navigationRailFragment),
-            Link("Scaffold", R.id.action_seniorLayouts_scaffoldFragment),
-            Link("Backdrop", R.id.action_seniorLayouts_backdropFragment),
-            Link("AppBar", R.id.action_seniorLayouts_appBarFragment),
-            Link("BottomAppBar", R.id.action_seniorLayouts_bottomAppBarFragment),
-            Link("BottomNavigation", R.id.action_seniorLayouts_bottomNavigationFragment),
-            Link("Surface", R.id.action_seniorLayouts_surfaceFragment),
-            Link("BottomSheet", R.id.action_seniorLayouts_bottomSheetFragment),
+            Link("Card", R.id.action_seniorWidgets_cardFragment),
+            Link("NavigationBar", R.id.action_seniorWidgets_navigationBarFragment),
+            Link("NavigationRail", R.id.action_seniorWidgets_navigationRailFragment),
+            Link("Backdrop", R.id.action_seniorWidgets_backdropFragment),
+            Link("AppBar", R.id.action_seniorWidgets_appBarFragment),
+            Link("BottomAppBar", R.id.action_seniorWidgets_bottomAppBarFragment),
+            Link("BottomNavigation", R.id.action_seniorWidgets_bottomNavigationFragment),
+            Link("BottomSheet", R.id.action_seniorWidgets_bottomSheetFragment),
+            Link("Scaffold", R.id.action_seniorWidgets_scaffoldFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

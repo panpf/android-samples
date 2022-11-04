@@ -33,6 +33,7 @@ class BasicLayoutsFragment : ToolbarFragment() {
             Link("Column", R.id.action_basicLayouts_columnFragment),
             Link("FlowColumn", R.id.action_basicLayouts_flowColumnFragment),
             Link("Box", R.id.action_basicLayouts_boxFragment),
+            Link("Surface", R.id.action_basicWidgets_surfaceFragment),
             Link("ConstraintLayout", R.id.action_basicLayouts_constraintLayoutFragment),
         )
         return ComposeView(inflater.context).apply {

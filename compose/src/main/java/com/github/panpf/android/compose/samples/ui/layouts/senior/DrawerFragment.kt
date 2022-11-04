@@ -79,8 +79,8 @@ class DrawerFragment : ToolbarFragment() {
 fun ModalDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "ModalDrawer", allExpandFlow) {
-        Box {
+    ExpandableItem(title = "ModalDrawer", allExpandFlow, padding = 20.dp) {
+        Box(modifier = Modifier.clip(RectangleShape)) {
             ModalDrawer(
                 drawerState = drawerState,
                 modifier = Modifier
@@ -136,8 +136,8 @@ fun ModalDrawerSamplePreview() {
 fun ModalDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "ModalDrawer（drawerShape）", allExpandFlow) {
-        Box {
+    ExpandableItem(title = "ModalDrawer（drawerShape）", allExpandFlow, padding = 20.dp) {
+        Box(modifier = Modifier.clip(RectangleShape)) {
             ModalDrawer(
                 drawerState = drawerState,
                 modifier = Modifier
@@ -195,7 +195,7 @@ fun ModalDrawerDrawerShapeSamplePreview() {
 fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberBottomDrawerState(initialValue = BottomDrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "BottomDrawer", allExpandFlow) {
+    ExpandableItem(title = "BottomDrawer", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.clip(RectangleShape)) {
             BottomDrawer(
                 drawerState = drawerState,
@@ -256,7 +256,7 @@ fun BottomDrawerSamplePreview() {
 fun BottomDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberBottomDrawerState(initialValue = BottomDrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "BottomDrawer（drawerShape）", allExpandFlow) {
+    ExpandableItem(title = "BottomDrawer（drawerShape）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.clip(RectangleShape)) {
             BottomDrawer(
                 drawerState = drawerState,

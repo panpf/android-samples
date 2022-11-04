@@ -35,6 +35,7 @@ class SeniorLayoutsFragment : ToolbarFragment() {
             Link("HorizontalPager", R.id.action_seniorLayouts_horizontalPagerFragment),
             Link("VerticalPager", R.id.action_seniorLayouts_verticalPagerFragment),
             Link("Drawer", R.id.action_seniorLayouts_drawerFragment),
+            Link("NavigationDrawer", R.id.action_seniorLayouts_navigationDrawerFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {
