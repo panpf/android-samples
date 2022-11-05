@@ -107,6 +107,13 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
+            android:id="@+id/action_basicWidgets_triStateCheckboxFragment"
+            app:destination="@id/triStateCheckboxFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+        <action
             android:id="@+id/action_basicWidgets_iconFragment"
             app:destination="@id/iconFragment"
             app:enterAnim="@anim/nav_enter"
@@ -390,6 +397,10 @@
     <fragment
         android:id="@+id/checkboxFragment"
         android:name="com.github.panpf.android.compose.samples.ui.widgets.basic.CheckboxFragment" />
+
+    <fragment
+        android:id="@+id/triStateCheckboxFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.basic.TriStateCheckboxFragment" />
 
     <fragment
         android:id="@+id/iconFragment"

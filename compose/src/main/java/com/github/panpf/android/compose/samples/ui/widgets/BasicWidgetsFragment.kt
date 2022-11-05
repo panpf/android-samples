@@ -37,7 +37,7 @@ class BasicWidgetsFragment : ToolbarFragment() {
             // todo Segmented button planned https://m3.material.io/components/segmented-buttons/overview
             Link("RadioButton", R.id.action_basicWidgets_radioButtonFragment),
             Link("Checkbox", R.id.action_basicWidgets_checkboxFragment),
-            // todo TriStateCheckbox
+            Link("TriStateCheckbox", R.id.action_basicWidgets_triStateCheckboxFragment),
             Link("Switch", R.id.action_basicWidgets_switchFragment),
             Link("Icon", R.id.action_basicWidgets_iconFragment),
             Link("Image", R.id.action_basicWidgets_imageFragment),
