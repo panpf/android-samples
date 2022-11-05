@@ -326,15 +326,8 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_seniorWidgets_backdropFragment"
-            app:destination="@id/backdropFragment"
-            app:enterAnim="@anim/nav_enter"
-            app:exitAnim="@anim/nav_exit"
-            app:popEnterAnim="@anim/nav_pop_enter"
-            app:popExitAnim="@anim/nav_pop_exit" />
-        <action
-            android:id="@+id/action_seniorWidgets_appBarFragment"
-            app:destination="@id/appBarFragment"
+            android:id="@+id/action_seniorWidgets_topAppBarFragment"
+            app:destination="@id/topAppBarFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -515,12 +508,8 @@
         android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.ScaffoldFragment" />
 
     <fragment
-        android:id="@+id/backdropFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.BackdropFragment" />
-
-    <fragment
-        android:id="@+id/appBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.AppBarFragment" />
+        android:id="@+id/topAppBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.TopAppBarFragment" />
 
     <fragment
         android:id="@+id/bottomAppBarFragment"

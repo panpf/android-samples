@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -80,26 +79,24 @@ class NavigationBarFragment : ToolbarFragment() {
 fun NavigationBarSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
-        mutableStateOf(
-            listOf(
-                NavigationBarItemInfo("首页", R.drawable.ic_home),
-                NavigationBarItemInfo("通讯录", R.drawable.ic_phone),
-                NavigationBarItemInfo("游戏", R.drawable.ic_games),
-                NavigationBarItemInfo("设置", R.drawable.ic_settings),
-            )
+        listOf(
+            "首页" to R.drawable.ic_home,
+            "通讯录" to R.drawable.ic_phone,
+            "游戏" to R.drawable.ic_games,
+            "设置" to R.drawable.ic_settings,
         )
     }
     ExpandableItem(title = "NavigationBar", allExpandFlow, padding = 20.dp) {
         NavigationBar {
-            items.value.forEachIndexed { index, info ->
+            items.forEachIndexed { index, itemPair ->
                 NavigationBarItem(
                     icon = {
                         Image(
-                            painter = painterResource(id = info.iconId),
+                            painter = painterResource(id = itemPair.second),
                             contentDescription = "icon"
                         )
                     },
-                    label = { Text(text = info.title) },
+                    label = { Text(text = itemPair.first) },
                     selected = index == selectedIndex.value,
                     onClick = {
                         selectedIndex.value = index
@@ -121,26 +118,26 @@ fun NavigationBarSamplePreview() {
 fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
-        mutableStateOf(
-            listOf(
-                NavigationBarItemInfo("首页", R.drawable.ic_home),
-                NavigationBarItemInfo("通讯录", R.drawable.ic_phone),
-                NavigationBarItemInfo("游戏", R.drawable.ic_games),
-                NavigationBarItemInfo("设置", R.drawable.ic_settings),
-            )
+        listOf(
+            "首页" to R.drawable.ic_home,
+            "通讯录" to R.drawable.ic_phone,
+            "游戏" to R.drawable.ic_games,
+            "设置" to R.drawable.ic_settings,
         )
     }
     ExpandableItem(title = "NavigationBar（colors）", allExpandFlow, padding = 20.dp) {
-        NavigationBar {
-            items.value.forEachIndexed { index, info ->
+        NavigationBar(
+            containerColor = Color.Yellow.copy(alpha = 0.5f)
+        ) {
+            items.forEachIndexed { index, itemPair ->
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = info.iconId),
+                            painter = painterResource(id = itemPair.second),
                             contentDescription = "icon"
                         )
                     },
-                    label = { Text(text = info.title) },
+                    label = { Text(text = itemPair.first) },
                     selected = index == selectedIndex.value,
                     onClick = {
                         selectedIndex.value = index
@@ -174,13 +171,11 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
     }
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
-        mutableStateOf(
-            listOf(
-                NavigationBarItemInfo("首页", R.drawable.ic_home),
-                NavigationBarItemInfo("通讯录", R.drawable.ic_phone),
-                NavigationBarItemInfo("游戏", R.drawable.ic_games),
-                NavigationBarItemInfo("设置", R.drawable.ic_settings),
-            )
+        listOf(
+            "首页" to R.drawable.ic_home,
+            "通讯录" to R.drawable.ic_phone,
+            "游戏" to R.drawable.ic_games,
+            "设置" to R.drawable.ic_settings,
         )
     }
     val pagerState = rememberPagerState(selectedIndex.value)
@@ -194,7 +189,7 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
         Column(modifier = Modifier.fillMaxWidth()) {
             HorizontalPager(
                 state = pagerState,
-                count = items.value.size,
+                count = items.size,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)
@@ -206,7 +201,7 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
                         .padding(20.dp)
                 ) {
                     Text(
-                        text = items.value[index].title,
+                        text = items[index].first,
                         modifier = Modifier
                             .align(Alignment.Center),
                         textAlign = TextAlign.Center
@@ -214,15 +209,15 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             NavigationBar {
-                items.value.forEachIndexed { index, info ->
+                items.forEachIndexed { index, itemPair ->
                     NavigationBarItem(
                         icon = {
                             Image(
-                                painter = painterResource(id = info.iconId),
+                                painter = painterResource(id = itemPair.second),
                                 contentDescription = "icon"
                             )
                         },
-                        label = { Text(text = info.title) },
+                        label = { Text(text = itemPair.first) },
                         selected = index == selectedIndex.value,
                         onClick = {
                             selectedIndex.value = index
@@ -242,5 +237,3 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
 fun NavigationBarPagerSamplePreview() {
     NavigationBarPagerSample(remember { MutableStateFlow(true) })
 }
-
-data class NavigationBarItemInfo(val title: String, @DrawableRes val iconId: Int)

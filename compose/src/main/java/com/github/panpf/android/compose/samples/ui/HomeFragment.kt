@@ -29,10 +29,10 @@ class HomeFragment : ToolbarFragment() {
         toolbar.title = requireContext().getString(R.string.app_name)
 
         val links = listOf(
-            Link("Basic Widgets", R.id.action_home_basicWidgetsFragment),
-            Link("Basic Layouts", R.id.action_home_basicLayoutsFragment),
-            Link("Senior Widgets", R.id.action_home_seniorWidgetsFragment),
-            Link("Senior Layouts", R.id.action_home_seniorLayoutsFragment),
+            Link("Layouts - Basic", R.id.action_home_basicLayoutsFragment),
+            Link("Layouts - Senior", R.id.action_home_seniorLayoutsFragment),
+            Link("Widgets - Basic", R.id.action_home_basicWidgetsFragment),
+            Link("Widgets - Senior", R.id.action_home_seniorWidgetsFragment),
             Link("Animation"),
             Link("Theme"),
             Link("TouchEvent"),

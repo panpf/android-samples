@@ -31,12 +31,16 @@ class SeniorWidgetsFragment : ToolbarFragment() {
             Link("Card", R.id.action_seniorWidgets_cardFragment),
             Link("NavigationBar", R.id.action_seniorWidgets_navigationBarFragment),
             Link("NavigationRail", R.id.action_seniorWidgets_navigationRailFragment),
-            Link("Backdrop", R.id.action_seniorWidgets_backdropFragment),
-            Link("AppBar", R.id.action_seniorWidgets_appBarFragment),
+            Link("TopAppBar", R.id.action_seniorWidgets_topAppBarFragment),
             Link("BottomAppBar", R.id.action_seniorWidgets_bottomAppBarFragment),
             Link("BottomNavigation", R.id.action_seniorWidgets_bottomNavigationFragment),
             Link("BottomSheet", R.id.action_seniorWidgets_bottomSheetFragment),
             Link("Scaffold", R.id.action_seniorWidgets_scaffoldFragment),
+            Link("DatePicker"),
+            Link("TimePicker"),
+            Link("Dialog"),
+            Link("Menu"),
+            Link("ListItem"),
         )
         return ComposeView(inflater.context).apply {
             setContent {

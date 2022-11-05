@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -77,8 +78,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -86,8 +86,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerTo(parent)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -97,8 +96,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 bottom.linkTo(menu.bottom)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Blue.copy(alpha = 0.5f))
@@ -108,8 +106,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 bottom.linkTo(menu.top, margin = 10.dp)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Yellow.copy(alpha = 0.5f))
@@ -119,8 +116,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 bottom.linkTo(menu.bottom)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Cyan.copy(alpha = 0.5f))
@@ -142,8 +138,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -152,8 +147,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 bottom.linkTo(parent.bottom, margin = 20.dp)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -161,8 +155,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 circular(menu, 254f, 60.dp)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Blue.copy(alpha = 0.5f))
@@ -170,8 +163,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 circular(menu, 295f, 60.dp)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Yellow.copy(alpha = 0.5f))
@@ -179,8 +171,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 circular(menu, 336f, 60.dp)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Cyan.copy(alpha = 0.5f))
@@ -200,8 +191,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -209,8 +199,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerTo(parent)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -233,8 +222,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -242,8 +230,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerTo(parent)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -266,8 +253,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -275,8 +261,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerTo(parent)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -299,8 +284,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(40.dp)
                             .background(Color.Red.copy(alpha = 0.5f))
@@ -308,8 +292,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerTo(parent)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -318,8 +301,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerAround(menu.start)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Blue.copy(alpha = 0.5f))
@@ -328,8 +310,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerAround(menu.end)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Yellow.copy(alpha = 0.5f))
@@ -338,8 +319,7 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                                 centerAround(menu.start)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Cyan.copy(alpha = 0.5f))
@@ -374,8 +354,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     val (text1, text2, text3, text4) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .height(26.dp)
                             .width(60.dp)
@@ -384,8 +363,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 start.linkTo(parent.start)
                                 top.linkTo(parent.top)
                             })
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .height(26.dp)
                             .width(20.dp)
@@ -394,8 +372,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 start.linkTo(parent.start)
                                 top.linkTo(text1.bottom)
                             })
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .height(26.dp)
                             .width(80.dp)
@@ -404,8 +381,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 start.linkTo(parent.start)
                                 top.linkTo(text2.bottom)
                             })
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .height(26.dp)
                             .width(40.dp)
@@ -417,8 +393,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                     val endBarrier = createEndBarrier(text1, text2, text3, text4, margin = 10.dp)
 
                     val (action1, action2, action3, action4) = createRefs()
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Green.copy(alpha = 0.5f))
@@ -427,8 +402,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 top.linkTo(parent.top)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Blue.copy(alpha = 0.5f))
@@ -437,8 +411,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 top.linkTo(action1.bottom)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Yellow.copy(alpha = 0.5f))
@@ -447,8 +420,7 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                                 top.linkTo(action2.bottom)
                             },
                     )
-                    Text(
-                        text = "",
+                    Box(
                         modifier = Modifier
                             .size(26.dp)
                             .background(Color.Cyan.copy(alpha = 0.5f))
@@ -490,8 +462,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         }
 
                         val (action1, action2, action3, action4) = createRefs()
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Green.copy(alpha = 0.5f))
@@ -500,8 +471,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     top.linkTo(parent.top)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Blue.copy(alpha = 0.5f))
@@ -510,8 +480,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     top.linkTo(action1.bottom)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Yellow.copy(alpha = 0.5f))
@@ -520,8 +489,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     top.linkTo(action2.bottom)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Cyan.copy(alpha = 0.5f))
@@ -550,8 +518,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         }
 
                         val (action1, action2, action3, action4) = createRefs()
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Green.copy(alpha = 0.5f))
@@ -560,8 +527,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     start.linkTo(parent.start)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Blue.copy(alpha = 0.5f))
@@ -570,8 +536,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     start.linkTo(action1.end)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Yellow.copy(alpha = 0.5f))
@@ -580,8 +545,7 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     start.linkTo(action2.end)
                                 },
                         )
-                        Text(
-                            text = "",
+                        Box(
                             modifier = Modifier
                                 .size(26.dp)
                                 .background(Color.Cyan.copy(alpha = 0.5f))
@@ -635,29 +599,25 @@ fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
                                     action1, action2, action3, action4, chainStyle = chainStyle
                                 )
                             }
-                            Text(
-                                text = "",
+                            Box(
                                 modifier = Modifier
                                     .size(26.dp)
                                     .background(Color.Green.copy(alpha = 0.5f))
                                     .constrainAs(action1) {},
                             )
-                            Text(
-                                text = "",
+                            Box(
                                 modifier = Modifier
                                     .size(26.dp)
                                     .background(Color.Blue.copy(alpha = 0.5f))
                                     .constrainAs(action2) {},
                             )
-                            Text(
-                                text = "",
+                            Box(
                                 modifier = Modifier
                                     .size(26.dp)
                                     .background(Color.Yellow.copy(alpha = 0.5f))
                                     .constrainAs(action3) {},
                             )
-                            Text(
-                                text = "",
+                            Box(
                                 modifier = Modifier
                                     .size(26.dp)
                                     .background(Color.Cyan.copy(alpha = 0.5f))
