@@ -341,8 +341,8 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
-            android:id="@+id/action_seniorWidgets_bottomSheetFragment"
-            app:destination="@id/bottomSheetFragment"
+            android:id="@+id/action_seniorWidgets_modalBottomSheetLayoutFragment"
+            app:destination="@id/modalBottomSheetLayoutFragment"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -518,6 +518,6 @@
         android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.BottomNavigationFragment" />
 
     <fragment
-        android:id="@+id/bottomSheetFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.BottomSheetFragment" />
+        android:id="@+id/modalBottomSheetLayoutFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.widgets.senior.ModalBottomSheetLayoutFragment" />
 </navigation>

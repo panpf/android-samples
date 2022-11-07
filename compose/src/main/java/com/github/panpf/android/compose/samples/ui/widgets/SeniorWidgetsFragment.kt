@@ -42,7 +42,7 @@ class SeniorWidgetsFragment : ToolbarFragment() {
             Link("TopAppBar", R.id.action_seniorWidgets_topAppBarFragment),
             Link("BottomAppBar", R.id.action_seniorWidgets_bottomAppBarFragment),
             Link("BottomNavigation", R.id.action_seniorWidgets_bottomNavigationFragment),
-            Link("BottomSheet", R.id.action_seniorWidgets_bottomSheetFragment),
+            Link("ModalBottomSheetLayout", R.id.action_seniorWidgets_modalBottomSheetLayoutFragment),
             Link("Scaffold", R.id.action_seniorWidgets_scaffoldFragment),
             Link("DatePicker"),
             Link("TimePicker"),
