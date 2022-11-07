@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class ExtensionComponentsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,14 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Extension Components"
         val links = listOf(
-            Link("Basic Components", R.id.action_global_basicWidgetsFragment),
-            Link("Extension Components", R.id.action_global_extensionComponentsFragment),
-            Link("Material Components", R.id.action_global_materialComponentsFragment),
-            Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
-            Link("Animation（Implementation）"),
-            Link("Theme（Implementation）"),
-            Link("TouchEvent（Implementation）"),
-            Link("Navigation（Implementation）"),
-            Link("Custom（Implementation）"),
-            Link("Cases（Implementation）"),  // banner, swipe refresh
+            Link("AsyncImage - Coil", R.id.action_global_asyncImageCoilFragment),
+            Link("AsyncImage - Sketch", R.id.action_global_asyncImageSketchFragment),
+            Link("FlowColumn", R.id.action_global_flowColumnFragment),
+            Link("FlowRow", R.id.action_global_flowRowFragment),
+            Link("HorizontalPager", R.id.action_global_horizontalPagerFragment),
+            Link("VerticalPager", R.id.action_global_verticalPagerFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

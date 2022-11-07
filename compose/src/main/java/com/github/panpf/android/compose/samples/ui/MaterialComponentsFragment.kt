@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class MaterialComponentsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,35 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Material Components"
         val links = listOf(
-            Link("Basic Components", R.id.action_global_basicWidgetsFragment),
-            Link("Extension Components", R.id.action_global_extensionComponentsFragment),
-            Link("Material Components", R.id.action_global_materialComponentsFragment),
-            Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
-            Link("Animation（Implementation）"),
-            Link("Theme（Implementation）"),
-            Link("TouchEvent（Implementation）"),
-            Link("Navigation（Implementation）"),
-            Link("Custom（Implementation）"),
-            Link("Cases（Implementation）"),  // banner, swipe refresh
+            Link("BottomAppBar（Implementation）"),
+            Link("Backdrop（Implementation）"),   // BackdropScaffold
+            Link("Badge（Implementation）"),
+            Link("BottomNavigation", R.id.action_global_bottomNavigationFragment),
+            Link("Button（Implementation）"), //  FloatingActionButton, IconButton, IconToggleButton
+            Link("Card（Implementation）"),
+            Link("Checkbox（Implementation）"),
+            Link("Chip（Implementation）"),
+            Link("Dialog（Implementation）"), // AlertDialog
+            Link("Divider（Implementation）"),
+            Link("Drawer", R.id.action_global_drawerFragment),
+                Link("Icon（Implementation）"),
+            Link("ListItem（Implementation）"),
+            Link("Menu（Implementation）"),   // DropdownMenu
+            Link("NavigationRail（Implementation）"),
+            Link("ProgressIndicator（Implementation）"),
+            Link("RadioButton（Implementation）"),
+            Link("Scaffold（Implementation）"),
+            Link("Sheet", R.id.action_global_modalBottomSheetLayoutFragment),    // ModalBottomSheetLayout, BottomSheetScaffold
+            Link("Slider（Implementation）"),
+            Link("Snackbar（Implementation）"),
+            Link("Surface（Implementation）"),
+            Link("Switch（Implementation）"),
+            Link("Tab（Implementation）"),
+            Link("TextField（Implementation）"),
+            Link("Text（Implementation）"),
+            Link("TopAppBar（Implementation）"),
         )
         return ComposeView(inflater.context).apply {
             setContent {

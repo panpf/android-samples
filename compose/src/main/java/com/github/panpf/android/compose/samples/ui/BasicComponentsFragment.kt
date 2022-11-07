@@ -18,7 +18,7 @@ import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class HomeFragment : ToolbarFragment() {
+class BasicComponentsFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -26,19 +26,17 @@ class HomeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = requireContext().getString(R.string.app_name)
-
+        toolbar.title = "Basic Components"
         val links = listOf(
-            Link("Basic Components", R.id.action_global_basicWidgetsFragment),
-            Link("Extension Components", R.id.action_global_extensionComponentsFragment),
-            Link("Material Components", R.id.action_global_materialComponentsFragment),
-            Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
-            Link("Animation（Implementation）"),
-            Link("Theme（Implementation）"),
-            Link("TouchEvent（Implementation）"),
-            Link("Navigation（Implementation）"),
-            Link("Custom（Implementation）"),
-            Link("Cases（Implementation）"),  // banner, swipe refresh
+            Link("Box", R.id.action_global_boxFragment),
+            Link("Column", R.id.action_global_columnFragment),
+            Link("Row", R.id.action_global_rowFragment),
+            Link("ConstraintLayout", R.id.action_global_constraintLayoutFragment),
+            Link("Image", R.id.action_global_imageFragment),
+            Link("LazyColumn", R.id.action_global_lazyColumnFragment),
+            Link("LazyRow", R.id.action_global_lazyRowFragment),
+            Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
+            Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {
