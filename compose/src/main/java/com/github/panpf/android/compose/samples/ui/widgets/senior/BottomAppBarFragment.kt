@@ -88,7 +88,7 @@ fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
                         ) {
                             Icon(
                                 painter = painterResource(id = it.second),
-                                contentDescription = "back"
+                                contentDescription = it.first
                             )
                         }
                     }
@@ -113,7 +113,7 @@ fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
                         ) {
                             Icon(
                                 painter = painterResource(id = it.second),
-                                contentDescription = "back"
+                                contentDescription = it.first
                             )
                         }
                     }
