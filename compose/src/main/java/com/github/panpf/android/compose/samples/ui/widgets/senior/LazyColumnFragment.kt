@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.layouts.senior
+package com.github.panpf.android.compose.samples.ui.widgets.senior
 
 import android.annotation.SuppressLint
 import android.os.Bundle

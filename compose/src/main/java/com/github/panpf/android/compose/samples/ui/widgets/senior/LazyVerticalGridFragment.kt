@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.layouts.senior
+package com.github.panpf.android.compose.samples.ui.widgets.senior
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -55,6 +55,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.HorizontalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.widgets.senior.MyPagingSource
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.layouts.senior
+package com.github.panpf.android.compose.samples.ui.widgets.senior
 
 import android.os.Bundle
 import android.view.LayoutInflater

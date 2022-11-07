@@ -28,6 +28,14 @@ class SeniorWidgetsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Senior Widgets"
         val links = listOf(
+            Link("LazyRow", R.id.action_seniorWidgets_lazyRowFragment),
+            Link("LazyColumn", R.id.action_seniorWidgets_lazyColumnFragment),
+            Link("LazyHorizontalGrid", R.id.action_seniorWidgets_lazyHorizontalGridFragment),
+            Link("LazyVerticalGrid", R.id.action_seniorWidgets_lazyVerticalGridFragment),
+            Link("HorizontalPager", R.id.action_seniorWidgets_horizontalPagerFragment),
+            Link("VerticalPager", R.id.action_seniorWidgets_verticalPagerFragment),
+            Link("Drawer", R.id.action_seniorWidgets_drawerFragment),
+            Link("NavigationDrawer", R.id.action_seniorWidgets_navigationDrawerFragment),
             Link("Card", R.id.action_seniorWidgets_cardFragment),
             Link("NavigationBar", R.id.action_seniorWidgets_navigationBarFragment),
             Link("NavigationRail", R.id.action_seniorWidgets_navigationRailFragment),

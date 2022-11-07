@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.layouts.senior
+package com.github.panpf.android.compose.samples.ui.widgets.senior
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,6 +56,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.VerticalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.widgets.senior.MyPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
