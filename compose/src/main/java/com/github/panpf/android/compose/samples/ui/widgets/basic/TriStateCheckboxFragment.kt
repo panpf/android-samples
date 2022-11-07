@@ -122,7 +122,7 @@ fun TriStateCheckboxColorsSamplePreview() {
 @Composable
 fun TriStateCheckboxGroupSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
-    val checkedSet = remember { mutableStateOf(setOf<Int>()) }
+    val checkedSet = remember { mutableStateOf(setOf(2)) }
     ExpandableItem(title = "TriStateCheckbox（Group）", allExpandFlow, padding = 20.dp) {
         val allToggleableState = when {
             checkedSet.value.isEmpty() -> ToggleableState.Off
