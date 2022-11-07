@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -80,7 +79,7 @@ fun ExpandableItem(
     title: String,
     allExpand: Flow<Boolean>,
     padding: Dp = 0.dp,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val selfExpand = remember { mutableStateOf(true) }
@@ -120,7 +119,7 @@ fun ExpandableItem(
         }
 
         AnimatedVisibility(visible = expand) {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(padding)

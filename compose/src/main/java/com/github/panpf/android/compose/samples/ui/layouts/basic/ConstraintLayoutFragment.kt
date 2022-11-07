@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,9 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.HorizontalDashedDivider
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.VerticalDashedDivider
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -344,93 +347,98 @@ fun ConstraintLayoutConstrainAsSamplePreview() {
 @Composable
 fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ConstraintLayout（Barrier）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            Column {
-                Text(text = "linkTo", modifier = Modifier.align(Alignment.CenterHorizontally))
-                ConstraintLayout(
-                    modifier = Modifier
-                        .size(160.dp)
-                        .border(2.dp, Color.Red)
-                        .padding(2.dp)
-                ) {
-                    val (text1, text2, text3, text4) = createRefs()
-                    Box(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .width(60.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
-                            .constrainAs(text1) {
-                                start.linkTo(parent.start)
-                                top.linkTo(parent.top)
-                            })
-                    Box(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .width(20.dp)
-                            .background(Color.Magenta.copy(alpha = 0.5f))
-                            .constrainAs(text2) {
-                                start.linkTo(parent.start)
-                                top.linkTo(text1.bottom)
-                            })
-                    Box(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .width(80.dp)
-                            .background(Color.White.copy(alpha = 0.5f))
-                            .constrainAs(text3) {
-                                start.linkTo(parent.start)
-                                top.linkTo(text2.bottom)
-                            })
-                    Box(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .width(40.dp)
-                            .background(Color.Black.copy(alpha = 0.5f))
-                            .constrainAs(text4) {
-                                start.linkTo(parent.start)
-                                top.linkTo(text3.bottom)
-                            })
-                    val endBarrier = createEndBarrier(text1, text2, text3, text4, margin = 10.dp)
+        Text(text = "以 N 个元素的其中一个边的最大值为基准创建一条线，其它元素可以以这条线为约束，这样的线就是 '屏障线'")
+        Spacer(modifier = Modifier.size(10.dp))
+        ConstraintLayout(
+            modifier = Modifier
+                .size(160.dp)
+                .border(2.dp, Color.Red)
+                .padding(2.dp)
+        ) {
+            val (text1, text2, text3, text4, barrierLineUI) = createRefs()
+            Box(
+                modifier = Modifier
+                    .height(26.dp)
+                    .width(60.dp)
+                    .background(Color.Red.copy(alpha = 0.5f))
+                    .constrainAs(text1) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    })
+            Box(
+                modifier = Modifier
+                    .height(26.dp)
+                    .width(20.dp)
+                    .background(Color.Magenta.copy(alpha = 0.5f))
+                    .constrainAs(text2) {
+                        start.linkTo(parent.start)
+                        top.linkTo(text1.bottom)
+                    })
+            Box(
+                modifier = Modifier
+                    .height(26.dp)
+                    .width(80.dp)
+                    .background(Color.Blue.copy(alpha = 0.5f))
+                    .constrainAs(text3) {
+                        start.linkTo(parent.start)
+                        top.linkTo(text2.bottom)
+                    })
+            Box(
+                modifier = Modifier
+                    .height(26.dp)
+                    .width(40.dp)
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .constrainAs(text4) {
+                        start.linkTo(parent.start)
+                        top.linkTo(text3.bottom)
+                    })
+            val barrierLine = createEndBarrier(text1, text2, text3, text4)
 
-                    val (action1, action2, action3, action4) = createRefs()
-                    Box(
-                        modifier = Modifier
-                            .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
-                            .constrainAs(action1) {
-                                start.linkTo(endBarrier)
-                                top.linkTo(parent.top)
-                            },
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(26.dp)
-                            .background(Color.Blue.copy(alpha = 0.5f))
-                            .constrainAs(action2) {
-                                start.linkTo(endBarrier)
-                                top.linkTo(action1.bottom)
-                            },
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(26.dp)
-                            .background(Color.Yellow.copy(alpha = 0.5f))
-                            .constrainAs(action3) {
-                                start.linkTo(endBarrier)
-                                top.linkTo(action2.bottom)
-                            },
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(26.dp)
-                            .background(Color.Cyan.copy(alpha = 0.5f))
-                            .constrainAs(action4) {
-                                start.linkTo(endBarrier)
-                                top.linkTo(action3.bottom)
-                            },
-                    )
-                }
-            }
+            val (action1, action2, action3, action4) = createRefs()
+            Box(
+                modifier = Modifier
+                    .size(26.dp)
+                    .background(Color.Green.copy(alpha = 0.5f))
+                    .constrainAs(action1) {
+                        start.linkTo(barrierLine)
+                        top.linkTo(parent.top)
+                    },
+            )
+            Box(
+                modifier = Modifier
+                    .size(26.dp)
+                    .background(Color.Blue.copy(alpha = 0.5f))
+                    .constrainAs(action2) {
+                        start.linkTo(barrierLine)
+                        top.linkTo(action1.bottom)
+                    },
+            )
+            Box(
+                modifier = Modifier
+                    .size(26.dp)
+                    .background(Color.Yellow.copy(alpha = 0.5f))
+                    .constrainAs(action3) {
+                        start.linkTo(barrierLine)
+                        top.linkTo(action2.bottom)
+                    },
+            )
+            Box(
+                modifier = Modifier
+                    .size(26.dp)
+                    .background(Color.Cyan.copy(alpha = 0.5f))
+                    .constrainAs(action4) {
+                        start.linkTo(barrierLine)
+                        top.linkTo(action3.bottom)
+                    },
+            )
+
+            VerticalDashedDivider(
+                color = Color.Gray,
+                modifier = Modifier
+                    .constrainAs(barrierLineUI) {
+                        start.linkTo(barrierLine)
+                    }
+            )
         }
     }
 }
@@ -445,8 +453,10 @@ fun ConstraintLayoutBarrierSamplePreview() {
 @Composable
 fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ConstraintLayout（GuideLine）", allExpandFlow, padding = 20.dp) {
+        Text(text = "从 Layout 的其中一个边为起点创建一条线，其它元素可以以这条线为约束，这样的线就是引导线")
+        Spacer(modifier = Modifier.size(10.dp))
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf("start", "end").forEach {
+            listOf("fromStart", "fromEnd").forEach {
                 Column {
                     Text(text = it, modifier = Modifier.align(Alignment.CenterHorizontally))
                     ConstraintLayout(
@@ -455,13 +465,13 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                             .border(2.dp, Color.Red)
                             .padding(2.dp)
                     ) {
-                        val guideLine = if ("start" == it) {
+                        val guideLine = if ("fromStart" == it) {
                             createGuidelineFromStart(0.3f)
                         } else {
                             createGuidelineFromEnd(0.3f)
                         }
+                        val (action1, action2, action3, action4, guideLineUI) = createRefs()
 
-                        val (action1, action2, action3, action4) = createRefs()
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
@@ -498,11 +508,19 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     top.linkTo(action3.bottom)
                                 },
                         )
+
+                        VerticalDashedDivider(
+                            color = Color.Gray,
+                            modifier = Modifier
+                                .constrainAs(guideLineUI) {
+                                    end.linkTo(guideLine)
+                                }
+                        )
                     }
                 }
             }
 
-            listOf("top", "bottom").forEach {
+            listOf("fromTop", "fromBottom").forEach {
                 Column {
                     Text(text = it, modifier = Modifier.align(Alignment.CenterHorizontally))
                     ConstraintLayout(
@@ -511,13 +529,13 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                             .border(2.dp, Color.Red)
                             .padding(2.dp)
                     ) {
-                        val guideLine = if ("top" == it) {
+                        val guideLine = if ("fromTop" == it) {
                             createGuidelineFromTop(0.3f)
                         } else {
                             createGuidelineFromBottom(0.3f)
                         }
+                        val (action1, action2, action3, action4, guideLineUI) = createRefs()
 
-                        val (action1, action2, action3, action4) = createRefs()
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
@@ -553,6 +571,14 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                                     top.linkTo(guideLine)
                                     start.linkTo(action3.end)
                                 },
+                        )
+
+                        HorizontalDashedDivider(
+                            color = Color.Gray,
+                            modifier = Modifier
+                                .constrainAs(guideLineUI) {
+                                    bottom.linkTo(guideLine)
+                                }
                         )
                     }
                 }
