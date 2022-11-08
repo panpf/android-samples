@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -47,7 +47,7 @@ class FlowRowFragment : ToolbarFragment() {
         toolbar.title = "FlowRow"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme {
+                MyTheme3 {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

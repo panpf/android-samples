@@ -20,10 +20,9 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalDrawer
+import androidx.compose.material.Surface
 import androidx.compose.material.rememberBottomDrawerState
 import androidx.compose.material.rememberDrawerState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,10 +56,7 @@ class DrawerFragment : ToolbarFragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
+                    Surface(modifier = Modifier.fillMaxSize()) {
                         ExpandableLayout { allExpandFlow ->
                             ModalDrawerSample(allExpandFlow)
                             ModalDrawerDrawerShapeSample(allExpandFlow)

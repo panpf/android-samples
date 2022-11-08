@@ -51,7 +51,7 @@ import com.github.panpf.android.compose.samples.ui.base.httpPhotoUrl
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -68,7 +68,7 @@ class AsyncImageCoilFragment : ToolbarFragment() {
         toolbar.title = "AsyncImage - Coil"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme {
+                MyTheme3 {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.panpf.android.compose.samples.model.Link
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 
 @Composable
 fun LinkItem(link: Link, onClick: () -> Unit) {
@@ -20,7 +20,7 @@ fun LinkItem(link: Link, onClick: () -> Unit) {
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LinkItemPreview() {
-    MyTheme {
+    MyTheme3 {
         LinkItem(link = Link("示例示例示例示例示例示例示例示例示例示例示例示例示例示例示例示例示例")) {
 
         }
@@ -49,7 +49,7 @@ fun LinkListPreview() {
         Link("Radio Button"),
         Link("Checkbox")
     )
-    MyTheme {
+    MyTheme3 {
         LinkList(links) { _, _ ->
 
         }

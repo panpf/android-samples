@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 
 @Composable
 fun MyDivider() {
@@ -22,7 +22,7 @@ fun MyDivider() {
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun MyDividerPreview() {
-    MyTheme {
+    MyTheme3 {
         Surface(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 100.dp, bottom = 100.dp)) {

@@ -33,7 +33,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.HorizontalDashedDivider
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.VerticalDashedDivider
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +49,7 @@ class ConstraintLayoutFragment : ToolbarFragment() {
         toolbar.title = "ConstraintLayout"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme {
+                MyTheme3 {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

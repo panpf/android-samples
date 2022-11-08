@@ -16,7 +16,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 
 class Material3ComponentsFragment : ToolbarFragment() {
 
@@ -59,7 +59,7 @@ class Material3ComponentsFragment : ToolbarFragment() {
         )
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme {
+                MyTheme3 {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

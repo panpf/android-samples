@@ -18,16 +18,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,10 +62,7 @@ class ModalBottomSheetLayoutFragment : ToolbarFragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
+                    Surface(modifier = Modifier.fillMaxSize()) {
                         ExpandableLayout { allExpandFlow ->
                             ModalBottomSheetLayoutSample(allExpandFlow)
                             ModalBottomSheetLayoutSheetShapeSample(allExpandFlow)

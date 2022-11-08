@@ -14,7 +14,6 @@ import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -46,10 +45,7 @@ class ChipFragment : ToolbarFragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
+                    Surface(modifier = Modifier.fillMaxSize()) {
                         ExpandableLayout { allExpandFlow ->
                             ChipSample(allExpandFlow)
                             ChipShapeSample(allExpandFlow)

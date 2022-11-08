@@ -45,7 +45,7 @@ import com.github.panpf.android.compose.samples.ui.base.httpPhotoUrl
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.github.panpf.sketch.compose.AsyncImage
 import com.github.panpf.sketch.fetch.newAssetUri
@@ -67,7 +67,7 @@ class AsyncImageSketchFragment : ToolbarFragment() {
         toolbar.title = "AsyncImage - Sketch"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme {
+                MyTheme3 {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
