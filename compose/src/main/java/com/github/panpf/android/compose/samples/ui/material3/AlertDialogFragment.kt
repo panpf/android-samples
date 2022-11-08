@@ -258,7 +258,7 @@ fun AlertDialogShapeSamplePreview() {
 
 @Composable
 fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
-    val openDialog = remember { mutableStateOf(true) }
+    val openDialog = remember { mutableStateOf(false) }
     ExpandableItem(title = "AlertDialog（colors）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
