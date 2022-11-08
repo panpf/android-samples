@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -95,7 +93,7 @@ fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = { context.showShortToast("add") }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "add")
+                        Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
                     }
                 }
             )
@@ -159,7 +157,7 @@ fun BottomAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
                 },
                 floatingActionButton = {
                     FloatingActionButton(onClick = { context.showShortToast("add") }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "add")
+                        Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
                     }
                 },
                 containerColor = Color.Blue.copy(alpha = 0.6f),

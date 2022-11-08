@@ -10,13 +10,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -111,6 +111,7 @@ fun CardColorsSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier.size(160.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.Red.copy(alpha = 0.5f),
+                contentColor = Color.White,
             )
         ) {
             Box(modifier = Modifier.fillMaxSize()) {

@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,10 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
@@ -115,12 +114,12 @@ fun BadgeContentColorSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeImageSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge（Image）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem(title = "Badge（Icon）", allExpandFlow, padding = 20.dp) {
         Badge {
-            Image(
-                imageVector = Icons.Default.Close,
+            Icon(
+                painter = painterResource(id = R.drawable.ic_close),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(Color.White)
+                tint = Color.White
             )
         }
     }
