@@ -28,8 +28,8 @@ class MaterialComponentsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Material Components"
         val links = listOf(
-            Link("BottomAppBar（Implementation）"),
-            Link("Backdrop（Implementation）"),   // BackdropScaffold
+            Link("BottomAppBar", R.id.action_global_materialBottomAppBarFragment),
+            Link("BackdropScaffold（Implementation）"),
             Link("Badge（Implementation）"),
             Link("BottomNavigation", R.id.action_global_bottomNavigationFragment),
             Link("Button（Implementation）"), //  FloatingActionButton, IconButton, IconToggleButton
@@ -39,14 +39,17 @@ class MaterialComponentsFragment : ToolbarFragment() {
             Link("Dialog（Implementation）"), // AlertDialog
             Link("Divider（Implementation）"),
             Link("Drawer", R.id.action_global_drawerFragment),
-                Link("Icon（Implementation）"),
+            Link("Icon（Implementation）"),
             Link("ListItem（Implementation）"),
             Link("Menu（Implementation）"),   // DropdownMenu
             Link("NavigationRail（Implementation）"),
             Link("ProgressIndicator（Implementation）"),
             Link("RadioButton（Implementation）"),
             Link("Scaffold（Implementation）"),
-            Link("Sheet", R.id.action_global_modalBottomSheetLayoutFragment),    // ModalBottomSheetLayout, BottomSheetScaffold
+            Link(
+                "Sheet",
+                R.id.action_global_modalBottomSheetLayoutFragment
+            ),    // ModalBottomSheetLayout, BottomSheetScaffold
             Link("Slider（Implementation）"),
             Link("Snackbar（Implementation）"),
             Link("Surface（Implementation）"),

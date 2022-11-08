@@ -27,6 +27,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,7 +63,10 @@ class ModalBottomSheetLayoutFragment : ToolbarFragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
-                    Surface(modifier = Modifier.fillMaxSize()) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
                         ExpandableLayout { allExpandFlow ->
                             ModalBottomSheetLayoutSample(allExpandFlow)
                             ModalBottomSheetLayoutSheetShapeSample(allExpandFlow)

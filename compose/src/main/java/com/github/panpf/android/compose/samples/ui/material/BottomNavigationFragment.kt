@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -57,7 +58,10 @@ class BottomNavigationFragment : ToolbarFragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
-                    Surface(modifier = Modifier.fillMaxSize()) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
                         ExpandableLayout { allExpandFlow ->
                             BottomNavigationSample(allExpandFlow)
                             BottomNavigationColorsSample(allExpandFlow)

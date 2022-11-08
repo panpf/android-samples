@@ -30,7 +30,7 @@ class Material3ComponentsFragment : ToolbarFragment() {
         val links = listOf(
             Link("AlertDialog", R.id.action_global_alertDialogFragment),
             Link("Badge", R.id.action_global_badgeFragment),
-            Link("BottomAppBar", R.id.action_global_bottomAppBarFragment),
+            Link("BottomAppBar", R.id.action_global_material3BottomAppBarFragment),
             Link("BottomSheets（Planned）"),
             Link("Button", R.id.action_global_buttonFragment),
             Link("Card", R.id.action_global_cardFragment),

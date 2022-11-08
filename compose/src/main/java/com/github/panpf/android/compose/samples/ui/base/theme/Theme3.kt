@@ -42,7 +42,7 @@ fun MyTheme3(
             secondary = PurpleGrey40,
             tertiary = Pink40,
         )
-    }.copy(surface = Color.White, background = Color.White)
+    }.copy(background = Color.White)
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

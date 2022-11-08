@@ -81,7 +81,7 @@ fun ExpandableItem(
     padding: Dp = 0.dp,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         val selfExpand = remember { mutableStateOf(true) }
         LaunchedEffect(allExpand) {
             allExpand.collect {

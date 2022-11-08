@@ -27,7 +27,7 @@ fun MyTheme(
             primary = Purple40,
             secondary = PurpleGrey40,
         )
-    }.copy(surface = Color.White, background = Color.White)
+    }.copy(background = Color.White)
 
     val view = LocalView.current
     if (!view.isInEditMode) {

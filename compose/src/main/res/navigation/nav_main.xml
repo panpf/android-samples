@@ -483,11 +483,11 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/bottomAppBarFragment"
+        android:id="@+id/material3BottomAppBarFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material3.BottomAppBarFragment" />
     <action
-        android:id="@+id/action_global_bottomAppBarFragment"
-        app:destination="@id/bottomAppBarFragment"
+        android:id="@+id/action_global_material3BottomAppBarFragment"
+        app:destination="@id/material3BottomAppBarFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -554,6 +554,18 @@
     <action
         android:id="@+id/action_global_tabRowFragment"
         app:destination="@id/tabRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <fragment
+        android:id="@+id/materialBottomAppBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.BottomAppBarFragment" />
+    <action
+        android:id="@+id/action_global_materialBottomAppBarFragment"
+        app:destination="@id/materialBottomAppBarFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
