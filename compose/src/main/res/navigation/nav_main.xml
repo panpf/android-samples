@@ -505,6 +505,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/popupFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.PopupFragment" />
+    <action
+        android:id="@+id/action_global_popupFragment"
+        app:destination="@id/popupFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/alertDialogFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material3.AlertDialogFragment" />
     <action

@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -50,7 +53,7 @@ class BadgeFragment : ToolbarFragment() {
                             BadgeContentColorSample(allExpandFlow)
                             BadgeImageSample(allExpandFlow)
                             BadgePointSample(allExpandFlow)
-                            // todo BadgeBox
+                            BadgeBoxSample(allExpandFlow)
                         }
                     }
                 }
@@ -144,4 +147,28 @@ fun BadgePointSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun BadgePointSamplePreview() {
     BadgePointSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BadgeBoxSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem(title = "Badge（Box）", allExpandFlow, padding = 20.dp) {
+        BadgedBox(badge = {
+            Badge {
+                Text(text = "99+")
+            }
+        }) {
+            Icon(
+                Icons.Filled.Settings,
+                contentDescription = "Favorite"
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun BadgeBoxSamplePreview() {
+    BadgeBoxSample(remember { MutableStateFlow(true) })
 }

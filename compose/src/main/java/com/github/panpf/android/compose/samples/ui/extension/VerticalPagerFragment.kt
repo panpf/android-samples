@@ -691,5 +691,3 @@ fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
 fun VerticalPagerIndicatorSamplePreview() {
     VerticalPagerIndicatorSample(remember { MutableStateFlow(true) })
 }
-
-// todo TabColumn

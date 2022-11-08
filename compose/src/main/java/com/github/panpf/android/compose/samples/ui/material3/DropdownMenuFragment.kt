@@ -128,7 +128,7 @@ fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem(title = "DropdownMenu（offset）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { expanded.value = true }) {
-            Text(text = "Show DropdownMenu And Offset")
+            Text(text = "Show Offset DropdownMenu")
         }
         DropdownMenu(
             expanded = expanded.value,
