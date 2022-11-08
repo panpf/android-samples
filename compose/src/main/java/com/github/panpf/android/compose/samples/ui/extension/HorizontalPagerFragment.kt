@@ -22,13 +22,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -46,11 +46,11 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -695,32 +695,10 @@ fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
         Column {
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
-            ) {
-                items.forEachIndexed { index, item ->
-                    Tab(
-                        selected = index == pagerState.currentPage,
-                        onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(index)
-                            }
-                        }
-                    ) {
-                        Text(text = item)
-                    }
-                }
-            }
-            TabRow(
-                selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
-                        height = 4.dp,
-                        color = Color.Green
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
                     )
-                },
-                backgroundColor = Color.Transparent,
-                divider = {
-                    TabRowDefaults.Divider(thickness = 2.dp, color = Color.Cyan)
                 }
             ) {
                 items.forEachIndexed { index, item ->
@@ -736,13 +714,11 @@ fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
+            Spacer(modifier = Modifier.size(2.dp))
             HorizontalPager(
                 count = items.size,
                 state = pagerState,
-                modifier = Modifier
-                    .height(200.dp)
-                    .border(2.dp, Color.Red)
-                    .padding(2.dp),
+                modifier = Modifier.height(200.dp)
             ) { index ->
                 Box(
                     modifier = Modifier
@@ -782,34 +758,11 @@ fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
         Column {
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
-            ) {
-                items.forEachIndexed { index, item ->
-                    Tab(
-                        selected = index == pagerState.currentPage,
-                        onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(index)
-                            }
-                        }
-                    ) {
-                        Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
-                    }
-                }
-            }
-            ScrollableTabRow(
-                selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
-                        height = 4.dp,
-                        color = Color.Green
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
                     )
                 },
-                backgroundColor = Color.Transparent,
-                divider = {
-                    TabRowDefaults.Divider(thickness = 2.dp, color = Color.Cyan)
-                },
-                edgePadding = 0.dp
             ) {
                 items.forEachIndexed { index, item ->
                     Tab(
@@ -824,13 +777,11 @@ fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
+            Spacer(modifier = Modifier.size(2.dp))
             HorizontalPager(
                 count = items.size,
                 state = pagerState,
-                modifier = Modifier
-                    .height(200.dp)
-                    .border(2.dp, Color.Red)
-                    .padding(2.dp),
+                modifier = Modifier.height(200.dp)
             ) { index ->
                 Box(
                     modifier = Modifier

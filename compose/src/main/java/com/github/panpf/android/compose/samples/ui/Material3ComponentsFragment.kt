@@ -28,23 +28,20 @@ class Material3ComponentsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Material3 Components"
         val links = listOf(
+            Link("AlertDialog", R.id.action_global_alertDialogFragment),
             Link("Badge", R.id.action_global_badgeFragment),
             Link("BottomAppBar", R.id.action_global_bottomAppBarFragment),
             Link("BottomSheets（Planned）"),
-            Link("Button", R.id.action_global_buttonFragment), //  FloatingActionButton, IconButton, IconToggleButton
+            Link("Button", R.id.action_global_buttonFragment),
             Link("Card", R.id.action_global_cardFragment),
             Link("Checkbox", R.id.action_global_checkboxFragment),
             Link("Chip", R.id.action_global_chipFragment),
             Link("DatePicker（Planned）"),
-            Link("Dialog（Implementation）"), // AlertDialog
             Link("Divider", R.id.action_global_dividerFragment),
+            Link("DropdownMenu", R.id.action_global_dropdownMenuFragment),
             Link("Icon", R.id.action_global_iconFragment),
-            Link("ListItem（Implementation）"),
-            Link("Menu（Implementation）"),   // DropdownMenu
-            Link(
-                "NavigationBar",
-                R.id.action_global_navigationBarFragment
-            ),  // DismissibleDrawerSheet, ModalDrawerSheet, PermanentDrawerSheet
+            Link("ListItem", R.id.action_global_listItemFragment),
+            Link("NavigationBar", R.id.action_global_navigationBarFragment),
             Link("NavigationDrawer", R.id.action_global_navigationDrawerFragment),
             Link("NavigationRail", R.id.action_global_navigationRailFragment),
             Link("ProgressIndicator", R.id.action_global_progressIndicatorFragment),
@@ -54,9 +51,9 @@ class Material3ComponentsFragment : ToolbarFragment() {
             Link("Snackbar", R.id.action_global_snackbarFragment),
             Link("Surface", R.id.action_global_surfaceFragment),
             Link("Switch", R.id.action_global_switchFragment),
-            Link("Tab（Implementation）"),
+            Link("TabRow", R.id.action_global_tabRowFragment),
             Link("TextField", R.id.action_global_textFieldFragment),
-            Link("Text（Implementation）", R.id.action_global_textFragment),
+            Link("Text", R.id.action_global_textFragment),
             Link("TimePicker（Planned）"),
             Link("TopAppBar", R.id.action_global_topAppBarFragment),
         )

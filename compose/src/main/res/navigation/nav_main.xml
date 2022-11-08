@@ -492,4 +492,59 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/dialogFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.DialogFragment" />
+    <action
+        android:id="@+id/action_global_dialogFragment"
+        app:destination="@id/dialogFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/alertDialogFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.AlertDialogFragment" />
+    <action
+        android:id="@+id/action_global_alertDialogFragment"
+        app:destination="@id/alertDialogFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/listItemFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ListItemFragment" />
+    <action
+        android:id="@+id/action_global_listItemFragment"
+        app:destination="@id/listItemFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/dropdownMenuFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.DropdownMenuFragment" />
+    <action
+        android:id="@+id/action_global_dropdownMenuFragment"
+        app:destination="@id/dropdownMenuFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/tabRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.TabRowFragment" />
+    <action
+        android:id="@+id/action_global_tabRowFragment"
+        app:destination="@id/tabRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>

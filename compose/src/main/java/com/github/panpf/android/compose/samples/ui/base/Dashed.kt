@@ -166,3 +166,24 @@ fun DashedShapePreview() {
     }
 }
 
+// dashed line
+//You can simply use a Canvas with the method drawLine applying as pathEffect a PathEffect.dashPathEffect:
+//val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+//Canvas(Modifier.fillMaxWidth().height(1.dp)) {
+//    drawLine(
+//        color = Color.Red,
+//        start = Offset(0f, 0f),
+//        end = Offset(size.width, 0f),
+//        pathEffect = pathEffect
+//    )
+//}
+//
+// dashed rect
+//You can also apply the same pathEffect to other method as:
+//
+//val stroke = Stroke(width = 2f,
+//    pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+//)
+//Canvas(Modifier.fillMaxWidth().height(70.dp)){
+//    drawRoundRect(color = Color.Red,style = stroke)
+//}

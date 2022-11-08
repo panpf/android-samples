@@ -37,6 +37,8 @@ class BasicComponentsFragment : ToolbarFragment() {
             Link("LazyRow", R.id.action_global_lazyRowFragment),
             Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
             Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
+            Link("Dialog", R.id.action_global_dialogFragment),
+            // todo Popup
         )
         return ComposeView(inflater.context).apply {
             setContent {

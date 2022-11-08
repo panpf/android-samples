@@ -51,6 +51,7 @@ class BadgeFragment : ToolbarFragment() {
                             BadgeContentColorSample(allExpandFlow)
                             BadgeImageSample(allExpandFlow)
                             BadgePointSample(allExpandFlow)
+                            // todo BadgeBox
                         }
                     }
                 }
