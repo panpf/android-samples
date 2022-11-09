@@ -179,7 +179,7 @@ fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Bool
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
-                Image(painterResource(id = R.drawable.ic_remove), contentDescription = "remove")
+                Image(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
             }
             LazyHorizontalGrid(
                 rows = GridCells.Adaptive(80.dp),

@@ -206,7 +206,7 @@ fun LazyVerticalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolea
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
-                    Image(painterResource(id = R.drawable.ic_remove), contentDescription = "remove")
+                    Image(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
                 }
                 IconButton(
                     onClick = {
