@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.NavDirections
@@ -16,7 +16,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
 class MaterialComponentsFragment : ToolbarFragment() {
 
@@ -28,28 +28,26 @@ class MaterialComponentsFragment : ToolbarFragment() {
     ): View {
         toolbar.title = "Material Components"
         val links = listOf(
-            Link("BottomAppBar", R.id.action_global_materialBottomAppBarFragment),
+            Link("AlertDialog", R.id.action_global_materialAlertDialogFragment),
+            Link("Badge", R.id.action_global_materialBadgeFragment),
             Link("BackdropScaffold（Implementation）"),
-            Link("Badge（Implementation）"),
-            Link("BottomNavigation", R.id.action_global_bottomNavigationFragment),
-            Link("Button（Implementation）"), //  FloatingActionButton, IconButton, IconToggleButton
-            Link("Card（Implementation）"),
-            Link("Checkbox（Implementation）"),
-            Link("Chip（Implementation）"),
-            Link("Dialog（Implementation）"), // AlertDialog
-            Link("Divider（Implementation）"),
-            Link("Drawer", R.id.action_global_drawerFragment),
-            Link("Icon（Implementation）"),
-            Link("ListItem（Implementation）"),
-            Link("Menu（Implementation）"),   // DropdownMenu
-            Link("NavigationRail（Implementation）"),
-            Link("ProgressIndicator（Implementation）"),
-            Link("RadioButton（Implementation）"),
-            Link("Scaffold（Implementation）"),
-            Link(
-                "Sheet",
-                R.id.action_global_modalBottomSheetLayoutFragment
-            ),    // ModalBottomSheetLayout, BottomSheetScaffold
+            Link("BottomAppBar", R.id.action_global_materialBottomAppBarFragment),
+            Link("BottomNavigation", R.id.action_global_materialBottomNavigationFragment),
+            Link("BottomSheetLayout", R.id.action_global_materialBottomSheetLayoutFragment),
+            Link("BottomSheetScaffold", R.id.action_global_materialBottomSheetScaffoldFragment),
+            Link("Button", R.id.action_global_materialButtonFragment),
+            Link("Card", R.id.action_global_materialCardFragment),
+            Link("Checkbox", R.id.action_global_materialCheckboxFragment),
+            Link("Chip", R.id.action_global_materialChipFragment),
+            Link("Divider", R.id.action_global_materialDividerFragment),
+            Link("DropdownMenu", R.id.action_global_materialDropdownMenuFragment),
+            Link("Drawer", R.id.action_global_materialDrawerFragment),
+            Link("Icon", R.id.action_global_materialIconFragment),
+            Link("ListItem", R.id.action_global_materialListItemFragment),
+            Link("NavigationRail", R.id.action_global_materialNavigationRailFragment),
+            Link("ProgressIndicator", R.id.action_global_materialProgressIndicatorFragment),
+            Link("RadioButton", R.id.action_global_materialRadioButtonFragment),
+            Link("Scaffold", R.id.action_global_materialScaffoldFragment),
             Link("Slider（Implementation）"),
             Link("Snackbar（Implementation）"),
             Link("Surface（Implementation）"),
@@ -61,10 +59,10 @@ class MaterialComponentsFragment : ToolbarFragment() {
         )
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         LinkList(links) { _, link ->
                             val nav = link.nav

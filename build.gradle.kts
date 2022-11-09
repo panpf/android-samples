@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        maven { setUrl("https://mirrors.huaweicloud.com/repository/maven/") }
         mavenCentral()
         google()
     }
@@ -14,7 +13,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { setUrl("https://mirrors.huaweicloud.com/repository/maven/") }
         mavenCentral()
         google()
         mavenLocal()

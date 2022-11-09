@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,28 +8,26 @@ import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,17 +43,16 @@ class AlertDialogFragment : ToolbarFragment() {
         toolbar.title = "AlertDialog"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             AlertDialogSample(allExpandFlow)
                             AlertDialogLimitDismissSample(allExpandFlow)
                             AlertDialogShapeSample(allExpandFlow)
                             AlertDialogColorsSample(allExpandFlow)
-                            AlertDialogTonalElevationSample(allExpandFlow)
                         }
                     }
                 }
@@ -81,12 +78,6 @@ fun AlertDialogSample(allExpandFlow: Flow<Boolean>) {
             }
             if (openDialog.value) {
                 AlertDialog(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "icon"
-                        )
-                    },
                     title = {
                         Text(text = "提示")
                     },
@@ -143,12 +134,6 @@ fun AlertDialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
             }
             if (openDialog.value) {
                 AlertDialog(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "icon"
-                        )
-                    },
                     title = {
                         Text(text = "提示")
                     },
@@ -204,17 +189,11 @@ fun AlertDialogShapeSample(allExpandFlow: Flow<Boolean>) {
                         openDialog.value = true
                     }
                 ) {
-                    Text(text = "Show Rectangle AlertDialog")
+                    Text(text = "Show Rounded Corner AlertDialog")
                 }
             }
             if (openDialog.value) {
                 AlertDialog(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "icon"
-                        )
-                    },
                     title = {
                         Text(text = "提示")
                     },
@@ -242,7 +221,7 @@ fun AlertDialogShapeSample(allExpandFlow: Flow<Boolean>) {
                     onDismissRequest = {
                         openDialog.value = false
                     },
-                    shape = androidx.compose.ui.graphics.RectangleShape
+                    shape = RoundedCornerShape(20.dp)
                 )
             }
         }
@@ -272,12 +251,6 @@ fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
             }
             if (openDialog.value) {
                 AlertDialog(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "icon",
-                        )
-                    },
                     title = {
                         Text(text = "提示")
                     },
@@ -305,10 +278,8 @@ fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
                     onDismissRequest = {
                         openDialog.value = false
                     },
-                    containerColor = Color(0xFF7F7FFF),
-                    iconContentColor = Color.White,
-                    titleContentColor = Color.White,
-                    textContentColor = Color.White,
+                    backgroundColor = Color(0xFF7F7FFF),
+                    contentColor = Color.White,
                 )
             }
         }
@@ -319,67 +290,4 @@ fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun AlertDialogColorsSamplePreview() {
     AlertDialogColorsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun AlertDialogTonalElevationSample(allExpandFlow: Flow<Boolean>) {
-    val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog（tonalElevation）", allExpandFlow, padding = 20.dp) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                Button(
-                    onClick = {
-                        openDialog.value = true
-                    }
-                ) {
-                    Text(text = "Show tonalElevation AlertDialog")
-                }
-            }
-            if (openDialog.value) {
-                AlertDialog(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "icon",
-                        )
-                    },
-                    title = {
-                        Text(text = "提示")
-                    },
-                    text = {
-                        Text(text = "确定要退出 App 吗？")
-                    },
-                    confirmButton = {
-                        TextButton(
-                            onClick = {
-                                openDialog.value = false
-                            }
-                        ) {
-                            Text(text = "确定")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(
-                            onClick = {
-                                openDialog.value = false
-                            }
-                        ) {
-                            Text(text = "取消")
-                        }
-                    },
-                    onDismissRequest = {
-                        openDialog.value = false
-                    },
-                    tonalElevation = 100.dp,
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun AlertDialogTonalElevationSamplePreview() {
-    AlertDialogTonalElevationSample(remember { MutableStateFlow(true) })
 }

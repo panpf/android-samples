@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.ListItem
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +23,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -40,16 +38,15 @@ class ListItemFragment : ToolbarFragment() {
         toolbar.title = "ListItem"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             ListItemOneLineSample(allExpandFlow)
                             ListItemTwoLineSample(allExpandFlow)
                             ListItemThreeLineSample(allExpandFlow)
-                            ListItemColorsSample(allExpandFlow)
                         }
                     }
                 }
@@ -59,27 +56,26 @@ class ListItemFragment : ToolbarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
-                Text(text = "One line list item with trailing")
-            },
-            leadingContent = {
+            icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_phone),
                     contentDescription = "phone"
                 )
             },
-            trailingContent = {
+            trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_right),
                     contentDescription = "more"
                 )
             },
-        )
+        ) {
+            Text(text = "One line list item with trailing")
+        }
     }
 }
 
@@ -90,30 +86,29 @@ fun ListItemOneLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
-                Text(text = "Two line list item with trailing")
-            },
-            supportingText = {
+            secondaryText = {
                 Text(text = "Secondary text")
             },
-            leadingContent = {
+            icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_phone),
                     contentDescription = "phone"
                 )
             },
-            trailingContent = {
+            trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_right),
                     contentDescription = "more"
                 )
             },
-        )
+        ) {
+            Text(text = "Two line list item with trailing")
+        }
     }
 }
 
@@ -124,33 +119,32 @@ fun ListItemTwoLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
-                Text(text = "Three line list item with trailing")
-            },
             overlineText = {
                 Text(text = "Over line")
             },
-            supportingText = {
+            secondaryText = {
                 Text(text = "Secondary text")
             },
-            leadingContent = {
+            icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_phone),
                     contentDescription = "phone"
                 )
             },
-            trailingContent = {
+            trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_right),
                     contentDescription = "more"
                 )
             },
-        )
+        ) {
+            Text(text = "Three line list item with trailing")
+        }
     }
 }
 
@@ -158,49 +152,4 @@ fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun ListItemThreeLineSamplePreview() {
     ListItemThreeLineSample(remember { MutableStateFlow(true) })
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ListItem（colors）", allExpandFlow, padding = 20.dp) {
-        ListItem(
-            headlineText = {
-                Text(text = "Three line list item with trailing")
-            },
-            overlineText = {
-                Text(text = "Over line")
-            },
-            supportingText = {
-                Text(text = "Secondary text")
-            },
-            leadingContent = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_phone),
-                    contentDescription = "phone"
-                )
-            },
-            trailingContent = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
-                    contentDescription = "more"
-                )
-            },
-            colors = ListItemDefaults.colors(
-                containerColor = Color(0xFF7F7FFF),
-                headlineColor = Color.White,
-                leadingIconColor = Color.White,
-                overlineColor = Color.White,
-                supportingColor = Color.White,
-                trailingIconColor = Color.White,
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun ListItemColorsSamplePreview() {
-    ListItemColorsSample(remember { MutableStateFlow(true) })
 }

@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -43,10 +40,10 @@ class CardFragment : ToolbarFragment() {
         toolbar.title = "Card"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             CardSample(allExpandFlow)
@@ -54,8 +51,6 @@ class CardFragment : ToolbarFragment() {
                             CardColorsSample(allExpandFlow)
                             CardElevationSample(allExpandFlow)
                             CardBorderSample(allExpandFlow)
-                            ElevatedCardSample(allExpandFlow)
-                            OutlinedCardSample(allExpandFlow)
                         }
                     }
                 }
@@ -109,10 +104,8 @@ fun CardColorsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Card（colors）", allExpandFlow, padding = 20.dp) {
         Card(
             modifier = Modifier.size(160.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.Red.copy(alpha = 0.5f),
-                contentColor = Color.White,
-            )
+            backgroundColor = Color.Red.copy(alpha = 0.5f),
+            contentColor = Color.White,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
@@ -133,7 +126,7 @@ fun CardElevationSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Card（elevation）", allExpandFlow, padding = 20.dp) {
         Card(
             modifier = Modifier.size(160.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp, pressedElevation = 0.dp)
+            elevation = 10.dp
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
@@ -167,40 +160,4 @@ fun CardBorderSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun CardBorderSamplePreview() {
     CardBorderSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ElevatedCard", allExpandFlow, padding = 20.dp) {
-        ElevatedCard(modifier = Modifier.size(160.dp)) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun ElevatedCardSamplePreview() {
-    ElevatedCardSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "OutlinedCard", allExpandFlow, padding = 20.dp) {
-        OutlinedCard(modifier = Modifier.size(160.dp)) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun OutlinedCardSamplePreview() {
-    OutlinedCardSample(remember { MutableStateFlow(true) })
 }

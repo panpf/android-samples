@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
@@ -15,6 +14,7 @@ import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ElevatedSuggestionChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
@@ -25,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -91,13 +90,13 @@ fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -128,13 +127,13 @@ fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -166,22 +165,22 @@ fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.Blue)
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.Yellow)
                         )
                     },
                     colors = AssistChipDefaults.assistChipColors(
                         labelColor = Color.Red,
                         containerColor = Color.Cyan,
+                        leadingIconContentColor = Color.Blue,
+                        trailingIconContentColor = Color.Yellow,
                     )
                 )
             }
@@ -209,13 +208,13 @@ fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -247,13 +246,13 @@ fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -301,13 +300,13 @@ fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it.first)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -355,13 +354,13 @@ fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it.first)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = null
                         )
@@ -409,13 +408,13 @@ fun InputChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it.first)
                     },
                     leadingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_clear),
                             contentDescription = null
                         )
@@ -463,7 +462,7 @@ fun InputChipSamplePreview() {
 //                                Text(text = pair.first)
 //                            },
 //                            trailingIcon = {
-//                                Image(
+//                                Icon(
 //                                    painter = painterResource(id = R.drawable.ic_clear),
 //                                    contentDescription = null,
 //                                    modifier = Modifier.clickable {
@@ -509,7 +508,7 @@ fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     icon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null
                         )
@@ -540,7 +539,7 @@ fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
                         Text(text = it)
                     },
                     icon = {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_games),
                             contentDescription = null,
                         )

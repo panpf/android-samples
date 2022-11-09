@@ -22,12 +22,12 @@ import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +51,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class ModalBottomSheetLayoutFragment : ToolbarFragment() {
+class BottomSheetLayoutFragment : ToolbarFragment() {
 
     override fun createView(
         toolbar: Toolbar,
@@ -59,7 +59,7 @@ class ModalBottomSheetLayoutFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "ModalBottomSheetLayout"
+        toolbar.title = "BottomSheetLayout"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

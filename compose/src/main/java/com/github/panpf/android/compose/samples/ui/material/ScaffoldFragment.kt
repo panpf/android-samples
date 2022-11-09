@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,21 +9,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.FabPosition
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -57,10 +54,10 @@ class ScaffoldFragment : ToolbarFragment() {
         toolbar.title = "Scaffold"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ScaffoldSample()
                     }
@@ -71,7 +68,7 @@ class ScaffoldFragment : ToolbarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ScaffoldSample() {
     val colors = remember {
@@ -87,7 +84,6 @@ fun ScaffoldSample() {
         )
     }
     val snackbarHostState = remember { SnackbarHostState() }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val navigationSelectedIndex = remember { mutableStateOf(0) }
     val pagerState = rememberPagerState(navigationSelectedIndex.value)
@@ -126,9 +122,9 @@ fun ScaffoldSample() {
             }
         },
         bottomBar = {
-            NavigationBar {
+            BottomNavigation {
                 pagerItems.forEachIndexed { index, itemPair ->
-                    NavigationBarItem(
+                    BottomNavigationItem(
                         icon = {
                             Icon(
                                 painter = painterResource(id = itemPair.second),
@@ -157,10 +153,11 @@ fun ScaffoldSample() {
                             "Snackbar # ${++clickCount.value}"
                         )
                     }
+                },
+                text = {
+                    Text("Show snackbar")
                 }
-            ) {
-                Text("Show snackbar")
-            }
+            )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     )

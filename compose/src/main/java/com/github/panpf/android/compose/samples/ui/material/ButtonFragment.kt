@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,28 +14,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledIconToggleButton
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.FilledTonalIconToggleButton
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconToggleButton
-import androidx.compose.material3.LargeFloatingActionButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.OutlinedIconToggleButton
-import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.IconToggleButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,7 +40,8 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.material3.LargeFloatingActionButtonSample
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,10 +57,10 @@ class ButtonFragment : ToolbarFragment() {
         toolbar.title = "Button"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             ButtonContentTextSample(allExpandFlow)
@@ -79,25 +70,15 @@ class ButtonFragment : ToolbarFragment() {
                             ButtonElevationSample(allExpandFlow)
                             ButtonBorderSample(allExpandFlow)
                             ButtonContentPaddingSample(allExpandFlow)
-                            ElevatedButtonSample(allExpandFlow)
-                            FilledTonalButtonSample(allExpandFlow)
                             OutlinedButtonSample(allExpandFlow)
                             TextButtonSample(allExpandFlow)
                             IconButtonSample(allExpandFlow)
-                            FilledIconButtonSample(allExpandFlow)
-                            FilledTonalIconButtonSample(allExpandFlow)
-                            OutlinedIconButtonSample(allExpandFlow)
                             IconToggleButtonSample(allExpandFlow)
-                            FilledIconToggleButtonSample(allExpandFlow)
-                            FilledTonalIconToggleButtonSample(allExpandFlow)
-                            OutlinedIconToggleButtonSample(allExpandFlow)
                             FloatingActionButtonSample(allExpandFlow)
                             FloatingActionButtonShapeSample(allExpandFlow)
                             FloatingActionButtonColorSample(allExpandFlow)
-                            SmallFloatingActionButtonSample(allExpandFlow)
                             LargeFloatingActionButtonSample(allExpandFlow)
                             ExtendedFloatingActionButtonSample(allExpandFlow)
-                            // todo Segmented button planned https://m3.material.io/components/segmented-buttons/overview
                         }
                     }
                 }
@@ -150,7 +131,7 @@ fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（shape)", allExpandFlow, padding = 20.dp) {
         Button(
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(50),
             onClick = { context.showShortToast("You tapped me!") }
         ) {
             Icon(
@@ -175,9 +156,9 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
         Row {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Cyan,
+                    backgroundColor = Color.Cyan,
                     contentColor = Color.Black,
-                    disabledContainerColor = Color.Gray,
+                    disabledBackgroundColor = Color.Gray,
                     disabledContentColor = Color.White,
                 ),
                 onClick = { context.showShortToast("You tapped me!") }
@@ -194,9 +175,9 @@ fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
             )
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Cyan,
+                    backgroundColor = Color.Cyan,
                     contentColor = Color.Black,
-                    disabledContainerColor = Color.Gray,
+                    disabledBackgroundColor = Color.Gray,
                     disabledContentColor = Color.White,
                 ),
                 enabled = false,
@@ -223,7 +204,7 @@ fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（elevation）", allExpandFlow, padding = 20.dp) {
         Button(
-            elevation = ButtonDefaults.buttonElevation(
+            elevation = ButtonDefaults.elevation(
                 defaultElevation = 10.dp,
                 pressedElevation = 0.dp
             ),
@@ -291,48 +272,6 @@ fun ButtonContentPaddingSamplePreview() {
 
 
 @Composable
-fun ElevatedButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("ElevatedButton", allExpandFlow, padding = 20.dp) {
-        ElevatedButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "",
-                tint = Color.Red
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun ElevatedButtonSamplePreview() {
-    ElevatedButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun FilledTonalButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("FilledTonalButton", allExpandFlow, padding = 20.dp) {
-        FilledTonalButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "",
-                tint = Color.Red
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun FilledTonalButtonSamplePreview() {
-    FilledTonalButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
@@ -391,66 +330,6 @@ fun IconButtonSamplePreview() {
 
 
 @Composable
-fun FilledIconButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("FilledIconButton", allExpandFlow, padding = 20.dp) {
-        FilledIconButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun FilledIconButtonSamplePreview() {
-    FilledIconButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun FilledTonalIconButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("FilledTonalIconButton", allExpandFlow, padding = 20.dp) {
-        FilledTonalIconButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun FilledTonalIconButtonSamplePreview() {
-    FilledTonalIconButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun OutlinedIconButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("OutlinedIconButton", allExpandFlow, padding = 20.dp) {
-        OutlinedIconButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun OutlinedIconButtonSamplePreview() {
-    OutlinedIconButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("IconToggleButton", allExpandFlow, padding = 20.dp) {
         val checked = remember { mutableStateOf(false) }
@@ -472,81 +351,6 @@ fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun IconToggleButtonSamplePreview() {
     IconToggleButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun FilledIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("FilledIconToggleButton", allExpandFlow, padding = 20.dp) {
-        val checked = remember { mutableStateOf(false) }
-        FilledIconToggleButton(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
-        ) {
-            val iconResId =
-                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-            Icon(
-                painterResource(id = iconResId),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun FilledIconToggleButtonSamplePreview() {
-    FilledIconToggleButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun FilledTonalIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("FilledTonalIconToggleButton", allExpandFlow, padding = 20.dp) {
-        val checked = remember { mutableStateOf(false) }
-        FilledTonalIconToggleButton(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
-        ) {
-            val iconResId =
-                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-            Icon(
-                painterResource(id = iconResId),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun FilledTonalIconToggleButtonSamplePreview() {
-    FilledTonalIconToggleButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun OutlinedIconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("OutlinedIconToggleButton", allExpandFlow, padding = 20.dp) {
-        val checked = remember { mutableStateOf(false) }
-        OutlinedIconToggleButton(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
-        ) {
-            val iconResId =
-                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-            Icon(
-                painterResource(id = iconResId),
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun OutlinedIconToggleButtonSamplePreview() {
-    OutlinedIconToggleButtonSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -592,7 +396,7 @@ fun FloatingActionButtonColorSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FloatingActionButton（Color）", allExpandFlow, padding = 20.dp) {
         FloatingActionButton(
-            containerColor = Color.Cyan,
+            backgroundColor = Color.Cyan,
             contentColor = Color.Magenta,
             onClick = { context.showShortToast("You tapped me!") },
         ) {
@@ -609,45 +413,10 @@ fun FloatingActionButtonColorSamplePreview() {
 
 
 @Composable
-fun SmallFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("SmallFloatingActionButton", allExpandFlow, padding = 20.dp) {
-        SmallFloatingActionButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Text(text = "Send")
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun SmallFloatingActionButtonSamplePreview() {
-    SmallFloatingActionButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LargeFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("LargeFloatingActionButton", allExpandFlow, padding = 20.dp) {
-        LargeFloatingActionButton(onClick = { context.showShortToast("You tapped me!") }) {
-            Text(text = "Send")
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LargeFloatingActionButtonSamplePreview() {
-    LargeFloatingActionButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("ExtendedFloatingActionButton", allExpandFlow, padding = 20.dp) {
         val expanded = remember { mutableStateOf(false) }
         ExtendedFloatingActionButton(
-            expanded = expanded.value,
             onClick = { expanded.value = !expanded.value },
             text = { Text(text = "Expand") },
             icon = {
