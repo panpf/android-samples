@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,29 +39,15 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.list.HorizontalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class LazyColumnFragment : ToolbarFragment() {
 
@@ -96,7 +80,6 @@ class LazyColumnFragment : ToolbarFragment() {
                             LazyColumnLayoutInfoSample(allExpandFlow)
                             LazyColumnStickerHeaderSample(allExpandFlow)
                             LazyColumnMultiTypeSample(allExpandFlow)
-                            LazyColumnPagingSample(allExpandFlow)
                         }
                     }
                 }
@@ -736,122 +719,4 @@ fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyColumnMultiTypeSamplePreview() {
     LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LazyColumnPagingSample(allExpandFlow: Flow<Boolean>) {
-    val pagingFlow = remember {
-        Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                initialLoadSize = 20,
-                enablePlaceholders = false,
-            ),
-            initialKey = 0,
-            pagingSourceFactory = {
-                MyPagingSource()
-            }
-        ).flow
-    }
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
-    val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
-    val swipeRefreshState =
-        rememberSwipeRefreshState(lazyPagingItems.loadState.refresh is LoadState.Loading).apply {
-            isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
-        }
-    ExpandableItem(title = "LazyColumn（Paging）", allExpandFlow, padding = 20.dp) {
-        SwipeRefresh(
-            state = swipeRefreshState,
-            onRefresh = { lazyPagingItems.refresh() },
-            modifier = Modifier
-                .width(200.dp)
-                .height(300.dp)
-        ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(
-                    count = lazyPagingItems.itemCount,
-                    key = { lazyPagingItems.peek(it) ?: "" },
-                    contentType = { 0 },
-                ) { index ->
-                    LazyColumnPagingItem(
-                        lazyPagingItems[index] ?: "",
-                        colors[index % colors.size]
-                    )
-                }
-
-                if (lazyPagingItems.itemCount > 0) {
-                    item(
-                        key = "AppendState",
-                        contentType = 1
-                    ) {
-                        HorizontalAppendStateUI(lazyPagingItems.loadState.append) {
-                            lazyPagingItems.retry()
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyColumnPagingSamplePreview() {
-    LazyColumnPagingSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LazyColumnPagingItem(item: String, bgColor: Color) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(bgColor)
-    ) {
-        Text(
-            text = item,
-            modifier = Modifier
-                .align(Alignment.Center)
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyColumnPagingItemPreview() {
-    LazyColumnPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
-}
-
-class MyPagingSource : PagingSource<Int, String>() {
-
-    override fun getRefreshKey(state: PagingState<Int, String>): Int {
-        return 0
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, String> {
-        return withContext(Dispatchers.IO) {
-            delay(2000)
-            val start = params.key ?: 0
-            val loadSize = params.loadSize
-            val time = SimpleDateFormat("HH:mm:ss").format(Date())
-            val list = buildList {
-                repeat(loadSize) {
-                    val index = start + it
-                    if (index < 199) {
-                        add("${(index + 1)}. $time")
-                    }
-                }
-            }
-            val nextKey = (start + loadSize).let {
-                if (it < 199) it else null
-            }
-            LoadResult.Page(data = list, prevKey = null, nextKey = nextKey)
-        }
-    }
 }

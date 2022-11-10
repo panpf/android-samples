@@ -213,6 +213,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/swipeRefreshPagingFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.extension.SwipeRefreshPagingFragment" />
+    <action
+        android:id="@+id/action_global_swipeRefreshPagingFragment"
+        app:destination="@id/swipeRefreshPagingFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/verticalPagerFragment"
         android:name="com.github.panpf.android.compose.samples.ui.extension.VerticalPagerFragment" />
     <action

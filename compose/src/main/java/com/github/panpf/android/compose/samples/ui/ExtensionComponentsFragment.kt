@@ -33,7 +33,9 @@ class ExtensionComponentsFragment : ToolbarFragment() {
             Link("FlowColumn", R.id.action_global_flowColumnFragment),
             Link("FlowRow", R.id.action_global_flowRowFragment),
             Link("HorizontalPager", R.id.action_global_horizontalPagerFragment),
+            Link("SwipeRefreshPaging", R.id.action_global_swipeRefreshPagingFragment),
             Link("VerticalPager", R.id.action_global_verticalPagerFragment),
+            Link("WebView（Implementation）"),   // todo Implementation
         )
         return ComposeView(inflater.context).apply {
             setContent {

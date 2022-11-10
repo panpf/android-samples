@@ -42,17 +42,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.list.VerticalAppendStateUI
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -89,7 +84,6 @@ class LazyRowFragment : ToolbarFragment() {
                             LazyRowLayoutInfoSample(allExpandFlow)
                             LazyRowStickerHeaderSample(allExpandFlow)
                             LazyRowMultiTypeSample(allExpandFlow)
-                            LazyRowPagingSample(allExpandFlow)
                         }
                     }
                 }
@@ -720,85 +714,4 @@ fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 fun LazyRowMultiTypeSamplePreview() {
     LazyRowMultiTypeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LazyRowPagingSample(allExpandFlow: Flow<Boolean>) {
-    val pagingFlow = remember {
-        Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                initialLoadSize = 20,
-                enablePlaceholders = false,
-            ),
-            initialKey = 0,
-            pagingSourceFactory = {
-                MyPagingSource()
-            }
-        ).flow
-    }
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
-    val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
-    ExpandableItem(title = "LazyRow（Paging）", allExpandFlow, padding = 20.dp) {
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .border(2.dp, Color.Red)
-                .padding(2.dp)
-        ) {
-            items(
-                count = lazyPagingItems.itemCount,
-                key = { lazyPagingItems.peek(it) ?: "" },
-                contentType = { 0 },
-            ) { index ->
-                LazyRowPagingItem(lazyPagingItems[index] ?: "", colors[index % colors.size])
-            }
-
-            if (lazyPagingItems.itemCount > 0) {
-                item(
-                    key = "AppendState",
-                    contentType = 1
-                ) {
-                    VerticalAppendStateUI(lazyPagingItems.loadState.append) {
-                        lazyPagingItems.retry()
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyRowPagingSamplePreview() {
-    LazyRowPagingSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-fun LazyRowPagingItem(item: String, bgColor: Color) {
-    Box(
-        modifier = Modifier
-            .background(bgColor)
-            .fillMaxHeight()
-            .padding(20.dp)
-    ) {
-        Text(
-            text = item.replace(". ", "\n"),
-            modifier = Modifier
-                .align(Alignment.Center),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-fun LazyRowPagingItemPreview() {
-    LazyRowPagingItem("15. 18:23:45", Color.Red.copy(alpha = 0.5f))
 }

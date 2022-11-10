@@ -33,12 +33,13 @@ class HomeFragment : ToolbarFragment() {
             Link("Extension Components", R.id.action_global_extensionComponentsFragment),
             Link("Material Components", R.id.action_global_materialComponentsFragment),
             Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
-            Link("Animation（Implementation）"),
-            Link("Theme（Implementation）"),
-            Link("TouchEvent（Implementation）"),
-            Link("Navigation（Implementation）"),
-            Link("Custom（Implementation）"),
-            Link("Cases（Implementation）"),  // banner, swipe refresh
+            Link("Animation（Implementation）"),   // todo Implementation
+            Link("Theme（Implementation）"),   // todo Implementation
+            Link("TouchEvent（Implementation）"),   // todo Implementation
+            Link("Navigation（Implementation）"),   // todo Implementation
+            Link("Custom（Implementation）"),   // todo Implementation
+            Link("Cases（Implementation）"),  // todo Implementation banner
+            Link("Other（Implementation）"),  // todo Implementation Placeholder, Drawable Painter
         )
         return ComposeView(inflater.context).apply {
             setContent {
