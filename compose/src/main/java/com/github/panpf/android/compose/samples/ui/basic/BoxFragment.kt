@@ -256,7 +256,7 @@ fun BoxAlignSamplePreview() {
 fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Box（matchParentSize）", allExpandFlow, padding = 20.dp) {
         Column {
-            Text(text = "Box 中一个 Text，Text 设置 matchParentSize。Box 设置宽高时 Text 充满 Box；Box 不设置宽高时 Box 不可见，因此 matchParentSize 不会影响 Box 的宽高")
+            Text(text = "Box 中一个 Text，Text 设置 matchParentSize。\nBox 设置宽高时 Text 充满 Box；\nBox 不设置宽高时 Box 不可见。\n因此 matchParentSize 不会影响 Box 的宽高")
             Spacer(modifier = Modifier.size(10.dp))
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Box(
@@ -290,7 +290,7 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(40.dp))
-            Text(text = "Box 中一个 Text，Text 设置 fillMaxSize。Box 设置宽高时 Text 充满 Box；Box 仅设置高时 Box 宽充满父布局，因此 fillMaxSize 会影响 Box 的宽高")
+            Text(text = "Box 中一个 Text，Text 设置 fillMaxSize。\nBox 设置宽高时 Text 充满 Box；\nBox 仅设置高时 Box 宽充满父布局。\n因此 fillMaxSize 会影响 Box 的宽高")
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Box(
                     modifier = Modifier
