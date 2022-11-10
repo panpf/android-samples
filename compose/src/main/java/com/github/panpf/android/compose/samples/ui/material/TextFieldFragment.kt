@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material3
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,13 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +36,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,10 +52,10 @@ class TextFieldFragment : ToolbarFragment() {
         toolbar.title = "TextField"
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTheme3 {
+                MyTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colors.background
                     ) {
                         ExpandableLayout { allExpandFlow ->
                             TextFieldSample(allExpandFlow)
@@ -94,7 +93,6 @@ private const val novel =
     "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。"
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -114,7 +112,6 @@ fun TextFieldSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldDefaultValueSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -134,7 +131,6 @@ fun TextFieldDefaultValueSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -155,7 +151,6 @@ fun TextFieldEnabledFalseSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldReadOnlySample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -176,7 +171,6 @@ fun TextFieldReadOnlySamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldTextStyleColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -197,7 +191,6 @@ fun TextFieldTextStyleColorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -218,7 +211,6 @@ fun TextFieldLabelSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldPlaceholderSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -239,7 +231,6 @@ fun TextFieldPlaceholderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldLeadingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -265,7 +256,6 @@ fun TextFieldLeadingIconSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldTrailingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -294,7 +284,6 @@ fun TextFieldTrailingIconSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -320,7 +309,6 @@ fun TextFieldIsErrorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldVisualTransformationSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -342,7 +330,6 @@ fun TextFieldVisualTransformationSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -367,7 +354,6 @@ fun TextFieldKeyboardOptionsKeyboardTypeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldKeyboardOptionsImeActionSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -388,7 +374,6 @@ fun TextFieldKeyboardOptionsImeActionSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldKeyboardActionsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -411,7 +396,6 @@ fun TextFieldKeyboardActionsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldSingleLineSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -432,7 +416,6 @@ fun TextFieldSingleLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldMaxLinesSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -453,7 +436,6 @@ fun TextFieldMaxLinesSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -474,7 +456,6 @@ fun TextFieldShapeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -484,7 +465,7 @@ fun TextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Blue.copy(alpha = 0.5f),
+                backgroundColor = Color.Blue.copy(alpha = 0.5f),
                 textColor = Color.White,
                 cursorColor = Color.Cyan
             ),
@@ -499,7 +480,6 @@ fun TextFieldColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedTextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -519,7 +499,6 @@ fun OutlinedTextFieldSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedTextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -540,7 +519,6 @@ fun OutlinedTextFieldLabelSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedTextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -567,7 +545,6 @@ fun OutlinedTextFieldIsErrorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedTextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -588,12 +565,11 @@ fun OutlinedTextFieldShapeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedTextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
     ExpandableItem(
-        title = "OutlinedTextField（colors）",
+        title = "OutlinedTextField（colors - backgroundColor）",
         allExpand = allExpandFlow
     ) {
         OutlinedTextField(
@@ -601,7 +577,7 @@ fun OutlinedTextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color.Blue.copy(alpha = 0.5f),
+                backgroundColor = Color.Blue.copy(alpha = 0.5f),
                 textColor = Color.White,
                 cursorColor = Color.Cyan,
                 unfocusedBorderColor = Color.Green,

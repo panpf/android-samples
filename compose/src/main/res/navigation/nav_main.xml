@@ -436,6 +436,94 @@
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
+    <fragment
+        android:id="@+id/materialSliderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.SliderFragment" />
+    <action
+        android:id="@+id/action_global_materialSliderFragment"
+        app:destination="@id/materialSliderFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialSnackbarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.SnackbarFragment" />
+    <action
+        android:id="@+id/action_global_materialSnackbarFragment"
+        app:destination="@id/materialSnackbarFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialSurfaceFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.SurfaceFragment" />
+    <action
+        android:id="@+id/action_global_materialSurfaceFragment"
+        app:destination="@id/materialSurfaceFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialSwitchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.SwitchFragment" />
+    <action
+        android:id="@+id/action_global_materialSwitchFragment"
+        app:destination="@id/materialSwitchFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialTabRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TabRowFragment" />
+    <action
+        android:id="@+id/action_global_materialTabRowFragment"
+        app:destination="@id/materialTabRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialTextFieldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TextFieldFragment" />
+    <action
+        android:id="@+id/action_global_materialTextFieldFragment"
+        app:destination="@id/materialTextFieldFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialTextFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TextFragment" />
+    <action
+        android:id="@+id/action_global_materialTextFragment"
+        app:destination="@id/materialTextFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/materialTopAppBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TopAppBarFragment" />
+    <action
+        android:id="@+id/action_global_materialTopAppBarFragment"
+        app:destination="@id/materialTopAppBarFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
 
     <!-- material3 -->
 

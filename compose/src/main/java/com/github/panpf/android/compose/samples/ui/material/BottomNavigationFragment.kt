@@ -205,7 +205,7 @@ fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxSize()
                         .padding(20.dp)
                 ) {
-                    androidx.compose.material3.Text(
+                    Text(
                         text = items[index].first,
                         modifier = Modifier
                             .align(Alignment.Center),

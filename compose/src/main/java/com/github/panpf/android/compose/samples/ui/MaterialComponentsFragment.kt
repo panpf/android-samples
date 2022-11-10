@@ -30,7 +30,7 @@ class MaterialComponentsFragment : ToolbarFragment() {
         val links = listOf(
             Link("AlertDialog", R.id.action_global_materialAlertDialogFragment),
             Link("Badge", R.id.action_global_materialBadgeFragment),
-            Link("BackdropScaffold（Implementation）"),
+            Link("BackdropScaffold（Implementation）"),  // todo Implementation
             Link("BottomAppBar", R.id.action_global_materialBottomAppBarFragment),
             Link("BottomNavigation", R.id.action_global_materialBottomNavigationFragment),
             Link("BottomSheetLayout", R.id.action_global_materialBottomSheetLayoutFragment),
@@ -48,14 +48,14 @@ class MaterialComponentsFragment : ToolbarFragment() {
             Link("ProgressIndicator", R.id.action_global_materialProgressIndicatorFragment),
             Link("RadioButton", R.id.action_global_materialRadioButtonFragment),
             Link("Scaffold", R.id.action_global_materialScaffoldFragment),
-            Link("Slider（Implementation）"),
-            Link("Snackbar（Implementation）"),
-            Link("Surface（Implementation）"),
-            Link("Switch（Implementation）"),
-            Link("Tab（Implementation）"),
-            Link("TextField（Implementation）"),
-            Link("Text（Implementation）"),
-            Link("TopAppBar（Implementation）"),
+            Link("Slider", R.id.action_global_materialSliderFragment),
+            Link("Snackbar", R.id.action_global_materialSnackbarFragment),
+            Link("Surface", R.id.action_global_materialSurfaceFragment),
+            Link("Switch", R.id.action_global_materialSwitchFragment),
+            Link("TabRow", R.id.action_global_materialTabRowFragment),
+            Link("TextField", R.id.action_global_materialTextFieldFragment),
+            Link("Text", R.id.action_global_materialTextFragment),
+            Link("TopAppBar", R.id.action_global_materialTopAppBarFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

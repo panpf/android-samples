@@ -31,12 +31,12 @@ class Material3ComponentsFragment : ToolbarFragment() {
             Link("AlertDialog", R.id.action_global_alertDialogFragment),
             Link("Badge", R.id.action_global_badgeFragment),
             Link("BottomAppBar", R.id.action_global_material3BottomAppBarFragment),
-            Link("BottomSheets（Planned）"),
+            Link("BottomSheets（Planned）"),  // todo Planned https://m3.material.io/components/bottom-sheets/overview
             Link("Button", R.id.action_global_buttonFragment),
             Link("Card", R.id.action_global_cardFragment),
             Link("Checkbox", R.id.action_global_checkboxFragment),
             Link("Chip", R.id.action_global_chipFragment),
-            Link("DatePicker（Planned）"),
+            Link("DatePicker（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
             Link("Divider", R.id.action_global_dividerFragment),
             Link("DropdownMenu", R.id.action_global_dropdownMenuFragment),
             Link("Icon", R.id.action_global_iconFragment),
@@ -54,7 +54,7 @@ class Material3ComponentsFragment : ToolbarFragment() {
             Link("TabRow", R.id.action_global_tabRowFragment),
             Link("TextField", R.id.action_global_textFieldFragment),
             Link("Text", R.id.action_global_textFragment),
-            Link("TimePicker（Planned）"),
+            Link("TimePicker（Planned）"),  // todo Planned https://m3.material.io/components/time-pickers/overview
             Link("TopAppBar", R.id.action_global_topAppBarFragment),
         )
         return ComposeView(inflater.context).apply {

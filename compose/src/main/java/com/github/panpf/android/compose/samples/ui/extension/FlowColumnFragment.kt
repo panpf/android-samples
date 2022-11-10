@@ -269,7 +269,7 @@ fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             .width(100.dp)
                             .border(2.dp, Color.Red)
                             .padding(2.dp),
-                        crossAxisAlignment = alignment  // todo 无效
+                        crossAxisAlignment = alignment  // todo Invalid
                     ) {
                         listOf("数\n码", "汽\n车", "摄\n影").forEach {
                             Chip(onClick = { }) {

@@ -41,7 +41,6 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
-import com.github.panpf.android.compose.samples.ui.material3.LargeFloatingActionButtonSample
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,7 +76,6 @@ class ButtonFragment : ToolbarFragment() {
                             FloatingActionButtonSample(allExpandFlow)
                             FloatingActionButtonShapeSample(allExpandFlow)
                             FloatingActionButtonColorSample(allExpandFlow)
-                            LargeFloatingActionButtonSample(allExpandFlow)
                             ExtendedFloatingActionButtonSample(allExpandFlow)
                         }
                     }

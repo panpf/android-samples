@@ -97,7 +97,7 @@ class ButtonFragment : ToolbarFragment() {
                             SmallFloatingActionButtonSample(allExpandFlow)
                             LargeFloatingActionButtonSample(allExpandFlow)
                             ExtendedFloatingActionButtonSample(allExpandFlow)
-                            // todo Segmented button planned https://m3.material.io/components/segmented-buttons/overview
+                            // todo SegmentedButton Planned https://m3.material.io/components/segmented-buttons/overview
                         }
                     }
                 }

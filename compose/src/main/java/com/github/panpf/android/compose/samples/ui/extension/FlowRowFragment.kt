@@ -247,7 +247,7 @@ fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .height(80.dp)
                         .border(2.dp, Color.Red)
                         .padding(2.dp),
-                    crossAxisAlignment = alignment  // todo 无效
+                    crossAxisAlignment = alignment  // todo Invalid
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                         Chip(onClick = { }) {
