@@ -35,7 +35,7 @@ class ExtensionComponentsFragment : ToolbarFragment() {
             Link("HorizontalPager", R.id.action_global_horizontalPagerFragment),
             Link("SwipeRefreshPaging", R.id.action_global_swipeRefreshPagingFragment),
             Link("VerticalPager", R.id.action_global_verticalPagerFragment),
-            Link("WebView（Implementation）"),   // todo Implementation
+            Link("WebView", R.id.action_global_webViewFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {
