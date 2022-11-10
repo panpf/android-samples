@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
@@ -23,7 +22,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.isVisible
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -54,7 +53,7 @@ class ScaffoldFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Scaffold"
+        toolbar.isVisible = false
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {
@@ -87,7 +86,6 @@ fun ScaffoldSample() {
         )
     }
     val snackbarHostState = remember { SnackbarHostState() }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val navigationSelectedIndex = remember { mutableStateOf(0) }
     val pagerState = rememberPagerState(navigationSelectedIndex.value)
@@ -100,7 +98,7 @@ fun ScaffoldSample() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Simple Scaffold Screen") },
+                title = { Text("Scaffold") },
             )
         },
         content = { innerPadding ->

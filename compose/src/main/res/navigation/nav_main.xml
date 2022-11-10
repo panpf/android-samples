@@ -239,6 +239,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/materialBackdropScaffoldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.BackdropScaffoldFragment" />
+    <action
+        android:id="@+id/action_global_materialBackdropScaffoldFragment"
+        app:destination="@id/materialBackdropScaffoldFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/materialBadgeFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material.BadgeFragment" />
     <action

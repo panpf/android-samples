@@ -29,8 +29,8 @@ class MaterialComponentsFragment : ToolbarFragment() {
         toolbar.title = "Material Components"
         val links = listOf(
             Link("AlertDialog", R.id.action_global_materialAlertDialogFragment),
+            Link("BackdropScaffold", R.id.action_global_materialBackdropScaffoldFragment),
             Link("Badge", R.id.action_global_materialBadgeFragment),
-            Link("BackdropScaffold（Implementation）"),  // todo Implementation
             Link("BottomAppBar", R.id.action_global_materialBottomAppBarFragment),
             Link("BottomNavigation", R.id.action_global_materialBottomNavigationFragment),
             Link("BottomSheetLayout", R.id.action_global_materialBottomSheetLayoutFragment),

@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.isVisible
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
@@ -64,7 +65,7 @@ class BottomSheetScaffoldFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "BottomSheetScaffold"
+        toolbar.isVisible = false
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {
@@ -118,7 +119,7 @@ fun BottomSheetScaffoldSample() {
         scaffoldState = bottomSheetScaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text("Simple BottomSheetScaffold Screen") },
+                title = { Text("BottomSheetScaffold") },
                 navigationIcon = {
                     IconButton(
                         onClick = {
