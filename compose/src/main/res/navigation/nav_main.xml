@@ -78,11 +78,11 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/rowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.basic.RowFragment" />
+        android:id="@+id/dialogFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.DialogFragment" />
     <action
-        android:id="@+id/action_global_rowFragment"
-        app:destination="@id/rowFragment"
+        android:id="@+id/action_global_dialogFragment"
+        app:destination="@id/dialogFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -122,17 +122,6 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/lazyRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.basic.LazyRowFragment" />
-    <action
-        android:id="@+id/action_global_lazyRowFragment"
-        app:destination="@id/lazyRowFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
         android:id="@+id/lazyHorizontalGridFragment"
         android:name="com.github.panpf.android.compose.samples.ui.basic.LazyHorizontalGridFragment" />
     <action
@@ -144,11 +133,44 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/lazyRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.LazyRowFragment" />
+    <action
+        android:id="@+id/action_global_lazyRowFragment"
+        app:destination="@id/lazyRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/lazyVerticalGridFragment"
         android:name="com.github.panpf.android.compose.samples.ui.basic.LazyVerticalGridFragment" />
     <action
         android:id="@+id/action_global_lazyVerticalGridFragment"
         app:destination="@id/lazyVerticalGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/popupFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.PopupFragment" />
+    <action
+        android:id="@+id/action_global_popupFragment"
+        app:destination="@id/popupFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/rowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.basic.RowFragment" />
+    <action
+        android:id="@+id/action_global_rowFragment"
+        app:destination="@id/rowFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -525,22 +547,22 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/materialTextFieldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material.TextFieldFragment" />
+        android:id="@+id/materialTextFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TextFragment" />
     <action
-        android:id="@+id/action_global_materialTextFieldFragment"
-        app:destination="@id/materialTextFieldFragment"
+        android:id="@+id/action_global_materialTextFragment"
+        app:destination="@id/materialTextFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/materialTextFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material.TextFragment" />
+        android:id="@+id/materialTextFieldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material.TextFieldFragment" />
     <action
-        android:id="@+id/action_global_materialTextFragment"
-        app:destination="@id/materialTextFragment"
+        android:id="@+id/action_global_materialTextFieldFragment"
+        app:destination="@id/materialTextFieldFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -561,220 +583,22 @@
     <!-- material3 -->
 
     <fragment
-        android:id="@+id/surfaceFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.SurfaceFragment" />
+        android:id="@+id/material3AlertDialogFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.AlertDialogFragment" />
     <action
-        android:id="@+id/action_global_surfaceFragment"
-        app:destination="@id/surfaceFragment"
+        android:id="@+id/action_global_material3AlertDialogFragment"
+        app:destination="@id/material3AlertDialogFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/textFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.TextFragment" />
-    <action
-        android:id="@+id/action_global_textFragment"
-        app:destination="@id/textFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/buttonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.ButtonFragment" />
-    <action
-        android:id="@+id/action_global_buttonFragment"
-        app:destination="@id/buttonFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/textFieldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.TextFieldFragment" />
-    <action
-        android:id="@+id/action_global_textFieldFragment"
-        app:destination="@id/textFieldFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/checkboxFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.CheckboxFragment" />
-    <action
-        android:id="@+id/action_global_checkboxFragment"
-        app:destination="@id/checkboxFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/iconFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.IconFragment" />
-    <action
-        android:id="@+id/action_global_iconFragment"
-        app:destination="@id/iconFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/radioButtonFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.RadioButtonFragment" />
-    <action
-        android:id="@+id/action_global_radioButtonFragment"
-        app:destination="@id/radioButtonFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/sliderFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.SliderFragment" />
-    <action
-        android:id="@+id/action_global_sliderFragment"
-        app:destination="@id/sliderFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/switchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.SwitchFragment" />
-    <action
-        android:id="@+id/action_global_switchFragment"
-        app:destination="@id/switchFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/badgeFragment"
+        android:id="@+id/material3BadgeFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material3.BadgeFragment" />
     <action
-        android:id="@+id/action_global_badgeFragment"
-        app:destination="@id/badgeFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/chipFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.ChipFragment" />
-    <action
-        android:id="@+id/action_global_chipFragment"
-        app:destination="@id/chipFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/dividerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.DividerFragment" />
-    <action
-        android:id="@+id/action_global_dividerFragment"
-        app:destination="@id/dividerFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/progressIndicatorFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.ProgressIndicatorFragment" />
-    <action
-        android:id="@+id/action_global_progressIndicatorFragment"
-        app:destination="@id/progressIndicatorFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/snackbarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.SnackbarFragment" />
-    <action
-        android:id="@+id/action_global_snackbarFragment"
-        app:destination="@id/snackbarFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/navigationDrawerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationDrawerFragment" />
-    <action
-        android:id="@+id/action_global_navigationDrawerFragment"
-        app:destination="@id/navigationDrawerFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/cardFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.CardFragment" />
-    <action
-        android:id="@+id/action_global_cardFragment"
-        app:destination="@id/cardFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/navigationBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationBarFragment" />
-    <action
-        android:id="@+id/action_global_navigationBarFragment"
-        app:destination="@id/navigationBarFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/navigationRailFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationRailFragment" />
-    <action
-        android:id="@+id/action_global_navigationRailFragment"
-        app:destination="@id/navigationRailFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/scaffoldFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.ScaffoldFragment" />
-    <action
-        android:id="@+id/action_global_scaffoldFragment"
-        app:destination="@id/scaffoldFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/topAppBarFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.TopAppBarFragment" />
-    <action
-        android:id="@+id/action_global_topAppBarFragment"
-        app:destination="@id/topAppBarFragment"
+        android:id="@+id/action_global_material3BadgeFragment"
+        app:destination="@id/material3BadgeFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -792,66 +616,242 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/dialogFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.basic.DialogFragment" />
+        android:id="@+id/material3ButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ButtonFragment" />
     <action
-        android:id="@+id/action_global_dialogFragment"
-        app:destination="@id/dialogFragment"
+        android:id="@+id/action_global_material3ButtonFragment"
+        app:destination="@id/material3ButtonFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/popupFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.basic.PopupFragment" />
+        android:id="@+id/material3CardFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.CardFragment" />
     <action
-        android:id="@+id/action_global_popupFragment"
-        app:destination="@id/popupFragment"
+        android:id="@+id/action_global_material3CardFragment"
+        app:destination="@id/material3CardFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/alertDialogFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.AlertDialogFragment" />
+        android:id="@+id/material3CheckboxFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.CheckboxFragment" />
     <action
-        android:id="@+id/action_global_alertDialogFragment"
-        app:destination="@id/alertDialogFragment"
+        android:id="@+id/action_global_material3CheckboxFragment"
+        app:destination="@id/material3CheckboxFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/listItemFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.material3.ListItemFragment" />
+        android:id="@+id/material3ChipFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ChipFragment" />
     <action
-        android:id="@+id/action_global_listItemFragment"
-        app:destination="@id/listItemFragment"
+        android:id="@+id/action_global_material3ChipFragment"
+        app:destination="@id/material3ChipFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/dropdownMenuFragment"
+        android:id="@+id/material3DividerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.DividerFragment" />
+    <action
+        android:id="@+id/action_global_material3DividerFragment"
+        app:destination="@id/material3DividerFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3DropdownMenuFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material3.DropdownMenuFragment" />
     <action
-        android:id="@+id/action_global_dropdownMenuFragment"
-        app:destination="@id/dropdownMenuFragment"
+        android:id="@+id/action_global_material3DropdownMenuFragment"
+        app:destination="@id/material3DropdownMenuFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/tabRowFragment"
+        android:id="@+id/material3IconFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.IconFragment" />
+    <action
+        android:id="@+id/action_global_material3IconFragment"
+        app:destination="@id/material3IconFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3ListItemFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ListItemFragment" />
+    <action
+        android:id="@+id/action_global_material3ListItemFragment"
+        app:destination="@id/material3ListItemFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3NavigationBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationBarFragment" />
+    <action
+        android:id="@+id/action_global_material3NavigationBarFragment"
+        app:destination="@id/material3NavigationBarFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3NavigationDrawerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationDrawerFragment" />
+    <action
+        android:id="@+id/action_global_material3NavigationDrawerFragment"
+        app:destination="@id/material3NavigationDrawerFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3NavigationRailFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.NavigationRailFragment" />
+    <action
+        android:id="@+id/action_global_material3NavigationRailFragment"
+        app:destination="@id/material3NavigationRailFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3ProgressIndicatorFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ProgressIndicatorFragment" />
+    <action
+        android:id="@+id/action_global_material3ProgressIndicatorFragment"
+        app:destination="@id/material3ProgressIndicatorFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3RadioButtonFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.RadioButtonFragment" />
+    <action
+        android:id="@+id/action_global_material3RadioButtonFragment"
+        app:destination="@id/material3RadioButtonFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3ScaffoldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.ScaffoldFragment" />
+    <action
+        android:id="@+id/action_global_material3ScaffoldFragment"
+        app:destination="@id/material3ScaffoldFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3SliderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.SliderFragment" />
+    <action
+        android:id="@+id/action_global_material3SliderFragment"
+        app:destination="@id/material3SliderFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3SnackbarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.SnackbarFragment" />
+    <action
+        android:id="@+id/action_global_material3SnackbarFragment"
+        app:destination="@id/material3SnackbarFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3SurfaceFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.SurfaceFragment" />
+    <action
+        android:id="@+id/action_global_material3SurfaceFragment"
+        app:destination="@id/material3SurfaceFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3SwitchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.SwitchFragment" />
+    <action
+        android:id="@+id/action_global_material3SwitchFragment"
+        app:destination="@id/material3SwitchFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3TabRowFragment"
         android:name="com.github.panpf.android.compose.samples.ui.material3.TabRowFragment" />
     <action
-        android:id="@+id/action_global_tabRowFragment"
-        app:destination="@id/tabRowFragment"
+        android:id="@+id/action_global_material3TabRowFragment"
+        app:destination="@id/material3TabRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3TextFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.TextFragment" />
+    <action
+        android:id="@+id/action_global_material3TextFragment"
+        app:destination="@id/material3TextFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3TextFieldFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.TextFieldFragment" />
+    <action
+        android:id="@+id/action_global_material3TextFieldFragment"
+        app:destination="@id/material3TextFieldFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/material3TopAppBarFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.material3.TopAppBarFragment" />
+    <action
+        android:id="@+id/action_global_material3TopAppBarFragment"
+        app:destination="@id/material3TopAppBarFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

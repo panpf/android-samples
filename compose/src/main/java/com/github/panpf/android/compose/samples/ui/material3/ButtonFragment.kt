@@ -63,7 +63,7 @@ class ButtonFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Button"
+        toolbar.title = "Button - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

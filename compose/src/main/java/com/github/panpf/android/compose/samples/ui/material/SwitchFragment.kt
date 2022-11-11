@@ -42,7 +42,7 @@ class SwitchFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Switch"
+        toolbar.title = "Switch - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

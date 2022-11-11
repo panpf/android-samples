@@ -53,8 +53,8 @@ class MaterialComponentsFragment : ToolbarFragment() {
             Link("Surface", R.id.action_global_materialSurfaceFragment),
             Link("Switch", R.id.action_global_materialSwitchFragment),
             Link("TabRow", R.id.action_global_materialTabRowFragment),
-            Link("TextField", R.id.action_global_materialTextFieldFragment),
             Link("Text", R.id.action_global_materialTextFragment),
+            Link("TextField", R.id.action_global_materialTextFieldFragment),
             Link("TopAppBar", R.id.action_global_materialTopAppBarFragment),
         )
         return ComposeView(inflater.context).apply {

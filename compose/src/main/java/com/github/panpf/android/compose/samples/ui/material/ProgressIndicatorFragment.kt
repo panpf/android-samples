@@ -44,7 +44,7 @@ class ProgressIndicatorFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "ProgressIndicator"
+        toolbar.title = "ProgressIndicator - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

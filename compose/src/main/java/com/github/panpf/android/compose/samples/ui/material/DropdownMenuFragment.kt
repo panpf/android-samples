@@ -46,7 +46,7 @@ class DropdownMenuFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "DropdownMenu"
+        toolbar.title = "DropdownMenu - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

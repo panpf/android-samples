@@ -50,7 +50,7 @@ class TextFieldFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "TextField"
+        toolbar.title = "TextField - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

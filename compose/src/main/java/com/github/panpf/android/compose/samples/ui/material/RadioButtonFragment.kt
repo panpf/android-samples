@@ -39,7 +39,7 @@ class RadioButtonFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "RadioButton"
+        toolbar.title = "RadioButton - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

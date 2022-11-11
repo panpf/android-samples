@@ -40,7 +40,7 @@ class CardFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Card"
+        toolbar.title = "Card - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

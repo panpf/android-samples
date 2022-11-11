@@ -98,7 +98,7 @@ fun ScaffoldSample() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Scaffold") },
+                title = { Text("Scaffold - Material3") },
             )
         },
         content = { innerPadding ->

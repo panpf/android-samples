@@ -49,7 +49,7 @@ class TabRowFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "TabRow"
+        toolbar.title = "TabRow - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

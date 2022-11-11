@@ -30,15 +30,15 @@ class BasicComponentsFragment : ToolbarFragment() {
         val links = listOf(
             Link("Box", R.id.action_global_boxFragment),
             Link("Column", R.id.action_global_columnFragment),
-            Link("Row", R.id.action_global_rowFragment),
+            Link("Dialog", R.id.action_global_dialogFragment),
             Link("ConstraintLayout", R.id.action_global_constraintLayoutFragment),
             Link("Image", R.id.action_global_imageFragment),
             Link("LazyColumn", R.id.action_global_lazyColumnFragment),
-            Link("LazyRow", R.id.action_global_lazyRowFragment),
             Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
+            Link("LazyRow", R.id.action_global_lazyRowFragment),
             Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
-            Link("Dialog", R.id.action_global_dialogFragment),
             Link("Popup", R.id.action_global_popupFragment),
+            Link("Row", R.id.action_global_rowFragment),
         )
         return ComposeView(inflater.context).apply {
             setContent {

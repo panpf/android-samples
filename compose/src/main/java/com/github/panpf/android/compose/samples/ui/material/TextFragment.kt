@@ -61,7 +61,7 @@ class TextFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Text"
+        toolbar.title = "Text - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

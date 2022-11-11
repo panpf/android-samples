@@ -119,7 +119,7 @@ fun BottomSheetScaffoldSample() {
         scaffoldState = bottomSheetScaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text("BottomSheetScaffold") },
+                title = { Text("BottomSheetScaffold - Material") },
                 navigationIcon = {
                     IconButton(
                         onClick = {

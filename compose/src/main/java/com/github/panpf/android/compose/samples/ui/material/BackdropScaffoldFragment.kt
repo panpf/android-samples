@@ -86,7 +86,7 @@ fun BackdropScaffoldSample() {
         scaffoldState = scaffoldState,
         appBar = {
             TopAppBar(
-                title = { Text("BackdropScaffold") },
+                title = { Text("BackdropScaffold - Material") },
             )
         },
         frontLayerContent = {

@@ -48,7 +48,7 @@ class SurfaceFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Surface"
+        toolbar.title = "Surface - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

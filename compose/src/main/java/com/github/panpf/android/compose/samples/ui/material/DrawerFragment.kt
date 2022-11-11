@@ -53,7 +53,7 @@ class DrawerFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Drawer"
+        toolbar.title = "Drawer - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

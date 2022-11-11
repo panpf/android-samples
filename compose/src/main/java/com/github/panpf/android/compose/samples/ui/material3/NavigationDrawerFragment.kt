@@ -56,7 +56,7 @@ class NavigationDrawerFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "NavigationDrawer"
+        toolbar.title = "NavigationDrawer - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

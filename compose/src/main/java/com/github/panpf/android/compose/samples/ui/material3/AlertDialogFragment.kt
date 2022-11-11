@@ -42,7 +42,7 @@ class AlertDialogFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "AlertDialog"
+        toolbar.title = "AlertDialog - Material3 - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

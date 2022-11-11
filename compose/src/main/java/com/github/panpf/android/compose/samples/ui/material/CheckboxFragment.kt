@@ -42,7 +42,7 @@ class CheckboxFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Checkbox"
+        toolbar.title = "Checkbox - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

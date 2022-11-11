@@ -48,7 +48,7 @@ class ChipFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Chip"
+        toolbar.title = "Chip - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

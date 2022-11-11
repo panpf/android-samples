@@ -39,7 +39,7 @@ class IconFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Icon"
+        toolbar.title = "Icon - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

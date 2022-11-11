@@ -39,7 +39,7 @@ class BadgeFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Badge"
+        toolbar.title = "Badge - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {

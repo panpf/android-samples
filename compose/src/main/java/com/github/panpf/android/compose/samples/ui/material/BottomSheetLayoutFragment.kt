@@ -59,7 +59,7 @@ class BottomSheetLayoutFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "BottomSheetLayout"
+        toolbar.title = "BottomSheetLayout - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

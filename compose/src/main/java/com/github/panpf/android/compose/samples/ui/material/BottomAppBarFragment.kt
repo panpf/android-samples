@@ -41,7 +41,7 @@ class BottomAppBarFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "BottomAppBar"
+        toolbar.title = "BottomAppBar - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

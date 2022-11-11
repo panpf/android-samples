@@ -31,7 +31,7 @@ class DividerFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Divider"
+        toolbar.title = "Divider - Material"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme {

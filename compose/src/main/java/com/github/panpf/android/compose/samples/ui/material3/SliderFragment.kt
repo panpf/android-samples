@@ -45,7 +45,7 @@ class SliderFragment : ToolbarFragment() {
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toolbar.title = "Slider"
+        toolbar.title = "Slider - Material3"
         return ComposeView(inflater.context).apply {
             setContent {
                 MyTheme3 {
