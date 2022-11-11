@@ -1,21 +1,14 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,39 +18,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ColumnFragment : ToolbarFragment() {
+class ColumnFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Column"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            ColumnSample(allExpandFlow)
-                            ColumnFullSample(allExpandFlow)
-                            ColumnItemSpacedSample(allExpandFlow)
-                            ColumnVerticalArrangementSample(allExpandFlow)
-                            ColumnHorizontalAlignmentSample(allExpandFlow)
-                            ColumnWeightSample(allExpandFlow)
-                            ColumnAlignSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Column") {
+                    ExpandableLayout { allExpandFlow ->
+                        ColumnSample(allExpandFlow)
+                        ColumnFullSample(allExpandFlow)
+                        ColumnItemSpacedSample(allExpandFlow)
+                        ColumnVerticalArrangementSample(allExpandFlow)
+                        ColumnHorizontalAlignmentSample(allExpandFlow)
+                        ColumnWeightSample(allExpandFlow)
+                        ColumnAlignSample(allExpandFlow)
                     }
                 }
             }
@@ -69,7 +51,7 @@ class ColumnFragment : ToolbarFragment() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
@@ -95,7 +77,7 @@ fun ColumnSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（Full）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（Full）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
@@ -121,7 +103,7 @@ fun ColumnFullSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
@@ -148,7 +130,7 @@ fun ColumnItemSpacedSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（verticalArrangement）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（verticalArrangement）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Arrangement.Top to "Top",
@@ -195,7 +177,7 @@ fun ColumnVerticalArrangementSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.Start to "Start",
@@ -239,7 +221,7 @@ fun ColumnHorizontalAlignmentSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（weight）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（weight）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 listOf("数\n码" to 1f, "汽\n车" to null, "摄\n影" to null),
@@ -278,7 +260,7 @@ fun ColumnWeightSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Column（align）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Column（align）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.Start to "Start",

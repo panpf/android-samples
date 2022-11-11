@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -68,7 +68,7 @@ class SwitchFragment : ToolbarFragment() {
 @Composable
 fun SwitchSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Switch", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Switch", allExpandFlow, padding = 20.dp) {
         Switch(
             checked = checked.value,
             onCheckedChange = { checked.value = it }
@@ -86,7 +86,7 @@ fun SwitchSamplePreview() {
 @Composable
 fun SwitchEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Switch（enabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Switch（enabled - false）", allExpandFlow, padding = 20.dp) {
         Switch(
             checked = checked.value,
             onCheckedChange = { checked.value = it },
@@ -105,7 +105,7 @@ fun SwitchEnabledFalseSamplePreview() {
 @Composable
 fun SwitchColorsSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Switch（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Switch（colors）", allExpandFlow, padding = 20.dp) {
         Switch(
             checked = checked.value,
             onCheckedChange = { checked.value = it },
@@ -132,7 +132,7 @@ fun SwitchColorsSamplePreview() {
 fun SwitchGroupSingleSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
     val selectedIndex = remember { mutableStateOf(null as Int?) }
-    ExpandableItem(title = "Switch（Group - Single）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Switch（Group - Single）", allExpandFlow, padding = 20.dp) {
         Column {
             platforms.forEachIndexed { index, platform ->
                 Row(modifier = Modifier
@@ -168,7 +168,7 @@ fun SwitchGroupSingleSamplePreview() {
 fun SwitchGroupMultiSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
     val checkedSet = remember { mutableStateOf(setOf<Int>()) }
-    ExpandableItem(title = "Switch（Group - Multi）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Switch（Group - Multi）", allExpandFlow, padding = 20.dp) {
         Column {
             platforms.forEachIndexed { index, platform ->
                 Row(modifier = Modifier

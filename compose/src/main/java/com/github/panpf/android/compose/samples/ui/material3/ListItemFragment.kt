@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -62,7 +62,7 @@ class ListItemFragment : ToolbarFragment() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             headlineText = {
                 Text(text = "One line list item with trailing")
@@ -93,7 +93,7 @@ fun ListItemOneLineSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             headlineText = {
                 Text(text = "Two line list item with trailing")
@@ -127,7 +127,7 @@ fun ListItemTwoLineSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             headlineText = {
                 Text(text = "Three line list item with trailing")
@@ -164,7 +164,7 @@ fun ListItemThreeLineSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ListItem（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ListItem（colors）", allExpandFlow, padding = 20.dp) {
         ListItem(
             headlineText = {
                 Text(text = "Three line list item with trailing")

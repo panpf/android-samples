@@ -31,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -81,7 +81,7 @@ class ChipFragment : ToolbarFragment() {
 @Composable
 fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "AssistChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AssistChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 AssistChip(
@@ -118,7 +118,7 @@ fun AssistChipSamplePreview() {
 @Composable
 fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "AssistChip（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AssistChip（shape）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 AssistChip(
@@ -156,7 +156,7 @@ fun AssistChipShapeSamplePreview() {
 @Composable
 fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "AssistChip（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AssistChip（colors）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 AssistChip(
@@ -199,7 +199,7 @@ fun AssistChipColorsSamplePreview() {
 @Composable
 fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "AssistChip（border）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AssistChip（border）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 AssistChip(
@@ -237,7 +237,7 @@ fun AssistChipBorderSamplePreview() {
 @Composable
 fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 ElevatedAssistChip(
@@ -286,7 +286,7 @@ fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
             "舞蹈" to mutableStateOf(false)
         )
     }
-    ExpandableItem(title = "FilterChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "FilterChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             items.forEach {
                 FilterChip(
@@ -340,7 +340,7 @@ fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
             "舞蹈" to mutableStateOf(false)
         )
     }
-    ExpandableItem(title = "ElevatedFilterChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ElevatedFilterChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             items.forEach {
                 ElevatedFilterChip(
@@ -394,7 +394,7 @@ fun InputChipSample(allExpandFlow: Flow<Boolean>) {
             "舞蹈" to mutableStateOf(false)
         )
     }
-    ExpandableItem(title = "InputChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "InputChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             items.forEach {
                 InputChip(
@@ -438,7 +438,7 @@ fun InputChipSamplePreview() {
 //    val context = LocalContext.current
 //    val items = remember { mutableStateOf<List<Pair<String, Boolean>>>(listOf()) }
 //    val value = remember { mutableStateOf("") }
-//    ExpandableItem(title = "InputChip", allExpandFlow, padding = 20.dp) {
+//    ExpandableItem3(title = "InputChip", allExpandFlow, padding = 20.dp) {
 //        TextField(
 //            value = value.value,
 //            onValueChange = { value.value = it },
@@ -499,7 +499,7 @@ fun InputChipSamplePreview() {
 @Composable
 fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "SuggestionChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "SuggestionChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 SuggestionChip(
@@ -530,7 +530,7 @@ fun SuggestionChipSamplePreview() {
 @Composable
 fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "ElevatedSuggestionChip", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ElevatedSuggestionChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
             listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
                 ElevatedSuggestionChip(

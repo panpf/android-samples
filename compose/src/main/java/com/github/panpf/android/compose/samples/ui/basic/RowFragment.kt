@@ -1,24 +1,17 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,38 +21,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class RowFragment : ToolbarFragment() {
+class RowFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Row"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            RowSample(allExpandFlow)
-                            RowFullSample(allExpandFlow)
-                            RowItemSpacedSample(allExpandFlow)
-                            RowHorizontalArrangementSample(allExpandFlow)
-                            RowVerticalAlignmentSample(allExpandFlow)
-                            RowWeightSample(allExpandFlow)
-                            RowAlignSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Row") {
+                    ExpandableLayout { allExpandFlow ->
+                        RowSample(allExpandFlow)
+                        RowFullSample(allExpandFlow)
+                        RowItemSpacedSample(allExpandFlow)
+                        RowHorizontalArrangementSample(allExpandFlow)
+                        RowVerticalAlignmentSample(allExpandFlow)
+                        RowWeightSample(allExpandFlow)
+                        RowAlignSample(allExpandFlow)
                     }
                 }
             }
@@ -71,7 +53,7 @@ class RowFragment : ToolbarFragment() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -97,7 +79,7 @@ fun RowSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,7 +105,7 @@ fun RowFullSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -150,7 +132,7 @@ fun RowItemSpacedSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Arrangement.Start to "Start",
@@ -193,7 +175,7 @@ fun RowHorizontalArrangementSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（verticalAlignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（verticalAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Alignment.Top to "Top",
@@ -233,7 +215,7 @@ fun RowVerticalAlignmentSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（weight）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（weight）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 listOf("数码" to 1f, "汽车" to null, "摄影" to null, "舞蹈" to null),
@@ -276,7 +258,7 @@ fun RowWeightSamplePreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Row（align）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Row（align）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Alignment.Top to "Top",

@@ -1,10 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +12,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,8 +24,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -45,49 +38,38 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
-class LazyVerticalGridFragment : ToolbarFragment() {
+class LazyVerticalGridFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "LazyVerticalGrid"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            LazyVerticalGridSample(allExpandFlow)
-                            LazyVerticalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
-                            LazyVerticalGridContentPaddingSample(allExpandFlow)
-                            LazyVerticalGridItemSpacedSample(allExpandFlow)
-                            LazyVerticalGridReverseLayoutSample(allExpandFlow)
-                            LazyVerticalGridVerticalArrangementSample(allExpandFlow)
-                            LazyVerticalGridHorizontalArrangementSample(allExpandFlow)
-                            LazyVerticalGridUserScrollEnabledSample(allExpandFlow)
-                            LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow)
-                            LazyVerticalGridScrollInProgressSample(allExpandFlow)
-                            LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
-                            LazyVerticalGridSpanSample(allExpandFlow)
-                            LazyVerticalGridAnimateItemPlacementSample(allExpandFlow)
-                            LazyVerticalGridLayoutInfoSample(allExpandFlow)
-                            LazyVerticalGridMultiTypeSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("LazyVerticalGrid") {
+                    ExpandableLayout { allExpandFlow ->
+                        LazyVerticalGridSample(allExpandFlow)
+                        LazyVerticalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
+                        LazyVerticalGridContentPaddingSample(allExpandFlow)
+                        LazyVerticalGridItemSpacedSample(allExpandFlow)
+                        LazyVerticalGridReverseLayoutSample(allExpandFlow)
+                        LazyVerticalGridVerticalArrangementSample(allExpandFlow)
+                        LazyVerticalGridHorizontalArrangementSample(allExpandFlow)
+                        LazyVerticalGridUserScrollEnabledSample(allExpandFlow)
+                        LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow)
+                        LazyVerticalGridScrollInProgressSample(allExpandFlow)
+                        LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
+                        LazyVerticalGridSpanSample(allExpandFlow)
+                        LazyVerticalGridAnimateItemPlacementSample(allExpandFlow)
+                        LazyVerticalGridLayoutInfoSample(allExpandFlow)
+                        LazyVerticalGridMultiTypeSample(allExpandFlow)
                     }
                 }
             }
@@ -109,7 +91,7 @@ fun LazyVerticalGridSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(title = "LazyVerticalGrid", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyVerticalGrid", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
@@ -157,7 +139,7 @@ fun LazyVerticalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolea
         }
     }
     val gridHeight = remember { mutableStateOf(200.dp) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（columns - AdaptiveCells）",
         allExpandFlow,
         padding = 20.dp
@@ -236,7 +218,7 @@ fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（contentPadding）",
         allExpandFlow,
         padding = 20.dp
@@ -288,7 +270,7 @@ fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（ItemSpaced）",
         allExpandFlow,
         padding = 20.dp
@@ -341,7 +323,7 @@ fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（reverseLayout）",
         allExpandFlow,
         padding = 20.dp
@@ -391,7 +373,7 @@ fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
             add((it + 1).toString())
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（verticalArrangement）",
         allExpandFlow,
         padding = 20.dp
@@ -456,7 +438,7 @@ fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
             add((it + 1).toString())
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（horizontalArrangement）",
         allExpandFlow,
         padding = 20.dp
@@ -522,7 +504,7 @@ fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（userScrollEnabled = false）",
         allExpandFlow,
         padding = 20.dp
@@ -578,7 +560,7 @@ fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（firstVisibleItemIndex）",
         allExpandFlow,
         padding = 20.dp
@@ -635,7 +617,7 @@ fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyGridState(3)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（isScrollInProgress）",
         allExpandFlow,
         padding = 20.dp
@@ -692,7 +674,7 @@ fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyGridState(3)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（animateScrollToItem）",
         allExpandFlow,
         padding = 20.dp
@@ -778,7 +760,7 @@ fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(title = "LazyVerticalGrid（span）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyVerticalGrid（span）", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
@@ -843,7 +825,7 @@ fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             }
         )
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyVerticalGrid（animateItemPlacement）",
         allExpandFlow,
         padding = 20.dp
@@ -912,7 +894,7 @@ fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
-    ExpandableItem(title = "LazyVerticalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyVerticalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
         Column {
             LazyVerticalGrid(
                 state = lazyGridState,
@@ -998,7 +980,7 @@ fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         set(18, R.drawable.ic_check)
         set(40, R.drawable.ic_info)
     }.toList()
-    ExpandableItem(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier

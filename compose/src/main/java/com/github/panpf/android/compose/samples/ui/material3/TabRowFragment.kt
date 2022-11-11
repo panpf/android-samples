@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
@@ -77,7 +77,7 @@ class TabRowFragment : ToolbarFragment() {
 fun TabRowSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "TabRow", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TabRow", allExpandFlow, padding = 20.dp) {
         TabRow(
             selectedTabIndex = selectedTabIndex.value,
         ) {
@@ -106,7 +106,7 @@ fun TabRowSamplePreview() {
 fun TabRowColorsSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "TabRow（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TabRow（colors）", allExpandFlow, padding = 20.dp) {
         TabRow(
             selectedTabIndex = selectedTabIndex.value,
             containerColor = Color.Transparent,
@@ -154,7 +154,7 @@ fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "TabRow（Pager）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
@@ -209,7 +209,7 @@ fun TabRowPagerSamplePreview() {
 fun ScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "ScrollableTabRow", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ScrollableTabRow", allExpandFlow, padding = 20.dp) {
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex.value,
         ) {
@@ -238,7 +238,7 @@ fun ScrollableTabRowSamplePreview() {
 fun ScrollableTabRowColorsSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "ScrollableTabRow（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ScrollableTabRow（colors）", allExpandFlow, padding = 20.dp) {
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex.value,
             containerColor = Color.Transparent,
@@ -286,7 +286,7 @@ fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "ScrollableTabRow（Pager）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ScrollableTabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,

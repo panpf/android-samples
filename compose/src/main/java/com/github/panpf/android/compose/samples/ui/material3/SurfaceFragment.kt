@@ -31,7 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -74,7 +74,7 @@ class SurfaceFragment : ToolbarFragment() {
 @Composable
 fun SurfaceSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Surface", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Surface", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
         ) {
@@ -102,7 +102,7 @@ fun SurfaceSamplePreview() {
 @Composable
 fun SurfaceColorSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Surface（color）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Surface（color）", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
             color = Color.Red.copy(alpha = 0.5f)
@@ -131,7 +131,7 @@ fun SurfaceColorSamplePreview() {
 @Composable
 fun SurfaceShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Surface（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Surface（shape）", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
             color = Color.Red.copy(alpha = 0.5f),
@@ -161,7 +161,7 @@ fun SurfaceShapeSamplePreview() {
 @Composable
 fun SurfaceBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Surface（border）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Surface（border）", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
             border = BorderStroke(2.dp, Color.Red)
@@ -190,7 +190,7 @@ fun SurfaceBorderSamplePreview() {
 @Composable
 fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Surface（WithBox）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Surface（WithBox）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {

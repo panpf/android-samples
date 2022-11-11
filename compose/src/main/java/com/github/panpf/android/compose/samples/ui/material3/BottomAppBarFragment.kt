@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -75,7 +75,7 @@ fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val context = LocalContext.current
-    ExpandableItem(title = "BottomAppBar", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "BottomAppBar", allExpandFlow, padding = 20.dp) {
         Column {
             BottomAppBar(
                 actions = {
@@ -139,7 +139,7 @@ fun BottomAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val context = LocalContext.current
-    ExpandableItem(title = "BottomAppBar（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "BottomAppBar（colors）", allExpandFlow, padding = 20.dp) {
         Column {
             BottomAppBar(
                 actions = {

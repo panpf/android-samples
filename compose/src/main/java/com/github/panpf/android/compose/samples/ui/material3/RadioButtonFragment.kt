@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -64,7 +64,7 @@ class RadioButtonFragment : ToolbarFragment() {
 @Composable
 fun RadioButtonSample(allExpandFlow: Flow<Boolean>) {
     val selected = remember { mutableStateOf(false) }
-    ExpandableItem(title = "RadioButton", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "RadioButton", allExpandFlow, padding = 20.dp) {
         RadioButton(
             selected = selected.value,
             onClick = { selected.value = !selected.value }
@@ -82,7 +82,7 @@ fun RadioButtonSamplePreview() {
 @Composable
 fun RadioButtonEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val selected = remember { mutableStateOf(false) }
-    ExpandableItem(title = "RadioButton（enabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "RadioButton（enabled - false）", allExpandFlow, padding = 20.dp) {
         RadioButton(
             selected = selected.value,
             onClick = { selected.value = !selected.value },
@@ -101,7 +101,7 @@ fun RadioButtonEnabledFalseSamplePreview() {
 @Composable
 fun RadioButtonColorsSample(allExpandFlow: Flow<Boolean>) {
     val selected = remember { mutableStateOf(false) }
-    ExpandableItem(title = "RadioButton（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "RadioButton（colors）", allExpandFlow, padding = 20.dp) {
         RadioButton(
             selected = selected.value,
             onClick = { selected.value = !selected.value },
@@ -124,7 +124,7 @@ fun RadioButtonColorsSamplePreview() {
 fun RadioButtonGroupSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
     val selectedIndex = remember { mutableStateOf(null as Int?) }
-    ExpandableItem(title = "RadioButton（Group）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "RadioButton（Group）", allExpandFlow, padding = 20.dp) {
         Column {
             platforms.forEachIndexed { index, platform ->
                 Row(modifier = Modifier

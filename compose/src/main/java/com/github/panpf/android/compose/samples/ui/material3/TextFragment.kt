@@ -46,7 +46,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -119,7 +119,7 @@ private fun MyTextContainer(content: @Composable BoxScope.() -> Unit) {
 
 @Composable
 fun TextSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text)
         }
@@ -135,7 +135,7 @@ fun TextSamplePreview() {
 
 @Composable
 fun TextColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（color）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（color）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text, color = Color.Magenta)
         }
@@ -151,7 +151,7 @@ fun TextColorSamplePreview() {
 
 @Composable
 fun TextFontSizeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（fontSize）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（fontSize）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text, fontSize = 20.sp)
         }
@@ -167,7 +167,7 @@ fun TextFontSizeSamplePreview() {
 
 @Composable
 fun TextFontStyleSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（fontStyle - Italic）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（fontStyle - Italic）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text, fontStyle = FontStyle.Italic)
         }
@@ -183,7 +183,7 @@ fun TextFontStyleSamplePreview() {
 
 @Composable
 fun TextFontWeightSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（fontWeight）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（fontWeight）", allExpandFlow, padding = 20.dp) {
         listOf(
             "Thin" to FontWeight.Thin,
             "Normal" to FontWeight.Normal,
@@ -209,7 +209,7 @@ fun TextFontWeightSamplePreview() {
 
 @Composable
 fun TextFontFamilySample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（fontFamily）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（fontFamily）", allExpandFlow, padding = 20.dp) {
         listOf(
             "SansSerif" to FontFamily.SansSerif,
             "Monospace" to FontFamily.Monospace,
@@ -235,7 +235,7 @@ fun TextFontFamilySamplePreview() {
 
 @Composable
 fun TextLetterSpacingSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（letterSpacing）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（letterSpacing）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text, letterSpacing = 8.sp)
         }
@@ -251,7 +251,7 @@ fun TextLetterSpacingSamplePreview() {
 
 @Composable
 fun TextTextDecorationSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（textDecoration）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（textDecoration）", allExpandFlow, padding = 20.dp) {
         Text(text = "Underline")
         MyTextContainer {
             Text(text = text, textDecoration = TextDecoration.Underline)
@@ -274,7 +274,7 @@ fun TextTextDecorationUnderlineSamplePreview() {
 
 @Composable
 fun TextTextAlignSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（textAlign）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（textAlign）", allExpandFlow, padding = 20.dp) {
         Text(text = "Start")
         MyTextContainer {
             Text(text = text, textAlign = TextAlign.Start)
@@ -309,7 +309,7 @@ fun TextTextAlignSamplePreview() {
 
 @Composable
 fun TextLineHeightSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（lineHeight）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（lineHeight）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(text = text, lineHeight = 28.sp)
         }
@@ -325,7 +325,7 @@ fun TextLineHeightSamplePreview() {
 
 @Composable
 fun TextOverflowSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（overflow）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（overflow）", allExpandFlow, padding = 20.dp) {
         listOf(
             "Ellipsis" to TextOverflow.Ellipsis,
             "Clip" to TextOverflow.Clip,
@@ -366,7 +366,7 @@ fun TextOverflowEllipsisSamplePreview() {
 
 @Composable
 fun TextSoftWrapSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（softWrap）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（softWrap）", allExpandFlow, padding = 20.dp) {
         Text(text = "true")
         MyTextContainer {
             Text(text = text, softWrap = true)
@@ -389,7 +389,7 @@ fun TextSoftWrapSamplePreview() {
 
 @Composable
 fun TextMaxLinesSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（maxLines）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（maxLines）", allExpandFlow, padding = 20.dp) {
         listOf(
             "maxLines + TextOverflow.Ellipsis" to TextOverflow.Ellipsis,
             "maxLines + TextOverflow.Clip" to TextOverflow.Clip,
@@ -419,7 +419,7 @@ fun TextMaxLinesSamplePreview() {
 
 @Composable
 fun TextBaselineShiftSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（baselineShift）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（baselineShift）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -438,7 +438,7 @@ fun TextBaselineShiftSamplePreview() {
 
 @Composable
 fun TextTextGeometricTransformSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（textGeometricTransform）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（textGeometricTransform）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -462,7 +462,7 @@ fun TextTextGeometricTransformSamplePreview() {
 
 @Composable
 fun TextBackgroundSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（background）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（background）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -481,7 +481,7 @@ fun TextBackgroundSamplePreview() {
 
 @Composable
 fun TextShadowSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（shadow）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（shadow）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -506,7 +506,7 @@ fun TextShadowSamplePreview() {
 
 @Composable
 fun TextTextDirectionSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（textDirection）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（textDirection）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -525,7 +525,7 @@ fun TextTextDirectionSamplePreview() {
 
 @Composable
 fun TextTextIndentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（textIndent）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（textIndent）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = text,
@@ -544,7 +544,7 @@ fun TextTextIndentSamplePreview() {
 
 @Composable
 fun TextAnnotatedStringSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（AnnotatedString - PartialHighlighting）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（AnnotatedString - PartialHighlighting）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             Text(
                 text = buildAnnotatedString {
@@ -576,7 +576,7 @@ fun TextAnnotatedStringSamplePreview() {
 @Composable
 fun TextClickableAnnotatedStringSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(
+    ExpandableItem3(
         "Text（AnnotatedString - PartialHighlighting - Clickable）",
         allExpandFlow,
         padding = 20.dp
@@ -636,7 +636,7 @@ fun TextClickableAnnotatedStringSamplePreview() {
 
 @Composable
 fun TextSelectableSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem("Text（Selectable）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3("Text（Selectable）", allExpandFlow, padding = 20.dp) {
         MyTextContainer {
             SelectionContainer {
                 Text(text = text)

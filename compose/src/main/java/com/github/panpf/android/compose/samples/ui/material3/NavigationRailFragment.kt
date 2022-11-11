@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -88,7 +88,7 @@ fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
             "设置" to R.drawable.ic_settings,
         )
     }
-    ExpandableItem(title = "NavigationRail", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "NavigationRail", allExpandFlow, padding = 20.dp) {
         NavigationRail(
             modifier = Modifier
                 .height(300.dp),
@@ -133,7 +133,7 @@ fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
             "设置" to R.drawable.ic_settings,
         )
     }
-    ExpandableItem(title = "NavigationRail（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "NavigationRail（colors）", allExpandFlow, padding = 20.dp) {
         NavigationRail(
             modifier = Modifier.height(300.dp),
             containerColor = Color.Yellow.copy(alpha = 0.5f)
@@ -197,7 +197,7 @@ fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
         }
     }
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = " NavigationRail（Pager）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = " NavigationRail（Pager）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

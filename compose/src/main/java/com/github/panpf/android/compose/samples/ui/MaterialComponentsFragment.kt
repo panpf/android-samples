@@ -1,32 +1,18 @@
 package com.github.panpf.android.compose.samples.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.ui.Modifier
+import android.content.Context
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.model.Link
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
 
-class MaterialComponentsFragment : ToolbarFragment() {
+class MaterialComponentsFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Material Components"
+    override fun onCreateComposeView(context: Context): ComposeView {
         val links = listOf(
             Link("AlertDialog", R.id.action_global_materialAlertDialogFragment),
             Link("BackdropScaffold", R.id.action_global_materialBackdropScaffoldFragment),
@@ -57,20 +43,15 @@ class MaterialComponentsFragment : ToolbarFragment() {
             Link("TextField", R.id.action_global_materialTextFieldFragment),
             Link("TopAppBar", R.id.action_global_materialTopAppBarFragment),
         )
-        return ComposeView(inflater.context).apply {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colors.background
-                    ) {
-                        LinkList(links) { _, link ->
-                            val nav = link.nav
-                            if (nav is Int) {
-                                findNavController().navigate(nav)
-                            } else if (nav is NavDirections) {
-                                findNavController().navigate(nav)
-                            }
+                MyTopAppBarScaffold("Material Components") {
+                    LinkList(links) { _, link ->
+                        val nav = link.nav
+                        if (nav is Int) {
+                            findNavController().navigate(nav)
+                        } else if (nav is NavDirections) {
+                            findNavController().navigate(nav)
                         }
                     }
                 }

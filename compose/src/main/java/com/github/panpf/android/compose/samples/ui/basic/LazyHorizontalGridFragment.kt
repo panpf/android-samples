@@ -1,10 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,8 +26,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -47,48 +40,37 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
-class LazyHorizontalGridFragment : ToolbarFragment() {
+class LazyHorizontalGridFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "LazyHorizontalGrid"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            LazyHorizontalGridSample(allExpandFlow)
-                            LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
-                            LazyHorizontalGridContentPaddingSample(allExpandFlow)
-                            LazyHorizontalGridItemSpacedSample(allExpandFlow)
-                            LazyHorizontalGridReverseLayoutSample(allExpandFlow)
-                            LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
-                            LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
-                            LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
-                            LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
-                            LazyHorizontalGridScrollInProgressSample(allExpandFlow)
-                            LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
-                            LazyHorizontalGridSpanSample(allExpandFlow)
-                            LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
-                            LazyHorizontalGridLayoutInfoSample(allExpandFlow)
-                            LazyHorizontalGridMultiTypeSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("LazyHorizontalGrid") {
+                    ExpandableLayout { allExpandFlow ->
+                        LazyHorizontalGridSample(allExpandFlow)
+                        LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
+                        LazyHorizontalGridContentPaddingSample(allExpandFlow)
+                        LazyHorizontalGridItemSpacedSample(allExpandFlow)
+                        LazyHorizontalGridReverseLayoutSample(allExpandFlow)
+                        LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
+                        LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
+                        LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
+                        LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
+                        LazyHorizontalGridScrollInProgressSample(allExpandFlow)
+                        LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
+                        LazyHorizontalGridSpanSample(allExpandFlow)
+                        LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
+                        LazyHorizontalGridLayoutInfoSample(allExpandFlow)
+                        LazyHorizontalGridMultiTypeSample(allExpandFlow)
                     }
                 }
             }
@@ -110,7 +92,7 @@ fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(title = "LazyHorizontalGrid", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyHorizontalGrid", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
@@ -158,7 +140,7 @@ fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Bool
         }
     }
     val gridHeight = remember { mutableStateOf(200.dp) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（rows - AdaptiveCells）",
         allExpandFlow,
         padding = 20.dp
@@ -231,7 +213,7 @@ fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（contentPadding）",
         allExpandFlow,
         padding = 20.dp
@@ -283,7 +265,7 @@ fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（ItemSpaced）",
         allExpandFlow,
         padding = 20.dp
@@ -336,7 +318,7 @@ fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（reverseLayout）",
         allExpandFlow,
         padding = 20.dp
@@ -386,7 +368,7 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
             add((it + 1).toString())
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（horizontalArrangement）",
         allExpandFlow,
         padding = 20.dp
@@ -454,7 +436,7 @@ fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
             add((it + 1).toString())
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（verticalArrangement）",
         allExpandFlow,
         padding = 20.dp
@@ -523,7 +505,7 @@ fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（userScrollEnabled = false）",
         allExpandFlow,
         padding = 20.dp
@@ -579,7 +561,7 @@ fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（firstVisibleItemIndex）",
         allExpandFlow,
         padding = 20.dp
@@ -636,7 +618,7 @@ fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyGridState(3)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（isScrollInProgress）",
         allExpandFlow,
         padding = 20.dp
@@ -693,7 +675,7 @@ fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyGridState(3)
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（animateScrollToItem）",
         allExpandFlow,
         padding = 20.dp
@@ -779,7 +761,7 @@ fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             }
         }
     }
-    ExpandableItem(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
@@ -844,7 +826,7 @@ fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             }
         )
     }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LazyHorizontalGrid（animateItemPlacement）",
         allExpandFlow,
         padding = 20.dp
@@ -912,7 +894,7 @@ fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
-    ExpandableItem(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
         Column {
             LazyHorizontalGrid(
                 state = lazyGridState,
@@ -998,7 +980,7 @@ fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         set(18, R.drawable.ic_check)
         set(40, R.drawable.ic_info)
     }.toList()
-    ExpandableItem(title = "LazyHorizontalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyHorizontalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier

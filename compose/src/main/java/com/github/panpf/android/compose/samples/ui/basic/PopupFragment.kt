@@ -1,18 +1,12 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,34 +20,23 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class PopupFragment : ToolbarFragment() {
+class PopupFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Popup"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            PopupSample(allExpandFlow)
-                            PopupLimitDismissSample(allExpandFlow)
-                            PopupOffsetSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Popup") {
+                    ExpandableLayout { allExpandFlow ->
+                        PopupSample(allExpandFlow)
+                        PopupLimitDismissSample(allExpandFlow)
+                        PopupOffsetSample(allExpandFlow)
                     }
                 }
             }
@@ -65,7 +48,7 @@ class PopupFragment : ToolbarFragment() {
 @Composable
 fun PopupSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Popup", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Popup", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = {
@@ -112,7 +95,7 @@ fun PopupSamplePreview() {
 @Composable
 fun PopupLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Popup（LimitDismiss）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Popup（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = {
@@ -163,7 +146,7 @@ fun PopupLimitDismissSamplePreview() {
 @Composable
 fun PopupOffsetSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Popup（offset）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Popup（offset）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = {

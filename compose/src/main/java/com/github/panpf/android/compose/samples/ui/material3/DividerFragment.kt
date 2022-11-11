@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -55,7 +55,7 @@ class DividerFragment : ToolbarFragment() {
 
 @Composable
 fun DividerSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Divider", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Divider", allExpandFlow, padding = 20.dp) {
         Divider()
     }
 }
@@ -69,7 +69,7 @@ fun DividerSamplePreview() {
 
 @Composable
 fun DividerColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Divider（color）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Divider（color）", allExpandFlow, padding = 20.dp) {
         Divider(color = Color.Red)
     }
 }
@@ -83,7 +83,7 @@ fun DividerColorSamplePreview() {
 
 @Composable
 fun DividerThicknessSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Divider（thickness）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Divider（thickness）", allExpandFlow, padding = 20.dp) {
         Divider(thickness = 5.dp)
     }
 }
@@ -97,7 +97,7 @@ fun DividerThicknessSamplePreview() {
 
 //@Composable
 //fun DividerStartIndentSample(allExpandFlow: Flow<Boolean>) {
-//    ExpandableItem(title = "Divider（startIndent）", allExpandFlow, padding = 20.dp) {
+//    ExpandableItem3(title = "Divider（startIndent）", allExpandFlow, padding = 20.dp) {
 //        Divider(startIndent = 20.dp)
 //    }
 //}

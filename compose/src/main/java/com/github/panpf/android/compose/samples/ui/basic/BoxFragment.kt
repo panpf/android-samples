@@ -1,10 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -14,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,36 +19,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class BoxFragment : ToolbarFragment() {
+class BoxFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Box"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            BoxSample(allExpandFlow)
-                            BoxContentAlignmentSample(allExpandFlow)
-                            BoxAlignSample(allExpandFlow)
-                            BoxMatchParentSizeSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Box") {
+                    ExpandableLayout { allExpandFlow ->
+                        BoxSample(allExpandFlow)
+                        BoxContentAlignmentSample(allExpandFlow)
+                        BoxAlignSample(allExpandFlow)
+                        BoxMatchParentSizeSample(allExpandFlow)
                     }
                 }
             }
@@ -65,7 +48,7 @@ class BoxFragment : ToolbarFragment() {
 
 @Composable
 fun BoxSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Box", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Box", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             Box(
                 modifier = Modifier
@@ -137,7 +120,7 @@ fun BoxSamplePreview() {
 
 @Composable
 fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Box（contentAlignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Box（contentAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.TopStart to "TopStart",
@@ -193,7 +176,7 @@ fun BoxContentAlignmentSamplePreview() {
 
 @Composable
 fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Box（align）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Box（align）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "蓝色和绿色块受 Box 的 contentAlignment 属性控制始终居中，红色块受自身 align 属性控制")
             Spacer(modifier = Modifier.size(10.dp))
@@ -254,7 +237,7 @@ fun BoxAlignSamplePreview() {
 
 @Composable
 fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Box（matchParentSize）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Box（matchParentSize）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "Box 中一个 Text，Text 设置 matchParentSize。\nBox 设置宽高时 Text 充满 Box；\nBox 不设置宽高时 Box 不可见。\n因此 matchParentSize 不会影响 Box 的宽高")
             Spacer(modifier = Modifier.size(10.dp))

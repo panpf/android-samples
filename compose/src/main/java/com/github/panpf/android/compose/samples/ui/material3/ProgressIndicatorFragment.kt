@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -75,7 +75,7 @@ class ProgressIndicatorFragment : ToolbarFragment() {
 
 @Composable
 fun CircularProgressIndicatorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "CircularProgressIndicator", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CircularProgressIndicator", allExpandFlow, padding = 20.dp) {
         CircularProgressIndicator()
     }
 }
@@ -89,7 +89,7 @@ fun CircularProgressIndicatorSamplePreview() {
 
 @Composable
 fun CircularProgressIndicatorSizeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "CircularProgressIndicator（size）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CircularProgressIndicator（size）", allExpandFlow, padding = 20.dp) {
         CircularProgressIndicator(modifier = Modifier.size(70.dp))
     }
 }
@@ -103,7 +103,7 @@ fun CircularProgressIndicatorSizeSamplePreview() {
 
 @Composable
 fun CircularProgressIndicatorColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "CircularProgressIndicator（color）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CircularProgressIndicator（color）", allExpandFlow, padding = 20.dp) {
         CircularProgressIndicator(color = Color.Red)
     }
 }
@@ -117,7 +117,7 @@ fun CircularProgressIndicatorColorSamplePreview() {
 
 @Composable
 fun CircularProgressIndicatorStrokeWidthSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+    ExpandableItem3(
         title = "CircularProgressIndicator（strokeWidth）",
         allExpandFlow,
         padding = 20.dp
@@ -135,7 +135,7 @@ fun CircularProgressIndicatorStrokeWidthSamplePreview() {
 
 @Composable
 fun LinearProgressIndicatorIndeterminateSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Indeterminate）",
         allExpandFlow,
         padding = 20.dp
@@ -153,7 +153,7 @@ fun LinearProgressIndicatorIndeterminateSamplePreview() {
 
 @Composable
 fun LinearProgressIndicatorIndeterminateSizeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Indeterminate - size）",
         allExpandFlow,
         padding = 20.dp
@@ -175,7 +175,7 @@ fun LinearProgressIndicatorIndeterminateSizeSamplePreview() {
 
 @Composable
 fun LinearProgressIndicatorIndeterminateColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Indeterminate - color）",
         allExpandFlow,
         padding = 20.dp
@@ -197,7 +197,7 @@ fun LinearProgressIndicatorIndeterminateColorSamplePreview() {
 
 @Composable
 fun LinearProgressIndicatorIndeterminateClipSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Indeterminate - clip）",
         allExpandFlow,
         padding = 20.dp
@@ -220,7 +220,7 @@ fun LinearProgressIndicatorIndeterminateClipSamplePreview() {
 @Composable
 fun LinearProgressIndicatorDeterminateSample(allExpandFlow: Flow<Boolean>) {
     val progress = remember { mutableStateOf(0.3f) }
-    ExpandableItem(title = "LinearProgressIndicator（Determinate）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LinearProgressIndicator（Determinate）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             IconButton(
                 onClick = {
@@ -254,7 +254,7 @@ fun LinearProgressIndicatorDeterminateSamplePreview() {
 @Composable
 fun LinearProgressIndicatorDeterminateSizeSample(allExpandFlow: Flow<Boolean>) {
     val progress = remember { mutableStateOf(0.3f) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Determinate - size）",
         allExpandFlow,
         padding = 20.dp
@@ -296,7 +296,7 @@ fun LinearProgressIndicatorDeterminateSizeSamplePreview() {
 @Composable
 fun LinearProgressIndicatorDeterminateColorSample(allExpandFlow: Flow<Boolean>) {
     val progress = remember { mutableStateOf(0.3f) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Determinate - color）",
         allExpandFlow,
         padding = 20.dp
@@ -339,7 +339,7 @@ fun LinearProgressIndicatorDeterminateColorSamplePreview() {
 @Composable
 fun LinearProgressIndicatorDeterminateClipSample(allExpandFlow: Flow<Boolean>) {
     val progress = remember { mutableStateOf(0.3f) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "LinearProgressIndicator（Determinate - clip）",
         allExpandFlow,
         padding = 20.dp

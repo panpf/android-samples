@@ -27,7 +27,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -70,7 +70,7 @@ class CheckboxFragment : ToolbarFragment() {
 @Composable
 fun CheckboxSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Checkbox", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Checkbox", allExpandFlow, padding = 20.dp) {
         Checkbox(
             checked = checked.value,
             onCheckedChange = { checked.value = it }
@@ -88,7 +88,7 @@ fun CheckboxSamplePreview() {
 @Composable
 fun CheckboxEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Checkbox（enabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Checkbox（enabled - false）", allExpandFlow, padding = 20.dp) {
         Checkbox(
             checked = checked.value,
             onCheckedChange = { checked.value = it },
@@ -107,7 +107,7 @@ fun CheckboxEnabledFalseSamplePreview() {
 @Composable
 fun CheckboxColorsSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Checkbox（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Checkbox（colors）", allExpandFlow, padding = 20.dp) {
         Checkbox(
             checked = checked.value,
             onCheckedChange = { checked.value = it },
@@ -130,7 +130,7 @@ fun CheckboxColorsSamplePreview() {
 fun CheckboxGroupSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
     val checkedSet = remember { mutableStateOf(setOf<Int>()) }
-    ExpandableItem(title = "Checkbox（Group）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Checkbox（Group）", allExpandFlow, padding = 20.dp) {
         Column {
             platforms.forEachIndexed { index, platform ->
                 Row(modifier = Modifier
@@ -179,7 +179,7 @@ fun TriStateCheckboxSample(allExpandFlow: Flow<Boolean>) {
     val toggleableState = remember {
         mutableStateOf(ToggleableState(false))
     }
-    ExpandableItem(title = "TriStateCheckbox", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TriStateCheckbox", allExpandFlow, padding = 20.dp) {
         TriStateCheckbox(
             state = toggleableState.value,
             onClick = {
@@ -205,7 +205,7 @@ fun TriStateCheckboxColorsSample(allExpandFlow: Flow<Boolean>) {
     val toggleableState = remember {
         mutableStateOf(ToggleableState(false))
     }
-    ExpandableItem(title = "TriStateCheckbox（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TriStateCheckbox（colors）", allExpandFlow, padding = 20.dp) {
         TriStateCheckbox(
             state = toggleableState.value,
             onClick = {
@@ -234,7 +234,7 @@ fun TriStateCheckboxColorsSamplePreview() {
 fun TriStateCheckboxGroupSample(allExpandFlow: Flow<Boolean>) {
     val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
     val checkedSet = remember { mutableStateOf(setOf(2)) }
-    ExpandableItem(title = "TriStateCheckbox（Group）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TriStateCheckbox（Group）", allExpandFlow, padding = 20.dp) {
         val allToggleableState = when {
             checkedSet.value.isEmpty() -> ToggleableState.Off
             checkedSet.value.size == platforms.size -> ToggleableState.On

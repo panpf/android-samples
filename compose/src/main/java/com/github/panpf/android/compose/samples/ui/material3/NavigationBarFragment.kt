@@ -35,7 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -86,7 +86,7 @@ fun NavigationBarSample(allExpandFlow: Flow<Boolean>) {
             "设置" to R.drawable.ic_settings,
         )
     }
-    ExpandableItem(title = "NavigationBar", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "NavigationBar", allExpandFlow, padding = 20.dp) {
         NavigationBar {
             items.forEachIndexed { index, itemPair ->
                 NavigationBarItem(
@@ -125,7 +125,7 @@ fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
             "设置" to R.drawable.ic_settings,
         )
     }
-    ExpandableItem(title = "NavigationBar（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "NavigationBar（colors）", allExpandFlow, padding = 20.dp) {
         NavigationBar(
             containerColor = Color.Yellow.copy(alpha = 0.5f)
         ) {
@@ -185,7 +185,7 @@ fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
         }
     }
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "NavigationBar（Pager）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "NavigationBar（Pager）", allExpandFlow, padding = 20.dp) {
         Column(modifier = Modifier.fillMaxWidth()) {
             HorizontalPager(
                 state = pagerState,

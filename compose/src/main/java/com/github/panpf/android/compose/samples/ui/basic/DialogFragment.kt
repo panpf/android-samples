@@ -1,21 +1,14 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -29,33 +22,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DialogFragment : ToolbarFragment() {
+class DialogFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Dialog"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            DialogSample(allExpandFlow)
-                            DialogLimitDismissSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Dialog") {
+                    ExpandableLayout { allExpandFlow ->
+                        DialogSample(allExpandFlow)
+                        DialogLimitDismissSample(allExpandFlow)
                     }
                 }
             }
@@ -67,7 +49,7 @@ class DialogFragment : ToolbarFragment() {
 @Composable
 fun DialogSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Dialog", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Dialog", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = {
@@ -106,7 +88,7 @@ fun DialogSamplePreview() {
 @Composable
 fun DialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Dialog（LimitDismiss）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Dialog（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = {

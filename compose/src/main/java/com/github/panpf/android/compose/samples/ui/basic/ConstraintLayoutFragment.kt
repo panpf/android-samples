@@ -1,22 +1,15 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,38 +21,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.HorizontalDashedDivider
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.github.panpf.android.compose.samples.ui.base.VerticalDashedDivider
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ConstraintLayoutFragment : ToolbarFragment() {
+class ConstraintLayoutFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "ConstraintLayout"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            ConstraintLayoutConstrainAsSample(allExpandFlow)
-                            ConstraintLayoutBarrierSample(allExpandFlow)
-                            ConstraintLayoutGuideLineSample(allExpandFlow)
-                            ConstraintLayoutChainSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("ConstraintLayout") {
+                    ExpandableLayout { allExpandFlow ->
+                        ConstraintLayoutConstrainAsSample(allExpandFlow)
+                        ConstraintLayoutBarrierSample(allExpandFlow)
+                        ConstraintLayoutGuideLineSample(allExpandFlow)
+                        ConstraintLayoutChainSample(allExpandFlow)
                     }
                 }
             }
@@ -70,7 +52,7 @@ class ConstraintLayoutFragment : ToolbarFragment() {
 
 @Composable
 fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ConstraintLayout（constrainAs）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ConstraintLayout（constrainAs）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             Column {
                 Text(text = "linkTo", modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -346,7 +328,7 @@ fun ConstraintLayoutConstrainAsSamplePreview() {
 
 @Composable
 fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ConstraintLayout（Barrier）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ConstraintLayout（Barrier）", allExpandFlow, padding = 20.dp) {
         Text(text = "以 N 个元素的其中一个边的最大值为基准创建一条线，其它元素可以以这条线为约束，这样的线就是 '屏障线'")
         Spacer(modifier = Modifier.size(10.dp))
         ConstraintLayout(
@@ -452,7 +434,7 @@ fun ConstraintLayoutBarrierSamplePreview() {
 
 @Composable
 fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ConstraintLayout（GuideLine）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ConstraintLayout（GuideLine）", allExpandFlow, padding = 20.dp) {
         Text(text = "从 Layout 的其中一个边为起点创建一条线，其它元素可以以这条线为约束，这样的线就是引导线")
         Spacer(modifier = Modifier.size(10.dp))
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
@@ -596,7 +578,7 @@ fun ConstraintLayoutGuideLineSamplePreview() {
 
 @Composable
 fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "ConstraintLayout（Chain）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ConstraintLayout（Chain）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf("Vertical", "Horizontal").forEach { direction ->
                 listOf(

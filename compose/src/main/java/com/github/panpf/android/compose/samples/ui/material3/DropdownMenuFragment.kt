@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -74,7 +74,7 @@ fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val context = LocalContext.current
-    ExpandableItem(title = "DropdownMenu", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "DropdownMenu", allExpandFlow, padding = 20.dp) {
         Button(onClick = { expanded.value = true }) {
             Text(text = "Show DropdownMenu")
         }
@@ -126,7 +126,7 @@ fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val context = LocalContext.current
-    ExpandableItem(title = "DropdownMenu（offset）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "DropdownMenu（offset）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { expanded.value = true }) {
             Text(text = "Show Offset DropdownMenu")
         }
@@ -179,7 +179,7 @@ fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     val context = LocalContext.current
-    ExpandableItem(title = "DropdownMenu（LimitDismiss）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "DropdownMenu（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { expanded.value = true }) {
             Text(text = "Show Limit Dismiss DropdownMenu")
         }

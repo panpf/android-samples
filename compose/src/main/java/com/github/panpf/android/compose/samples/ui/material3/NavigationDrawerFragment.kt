@@ -40,7 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -83,7 +83,7 @@ fun ModalNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val selectedIndex = remember { mutableStateOf(0) }
-    ExpandableItem(title = "ModalNavigationDrawer", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "ModalNavigationDrawer", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.clip(RectangleShape)) {
             ModalNavigationDrawer(
                 drawerState = drawerState,
@@ -150,7 +150,7 @@ fun DismissibleNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val selectedIndex = remember { mutableStateOf(0) }
-    ExpandableItem(title = "DismissibleNavigationDrawer", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "DismissibleNavigationDrawer", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.clip(RectangleShape)) {
             DismissibleNavigationDrawer(
                 drawerState = drawerState,
@@ -215,7 +215,7 @@ fun DismissibleNavigationDrawerSamplePreview() {
 @Composable
 fun PermanentNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
-    ExpandableItem(title = "PermanentNavigationDrawer", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "PermanentNavigationDrawer", allExpandFlow, padding = 20.dp) {
         PermanentNavigationDrawer(
             modifier = Modifier
                 .fillMaxWidth()

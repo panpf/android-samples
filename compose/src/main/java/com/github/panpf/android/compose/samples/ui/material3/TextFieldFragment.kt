@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -98,7 +98,7 @@ private const val novel =
 @Composable
 fun TextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -118,7 +118,7 @@ fun TextFieldSamplePreview() {
 @Composable
 fun TextFieldDefaultValueSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（value）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（value）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -138,7 +138,7 @@ fun TextFieldDefaultValueSamplePreview() {
 @Composable
 fun TextFieldEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（enabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（enabled - false）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -159,7 +159,7 @@ fun TextFieldEnabledFalseSamplePreview() {
 @Composable
 fun TextFieldReadOnlySample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（readOnly）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（readOnly）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -180,7 +180,7 @@ fun TextFieldReadOnlySamplePreview() {
 @Composable
 fun TextFieldTextStyleColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（textStyle - color）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（textStyle - color）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -201,7 +201,7 @@ fun TextFieldTextStyleColorSamplePreview() {
 @Composable
 fun TextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（label）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（label）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -222,7 +222,7 @@ fun TextFieldLabelSamplePreview() {
 @Composable
 fun TextFieldPlaceholderSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（placeholder）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（placeholder）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -243,7 +243,7 @@ fun TextFieldPlaceholderSamplePreview() {
 @Composable
 fun TextFieldLeadingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（leadingIcon）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（leadingIcon）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -269,7 +269,7 @@ fun TextFieldLeadingIconSamplePreview() {
 @Composable
 fun TextFieldTrailingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（trailingIcon）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（trailingIcon）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -299,7 +299,7 @@ fun TextFieldTrailingIconSamplePreview() {
 fun TextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    ExpandableItem(title = "TextField（isError）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（isError）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -324,7 +324,7 @@ fun TextFieldIsErrorSamplePreview() {
 @Composable
 fun TextFieldVisualTransformationSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（visualTransformation - Password）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（visualTransformation - Password）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -346,7 +346,7 @@ fun TextFieldVisualTransformationSamplePreview() {
 @Composable
 fun TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(
+    ExpandableItem3(
         title = "TextField（keyboardOptions - Number）",
         allExpand = allExpandFlow,
         20.dp
@@ -371,7 +371,7 @@ fun TextFieldKeyboardOptionsKeyboardTypeSamplePreview() {
 @Composable
 fun TextFieldKeyboardOptionsImeActionSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（keyboardOptions - Search）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（keyboardOptions - Search）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -393,7 +393,7 @@ fun TextFieldKeyboardOptionsImeActionSamplePreview() {
 fun TextFieldKeyboardActionsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "TextField（keyboardActions）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（keyboardActions）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -415,7 +415,7 @@ fun TextFieldKeyboardActionsSamplePreview() {
 @Composable
 fun TextFieldSingleLineSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（singleLine）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（singleLine）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -436,7 +436,7 @@ fun TextFieldSingleLineSamplePreview() {
 @Composable
 fun TextFieldMaxLinesSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（maxLines - 2）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（maxLines - 2）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -457,7 +457,7 @@ fun TextFieldMaxLinesSamplePreview() {
 @Composable
 fun TextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（shape）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -478,7 +478,7 @@ fun TextFieldShapeSamplePreview() {
 @Composable
 fun TextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "TextField（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "TextField（colors）", allExpandFlow, padding = 20.dp) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -503,7 +503,7 @@ fun TextFieldColorsSamplePreview() {
 @Composable
 fun OutlinedTextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "OutlinedTextField", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "OutlinedTextField", allExpandFlow, padding = 20.dp) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -523,7 +523,7 @@ fun OutlinedTextFieldSamplePreview() {
 @Composable
 fun OutlinedTextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
-    ExpandableItem(title = "OutlinedTextField（label）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "OutlinedTextField（label）", allExpandFlow, padding = 20.dp) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -545,7 +545,7 @@ fun OutlinedTextFieldLabelSamplePreview() {
 fun OutlinedTextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
     val isError = remember { mutableStateOf(false) }
-    ExpandableItem(title = "OutlinedTextField（isError）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "OutlinedTextField（isError）", allExpandFlow, padding = 20.dp) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -571,7 +571,7 @@ fun OutlinedTextFieldIsErrorSamplePreview() {
 @Composable
 fun OutlinedTextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(title = "OutlinedTextField（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "OutlinedTextField（shape）", allExpandFlow, padding = 20.dp) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = inputText.value,
@@ -592,7 +592,7 @@ fun OutlinedTextFieldShapeSamplePreview() {
 @Composable
 fun OutlinedTextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
-    ExpandableItem(
+    ExpandableItem3(
         title = "OutlinedTextField（colors）",
         allExpand = allExpandFlow
     ) {

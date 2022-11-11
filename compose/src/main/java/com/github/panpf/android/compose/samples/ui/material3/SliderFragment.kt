@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -73,7 +73,7 @@ class SliderFragment : ToolbarFragment() {
 @Composable
 fun SliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
-    ExpandableItem(title = "Slider", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -103,7 +103,7 @@ fun SliderSamplePreview() {
 @Composable
 fun SliderValueSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f) }
-    ExpandableItem(title = "Slider（value）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider（value）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -133,7 +133,7 @@ fun SliderValueSamplePreview() {
 @Composable
 fun SliderEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
-    ExpandableItem(title = "Slider（enabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider（enabled - false）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -165,7 +165,7 @@ fun SliderEnabledFalseSamplePreview() {
 fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     val valueRange = 0.2f..0.8f
-    ExpandableItem(title = "Slider（valueRange）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider（valueRange）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -197,7 +197,7 @@ fun SliderValueRangeSamplePreview() {
 @Composable
 fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
-    ExpandableItem(title = "Slider（steps）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider（steps）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -228,7 +228,7 @@ fun SliderStepsSamplePreview() {
 @Composable
 fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f) }
-    ExpandableItem(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 Slider(
@@ -267,7 +267,7 @@ fun SliderColorsSamplePreview() {
 @Composable
 fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f..0.8f) }
-    ExpandableItem(title = "RangeSlider", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "RangeSlider", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f)) {
                 RangeSlider(

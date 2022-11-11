@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.theme.Purple40
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -75,12 +74,14 @@ fun ExpandableLayout(
 }
 
 @Composable
-fun ExpandableItem(
+fun BaseExpandableItem(
     title: String,
     allExpand: Flow<Boolean>,
+    color: Color,
     padding: Dp = 0.dp,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val expandedBgColor = color.copy(0.3f)
     Column(modifier = Modifier.fillMaxWidth()) {
         val selfExpand = remember { mutableStateOf(true) }
         LaunchedEffect(allExpand) {
@@ -104,7 +105,7 @@ fun ExpandableItem(
             .clickable {
                 selfExpand.value = !selfExpand.value
             }
-            .background(if (expand) Purple40.copy(alpha = 0.3f) else Color.Transparent)
+            .background(if (expand) expandedBgColor else Color.Transparent)
             .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 20.dp)
         ) {
             Text(
@@ -127,16 +128,29 @@ fun ExpandableItem(
                 content()
             }
         }
-
-//        if (!expand) {
-//            Divider(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(DividerDefaults.Thickness)
-//                    .padding(start = 20.dp, end = 20.dp)
-//            )
-//        }
     }
+}
+
+@Composable
+fun ExpandableItem(
+    title: String,
+    allExpand: Flow<Boolean>,
+    padding: Dp = 0.dp,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val primaryColor = androidx.compose.material.MaterialTheme.colors.primary
+    BaseExpandableItem(title, allExpand, primaryColor, padding, content)
+}
+
+@Composable
+fun ExpandableItem3(
+    title: String,
+    allExpand: Flow<Boolean>,
+    padding: Dp = 0.dp,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val primaryColor = androidx.compose.material3.MaterialTheme.colorScheme.primary
+    BaseExpandableItem(title, allExpand, primaryColor, padding, content)
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
@@ -157,6 +171,15 @@ fun ExpandableLayoutPreview() {
 fun ExpandableItemPreview() {
     val allExpandFlow = remember { MutableStateFlow(true) }
     ExpandableItem(title = "标题", allExpandFlow) {
+        Text(text = "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。\n          ----摘自《盗墓笔记》 - 云顶天宫（下）第一章 五圣雪山，网址：http://www.daomubiji.com/yun-ding-tian-gong-15.html")
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun ExpandableItem3Preview() {
+    val allExpandFlow = remember { MutableStateFlow(true) }
+    ExpandableItem3(title = "标题", allExpandFlow) {
         Text(text = "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。\n          ----摘自《盗墓笔记》 - 云顶天宫（下）第一章 五圣雪山，网址：http://www.daomubiji.com/yun-ding-tian-gong-15.html")
     }
 }

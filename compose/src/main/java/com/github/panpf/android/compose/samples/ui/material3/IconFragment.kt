@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -63,7 +63,7 @@ class IconFragment : ToolbarFragment() {
 
 @Composable
 fun IconResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（Resource）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Icon（Resource）", allExpandFlow, padding = 20.dp) {
         Icon(painter = painterResource(id = R.drawable.ic_arrow_down), contentDescription = "")
     }
 }
@@ -77,7 +77,7 @@ fun IconResourceSamplePreview() {
 
 @Composable
 fun IconVectorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（Vector）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Icon（Vector）", allExpandFlow, padding = 20.dp) {
         Icon(imageVector = Icons.Filled.List, contentDescription = "")
     }
 }
@@ -99,7 +99,7 @@ fun IconBitmapSample(allExpandFlow: Flow<Boolean>) {
             null
         ) as BitmapDrawable).bitmap.asImageBitmap()
     }
-    ExpandableItem(title = "Icon（Bitmap）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Icon（Bitmap）", allExpandFlow, padding = 20.dp) {
         Icon(bitmap = imageBitmap, contentDescription = "")
     }
 }
@@ -113,7 +113,7 @@ fun IconBitmapSamplePreview() {
 
 @Composable
 fun IconTintSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（tint）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Icon（tint）", allExpandFlow, padding = 20.dp) {
         Icon(
             imageVector = Icons.Filled.List,
             contentDescription = "",

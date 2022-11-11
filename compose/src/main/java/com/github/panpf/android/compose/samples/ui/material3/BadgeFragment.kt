@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -65,7 +65,7 @@ class BadgeFragment : ToolbarFragment() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Badge", allExpandFlow, padding = 20.dp) {
         Badge {
             Text(text = "99+")
         }
@@ -82,7 +82,7 @@ fun BadgeSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeColorsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Badge（colors）", allExpandFlow, padding = 20.dp) {
         Badge(containerColor = Color.Blue, contentColor = Color.Green) {
             Text(text = "99+")
         }
@@ -99,7 +99,7 @@ fun BadgeColorsSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeIconSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge（Icon）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Badge（Icon）", allExpandFlow, padding = 20.dp) {
         Badge {
             Icon(
                 painter = painterResource(id = R.drawable.ic_close),
@@ -120,7 +120,7 @@ fun BadgeIconSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgePointSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge（Point）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Badge（Point）", allExpandFlow, padding = 20.dp) {
         Badge()
     }
 }
@@ -135,7 +135,7 @@ fun BadgePointSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeBoxSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Badge（Box）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Badge（Box）", allExpandFlow, padding = 20.dp) {
         BadgedBox(badge = {
             Badge {
                 Text(text = "99+")

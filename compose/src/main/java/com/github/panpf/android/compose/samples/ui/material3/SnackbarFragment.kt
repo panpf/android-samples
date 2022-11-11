@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -62,7 +62,7 @@ class SnackbarFragment : ToolbarFragment() {
 
 @Composable
 fun SnackbarSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Snackbar", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar", allExpandFlow, padding = 20.dp) {
         Snackbar {
             Text(text = "已发布")
         }
@@ -79,7 +79,7 @@ fun SnackbarSamplePreview() {
 @Composable
 fun SnackbarActionSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Snackbar（action）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar（action）", allExpandFlow, padding = 20.dp) {
         Snackbar(
             action = {
                 Text(
@@ -102,7 +102,7 @@ fun SnackbarActionSamplePreview() {
 @Composable
 fun SnackbarActionOnNewLineSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "Snackbar（actionOnNewLine）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar（actionOnNewLine）", allExpandFlow, padding = 20.dp) {
         Snackbar(
             action = {
                 Text(
@@ -125,7 +125,7 @@ fun SnackbarActionOnNewLineSamplePreview() {
 
 @Composable
 fun SnackbarShapeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Snackbar（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar（shape）", allExpandFlow, padding = 20.dp) {
         Snackbar(
             shape = RoundedCornerShape(50)
         ) {
@@ -143,7 +143,7 @@ fun SnackbarShapeSamplePreview() {
 
 @Composable
 fun SnackbarContainerColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Snackbar（containerColor）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar（containerColor）", allExpandFlow, padding = 20.dp) {
         Snackbar(
             containerColor = Color.Red
         ) {
@@ -161,7 +161,7 @@ fun SnackbarContainerColorSamplePreview() {
 
 @Composable
 fun SnackbarContentColorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Snackbar（contentColor）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Snackbar（contentColor）", allExpandFlow, padding = 20.dp) {
         Snackbar(
             contentColor = Color.Red
         ) {

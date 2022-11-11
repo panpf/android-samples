@@ -1,26 +1,19 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
+import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -40,51 +33,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ImageFragment : ToolbarFragment() {
+class ImageFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Image"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            ImageResourceSample(allExpandFlow)
-                            ImageVectorSample(allExpandFlow)
-                            ImageBitmapSample(allExpandFlow)
-                            ImageAlignmentSample(allExpandFlow)
-                            ImageContentScaleSample(allExpandFlow)
-                            ImageAlphaSample(allExpandFlow)
-                            ImageClipSample(allExpandFlow)
-                            ImageBorderSample(allExpandFlow)
-                            ImageColorFilterSample(allExpandFlow)
-                            ImageBlurSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("Image") {
+                    ExpandableLayout { allExpandFlow ->
+                        ImageResourceSample(allExpandFlow)
+                        ImageVectorSample(allExpandFlow)
+                        ImageBitmapSample(allExpandFlow)
+                        ImageAlignmentSample(allExpandFlow)
+                        ImageContentScaleSample(allExpandFlow)
+                        ImageAlphaSample(allExpandFlow)
+                        ImageClipSample(allExpandFlow)
+                        ImageBorderSample(allExpandFlow)
+                        ImageColorFilterSample(allExpandFlow)
+                        ImageBlurSample(allExpandFlow)
                     }
                 }
             }
@@ -95,7 +77,7 @@ class ImageFragment : ToolbarFragment() {
 
 @Composable
 fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
         Image(
             painter = painterResource(id = R.drawable.dog_hor),
             contentDescription = "",
@@ -113,7 +95,7 @@ fun ImageResourceSamplePreview() {
 
 @Composable
 fun ImageVectorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（Vector）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（Vector）", allExpandFlow, padding = 20.dp) {
         Image(
             imageVector = Icons.Filled.Call,
             contentDescription = "",
@@ -136,7 +118,7 @@ fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
         ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)
             .let { it as BitmapDrawable }.bitmap.asImageBitmap()
     }
-    ExpandableItem(title = "Image（Bitmap）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（Bitmap）", allExpandFlow, padding = 20.dp) {
         Image(
             bitmap = imageBitmap,
             contentDescription = "",
@@ -158,7 +140,7 @@ fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val horSmall = remember {
         PhotoItem(horPhoto, "横向图片 - 小", false)
     }
-    ExpandableItem(title = "Image（alignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.TopStart to "TopStart",
@@ -224,7 +206,7 @@ fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
             ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
         )
     }
-    ExpandableItem(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
                 if (index != 0) {
@@ -275,7 +257,7 @@ fun ImageContentScaleSamplePreview() {
 
 @Composable
 fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
         Image(
             painter = painterResource(id = R.drawable.dog_hor),
             contentDescription = "",
@@ -294,7 +276,7 @@ fun ImageAlphaSamplePreview() {
 
 @Composable
 fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
                 painter = painterResource(id = R.drawable.dog_hor),
@@ -339,7 +321,7 @@ fun ImageClipSamplePreview() {
 
 @Composable
 fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（border）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（border）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
                 painter = painterResource(id = R.drawable.dog_hor),
@@ -386,7 +368,7 @@ fun ImageBorderSamplePreview() {
 
 @Composable
 fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
         Row {
             Column {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
@@ -430,7 +412,7 @@ fun ImageColorFilterSamplePreview() {
 
 @Composable
 fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Image（blur）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "Image（blur）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "仅支持 Android 12 以上版本")
             Spacer(modifier = Modifier.size(10.dp))

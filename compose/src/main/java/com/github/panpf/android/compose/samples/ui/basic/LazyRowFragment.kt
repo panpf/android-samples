@@ -1,10 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +12,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +25,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -45,46 +39,35 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class LazyRowFragment : ToolbarFragment() {
+class LazyRowFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "LazyRow"
-        return ComposeView(inflater.context).apply {
+    override fun onCreateComposeView(context: Context): ComposeView {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            LazyRowSample(allExpandFlow)
-                            LazyRowContentPaddingSample(allExpandFlow)
-                            LazyRowItemSpacedSample(allExpandFlow)
-                            LazyRowReverseLayoutSample(allExpandFlow)
-                            LazyRowHorizontalArrangementSample(allExpandFlow)
-                            LazyRowVerticalAlignmentSample(allExpandFlow)
-                            LazyRowUserScrollEnabledSample(allExpandFlow)
-                            LazyRowUserVisibleItemIndexSample(allExpandFlow)
-                            LazyRowScrollInProgressSample(allExpandFlow)
-                            LazyRowAnimateScrollToItemSample(allExpandFlow)
-                            LazyRowAnimateItemPlacementSample(allExpandFlow)
-                            LazyRowLayoutInfoSample(allExpandFlow)
-                            LazyRowStickerHeaderSample(allExpandFlow)
-                            LazyRowMultiTypeSample(allExpandFlow)
-                        }
+                MyTopAppBarScaffold3("LazyRow") {
+                    ExpandableLayout { allExpandFlow ->
+                        LazyRowSample(allExpandFlow)
+                        LazyRowContentPaddingSample(allExpandFlow)
+                        LazyRowItemSpacedSample(allExpandFlow)
+                        LazyRowReverseLayoutSample(allExpandFlow)
+                        LazyRowHorizontalArrangementSample(allExpandFlow)
+                        LazyRowVerticalAlignmentSample(allExpandFlow)
+                        LazyRowUserScrollEnabledSample(allExpandFlow)
+                        LazyRowUserVisibleItemIndexSample(allExpandFlow)
+                        LazyRowScrollInProgressSample(allExpandFlow)
+                        LazyRowAnimateScrollToItemSample(allExpandFlow)
+                        LazyRowAnimateItemPlacementSample(allExpandFlow)
+                        LazyRowLayoutInfoSample(allExpandFlow)
+                        LazyRowStickerHeaderSample(allExpandFlow)
+                        LazyRowMultiTypeSample(allExpandFlow)
                     }
                 }
             }
@@ -102,7 +85,7 @@ fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,7 +117,7 @@ fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（contentPadding）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（contentPadding）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -161,7 +144,7 @@ fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,7 +177,7 @@ fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（reverseLayout）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（reverseLayout）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -224,7 +207,7 @@ fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
-    ExpandableItem(title = "LazyRow（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Arrangement.Start to "Start",
@@ -275,7 +258,7 @@ fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（verticalAlignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（verticalAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Alignment.Top to "Top",
@@ -323,7 +306,7 @@ fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（userScrollEnabled - false）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（userScrollEnabled - false）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -361,7 +344,7 @@ fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
-    ExpandableItem(title = "LazyRow（firstVisibleItemIndex）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（firstVisibleItemIndex）", allExpandFlow, padding = 20.dp) {
         Column {
             LazyRow(
                 modifier = Modifier
@@ -399,7 +382,7 @@ fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
-    ExpandableItem(title = "LazyRow（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
             LazyRow(
                 modifier = Modifier
@@ -437,7 +420,7 @@ fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "LazyRow（animateScrollToItem）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（animateScrollToItem）", allExpandFlow, padding = 20.dp) {
         Row {
             IconButton(
                 onClick = {
@@ -511,7 +494,7 @@ fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             ).mapIndexed { index, item -> "$index:$item" }
         )
     }
-    ExpandableItem(title = "LazyRow（animateItemPlacement）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（animateItemPlacement）", allExpandFlow, padding = 20.dp) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = "点击 item 删除它，然后触发动画")
             LazyRow(
@@ -559,7 +542,7 @@ fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val layoutInfoState = remember { derivedStateOf { lazyListState.layoutInfo } }
-    ExpandableItem(title = "LazyRow（layoutInfo）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（layoutInfo）", allExpandFlow, padding = 20.dp) {
         Column {
             LazyRow(
                 state = lazyListState,
@@ -629,7 +612,7 @@ fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             groupName to strings
         }
     }
-    ExpandableItem(title = "LazyRow（stickyHeader）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（stickyHeader）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -676,7 +659,7 @@ fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             R.drawable.ic_games, "时尚"
         )
     }
-    ExpandableItem(title = "LazyRow（MultiType）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（MultiType）", allExpandFlow, padding = 20.dp) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()

@@ -1,32 +1,18 @@
 package com.github.panpf.android.compose.samples.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import android.content.Context
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.model.Link
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
+import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
+import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 
-class BasicComponentsFragment : ToolbarFragment() {
+class BasicComponentsFragment : ComposeFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Basic Components"
+    override fun onCreateComposeView(context: Context): ComposeView {
         val links = listOf(
             Link("Box", R.id.action_global_boxFragment),
             Link("Column", R.id.action_global_columnFragment),
@@ -40,20 +26,15 @@ class BasicComponentsFragment : ToolbarFragment() {
             Link("Popup", R.id.action_global_popupFragment),
             Link("Row", R.id.action_global_rowFragment),
         )
-        return ComposeView(inflater.context).apply {
+        return ComposeView(context).apply {
             setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        LinkList(links) { _, link ->
-                            val nav = link.nav
-                            if (nav is Int) {
-                                findNavController().navigate(nav)
-                            } else if (nav is NavDirections) {
-                                findNavController().navigate(nav)
-                            }
+                MyTopAppBarScaffold3("Basic Components") {
+                    LinkList(links) { _, link ->
+                        val nav = link.nav
+                        if (nav is Int) {
+                            findNavController().navigate(nav)
+                        } else if (nav is NavDirections) {
+                            findNavController().navigate(nav)
                         }
                     }
                 }

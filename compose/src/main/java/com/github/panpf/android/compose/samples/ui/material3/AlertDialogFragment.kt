@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
@@ -68,7 +68,7 @@ class AlertDialogFragment : ToolbarFragment() {
 @Composable
 fun AlertDialogSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AlertDialog", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Button(
@@ -130,7 +130,7 @@ fun AlertDialogSamplePreview() {
 @Composable
 fun AlertDialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog（LimitDismiss）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AlertDialog（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Button(
@@ -196,7 +196,7 @@ fun AlertDialogLimitDismissSamplePreview() {
 @Composable
 fun AlertDialogShapeSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AlertDialog（shape）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Button(
@@ -259,7 +259,7 @@ fun AlertDialogShapeSamplePreview() {
 @Composable
 fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog（colors）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AlertDialog（colors）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Button(
@@ -325,7 +325,7 @@ fun AlertDialogColorsSamplePreview() {
 @Composable
 fun AlertDialogTonalElevationSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
-    ExpandableItem(title = "AlertDialog（tonalElevation）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "AlertDialog（tonalElevation）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
             FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
                 Button(
