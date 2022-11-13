@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,33 +17,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class RowFragment : ComposeFragment() {
+class RowFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Row") {
-                    ExpandableLayout { allExpandFlow ->
-                        RowSample(allExpandFlow)
-                        RowFullSample(allExpandFlow)
-                        RowItemSpacedSample(allExpandFlow)
-                        RowHorizontalArrangementSample(allExpandFlow)
-                        RowVerticalAlignmentSample(allExpandFlow)
-                        RowWeightSample(allExpandFlow)
-                        RowAlignSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Row"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            RowSample(allExpandFlow)
+            RowFullSample(allExpandFlow)
+            RowItemSpacedSample(allExpandFlow)
+            RowHorizontalArrangementSample(allExpandFlow)
+            RowVerticalAlignmentSample(allExpandFlow)
+            RowWeightSample(allExpandFlow)
+            RowAlignSample(allExpandFlow)
         }
     }
 }
@@ -52,7 +48,7 @@ class RowFragment : ComposeFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowSample(allExpandFlow: Flow<Boolean>) {
+private fun RowSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
@@ -71,14 +67,14 @@ fun RowSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowSamplePreview() {
+private fun RowSamplePreview() {
     RowSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowFullSample(allExpandFlow: Flow<Boolean>) {
+private fun RowFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
@@ -97,14 +93,14 @@ fun RowFullSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowFullSamplePreview() {
+private fun RowFullSamplePreview() {
     RowFullSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
@@ -124,14 +120,14 @@ fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowItemSpacedSamplePreview() {
+private fun RowItemSpacedSamplePreview() {
     RowItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -167,14 +163,14 @@ fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowHorizontalArrangementSamplePreview() {
+private fun RowHorizontalArrangementSamplePreview() {
     RowHorizontalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（verticalAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -207,14 +203,14 @@ fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowVerticalAlignmentSamplePreview() {
+private fun RowVerticalAlignmentSamplePreview() {
     RowVerticalAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
+private fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（weight）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -250,14 +246,14 @@ fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowWeightSamplePreview() {
+private fun RowWeightSamplePreview() {
     RowWeightSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
+private fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（align）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -295,6 +291,6 @@ fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RowAlignSamplePreview() {
+private fun RowAlignSamplePreview() {
     RowAlignSample(remember { MutableStateFlow(true) })
 }

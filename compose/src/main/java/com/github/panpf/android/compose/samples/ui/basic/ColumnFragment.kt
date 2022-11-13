@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,34 +14,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ColumnFragment : ComposeFragment() {
+class ColumnFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Column") {
-                    ExpandableLayout { allExpandFlow ->
-                        ColumnSample(allExpandFlow)
-                        ColumnFullSample(allExpandFlow)
-                        ColumnItemSpacedSample(allExpandFlow)
-                        ColumnVerticalArrangementSample(allExpandFlow)
-                        ColumnHorizontalAlignmentSample(allExpandFlow)
-                        ColumnWeightSample(allExpandFlow)
-                        ColumnAlignSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Column"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            ColumnSample(allExpandFlow)
+            ColumnFullSample(allExpandFlow)
+            ColumnItemSpacedSample(allExpandFlow)
+            ColumnVerticalArrangementSample(allExpandFlow)
+            ColumnHorizontalAlignmentSample(allExpandFlow)
+            ColumnWeightSample(allExpandFlow)
+            ColumnAlignSample(allExpandFlow)
         }
     }
 }
@@ -50,7 +46,7 @@ class ColumnFragment : ComposeFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
@@ -69,14 +65,14 @@ fun ColumnSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnSamplePreview() {
+private fun ColumnSamplePreview() {
     ColumnSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（Full）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
@@ -95,14 +91,14 @@ fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnFullSamplePreview() {
+private fun ColumnFullSamplePreview() {
     ColumnFullSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
@@ -122,14 +118,14 @@ fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnItemSpacedSamplePreview() {
+private fun ColumnItemSpacedSamplePreview() {
     ColumnItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（verticalArrangement）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -169,14 +165,14 @@ fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnVerticalArrangementSamplePreview() {
+private fun ColumnVerticalArrangementSamplePreview() {
     ColumnVerticalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -213,14 +209,14 @@ fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnHorizontalAlignmentSamplePreview() {
+private fun ColumnHorizontalAlignmentSamplePreview() {
     ColumnHorizontalAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（weight）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -252,14 +248,14 @@ fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnWeightSamplePreview() {
+private fun ColumnWeightSamplePreview() {
     ColumnWeightSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
+private fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（align）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -301,6 +297,6 @@ fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ColumnAlignSamplePreview() {
+private fun ColumnAlignSamplePreview() {
     ColumnAlignSample(remember { MutableStateFlow(true) })
 }

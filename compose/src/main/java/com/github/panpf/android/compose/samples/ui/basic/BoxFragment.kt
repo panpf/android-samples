@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -16,38 +15,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class BoxFragment : ComposeFragment() {
+class BoxFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Box") {
-                    ExpandableLayout { allExpandFlow ->
-                        BoxSample(allExpandFlow)
-                        BoxContentAlignmentSample(allExpandFlow)
-                        BoxAlignSample(allExpandFlow)
-                        BoxMatchParentSizeSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Box"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            BoxSample(allExpandFlow)
+            BoxContentAlignmentSample(allExpandFlow)
+            BoxAlignSample(allExpandFlow)
+            BoxMatchParentSizeSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun BoxSample(allExpandFlow: Flow<Boolean>) {
+private fun BoxSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Box", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             Box(
@@ -113,13 +109,13 @@ fun BoxSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BoxSamplePreview() {
+private fun BoxSamplePreview() {
     BoxSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Box（contentAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
@@ -169,13 +165,13 @@ fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BoxContentAlignmentSamplePreview() {
+private fun BoxContentAlignmentSamplePreview() {
     BoxContentAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
+private fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Box（align）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "蓝色和绿色块受 Box 的 contentAlignment 属性控制始终居中，红色块受自身 align 属性控制")
@@ -230,13 +226,13 @@ fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BoxAlignSamplePreview() {
+private fun BoxAlignSamplePreview() {
     BoxAlignSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
+private fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Box（matchParentSize）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "Box 中一个 Text，Text 设置 matchParentSize。\nBox 设置宽高时 Text 充满 Box；\nBox 不设置宽高时 Box 不可见。\n因此 matchParentSize 不会影响 Box 的宽高")
@@ -310,6 +306,6 @@ fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BoxMatchParentSizeSamplePreview() {
+private fun BoxMatchParentSizeSamplePreview() {
     BoxMatchParentSizeSample(remember { MutableStateFlow(true) })
 }

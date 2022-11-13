@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +24,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -33,11 +31,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
@@ -50,33 +47,32 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ImageFragment : ComposeFragment() {
+class ImageFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Image") {
-                    ExpandableLayout { allExpandFlow ->
-                        ImageResourceSample(allExpandFlow)
-                        ImageVectorSample(allExpandFlow)
-                        ImageBitmapSample(allExpandFlow)
-                        ImageAlignmentSample(allExpandFlow)
-                        ImageContentScaleSample(allExpandFlow)
-                        ImageAlphaSample(allExpandFlow)
-                        ImageClipSample(allExpandFlow)
-                        ImageBorderSample(allExpandFlow)
-                        ImageColorFilterSample(allExpandFlow)
-                        ImageBlurSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Image"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            ImageResourceSample(allExpandFlow)
+            ImageVectorSample(allExpandFlow)
+            ImageBitmapSample(allExpandFlow)
+            ImageAlignmentSample(allExpandFlow)
+            ImageContentScaleSample(allExpandFlow)
+            ImageAlphaSample(allExpandFlow)
+            ImageClipSample(allExpandFlow)
+            ImageBorderSample(allExpandFlow)
+            ImageColorFilterSample(allExpandFlow)
+            ImageBlurSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
         Image(
             painter = painterResource(id = R.drawable.dog_hor),
@@ -88,13 +84,13 @@ fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageResourceSamplePreview() {
+private fun ImageResourceSamplePreview() {
     ImageResourceSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageVectorSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageVectorSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（Vector）", allExpandFlow, padding = 20.dp) {
         Image(
             imageVector = Icons.Filled.Call,
@@ -106,13 +102,13 @@ fun ImageVectorSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageVectorSamplePreview() {
+private fun ImageVectorSamplePreview() {
     ImageVectorSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val imageBitmap = remember {
         ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)
@@ -129,13 +125,13 @@ fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageBitmapSamplePreview() {
+private fun ImageBitmapSamplePreview() {
     ImageBitmapSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val horSmall = remember {
         PhotoItem(horPhoto, "横向图片 - 小", false)
@@ -179,13 +175,13 @@ fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageAlignmentSamplePreview() {
+private fun ImageAlignmentSamplePreview() {
     ImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val items = remember {
         val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
@@ -250,13 +246,13 @@ fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageContentScaleSamplePreview() {
+private fun ImageContentScaleSamplePreview() {
     ImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
         Image(
             painter = painterResource(id = R.drawable.dog_hor),
@@ -269,13 +265,13 @@ fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageAlphaSamplePreview() {
+private fun ImageAlphaSamplePreview() {
     ImageAlphaSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
@@ -314,13 +310,13 @@ fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageClipSamplePreview() {
+private fun ImageClipSamplePreview() {
     ImageClipSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（border）", allExpandFlow, padding = 20.dp) {
         Row {
             Image(
@@ -361,13 +357,13 @@ fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageBorderSamplePreview() {
+private fun ImageBorderSamplePreview() {
     ImageBorderSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
         Row {
             Column {
@@ -405,13 +401,13 @@ fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageColorFilterSamplePreview() {
+private fun ImageColorFilterSamplePreview() {
     ImageColorFilterSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
+private fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（blur）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "仅支持 Android 12 以上版本")
@@ -447,6 +443,6 @@ fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ImageBlurSamplePreview() {
+private fun ImageBlurSamplePreview() {
     ImageBlurSample(remember { MutableStateFlow(true) })
 }

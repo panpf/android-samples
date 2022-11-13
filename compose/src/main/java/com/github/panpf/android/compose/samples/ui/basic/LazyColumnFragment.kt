@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,44 +28,41 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class LazyColumnFragment : ComposeFragment() {
+class LazyColumnFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("LazyColumn") {
-                    ExpandableLayout { allExpandFlow ->
-                        LazyColumnSample(allExpandFlow)
-                        LazyColumnContentPaddingSample(allExpandFlow)
-                        LazyColumnItemSpacedSample(allExpandFlow)
-                        LazyColumnReverseLayoutSample(allExpandFlow)
-                        LazyColumnVerticalArrangementSample(allExpandFlow)
-                        LazyColumnHorizontalAlignmentSample(allExpandFlow)
-                        LazyColumnUserScrollEnabledSample(allExpandFlow)
-                        LazyColumnUserVisibleItemIndexSample(allExpandFlow)
-                        LazyColumnScrollInProgressSample(allExpandFlow)
-                        LazyColumnAnimateScrollToItemSample(allExpandFlow)
-                        LazyColumnAnimateItemPlacementSample(allExpandFlow)
-                        LazyColumnLayoutInfoSample(allExpandFlow)
-                        LazyColumnStickerHeaderSample(allExpandFlow)
-                        LazyColumnMultiTypeSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "LazyColumn"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            LazyColumnSample(allExpandFlow)
+            LazyColumnContentPaddingSample(allExpandFlow)
+            LazyColumnItemSpacedSample(allExpandFlow)
+            LazyColumnReverseLayoutSample(allExpandFlow)
+            LazyColumnVerticalArrangementSample(allExpandFlow)
+            LazyColumnHorizontalAlignmentSample(allExpandFlow)
+            LazyColumnUserScrollEnabledSample(allExpandFlow)
+            LazyColumnUserVisibleItemIndexSample(allExpandFlow)
+            LazyColumnScrollInProgressSample(allExpandFlow)
+            LazyColumnAnimateScrollToItemSample(allExpandFlow)
+            LazyColumnAnimateItemPlacementSample(allExpandFlow)
+            LazyColumnLayoutInfoSample(allExpandFlow)
+            LazyColumnStickerHeaderSample(allExpandFlow)
+            LazyColumnMultiTypeSample(allExpandFlow)
         }
     }
 }
@@ -74,7 +70,7 @@ class LazyColumnFragment : ComposeFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -100,14 +96,14 @@ fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnSamplePreview() {
+private fun LazyColumnSamplePreview() {
     LazyColumnSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -134,14 +130,14 @@ fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnContentPaddingSamplePreview() {
+private fun LazyColumnContentPaddingSamplePreview() {
     LazyColumnContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -168,14 +164,14 @@ fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnItemSpacedSamplePreview() {
+private fun LazyColumnItemSpacedSamplePreview() {
     LazyColumnItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -202,14 +198,14 @@ fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnReverseLayoutSamplePreview() {
+private fun LazyColumnReverseLayoutSamplePreview() {
     LazyColumnReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
@@ -247,14 +243,14 @@ fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnVerticalArrangementSamplePreview() {
+private fun LazyColumnVerticalArrangementSamplePreview() {
     LazyColumnVerticalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
@@ -289,14 +285,14 @@ fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnHorizontalAlignmentSamplePreview() {
+private fun LazyColumnHorizontalAlignmentSamplePreview() {
     LazyColumnHorizontalAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -328,14 +324,14 @@ fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnUserScrollEnabledSamplePreview() {
+private fun LazyColumnUserScrollEnabledSamplePreview() {
     LazyColumnUserScrollEnabledSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -369,14 +365,14 @@ fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnUserVisibleItemIndexSamplePreview() {
+private fun LazyColumnUserVisibleItemIndexSamplePreview() {
     LazyColumnUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -408,14 +404,14 @@ fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnScrollInProgressSamplePreview() {
+private fun LazyColumnScrollInProgressSamplePreview() {
     LazyColumnScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -482,14 +478,14 @@ fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnAnimateScrollToItemSamplePreview() {
+private fun LazyColumnAnimateScrollToItemSamplePreview() {
     LazyColumnAnimateScrollToItemSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         mutableStateOf(
             listOf(
@@ -530,14 +526,14 @@ fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnAnimateItemPlacementSamplePreview() {
+private fun LazyColumnAnimateItemPlacementSamplePreview() {
     LazyColumnAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -599,14 +595,14 @@ fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnLayoutInfoSamplePreview() {
+private fun LazyColumnLayoutInfoSamplePreview() {
     LazyColumnLayoutInfoSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
     val groupList = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -647,14 +643,14 @@ fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnStickerHeaderSamplePreview() {
+private fun LazyColumnStickerHeaderSamplePreview() {
     LazyColumnStickerHeaderSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf<Any>(
             "数码", R.drawable.ic_arrow_left, "汽车", "摄影", R.drawable.ic_arrow_right,
@@ -700,6 +696,6 @@ fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyColumnMultiTypeSamplePreview() {
+private fun LazyColumnMultiTypeSamplePreview() {
     LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
 }

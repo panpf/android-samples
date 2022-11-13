@@ -102,7 +102,8 @@ data class Photo(@DrawableRes val resId: Int, val aspectRatio: Float) {
 
 val horPhoto = Photo(drawable.dog_hor, 640.toFloat() / 427)
 val verPhoto = Photo(drawable.dog_ver, 150.toFloat() / 266)
-val httpPhotoUrl = "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=662&q=80"
+val httpPhotoUrl =
+    "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=662&q=80"
 
 data class PhotoItem(val photo: Photo, val name: String, val big: Boolean) {
 

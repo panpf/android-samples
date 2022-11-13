@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,52 +34,49 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
-class LazyHorizontalGridFragment : ComposeFragment() {
+class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("LazyHorizontalGrid") {
-                    ExpandableLayout { allExpandFlow ->
-                        LazyHorizontalGridSample(allExpandFlow)
-                        LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
-                        LazyHorizontalGridContentPaddingSample(allExpandFlow)
-                        LazyHorizontalGridItemSpacedSample(allExpandFlow)
-                        LazyHorizontalGridReverseLayoutSample(allExpandFlow)
-                        LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
-                        LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
-                        LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
-                        LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
-                        LazyHorizontalGridScrollInProgressSample(allExpandFlow)
-                        LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
-                        LazyHorizontalGridSpanSample(allExpandFlow)
-                        LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
-                        LazyHorizontalGridLayoutInfoSample(allExpandFlow)
-                        LazyHorizontalGridMultiTypeSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "LazyHorizontalGrid"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            LazyHorizontalGridSample(allExpandFlow)
+            LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow)
+            LazyHorizontalGridContentPaddingSample(allExpandFlow)
+            LazyHorizontalGridItemSpacedSample(allExpandFlow)
+            LazyHorizontalGridReverseLayoutSample(allExpandFlow)
+            LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
+            LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
+            LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
+            LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
+            LazyHorizontalGridScrollInProgressSample(allExpandFlow)
+            LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
+            LazyHorizontalGridSpanSample(allExpandFlow)
+            LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
+            LazyHorizontalGridLayoutInfoSample(allExpandFlow)
+            LazyHorizontalGridMultiTypeSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -121,13 +117,13 @@ fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridSamplePreview() {
+private fun LazyHorizontalGridSamplePreview() {
     LazyHorizontalGridSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -195,13 +191,13 @@ fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridHorizontalGridsDynamicCellsSamplePreview() {
+private fun LazyHorizontalGridHorizontalGridsDynamicCellsSamplePreview() {
     LazyHorizontalGridHorizontalGridsDynamicCellsSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -247,13 +243,13 @@ fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridContentPaddingSamplePreview() {
+private fun LazyHorizontalGridContentPaddingSamplePreview() {
     LazyHorizontalGridContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -300,13 +296,13 @@ fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridItemSpacedSamplePreview() {
+private fun LazyHorizontalGridItemSpacedSamplePreview() {
     LazyHorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -352,13 +348,13 @@ fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridReverseLayoutSamplePreview() {
+private fun LazyHorizontalGridReverseLayoutSamplePreview() {
     LazyHorizontalGridReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -420,13 +416,13 @@ fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
+private fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
     LazyHorizontalGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -487,13 +483,13 @@ fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridVerticalArrangementSamplePreview() {
+private fun LazyHorizontalGridVerticalArrangementSamplePreview() {
     LazyHorizontalGridVerticalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -539,13 +535,13 @@ fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
+private fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
     LazyHorizontalGridUserScrollEnabledSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -598,13 +594,13 @@ fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
+private fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
     LazyHorizontalGridUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -655,13 +651,13 @@ fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridScrollInProgressSamplePreview() {
+private fun LazyHorizontalGridScrollInProgressSamplePreview() {
     LazyHorizontalGridScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -743,13 +739,13 @@ fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
+private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
     LazyHorizontalGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -805,14 +801,14 @@ fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridSpanSamplePreview() {
+private fun LazyHorizontalGridSpanSamplePreview() {
     LazyHorizontalGridSpanSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -874,13 +870,13 @@ fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
+private fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
     LazyHorizontalGridAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -957,13 +953,13 @@ fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridLayoutInfoSamplePreview() {
+private fun LazyHorizontalGridLayoutInfoSamplePreview() {
     LazyHorizontalGridLayoutInfoSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -1040,6 +1036,6 @@ fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun LazyHorizontalGridMultiTypeSamplePreview() {
+private fun LazyHorizontalGridMultiTypeSamplePreview() {
     LazyHorizontalGridMultiTypeSample(remember { MutableStateFlow(true) })
 }

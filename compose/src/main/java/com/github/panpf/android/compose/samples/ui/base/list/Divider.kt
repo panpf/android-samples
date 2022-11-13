@@ -23,9 +23,11 @@ fun MyDivider() {
 @Composable
 fun MyDividerPreview() {
     MyTheme3 {
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 100.dp, bottom = 100.dp)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 100.dp, bottom = 100.dp)
+        ) {
             MyDivider()
         }
     }

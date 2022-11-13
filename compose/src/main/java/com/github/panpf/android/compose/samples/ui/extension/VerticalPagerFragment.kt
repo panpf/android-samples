@@ -1,10 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.extension
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,8 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -33,16 +26,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
@@ -52,37 +43,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class VerticalPagerFragment : ToolbarFragment() {
+class VerticalPagerFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "VerticalPager"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            VerticalPagerSample(allExpandFlow)
-                            VerticalPagerReverseLayoutSample(allExpandFlow)
-                            VerticalPagerItemSpacingSample(allExpandFlow)
-                            VerticalPagerContentPaddingSample(allExpandFlow)
-                            VerticalPagerHorizontalAlignmentHorSample(allExpandFlow)
-                            VerticalPagerScrollToPageSample(allExpandFlow)
-                            VerticalPagerAnimateScrollToPageSample(allExpandFlow)
-                            VerticalPagerScrollInProgressSample(allExpandFlow)
-                            VerticalPagerCurrentPageSample(allExpandFlow)
-                            VerticalPagerIndicatorSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "VerticalPager"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            VerticalPagerSample(allExpandFlow)
+            VerticalPagerReverseLayoutSample(allExpandFlow)
+            VerticalPagerItemSpacingSample(allExpandFlow)
+            VerticalPagerContentPaddingSample(allExpandFlow)
+            VerticalPagerHorizontalAlignmentHorSample(allExpandFlow)
+            VerticalPagerScrollToPageSample(allExpandFlow)
+            VerticalPagerAnimateScrollToPageSample(allExpandFlow)
+            VerticalPagerScrollInProgressSample(allExpandFlow)
+            VerticalPagerCurrentPageSample(allExpandFlow)
+            VerticalPagerIndicatorSample(allExpandFlow)
         }
     }
 }
@@ -90,14 +69,14 @@ class VerticalPagerFragment : ToolbarFragment() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
     }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem(title = "VerticalPager", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager", allExpandFlow, padding = 20.dp) {
         VerticalPager(
             count = items.size,
             modifier = Modifier
@@ -123,21 +102,21 @@ fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerSamplePreview() {
+private fun VerticalPagerSamplePreview() {
     VerticalPagerSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
     }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem(title = "VerticalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
             count = items.size,
             modifier = Modifier
@@ -164,21 +143,21 @@ fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerReverseLayoutSamplePreview() {
+private fun VerticalPagerReverseLayoutSamplePreview() {
     VerticalPagerReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
     }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem(title = "VerticalPager（itemSpacing）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（itemSpacing）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
             count = items.size,
             modifier = Modifier
@@ -205,21 +184,21 @@ fun VerticalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerItemSpacingSamplePreview() {
+private fun VerticalPagerItemSpacingSamplePreview() {
     VerticalPagerItemSpacingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
     }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem(title = "VerticalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
             count = items.size,
             modifier = Modifier
@@ -246,21 +225,21 @@ fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerContentPaddingSamplePreview() {
+private fun VerticalPagerContentPaddingSamplePreview() {
     VerticalPagerContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
     }
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem(title = "VerticalPager（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             mainAxisSpacing = 10.dp,
@@ -304,14 +283,14 @@ fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerVerticalAlignmentSamplePreview() {
+private fun VerticalPagerVerticalAlignmentSamplePreview() {
     VerticalPagerHorizontalAlignmentHorSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -320,11 +299,13 @@ fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "VerticalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
         Row {
-            Column(modifier = Modifier
-                .height(400.dp)
-                .width(200.dp)) {
+            Column(
+                modifier = Modifier
+                    .height(400.dp)
+                    .width(200.dp)
+            ) {
                 IconButton(
                     onClick = {
                         val currentPage = pagerState.currentPage
@@ -383,9 +364,10 @@ fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-            Column(modifier = Modifier
-                .height(400.dp)
-                .padding(top = 46.dp, bottom = 46.dp)
+            Column(
+                modifier = Modifier
+                    .height(400.dp)
+                    .padding(top = 46.dp, bottom = 46.dp)
             ) {
                 repeat(items.size) { index ->
                     Box(modifier = Modifier
@@ -412,14 +394,14 @@ fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerScrollToPageSamplePreview() {
+private fun VerticalPagerScrollToPageSamplePreview() {
     VerticalPagerScrollToPageSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -428,11 +410,13 @@ fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem(title = "VerticalPager（animateScrollToPage）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（animateScrollToPage）", allExpandFlow, padding = 20.dp) {
         Row {
-            Column(modifier = Modifier
-                .height(400.dp)
-                .width(200.dp)) {
+            Column(
+                modifier = Modifier
+                    .height(400.dp)
+                    .width(200.dp)
+            ) {
                 IconButton(
                     onClick = {
                         val currentPage = pagerState.currentPage
@@ -491,9 +475,10 @@ fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-            Column(modifier = Modifier
-                .height(400.dp)
-                .padding(top = 46.dp, bottom = 46.dp)
+            Column(
+                modifier = Modifier
+                    .height(400.dp)
+                    .padding(top = 46.dp, bottom = 46.dp)
             ) {
                 repeat(items.size) { index ->
                     Box(modifier = Modifier
@@ -520,14 +505,14 @@ fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerAnimateScrollToPageSamplePreview() {
+private fun VerticalPagerAnimateScrollToPageSamplePreview() {
     VerticalPagerAnimateScrollToPageSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -536,7 +521,7 @@ fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val scrollInProgressState = remember { derivedStateOf { pagerState.isScrollInProgress } }
-    ExpandableItem(title = "VerticalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
             VerticalPager(
                 count = items.size,
@@ -566,14 +551,14 @@ fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerScrollInProgressSamplePreview() {
+private fun VerticalPagerScrollInProgressSamplePreview() {
     VerticalPagerScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -583,7 +568,7 @@ fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val pagerState = rememberPagerState()
     val currentPageState = remember { derivedStateOf { pagerState.currentPage } }
     val currentPageOffsetState = remember { derivedStateOf { pagerState.currentPageOffset } }
-    ExpandableItem(title = "VerticalPager（currentPage）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（currentPage）", allExpandFlow, padding = 20.dp) {
         Column {
             VerticalPager(
                 count = items.size,
@@ -614,14 +599,14 @@ fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerCurrentPageSamplePreview() {
+private fun VerticalPagerCurrentPageSamplePreview() {
     VerticalPagerCurrentPageSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
+private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -629,7 +614,7 @@ fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
-    ExpandableItem(title = "VerticalPager（Indicator）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "VerticalPager（Indicator）", allExpandFlow, padding = 20.dp) {
         Box {
             VerticalPager(
                 count = items.size,
@@ -688,6 +673,6 @@ fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun VerticalPagerIndicatorSamplePreview() {
+private fun VerticalPagerIndicatorSamplePreview() {
     VerticalPagerIndicatorSample(remember { MutableStateFlow(true) })
 }

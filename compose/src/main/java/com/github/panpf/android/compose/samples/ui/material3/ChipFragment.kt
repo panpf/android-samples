@@ -1,11 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -16,16 +10,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,45 +23,32 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ChipFragment : ToolbarFragment() {
+class ChipFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Chip - Material3"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            AssistChipSample(allExpandFlow)
-                            AssistChipShapeSample(allExpandFlow)
-                            AssistChipColorsSample(allExpandFlow)
-                            AssistChipBorderSample(allExpandFlow)
-                            ElevatedAssistChipSample(allExpandFlow)
-                            FilterChipSample(allExpandFlow)
-                            ElevatedFilterChipSample(allExpandFlow)
-                            InputChipSample(allExpandFlow)
-                            //        InputChipTextFieldSample(allExpandFlow)
-                            SuggestionChipSample(allExpandFlow)
-                            ElevatedSuggestionChipSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Chip - Material3"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            AssistChipSample(allExpandFlow)
+            AssistChipShapeSample(allExpandFlow)
+            AssistChipColorsSample(allExpandFlow)
+            AssistChipBorderSample(allExpandFlow)
+            ElevatedAssistChipSample(allExpandFlow)
+            FilterChipSample(allExpandFlow)
+            ElevatedFilterChipSample(allExpandFlow)
+            InputChipSample(allExpandFlow)
+            //        InputChipTextFieldSample(allExpandFlow)
+            SuggestionChipSample(allExpandFlow)
+            ElevatedSuggestionChipSample(allExpandFlow)
         }
     }
 }
@@ -79,7 +56,7 @@ class ChipFragment : ToolbarFragment() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
+private fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -109,14 +86,14 @@ fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AssistChipSamplePreview() {
+private fun AssistChipSamplePreview() {
     AssistChipSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
+private fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip（shape）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -147,14 +124,14 @@ fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AssistChipShapeSamplePreview() {
+private fun AssistChipShapeSamplePreview() {
     AssistChipShapeSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
+private fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip（colors）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -190,14 +167,14 @@ fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AssistChipColorsSamplePreview() {
+private fun AssistChipColorsSamplePreview() {
     AssistChipColorsSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
+private fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip（border）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -228,14 +205,14 @@ fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AssistChipBorderSamplePreview() {
+private fun AssistChipBorderSamplePreview() {
     AssistChipBorderSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
+private fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -265,14 +242,14 @@ fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ElevatedAssistChipSamplePreview() {
+private fun ElevatedAssistChipSamplePreview() {
     ElevatedAssistChipSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
+private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val items = remember {
         listOf(
@@ -319,14 +296,14 @@ fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FilterChipSamplePreview() {
+private fun FilterChipSamplePreview() {
     FilterChipSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
+private fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val items = remember {
         listOf(
@@ -373,14 +350,14 @@ fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ElevatedFilterChipSamplePreview() {
+private fun ElevatedFilterChipSamplePreview() {
     ElevatedFilterChipSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InputChipSample(allExpandFlow: Flow<Boolean>) {
+private fun InputChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val items = remember {
         listOf(
@@ -427,7 +404,7 @@ fun InputChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun InputChipSamplePreview() {
+private fun InputChipSamplePreview() {
     InputChipSample(remember { MutableStateFlow(true) })
 }
 
@@ -497,7 +474,7 @@ fun InputChipSamplePreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
+private fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "SuggestionChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -521,14 +498,14 @@ fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuggestionChipSamplePreview() {
+private fun SuggestionChipSamplePreview() {
     SuggestionChipSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
+private fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "ElevatedSuggestionChip", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp) {
@@ -552,6 +529,6 @@ fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ElevatedSuggestionChipSamplePreview() {
+private fun ElevatedSuggestionChipSamplePreview() {
     ElevatedSuggestionChipSample(remember { MutableStateFlow(true) })
 }

@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,37 +16,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DialogFragment : ComposeFragment() {
+class DialogFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Dialog") {
-                    ExpandableLayout { allExpandFlow ->
-                        DialogSample(allExpandFlow)
-                        DialogLimitDismissSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Dialog"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            DialogSample(allExpandFlow)
+            DialogLimitDismissSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun DialogSample(allExpandFlow: Flow<Boolean>) {
+private fun DialogSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
     ExpandableItem3(title = "Dialog", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -80,13 +76,13 @@ fun DialogSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun DialogSamplePreview() {
+private fun DialogSamplePreview() {
     DialogSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun DialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
+private fun DialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val openDialog = remember { mutableStateOf(false) }
     ExpandableItem3(title = "Dialog（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -132,6 +128,6 @@ fun DialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun DialogLimitDismissSamplePreview() {
+private fun DialogLimitDismissSamplePreview() {
     DialogLimitDismissSample(remember { MutableStateFlow(true) })
 }

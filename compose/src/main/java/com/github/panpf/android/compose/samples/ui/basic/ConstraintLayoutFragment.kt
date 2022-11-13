@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -16,42 +15,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.HorizontalDashedDivider
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.VerticalDashedDivider
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ConstraintLayoutFragment : ComposeFragment() {
+class ConstraintLayoutFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("ConstraintLayout") {
-                    ExpandableLayout { allExpandFlow ->
-                        ConstraintLayoutConstrainAsSample(allExpandFlow)
-                        ConstraintLayoutBarrierSample(allExpandFlow)
-                        ConstraintLayoutGuideLineSample(allExpandFlow)
-                        ConstraintLayoutChainSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "ConstraintLayout"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            ConstraintLayoutConstrainAsSample(allExpandFlow)
+            ConstraintLayoutBarrierSample(allExpandFlow)
+            ConstraintLayoutGuideLineSample(allExpandFlow)
+            ConstraintLayoutChainSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
+private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ConstraintLayout（constrainAs）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             Column {
@@ -321,13 +317,13 @@ fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ConstraintLayoutConstrainAsSamplePreview() {
+private fun ConstraintLayoutConstrainAsSamplePreview() {
     ConstraintLayoutConstrainAsSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
+private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ConstraintLayout（Barrier）", allExpandFlow, padding = 20.dp) {
         Text(text = "以 N 个元素的其中一个边的最大值为基准创建一条线，其它元素可以以这条线为约束，这样的线就是 '屏障线'")
         Spacer(modifier = Modifier.size(10.dp))
@@ -427,13 +423,13 @@ fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ConstraintLayoutBarrierSamplePreview() {
+private fun ConstraintLayoutBarrierSamplePreview() {
     ConstraintLayoutBarrierSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
+private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ConstraintLayout（GuideLine）", allExpandFlow, padding = 20.dp) {
         Text(text = "从 Layout 的其中一个边为起点创建一条线，其它元素可以以这条线为约束，这样的线就是引导线")
         Spacer(modifier = Modifier.size(10.dp))
@@ -571,13 +567,13 @@ fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ConstraintLayoutGuideLineSamplePreview() {
+private fun ConstraintLayoutGuideLineSamplePreview() {
     ConstraintLayoutGuideLineSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
+private fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ConstraintLayout（Chain）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf("Vertical", "Horizontal").forEach { direction ->
@@ -641,6 +637,6 @@ fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ConstraintLayoutChainSamplePreview() {
+private fun ConstraintLayoutChainSamplePreview() {
     ConstraintLayoutChainSample(remember { MutableStateFlow(true) })
 }

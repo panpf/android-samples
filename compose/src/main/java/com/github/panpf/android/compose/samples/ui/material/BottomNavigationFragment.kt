@@ -1,10 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +20,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,8 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -46,37 +37,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class BottomNavigationFragment : ToolbarFragment() {
+class BottomNavigationFragment : MaterialComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "BottomNavigation - Material"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colors.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            BottomNavigationSample(allExpandFlow)
-                            BottomNavigationColorsSample(allExpandFlow)
-                            BottomNavigationPagerSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "BottomNavigation - Material"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            BottomNavigationSample(allExpandFlow)
+            BottomNavigationColorsSample(allExpandFlow)
+            BottomNavigationPagerSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun BottomNavigationSample(allExpandFlow: Flow<Boolean>) {
+private fun BottomNavigationSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
             "首页" to R.drawable.ic_home,
@@ -115,13 +94,13 @@ fun BottomNavigationSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BottomNavigationSamplePreview() {
+private fun BottomNavigationSamplePreview() {
     BottomNavigationSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun BottomNavigationColorsSample(allExpandFlow: Flow<Boolean>) {
+private fun BottomNavigationColorsSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
             "首页" to R.drawable.ic_home,
@@ -162,14 +141,14 @@ fun BottomNavigationColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BottomNavigationColorsSamplePreview() {
+private fun BottomNavigationColorsSamplePreview() {
     BottomNavigationColorsSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
+private fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -239,6 +218,6 @@ fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun BottomNavigationPagerSamplePreview() {
+private fun BottomNavigationPagerSamplePreview() {
     BottomNavigationPagerSample(remember { MutableStateFlow(true) })
 }

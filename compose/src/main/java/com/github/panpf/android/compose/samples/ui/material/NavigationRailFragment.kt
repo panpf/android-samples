@@ -1,10 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,10 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.NavigationRail
 import androidx.compose.material.NavigationRailItem
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +23,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -47,37 +38,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class NavigationRailFragment : ToolbarFragment() {
+class NavigationRailFragment : MaterialComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "NavigationRail - Material"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colors.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            NavigationRailSample(allExpandFlow)
-                            NavigationRailColorsSample(allExpandFlow)
-                            NavigationRailPagerSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "NavigationRail - Material"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            NavigationRailSample(allExpandFlow)
+            NavigationRailColorsSample(allExpandFlow)
+            NavigationRailPagerSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
+private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
@@ -116,13 +95,13 @@ fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun NavigationRailSamplePreview() {
+private fun NavigationRailSamplePreview() {
     NavigationRailSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
+private fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
@@ -163,14 +142,14 @@ fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun NavigationRailColorsSamplePreview() {
+private fun NavigationRailColorsSamplePreview() {
     NavigationRailColorsSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
+private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = remember {
         listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
             .map { it.copy(alpha = 0.5f) }
@@ -243,6 +222,6 @@ fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun NavigationRailPagerSamplePreview() {
+private fun NavigationRailPagerSamplePreview() {
     NavigationRailPagerSample(remember { MutableStateFlow(true) })
 }

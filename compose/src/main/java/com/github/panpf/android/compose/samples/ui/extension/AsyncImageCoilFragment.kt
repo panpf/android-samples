@@ -2,24 +2,16 @@ package com.github.panpf.android.compose.samples.ui.extension
 
 import android.content.Context
 import android.net.Uri
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.DrawableRes
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,7 +22,6 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,63 +31,50 @@ import coil.request.ImageRequest
 import coil.size.Precision
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.httpPhotoUrl
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AsyncImageCoilFragment : ToolbarFragment() {
+class AsyncImageCoilFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "AsyncImage - Coil"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            CoilAsyncImageResourceSample(allExpandFlow)
-                            CoilAsyncImageAssetSample(allExpandFlow)
-                            CoilAsyncImageHttpSample(allExpandFlow)
-                            CoilAsyncImageAlignmentSample(allExpandFlow)
-                            CoilAsyncImageContentScaleSample(allExpandFlow)
-                            CoilAsyncImageAlphaSample(allExpandFlow)
-                            CoilAsyncImageClipSample(allExpandFlow)
-                            CoilAsyncImageBorderSample(allExpandFlow)
-                            CoilAsyncImageColorFilterSample(allExpandFlow)
-                            CoilAsyncImageBlurSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "AsyncImage - Coil"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            CoilAsyncImageResourceSample(allExpandFlow)
+            CoilAsyncImageAssetSample(allExpandFlow)
+            CoilAsyncImageHttpSample(allExpandFlow)
+            CoilAsyncImageAlignmentSample(allExpandFlow)
+            CoilAsyncImageContentScaleSample(allExpandFlow)
+            CoilAsyncImageAlphaSample(allExpandFlow)
+            CoilAsyncImageClipSample(allExpandFlow)
+            CoilAsyncImageBorderSample(allExpandFlow)
+            CoilAsyncImageColorFilterSample(allExpandFlow)
+            CoilAsyncImageBlurSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(context.newCoilResourceUri(R.drawable.dog_hor))
@@ -110,15 +88,15 @@ fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageResourceSamplePreview() {
+private fun CoilAsyncImageResourceSamplePreview() {
     CoilAsyncImageResourceSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(newCoilAssetUri("dog.jpg"))
@@ -132,15 +110,15 @@ fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageAssetSamplePreview() {
+private fun CoilAsyncImageAssetSamplePreview() {
     CoilAsyncImageAssetSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(httpPhotoUrl)
@@ -154,16 +132,16 @@ fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageHttpSamplePreview() {
+private fun CoilAsyncImageHttpSamplePreview() {
     CoilAsyncImageHttpSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val photo = horPhoto
-    ExpandableItem(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.TopStart to "TopStart",
@@ -207,13 +185,13 @@ fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageAlignmentSamplePreview() {
+private fun CoilAsyncImageAlignmentSamplePreview() {
     CoilAsyncImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     val items = remember {
         val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
@@ -234,7 +212,7 @@ fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
             ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
         )
     }
-    ExpandableItem(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
                 if (index != 0) {
@@ -284,15 +262,15 @@ fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageContentScaleSamplePreview() {
+private fun CoilAsyncImageContentScaleSamplePreview() {
     CoilAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(context.newCoilResourceUri(R.drawable.dog_hor))
@@ -307,15 +285,15 @@ fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageAlphaSamplePreview() {
+private fun CoilAsyncImageAlphaSamplePreview() {
     CoilAsyncImageAlphaSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
                 model = ImageRequest.Builder(context)
@@ -362,15 +340,15 @@ fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageClipSamplePreview() {
+private fun CoilAsyncImageClipSamplePreview() {
     CoilAsyncImageClipSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（border）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（border）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
                 model = ImageRequest.Builder(context)
@@ -419,15 +397,15 @@ fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageBorderSamplePreview() {
+private fun CoilAsyncImageBorderSamplePreview() {
     CoilAsyncImageBorderSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
         Row {
             Column {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
@@ -473,15 +451,15 @@ fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageColorFilterSamplePreview() {
+private fun CoilAsyncImageColorFilterSamplePreview() {
     CoilAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem(title = "CoilAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "仅支持 Android 12 以上版本")
             Spacer(modifier = Modifier.size(10.dp))
@@ -522,7 +500,7 @@ fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun CoilAsyncImageBlurSamplePreview() {
+private fun CoilAsyncImageBlurSamplePreview() {
     CoilAsyncImageBlurSample(remember { MutableStateFlow(true) })
 }
 

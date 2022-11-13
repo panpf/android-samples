@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.basic
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,39 +13,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.github.panpf.android.compose.samples.ui.base.ComposeFragment
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MyTopAppBarScaffold3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class PopupFragment : ComposeFragment() {
+class PopupFragment : Material3ComposeAppBarFragment() {
 
-    override fun onCreateComposeView(context: Context): ComposeView {
-        return ComposeView(context).apply {
-            setContent {
-                MyTopAppBarScaffold3("Popup") {
-                    ExpandableLayout { allExpandFlow ->
-                        PopupSample(allExpandFlow)
-                        PopupLimitDismissSample(allExpandFlow)
-                        PopupOffsetSample(allExpandFlow)
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Popup"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            PopupSample(allExpandFlow)
+            PopupLimitDismissSample(allExpandFlow)
+            PopupOffsetSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun PopupSample(allExpandFlow: Flow<Boolean>) {
+private fun PopupSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
     ExpandableItem3(title = "Popup", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -87,13 +83,13 @@ fun PopupSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun PopupSamplePreview() {
+private fun PopupSamplePreview() {
     PopupSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun PopupLimitDismissSample(allExpandFlow: Flow<Boolean>) {
+private fun PopupLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
     ExpandableItem3(title = "Popup（LimitDismiss）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -138,13 +134,13 @@ fun PopupLimitDismissSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun PopupLimitDismissSamplePreview() {
+private fun PopupLimitDismissSamplePreview() {
     PopupLimitDismissSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun PopupOffsetSample(allExpandFlow: Flow<Boolean>) {
+private fun PopupOffsetSample(allExpandFlow: Flow<Boolean>) {
     val openPopup = remember { mutableStateOf(false) }
     ExpandableItem3(title = "Popup（offset）", allExpandFlow, padding = 20.dp) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -186,6 +182,6 @@ fun PopupOffsetSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun PopupOffsetSamplePreview() {
+private fun PopupOffsetSamplePreview() {
     PopupOffsetSample(remember { MutableStateFlow(true) })
 }

@@ -1,22 +1,14 @@
 package com.github.panpf.android.compose.samples.ui.extension
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,25 +19,23 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.httpPhotoUrl
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.github.panpf.sketch.compose.AsyncImage
 import com.github.panpf.sketch.fetch.newAssetUri
@@ -56,45 +46,33 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AsyncImageSketchFragment : ToolbarFragment() {
+class AsyncImageSketchFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "AsyncImage - Sketch"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            SketchAsyncImageResourceSample(allExpandFlow)
-                            SketchAsyncImageAssetSample(allExpandFlow)
-                            SketchAsyncImageHttpSample(allExpandFlow)
-                            SketchAsyncImageAlignmentSample(allExpandFlow)
-                            SketchAsyncImageContentScaleSample(allExpandFlow)
-                            SketchAsyncImageAlphaSample(allExpandFlow)
-                            SketchAsyncImageClipSample(allExpandFlow)
-                            SketchAsyncImageBorderSample(allExpandFlow)
-                            SketchAsyncImageColorFilterSample(allExpandFlow)
-                            SketchAsyncImageBlurSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "AsyncImage - Sketch"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            SketchAsyncImageResourceSample(allExpandFlow)
+            SketchAsyncImageAssetSample(allExpandFlow)
+            SketchAsyncImageHttpSample(allExpandFlow)
+            SketchAsyncImageAlignmentSample(allExpandFlow)
+            SketchAsyncImageContentScaleSample(allExpandFlow)
+            SketchAsyncImageAlphaSample(allExpandFlow)
+            SketchAsyncImageClipSample(allExpandFlow)
+            SketchAsyncImageBorderSample(allExpandFlow)
+            SketchAsyncImageColorFilterSample(allExpandFlow)
+            SketchAsyncImageBlurSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
                 placeholder(R.drawable.im_placeholder)
@@ -107,14 +85,14 @@ fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageResourceSamplePreview() {
+private fun SketchAsyncImageResourceSamplePreview() {
     SketchAsyncImageResourceSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             request = DisplayRequest(LocalContext.current, newAssetUri("dog.jpg")) {
                 placeholder(R.drawable.im_placeholder)
@@ -127,14 +105,14 @@ fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageAssetSamplePreview() {
+private fun SketchAsyncImageAssetSamplePreview() {
     SketchAsyncImageAssetSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             request = DisplayRequest(LocalContext.current, httpPhotoUrl) {
                 placeholder(R.drawable.im_placeholder)
@@ -147,15 +125,15 @@ fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageHttpSamplePreview() {
+private fun SketchAsyncImageHttpSamplePreview() {
     SketchAsyncImageHttpSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val photo = horPhoto
-    ExpandableItem(title = "SketchAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "SketchAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.TopStart to "TopStart",
@@ -182,7 +160,11 @@ fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             newResourceUri(photo.resId)
                         ) {
                             placeholder(R.drawable.im_placeholder)
-                            resize(targetSize.width.toInt(), targetSize.height.toInt(), Precision.EXACTLY)
+                            resize(
+                                targetSize.width.toInt(),
+                                targetSize.height.toInt(),
+                                Precision.EXACTLY
+                            )
                         },
                         contentDescription = "",
                         modifier = Modifier
@@ -200,13 +182,13 @@ fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageAlignmentSamplePreview() {
+private fun SketchAsyncImageAlignmentSamplePreview() {
     SketchAsyncImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
         val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
@@ -226,7 +208,7 @@ fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
             ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
         )
     }
-    ExpandableItem(title = "SketchAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "SketchAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
                 if (index != 0) {
@@ -281,14 +263,14 @@ fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageContentScaleSamplePreview() {
+private fun SketchAsyncImageContentScaleSamplePreview() {
     SketchAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
             request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
                 placeholder(R.drawable.im_placeholder)
@@ -302,14 +284,14 @@ fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageAlphaSamplePreview() {
+private fun SketchAsyncImageAlphaSamplePreview() {
     SketchAsyncImageAlphaSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
                 request = DisplayRequest(
@@ -362,14 +344,14 @@ fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageClipSamplePreview() {
+private fun SketchAsyncImageClipSamplePreview() {
     SketchAsyncImageClipSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（border）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（border）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
                 request = DisplayRequest(
@@ -424,14 +406,14 @@ fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageBorderSamplePreview() {
+private fun SketchAsyncImageBorderSamplePreview() {
     SketchAsyncImageBorderSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
         Row {
             Column {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
@@ -483,14 +465,14 @@ fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageColorFilterSamplePreview() {
+private fun SketchAsyncImageColorFilterSamplePreview() {
     SketchAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "SketchAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
+private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "SketchAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "仅支持 Android 12 以上版本")
             Spacer(modifier = Modifier.size(10.dp))
@@ -535,6 +517,6 @@ fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SketchAsyncImageBlurSamplePreview() {
+private fun SketchAsyncImageBlurSamplePreview() {
     SketchAsyncImageBlurSample(remember { MutableStateFlow(true) })
 }

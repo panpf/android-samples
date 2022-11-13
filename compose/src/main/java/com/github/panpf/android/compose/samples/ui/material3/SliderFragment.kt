@@ -1,23 +1,15 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -25,53 +17,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.roundToInt
 
-class SliderFragment : ToolbarFragment() {
+class SliderFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "Slider - Material3"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            SliderSample(allExpandFlow)
-                            SliderValueSample(allExpandFlow)
-                            SliderEnabledFalseSample(allExpandFlow)
-                            SliderValueRangeSample(allExpandFlow)
-                            SliderStepsSample(allExpandFlow)
-                            SliderColorsSample(allExpandFlow)
-                            RangeSliderSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "Slider - Material3"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            SliderSample(allExpandFlow)
+            SliderValueSample(allExpandFlow)
+            SliderEnabledFalseSample(allExpandFlow)
+            SliderValueRangeSample(allExpandFlow)
+            SliderStepsSample(allExpandFlow)
+            SliderColorsSample(allExpandFlow)
+            RangeSliderSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun SliderSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     ExpandableItem3(title = "Slider", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -95,13 +73,13 @@ fun SliderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderSamplePreview() {
+private fun SliderSamplePreview() {
     SliderSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SliderValueSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderValueSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f) }
     ExpandableItem3(title = "Slider（value）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -125,13 +103,13 @@ fun SliderValueSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderValueSamplePreview() {
+private fun SliderValueSamplePreview() {
     SliderValueSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SliderEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     ExpandableItem3(title = "Slider（enabled - false）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -156,13 +134,13 @@ fun SliderEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderEnabledFalseSamplePreview() {
+private fun SliderEnabledFalseSamplePreview() {
     SliderEnabledFalseSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     val valueRange = 0.2f..0.8f
     ExpandableItem3(title = "Slider（valueRange）", allExpandFlow, padding = 20.dp) {
@@ -189,13 +167,13 @@ fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderValueRangeSamplePreview() {
+private fun SliderValueRangeSamplePreview() {
     SliderValueRangeSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0f) }
     ExpandableItem3(title = "Slider（steps）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -220,13 +198,13 @@ fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderStepsSamplePreview() {
+private fun SliderStepsSamplePreview() {
     SliderStepsSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
+private fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f) }
     ExpandableItem3(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -258,14 +236,14 @@ fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SliderColorsSamplePreview() {
+private fun SliderColorsSamplePreview() {
     SliderColorsSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
+private fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f..0.8f) }
     ExpandableItem3(title = "RangeSlider", allExpandFlow, padding = 20.dp) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -289,6 +267,6 @@ fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun RangeSliderSamplePreview() {
+private fun RangeSliderSamplePreview() {
     RangeSliderSample(remember { MutableStateFlow(true) })
 }

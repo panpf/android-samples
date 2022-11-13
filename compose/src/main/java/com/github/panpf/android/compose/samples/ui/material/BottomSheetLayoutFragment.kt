@@ -1,10 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,10 +17,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -37,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,35 +37,22 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class BottomSheetLayoutFragment : ToolbarFragment() {
+class BottomSheetLayoutFragment : MaterialComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "BottomSheetLayout - Material"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colors.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            ModalBottomSheetLayoutSample(allExpandFlow)
-                            ModalBottomSheetLayoutSheetShapeSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "BottomSheetLayout - Material"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            ModalBottomSheetLayoutSample(allExpandFlow)
+            ModalBottomSheetLayoutSheetShapeSample(allExpandFlow)
         }
     }
 }
@@ -81,7 +60,7 @@ class BottomSheetLayoutFragment : ToolbarFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ModalBottomSheetLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun ModalBottomSheetLayoutSample(allExpandFlow: Flow<Boolean>) {
     val skipHalfExpanded = remember { mutableStateOf(false) }
     val state = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -162,14 +141,14 @@ fun ModalBottomSheetLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ModalBottomSheetLayoutSamplePreview() {
+private fun ModalBottomSheetLayoutSamplePreview() {
     ModalBottomSheetLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ModalBottomSheetLayoutSheetShapeSample(allExpandFlow: Flow<Boolean>) {
+private fun ModalBottomSheetLayoutSheetShapeSample(allExpandFlow: Flow<Boolean>) {
     val skipHalfExpanded = remember { mutableStateOf(false) }
     val state = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -251,6 +230,6 @@ fun ModalBottomSheetLayoutSheetShapeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ModalBottomSheetLayoutSheetShapeSampleSheetPreview() {
+private fun ModalBottomSheetLayoutSheetShapeSampleSheetPreview() {
     ModalBottomSheetLayoutSheetShapeSample(remember { MutableStateFlow(true) })
 }

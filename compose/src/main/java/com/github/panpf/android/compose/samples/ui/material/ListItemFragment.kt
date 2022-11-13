@@ -1,56 +1,33 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
+import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ListItemFragment : ToolbarFragment() {
+class ListItemFragment : MaterialComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "ListItem - Material"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colors.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            ListItemOneLineSample(allExpandFlow)
-                            ListItemTwoLineSample(allExpandFlow)
-                            ListItemThreeLineSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "ListItem - Material"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            ListItemOneLineSample(allExpandFlow)
+            ListItemTwoLineSample(allExpandFlow)
+            ListItemThreeLineSample(allExpandFlow)
         }
     }
 }
@@ -58,7 +35,7 @@ class ListItemFragment : ToolbarFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
+private fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             icon = {
@@ -81,14 +58,14 @@ fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ListItemOneLineSamplePreview() {
+private fun ListItemOneLineSamplePreview() {
     ListItemOneLineSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
+private fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             secondaryText = {
@@ -114,14 +91,14 @@ fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ListItemTwoLineSamplePreview() {
+private fun ListItemTwoLineSamplePreview() {
     ListItemTwoLineSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
+private fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
             overlineText = {
@@ -150,6 +127,6 @@ fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun ListItemThreeLineSamplePreview() {
+private fun ListItemThreeLineSamplePreview() {
     ListItemThreeLineSample(remember { MutableStateFlow(true) })
 }

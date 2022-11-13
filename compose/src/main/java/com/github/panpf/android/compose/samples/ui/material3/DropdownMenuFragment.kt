@@ -1,23 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,43 +17,30 @@ import androidx.compose.ui.window.PopupProperties
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DropdownMenuFragment : ToolbarFragment() {
+class DropdownMenuFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "DropdownMenu - Material3"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            DropdownMenuSample(allExpandFlow)
-                            DropdownMenuOffsetSample(allExpandFlow)
-                            DropdownMenuLimitDismissSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "DropdownMenu - Material3"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            DropdownMenuSample(allExpandFlow)
+            DropdownMenuOffsetSample(allExpandFlow)
+            DropdownMenuLimitDismissSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
+private fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
@@ -109,13 +86,13 @@ fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun DropdownMenuSamplePreview() {
+private fun DropdownMenuSamplePreview() {
     DropdownMenuSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
+private fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
@@ -162,13 +139,13 @@ fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun DropdownMenuOffsetSamplePreview() {
+private fun DropdownMenuOffsetSamplePreview() {
     DropdownMenuOffsetSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
+private fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
@@ -219,6 +196,6 @@ fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun DropdownMenuLimitDismissSamplePreview() {
+private fun DropdownMenuLimitDismissSamplePreview() {
     DropdownMenuLimitDismissSample(remember { MutableStateFlow(true) })
 }

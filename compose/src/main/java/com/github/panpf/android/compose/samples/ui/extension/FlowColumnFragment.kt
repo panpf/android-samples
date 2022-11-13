@@ -1,36 +1,26 @@
 package com.github.panpf.android.compose.samples.ui.extension
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.ToolbarFragment
-import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowColumn
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
@@ -39,35 +29,23 @@ import com.google.accompanist.flowlayout.SizeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class FlowColumnFragment : ToolbarFragment() {
+class FlowColumnFragment : Material3ComposeAppBarFragment() {
 
-    override fun createView(
-        toolbar: Toolbar,
-        inflater: LayoutInflater,
-        parent: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        toolbar.title = "FlowColumn"
-        return ComposeView(inflater.context).apply {
-            setContent {
-                MyTheme3 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        ExpandableLayout { allExpandFlow ->
-                            FlowColumnSample(allExpandFlow)
-                            FlowColumnFullSample(allExpandFlow)
-                            FlowColumnMainAxisSizeSample(allExpandFlow)
-                            FlowColumnMainAxisAlignmentSample(allExpandFlow)
-                            FlowColumnMainAxisSpacingSample(allExpandFlow)
-                            FlowColumnCrossAxisAlignmentSample(allExpandFlow)
-                            FlowColumnCrossAxisSpacingSample(allExpandFlow)
-                            FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow)
-                        }
-                    }
-                }
-            }
+    override fun getTitle(): String {
+        return "FlowColumn"
+    }
+
+    @Composable
+    override fun DrawContent() {
+        ExpandableLayout { allExpandFlow ->
+            FlowColumnSample(allExpandFlow)
+            FlowColumnFullSample(allExpandFlow)
+            FlowColumnMainAxisSizeSample(allExpandFlow)
+            FlowColumnMainAxisAlignmentSample(allExpandFlow)
+            FlowColumnMainAxisSpacingSample(allExpandFlow)
+            FlowColumnCrossAxisAlignmentSample(allExpandFlow)
+            FlowColumnCrossAxisSpacingSample(allExpandFlow)
+            FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow)
         }
     }
 }
@@ -75,8 +53,8 @@ class FlowColumnFragment : ToolbarFragment() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn", allExpandFlow, padding = 20.dp) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
@@ -94,15 +72,15 @@ fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnSamplePreview() {
+private fun FlowColumnSamplePreview() {
     FlowColumnSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（Full）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（Full）", allExpandFlow, padding = 20.dp) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
@@ -120,15 +98,15 @@ fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnFullSamplePreview() {
+private fun FlowColumnFullSamplePreview() {
     FlowColumnFullSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（mainAxisSize）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（mainAxisSize）", allExpandFlow, padding = 20.dp) {
         Row(Modifier.height(240.dp)) {
             listOf(
                 SizeMode.Wrap to "Wrap",
@@ -164,15 +142,15 @@ fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnMainAxisSizeSamplePreview() {
+private fun FlowColumnMainAxisSizeSamplePreview() {
     FlowColumnMainAxisSizeSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（mainAxisAlignment）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（mainAxisAlignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 FlowMainAxisAlignment.Start to "Start",
@@ -214,15 +192,15 @@ fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnMainAxisAlignmentSamplePreview() {
+private fun FlowColumnMainAxisAlignmentSamplePreview() {
     FlowColumnMainAxisAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
@@ -241,15 +219,15 @@ fun FlowColumnMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnMainAxisSpacingSamplePreview() {
+private fun FlowColumnMainAxisSpacingSamplePreview() {
     FlowColumnMainAxisSpacingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（crossAxisAlignment）（无效）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（crossAxisAlignment）（无效）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 FlowCrossAxisAlignment.Start to "Start",
@@ -285,15 +263,15 @@ fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnCrossAxisAlignmentSamplePreview() {
+private fun FlowColumnCrossAxisAlignmentSamplePreview() {
     FlowColumnCrossAxisAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "FlowColumn（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
         FlowColumn(
             modifier = Modifier
                 .height(200.dp)
@@ -312,15 +290,15 @@ fun FlowColumnCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnCrossAxisSpacingSamplePreview() {
+private fun FlowColumnCrossAxisSpacingSamplePreview() {
     FlowColumnCrossAxisSpacingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(
+private fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(
         title = "FlowColumn（lastLineMainAxisAlignment）",
         allExpandFlow,
         padding = 20.dp
@@ -370,6 +348,6 @@ fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun FlowColumnLastLineMainAxisAlignmentSamplePreview() {
+private fun FlowColumnLastLineMainAxisAlignmentSamplePreview() {
     FlowColumnLastLineMainAxisAlignmentSample(remember { MutableStateFlow(true) })
 }
