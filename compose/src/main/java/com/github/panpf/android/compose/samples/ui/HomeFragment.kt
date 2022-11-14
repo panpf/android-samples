@@ -15,10 +15,11 @@ class HomeFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("Basic Components", R.id.action_global_basicWidgetsFragment),
-                Link("Extension Components", R.id.action_global_extensionComponentsFragment),
-                Link("Material Components", R.id.action_global_materialComponentsFragment),
-                Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
+                Link("Components - Basic", R.id.action_global_basicComponentsFragment),
+                Link("Components - Extension", R.id.action_global_extensionComponentsFragment),
+                Link("Components - Material", R.id.action_global_materialComponentsFragment),
+                Link("Components - Material3", R.id.action_global_material3ComponentsFragment),
+                Link("Modifier", R.id.action_global_modifierFragment),
                 Link("Animation（Implementation）"),   // todo Implementation
                 Link("Theme（Implementation）"),   // todo Implementation
                 Link("TouchEvent（Implementation）"),   // todo Implementation
