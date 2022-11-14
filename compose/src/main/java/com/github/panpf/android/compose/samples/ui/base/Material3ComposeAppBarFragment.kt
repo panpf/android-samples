@@ -23,10 +23,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -36,11 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
-import com.github.panpf.tools4a.dimen.ktx.px2dp
 
 abstract class Material3ComposeAppBarFragment : Fragment() {
 
@@ -68,18 +65,6 @@ abstract class Material3ComposeAppBarFragment : Fragment() {
 
     @Composable
     abstract fun DrawContent()
-//
-//    @SuppressLint("ObsoleteSdkInt")
-//    private fun setTransparentStatusBar(toolbar: Toolbar) {
-//        val window = requireActivity().window
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-//            && window.decorView.systemUiVisibility == View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//        ) {
-//            toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-//                topMargin += requireContext().getStatusBarHeight()
-//            }
-//        }
-//    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,14 +74,9 @@ fun MyTopAppBarScaffold3(title: String? = null, content: @Composable () -> Unit)
     val finalTitle = remember {
         title ?: context.resources.getString(R.string.app_name)
     }
-//    val statusBarHeight = remember {
-//        context.getStatusBarHeight().px2dp.dp
-//    }
     MyTheme3 {
         Surface {
-            Column(modifier = Modifier.fillMaxSize()
-//                .padding(top = statusBarHeight)
-            ) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 val colorScheme = MaterialTheme.colorScheme
                 TopAppBar(
                     title = {

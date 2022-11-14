@@ -174,7 +174,11 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "与 Box 相比 Surface 会拦截触摸事件导致它下面的所有节点都无法点击")
+            Text(
+                text = "与 Box 相比 Surface常用来作为一个屏幕的的根节点，原因如下：\n" +
+                        "1. Surface 默认有背景" +
+                        "2. Surface 会拦截触摸事件导致它下面的所有节点都无法点击\n"
+            )
             Spacer(modifier = Modifier.size(10.dp))
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
