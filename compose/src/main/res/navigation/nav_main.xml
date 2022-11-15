@@ -9,7 +9,7 @@
         android:name="com.github.panpf.android.compose.samples.ui.HomeFragment" />
 
 
-    <!-- modifeir -->
+    <!-- modifier -->
 
     <fragment
         android:id="@+id/modifierFragment"
@@ -23,33 +23,22 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/modifierSizeFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierSizeFragment" />
+        android:id="@+id/modifierAlphaFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierAlphaFragment" />
     <action
-        android:id="@+id/action_global_modifierSizeFragment"
-        app:destination="@id/modifierSizeFragment"
+        android:id="@+id/action_global_modifierAlphaFragment"
+        app:destination="@id/modifierAlphaFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/modifierPaddingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierPaddingFragment" />
+        android:id="@+id/modifierAspectRatioFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierAspectRatioFragment" />
     <action
-        android:id="@+id/action_global_modifierPaddingFragment"
-        app:destination="@id/modifierPaddingFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/modifierBorderFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierBorderFragment" />
-    <action
-        android:id="@+id/action_global_modifierBorderFragment"
-        app:destination="@id/modifierBorderFragment"
+        android:id="@+id/action_global_modifierAspectRatioFragment"
+        app:destination="@id/modifierAspectRatioFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -67,11 +56,22 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/modifierClipFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierClipFragment" />
+        android:id="@+id/modifierBlurFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierBlurFragment" />
     <action
-        android:id="@+id/action_global_modifierClipFragment"
-        app:destination="@id/modifierClipFragment"
+        android:id="@+id/action_global_modifierBlurFragment"
+        app:destination="@id/modifierBlurFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierBorderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierBorderFragment" />
+    <action
+        android:id="@+id/action_global_modifierBorderFragment"
+        app:destination="@id/modifierBorderFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -83,6 +83,83 @@
     <action
         android:id="@+id/action_global_modifierClickableFragment"
         app:destination="@id/modifierClickableFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierClipFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierClipFragment" />
+    <action
+        android:id="@+id/action_global_modifierClipFragment"
+        app:destination="@id/modifierClipFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierOffsetFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierOffsetFragment" />
+    <action
+        android:id="@+id/action_global_modifierOffsetFragment"
+        app:destination="@id/modifierOffsetFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierPaddingFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierPaddingFragment" />
+    <action
+        android:id="@+id/action_global_modifierPaddingFragment"
+        app:destination="@id/modifierPaddingFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierRotateFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierRotateFragment" />
+    <action
+        android:id="@+id/action_global_modifierRotateFragment"
+        app:destination="@id/modifierRotateFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierScaleFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierScaleFragment" />
+    <action
+        android:id="@+id/action_global_modifierScaleFragment"
+        app:destination="@id/modifierScaleFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierShadowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierShadowFragment" />
+    <action
+        android:id="@+id/action_global_modifierShadowFragment"
+        app:destination="@id/modifierShadowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierSizeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierSizeFragment" />
+    <action
+        android:id="@+id/action_global_modifierSizeFragment"
+        app:destination="@id/modifierSizeFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

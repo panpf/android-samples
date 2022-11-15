@@ -19,33 +19,32 @@ class ModifierFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("size", R.id.action_global_modifierSizeFragment),
-                Link("padding", R.id.action_global_modifierPaddingFragment),
-                Link("border", R.id.action_global_modifierBorderFragment),
+                Link("alpha", R.id.action_global_modifierAlphaFragment),
+                Link("aspectRatio", R.id.action_global_modifierAspectRatioFragment),
                 Link("background", R.id.action_global_modifierBackgroundFragment),
-                Link("clip", R.id.action_global_modifierClipFragment),
+                Link("blur", R.id.action_global_modifierBlurFragment),
+                Link("border", R.id.action_global_modifierBorderFragment),
                 Link("clickable", R.id.action_global_modifierClickableFragment),
-                Link("shadow（Implementation）"),   // todo Implementation
-                Link("alpha（Implementation）"),   // todo Implementation
-                Link("blur（Implementation）"),   // todo Implementation
-                Link("rotate（Implementation）"),   // todo Implementation
-                Link("scale（Implementation）"),   // todo Implementation
-                Link("aspectRatio（Implementation）"),   // todo Implementation
-                Link("nestedScroll（Implementation）"),   // todo Implementation
-                Link("absoluteOffset（Implementation）"),   // todo Implementation
-                Link("drawBehind,drawWithCache,drawWithContent,safeDrawingPadding（Implementation）"),   // todo Implementation
-                Link("draggable（Implementation）"),   // todo Implementation
-                Link("displayCutoutPadding（Implementation）"),   // todo Implementation
-                Link("focusable,focusGroup,focusRequester,focusProperties（Implementation）"),   // todo Implementation
-                Link("onFocusChanged,onFocusedBoundsChanged,onFocusEvent（Implementation）"),   // todo Implementation
-                Link("offset（Implementation）"),   // todo Implementation
-                Link("onPlaced（Implementation）"),   // todo Implementation
-                Link("onKeyEvent（Implementation）"),   // todo Implementation
-                Link("onGloballyPositioned（Implementation）"),   // todo Implementation
-                Link("onSizeChanged（Implementation）"),   // todo Implementation
-                Link("paint（Implementation）"),   // todo Implementation
-                Link("statusBarPadding（Implementation）"),   // todo Implementation
-                Link("systemBarPadding（Implementation）"),   // todo Implementation
+                Link("clip", R.id.action_global_modifierClipFragment),
+                Link("offset", R.id.action_global_modifierOffsetFragment),
+                Link("padding", R.id.action_global_modifierPaddingFragment),
+                Link("rotate", R.id.action_global_modifierRotateFragment),
+                Link("scale", R.id.action_global_modifierScaleFragment),
+                Link("shadow", R.id.action_global_modifierShadowFragment),
+                Link("size", R.id.action_global_modifierSizeFragment),
+//                Link("nestedScroll（Implementation）"),   // todo Implementation
+//                Link("drawBehind,drawWithCache,drawWithContent,safeDrawingPadding（Implementation）"),   // todo Implementation
+//                Link("draggable（Implementation）"),   // todo Implementation
+//                Link("displayCutoutPadding（Implementation）"),   // todo Implementation
+//                Link("focusable,focusGroup,focusRequester,focusProperties（Implementation）"),   // todo Implementation
+//                Link("onFocusChanged,onFocusedBoundsChanged,onFocusEvent（Implementation）"),   // todo Implementation
+//                Link("onPlaced（Implementation）"),   // todo Implementation
+//                Link("onKeyEvent（Implementation）"),   // todo Implementation
+//                Link("onGloballyPositioned（Implementation）"),   // todo Implementation
+//                Link("onSizeChanged（Implementation）"),   // todo Implementation
+//                Link("paint（Implementation）"),   // todo Implementation
+//                Link("statusBarPadding（Implementation）"),   // todo Implementation
+//                Link("systemBarPadding（Implementation）"),   // todo Implementation
             )
         }
         LinkList(links) { _, link ->

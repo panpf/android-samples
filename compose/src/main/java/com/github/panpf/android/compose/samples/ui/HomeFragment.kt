@@ -25,6 +25,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
                 Link("TouchEvent（Implementation）"),   // todo Implementation
                 Link("Navigation（Implementation）"),   // todo Implementation
                 Link("Custom（Implementation）"),   // todo Implementation
+                Link("Draw（Implementation）"),   // todo Implementation
                 Link("Cases（Implementation）"),  // todo Implementation banner
                 Link("Other（Implementation）"),  // todo Implementation Placeholder, Drawable Painter
             )
