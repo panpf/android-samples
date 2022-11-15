@@ -39,6 +39,7 @@ class SwipeRefreshPagingFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         SwipeRefreshPagingSample()
+        // todo Implementation Modifier.pullRefresh
     }
 }
 

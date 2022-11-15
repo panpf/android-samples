@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ModifierPaddingFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Modifier - Padding"
+        return "Modifier - padding"
     }
 
     @Composable

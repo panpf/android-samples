@@ -44,6 +44,50 @@
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
+    <fragment
+        android:id="@+id/modifierBorderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierBorderFragment" />
+    <action
+        android:id="@+id/action_global_modifierBorderFragment"
+        app:destination="@id/modifierBorderFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierBackgroundFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierBackgroundFragment" />
+    <action
+        android:id="@+id/action_global_modifierBackgroundFragment"
+        app:destination="@id/modifierBackgroundFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierClipFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierClipFragment" />
+    <action
+        android:id="@+id/action_global_modifierClipFragment"
+        app:destination="@id/modifierClipFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierClickableFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierClickableFragment" />
+    <action
+        android:id="@+id/action_global_modifierClickableFragment"
+        app:destination="@id/modifierClickableFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
 
     <!-- components - basic -->
 
