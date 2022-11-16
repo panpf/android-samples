@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import com.github.panpf.android.compose.samples.ui.base.DescItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.google.accompanist.flowlayout.FlowColumn
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.MainAxisAlignment
 import kotlinx.coroutines.flow.Flow
@@ -27,15 +29,28 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ModifierPaddingFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Modifier - padding"
+        return "Modifier - padding*"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             ModifierPaddingSample(allExpandFlow)
+            ModifierPaddingFromSample(allExpandFlow)
             ModifierPaddingWithBackgroundSample(allExpandFlow)
             // todo absolutePadding 因为还没有找到修改 LayoutDirection 的方法
+            // todo captionBarPadding
+            // todo displayCutoutPadding
+            // todo imePadding
+            // todo mandatorySystemGesturesPadding
+            // todo navigationBarsPadding
+            // todo safeContentPadding
+            // todo safeGesturesPadding
+            // todo statusBarsPadding
+            // todo systemBarsPadding
+            // todo systemGesturesPadding
+            // todo waterfallPadding
+            // todo windowInsetsPadding
         }
     }
 }
@@ -113,6 +128,49 @@ private fun ModifierPaddingSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun ModifierPaddingSamplePreview() {
     ModifierPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun ModifierPaddingFromSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "Modifier（paddingFromBaseline）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        FlowColumn(
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+            mainAxisAlignment = MainAxisAlignment.SpaceBetween
+        ) {
+            DescItem("no padding") {
+                Text(
+                    text = "Compose",
+                    modifier = Modifier
+                        .background(colorScheme.primaryContainer)
+                )
+            }
+            DescItem("padding(top = 20.dp, bottom = 20.dp)") {
+                Text(
+                    text = "Compose",
+                    modifier = Modifier
+                        .background(colorScheme.primaryContainer)
+                        .padding(top = 20.dp, bottom = 20.dp)
+                )
+            }
+            DescItem("paddingFromBaseline(top = 20.dp, bottom = 20.dp)") {
+                Text(
+                    text = "Compose",
+                    modifier = Modifier
+                        .background(colorScheme.primaryContainer)
+                        .paddingFromBaseline(top = 20.dp, bottom = 20.dp)
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun ModifierPaddingFromSamplePreview() {
+    ModifierPaddingFromSample(remember { MutableStateFlow(true) })
 }
 
 

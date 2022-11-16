@@ -44,7 +44,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ModifierSizeFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Modifier - size"
+        return "Modifier - size*"
     }
 
     @Composable

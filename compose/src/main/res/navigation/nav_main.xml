@@ -100,6 +100,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/modifierHorizontalScrollFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierHorizontalScrollFragment" />
+    <action
+        android:id="@+id/action_global_modifierHorizontalScrollFragment"
+        app:destination="@id/modifierHorizontalScrollFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/modifierOffsetFragment"
         android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierOffsetFragment" />
     <action
@@ -160,6 +171,17 @@
     <action
         android:id="@+id/action_global_modifierSizeFragment"
         app:destination="@id/modifierSizeFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/modifierVerticalScrollFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierVerticalScrollFragment" />
+    <action
+        android:id="@+id/action_global_modifierVerticalScrollFragment"
+        app:destination="@id/modifierVerticalScrollFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

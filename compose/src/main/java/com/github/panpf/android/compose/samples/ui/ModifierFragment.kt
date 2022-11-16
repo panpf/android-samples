@@ -26,16 +26,18 @@ class ModifierFragment : Material3ComposeAppBarFragment() {
                 Link("border", R.id.action_global_modifierBorderFragment),
                 Link("clickable", R.id.action_global_modifierClickableFragment),
                 Link("clip", R.id.action_global_modifierClipFragment),
+                Link("horizontalScroll", R.id.action_global_modifierHorizontalScrollFragment),
                 Link("offset", R.id.action_global_modifierOffsetFragment),
-                Link("padding", R.id.action_global_modifierPaddingFragment),
+                Link("padding*", R.id.action_global_modifierPaddingFragment),
                 Link("rotate", R.id.action_global_modifierRotateFragment),
                 Link("scale", R.id.action_global_modifierScaleFragment),
                 Link("shadow", R.id.action_global_modifierShadowFragment),
-                Link("size", R.id.action_global_modifierSizeFragment),
-//                Link("nestedScroll（Implementation）"),   // todo Implementation
-//                Link("drawBehind,drawWithCache,drawWithContent,safeDrawingPadding（Implementation）"),   // todo Implementation
+                Link("size*", R.id.action_global_modifierSizeFragment),
+                Link("verticalScroll", R.id.action_global_modifierVerticalScrollFragment),
+//                Link("nestedScroll,toolingGraphicsLayer（Implementation）"),   // todo Implementation
+//                Link("graphicsLayer（Implementation）"),   // todo Implementation
+//                Link("drawBehind,drawWithCache,drawWithContent"),   // todo Implementation
 //                Link("draggable（Implementation）"),   // todo Implementation
-//                Link("displayCutoutPadding（Implementation）"),   // todo Implementation
 //                Link("focusable,focusGroup,focusRequester,focusProperties（Implementation）"),   // todo Implementation
 //                Link("onFocusChanged,onFocusedBoundsChanged,onFocusEvent（Implementation）"),   // todo Implementation
 //                Link("onPlaced（Implementation）"),   // todo Implementation
@@ -43,8 +45,7 @@ class ModifierFragment : Material3ComposeAppBarFragment() {
 //                Link("onGloballyPositioned（Implementation）"),   // todo Implementation
 //                Link("onSizeChanged（Implementation）"),   // todo Implementation
 //                Link("paint（Implementation）"),   // todo Implementation
-//                Link("statusBarPadding（Implementation）"),   // todo Implementation
-//                Link("systemBarPadding（Implementation）"),   // todo Implementation
+//                Link("transformable（Implementation）"),   // todo Implementation
             )
         }
         LinkList(links) { _, link ->
