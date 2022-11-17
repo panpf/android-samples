@@ -14,10 +14,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,7 +68,7 @@ class LazyColumnFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -82,13 +82,15 @@ private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -101,7 +103,7 @@ private fun LazyColumnSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -115,14 +117,16 @@ private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -135,7 +139,7 @@ private fun LazyColumnContentPaddingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -149,14 +153,16 @@ private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -169,7 +175,7 @@ private fun LazyColumnItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -183,14 +189,16 @@ private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -203,7 +211,7 @@ private fun LazyColumnReverseLayoutSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -225,14 +233,16 @@ private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     LazyColumn(
                         modifier = Modifier
                             .height(240.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
-                            Chip(onClick = { }) {
-                                Text(text = "$index:$item")
-                            }
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = "$index:$item") }
+                            )
                         }
                     }
                 }
@@ -248,7 +258,7 @@ private fun LazyColumnVerticalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -267,14 +277,16 @@ private fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(240.dp)
                             .width(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalAlignment = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
-                            Chip(onClick = { }) {
-                                Text(text = "$index:$item")
-                            }
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = "$index:$item") }
+                            )
                         }
                     }
                 }
@@ -290,7 +302,7 @@ private fun LazyColumnHorizontalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -308,15 +320,17 @@ private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false,
             state = rememberLazyListState()
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -329,7 +343,7 @@ private fun LazyColumnUserScrollEnabledSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -348,14 +362,16 @@ private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {}) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") }
+                    )
                 }
             }
             Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
@@ -370,7 +386,7 @@ private fun LazyColumnUserVisibleItemIndexSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -387,14 +403,16 @@ private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {}) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") }
+                    )
                 }
             }
             Text(text = "isScrollInProgress: ${scrollInProgressState.value}")
@@ -409,7 +427,7 @@ private fun LazyColumnScrollInProgressSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -442,18 +460,22 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {
-                        coroutineScope.launch {
-                            lazyListState.animateScrollToItem(index)
+                    ElevatedAssistChip(
+                        onClick = {
+                            coroutineScope.launch {
+                                lazyListState.animateScrollToItem(index)
+                            }
+                        },
+                        shape = RoundedCornerShape(50),
+                        label = {
+                            Text(text = "$index:$item")
                         }
-                    }) {
-                        Text(text = "$index:$item")
-                    }
+                    )
                 }
             }
             IconButton(
@@ -483,7 +505,7 @@ private fun LazyColumnAnimateScrollToItemSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -501,23 +523,25 @@ private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(
                     items = list.value,
                     key = { _, item -> item }
                 ) { _, item ->
-                    Chip(
+                    ElevatedAssistChip(
                         onClick = {
                             list.value = list.value.toMutableList().apply {
                                 remove(item)
                             }.toList()
                         },
-                        modifier = Modifier.animateItemPlacement()
-                    ) {
-                        Text(text = item)
-                    }
+                        shape = RoundedCornerShape(50),
+                        modifier = Modifier.animateItemPlacement(),
+                        label = {
+                            Text(text = item)
+                        }
+                    )
                 }
             }
         }
@@ -531,7 +555,7 @@ private fun LazyColumnAnimateItemPlacementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -549,13 +573,15 @@ private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(240.dp)
                     .width(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = { }) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") }
+                    )
                 }
             }
             Text(text = layoutInfoState.let { listLayoutInfoState ->
@@ -600,7 +626,7 @@ private fun LazyColumnLayoutInfoSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
     val groupList = remember {
@@ -618,7 +644,7 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             groupList.forEachIndexed { groupIndex, group ->
@@ -628,13 +654,19 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
                     ) {
-                        Text(text = group.first, modifier = Modifier.padding(10.dp))
+                        Text(
+                            text = group.first,
+                            modifier = Modifier.padding(10.dp),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 }
                 itemsIndexed(group.second) { itemIndex, item ->
-                    Chip(onClick = { }) {
-                        Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item") }
+                    )
                 }
             }
         }
@@ -648,7 +680,7 @@ private fun LazyColumnStickerHeaderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -664,7 +696,7 @@ private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .height(240.dp)
                 .width(100.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
         ) {
             itemsIndexed(
@@ -679,9 +711,11 @@ private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             ) { index, item ->
                 when (item) {
                     is String -> {
-                        Chip(onClick = { }) {
-                            Text(text = "$index:$item")
-                        }
+                        ElevatedAssistChip(
+                            onClick = { },
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = "$index:$item") }
+                        )
                     }
                     is Int -> {
                         FilledTonalIconButton(onClick = { }) {

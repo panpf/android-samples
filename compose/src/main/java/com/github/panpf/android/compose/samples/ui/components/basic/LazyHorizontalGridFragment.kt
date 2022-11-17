@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -33,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +41,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -77,10 +78,7 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -94,7 +92,7 @@ private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             itemsIndexed(items) { index, item ->
@@ -124,10 +122,7 @@ private fun LazyHorizontalGridSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -158,7 +153,7 @@ private fun LazyHorizontalGridHorizontalGridsDynamicCellsSample(allExpandFlow: F
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(gridHeight.value)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(items) { index, item ->
@@ -198,10 +193,7 @@ private fun LazyHorizontalGridHorizontalGridsDynamicCellsSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -219,7 +211,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
@@ -250,10 +242,7 @@ private fun LazyHorizontalGridContentPaddingSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -271,7 +260,7 @@ private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -303,10 +292,7 @@ private fun LazyHorizontalGridItemSpacedSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -324,7 +310,7 @@ private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) 
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
         ) {
@@ -355,10 +341,7 @@ private fun LazyHorizontalGridReverseLayoutSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = buildList {
         repeat(9) {
             add((it + 1).toString())
@@ -389,7 +372,7 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(110.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
                     ) {
@@ -423,10 +406,7 @@ private fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = buildList {
         repeat(9) {
             add((it + 1).toString())
@@ -457,7 +437,7 @@ private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Bool
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(110.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
@@ -490,10 +470,7 @@ private fun LazyHorizontalGridVerticalArrangementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -511,7 +488,7 @@ private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolea
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false
         ) {
@@ -542,10 +519,7 @@ private fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -568,7 +542,7 @@ private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boo
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -601,10 +575,7 @@ private fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -625,7 +596,7 @@ private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -658,10 +629,7 @@ private fun LazyHorizontalGridScrollInProgressSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -698,7 +666,7 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
                 modifier = Modifier
                     .weight(1f)
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
@@ -746,10 +714,7 @@ private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -763,7 +728,7 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             itemsIndexed(
@@ -809,10 +774,7 @@ private fun LazyHorizontalGridSpanSamplePreview() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         mutableStateOf(
             buildList {
@@ -834,7 +796,7 @@ private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boo
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(
@@ -877,10 +839,7 @@ private fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = remember {
         buildList {
             repeat(49) {
@@ -898,7 +857,7 @@ private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(items) { index, item ->
@@ -960,10 +919,7 @@ private fun LazyHorizontalGridLayoutInfoSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = buildList<Any> {
         repeat(49) {
             add((it + 1).toString())
@@ -982,7 +938,7 @@ private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             itemsIndexed(

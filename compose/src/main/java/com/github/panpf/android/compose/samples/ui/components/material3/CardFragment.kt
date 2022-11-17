@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -89,7 +90,7 @@ private fun CardColorsSample(allExpandFlow: Flow<Boolean>) {
         Card(
             modifier = Modifier.size(160.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.Red.copy(alpha = 0.5f),
+                containerColor = MyColor.TranslucenceRed,
                 contentColor = Color.White,
             )
         ) {

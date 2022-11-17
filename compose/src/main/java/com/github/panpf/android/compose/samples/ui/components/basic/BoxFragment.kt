@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,58 +51,58 @@ private fun BoxSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(60.dp)
-                        .background(Color.Blue.copy(alpha = 0.5f))
+                        .background(MyColor.HalfBlue)
                 )
             }
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(60.dp)
-                        .background(Color.Blue.copy(alpha = 0.5f))
+                        .background(MyColor.HalfBlue)
                 )
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(Color.Green.copy(alpha = 0.5f))
+                        .background(MyColor.HalfGreen)
                 )
             }
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(60.dp)
-                        .background(Color.Blue.copy(alpha = 0.5f))
+                        .background(MyColor.HalfBlue)
                 )
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(Color.Green.copy(alpha = 0.5f))
+                        .background(MyColor.HalfGreen)
                 )
                 Text(
                     text = "",
                     modifier = Modifier
                         .size(20.dp)
-                        .background(Color.Magenta.copy(alpha = 0.5f))
+                        .background(MyColor.HalfRed)
                 )
             }
         }
@@ -134,7 +136,7 @@ private fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         contentAlignment = alignment
                     ) {
@@ -142,19 +144,19 @@ private fun BoxContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             text = "",
                             modifier = Modifier
                                 .size(60.dp)
-                                .background(Color.Blue.copy(alpha = 0.5f))
+                                .background(MyColor.HalfBlue)
                         )
                         Text(
                             text = "",
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(Color.Green.copy(alpha = 0.5f))
+                                .background(MyColor.HalfGreen)
                         )
                         Text(
                             text = "",
                             modifier = Modifier
                                 .size(20.dp)
-                                .background(Color.Magenta.copy(alpha = 0.5f))
+                                .background(MyColor.HalfRed)
                         )
                     }
                 }
@@ -193,7 +195,7 @@ private fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .border(2.dp, Color.Red)
+                                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                                 .padding(2.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -201,19 +203,19 @@ private fun BoxAlignSample(allExpandFlow: Flow<Boolean>) {
                                 text = "",
                                 modifier = Modifier
                                     .size(60.dp)
-                                    .background(Color.Blue.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfBlue)
                             )
                             Text(
                                 text = "",
                                 modifier = Modifier
                                     .size(40.dp)
-                                    .background(Color.Green.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfGreen)
                             )
                             Text(
                                 text = "",
                                 modifier = Modifier
                                     .size(20.dp)
-                                    .background(Color.Magenta.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfRed)
                                     .align(alignment)
                             )
                         }
@@ -241,29 +243,31 @@ private fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "舞蹈",
+                        color = Color.White,
                         modifier = Modifier
                             .matchParentSize()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                     )
                 }
 
                 Box(
                     modifier = Modifier
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "舞蹈",
+                        color = Color.White,
                         modifier = Modifier
                             .matchParentSize()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                     )
                 }
             }
@@ -274,29 +278,31 @@ private fun BoxMatchParentSizeSample(allExpandFlow: Flow<Boolean>) {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "舞蹈",
+                        color = Color.White,
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                     )
                 }
                 Box(
                     modifier = Modifier
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .height(100.dp)
                         .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "舞蹈",
+                        color = Color.White,
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                     )
                 }
             }

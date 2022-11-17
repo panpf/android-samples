@@ -33,7 +33,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -63,10 +63,7 @@ class BottomSheetScaffoldFragment : MaterialComposeAppBarFragment() {
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 private fun BottomSheetScaffoldSample() {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val pagerItems = remember {
         listOf(
             "消息" to R.drawable.ic_message,

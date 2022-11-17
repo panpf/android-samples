@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -316,7 +317,7 @@ private fun TextOverflowSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .background(MyColor.TranslucenceRed)
             ) {
                 Text(
                     text = text,
@@ -328,7 +329,7 @@ private fun TextOverflowSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(46.dp)
-                        .background(Color.Blue.copy(alpha = 0.5f))
+                        .background(MyColor.TranslucenceBlue)
                 )
             }
         }
@@ -465,7 +466,7 @@ private fun TextShadowSample(allExpandFlow: Flow<Boolean>) {
                 text = text,
                 style = TextStyle(
                     shadow = Shadow(
-                        Color.Black.copy(alpha = 0.5f),
+                        MyColor.TranslucenceBlack,
                         offset = Offset(4f, 4f),
                         blurRadius = 2f
                     )

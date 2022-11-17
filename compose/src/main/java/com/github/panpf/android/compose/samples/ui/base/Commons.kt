@@ -20,18 +20,45 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
 import com.github.panpf.android.compose.samples.R.drawable
 
-val rainbowColorsBrush = Brush.sweepGradient(
-    listOf(
-        Color(0xFF9575CD),
-        Color(0xFFBA68C8),
-        Color(0xFFE57373),
-        Color(0xFFFFB74D),
-        Color(0xFFFFF176),
-        Color(0xFFAED581),
-        Color(0xFF4DD0E1),
-        Color(0xFF9575CD)
+object MyColor {
+    val HalfBlue = Color(127, 127, 255)
+    val HalfMagenta = Color(255, 127, 255)
+    val HalfGreen = Color(127, 255, 127)
+    val HalfRed = Color(255, 127, 127)
+    val HalfCyan = Color(127, 255, 255)
+    val HalfYellow = Color(255, 255, 127)
+    val HalfGray = Color(195, 195, 195)
+    val HalfBlack = Color(127, 127, 127)
+
+    val TranslucenceBlue = Color.Blue.copy(alpha = 0.5f)
+    val TranslucenceMagenta = Color.Magenta.copy(alpha = 0.5f)
+    val TranslucenceGreen = Color.Green.copy(alpha = 0.5f)
+    val TranslucenceRed = Color.Red.copy(alpha = 0.5f)
+    val TranslucenceCyan = Color.Cyan.copy(alpha = 0.5f)
+    val TranslucenceYellow = Color.Yellow.copy(alpha = 0.5f)
+    val TranslucenceGray = Color.Gray.copy(alpha = 0.5f)
+    val TranslucenceBlack = Color.Black.copy(alpha = 0.5f)
+
+    val rainbows = listOf(
+        HalfBlue,
+        HalfMagenta,
+        HalfGreen,
+        HalfRed,
+        HalfCyan,
+        HalfYellow,
     )
-)
+
+    val translucenceRainbows = listOf(
+        TranslucenceBlue,
+        TranslucenceMagenta,
+        TranslucenceGreen,
+        TranslucenceRed,
+        TranslucenceCyan,
+        TranslucenceYellow,
+    )
+}
+
+val rainbowColorsBrush = Brush.sweepGradient(MyColor.rainbows)
 
 val blackWhiteColorFilter: ColorFilter =
     ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })

@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
@@ -23,6 +23,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.HorizontalDashedDivider
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.android.compose.samples.ui.base.VerticalDashedDivider
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -55,14 +56,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.HalfRed)
                             .constrainAs(menu) {
                                 centerTo(parent)
                             },
@@ -70,7 +71,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.HalfGreen)
                             .constrainAs(action1) {
                                 end.linkTo(menu.start, margin = 10.dp)
                                 top.linkTo(menu.top)
@@ -80,7 +81,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                             .constrainAs(action2) {
                                 start.linkTo(menu.start)
                                 end.linkTo(menu.end)
@@ -90,7 +91,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Yellow.copy(alpha = 0.5f))
+                            .background(MyColor.HalfYellow)
                             .constrainAs(action3) {
                                 start.linkTo(menu.end, margin = 10.dp)
                                 top.linkTo(menu.top)
@@ -100,7 +101,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Cyan.copy(alpha = 0.5f))
+                            .background(MyColor.HalfMagenta)
                             .constrainAs(action4) {
                                 start.linkTo(menu.start)
                                 end.linkTo(menu.end)
@@ -115,14 +116,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.HalfRed)
                             .constrainAs(menu) {
                                 end.linkTo(parent.end, margin = 20.dp)
                                 bottom.linkTo(parent.bottom, margin = 20.dp)
@@ -131,7 +132,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.HalfGreen)
                             .constrainAs(action1) {
                                 circular(menu, 254f, 60.dp)
                             },
@@ -139,7 +140,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.HalfBlue)
                             .constrainAs(action2) {
                                 circular(menu, 295f, 60.dp)
                             },
@@ -147,7 +148,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Yellow.copy(alpha = 0.5f))
+                            .background(MyColor.HalfYellow)
                             .constrainAs(action3) {
                                 circular(menu, 336f, 60.dp)
                             },
@@ -155,7 +156,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Cyan.copy(alpha = 0.5f))
+                            .background(MyColor.HalfMagenta)
                             .constrainAs(action4) {
                                 circular(menu, 16f, 60.dp)
                             },
@@ -168,14 +169,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.HalfRed)
                             .constrainAs(menu) {
                                 centerTo(parent)
                             },
@@ -183,7 +184,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.HalfGreen)
                             .constrainAs(action1) {
                                 centerTo(menu)
                             },
@@ -199,14 +200,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.HalfRed)
                             .constrainAs(menu) {
                                 centerTo(parent)
                             },
@@ -214,7 +215,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.HalfGreen)
                             .constrainAs(action1) {
                                 centerHorizontallyTo(menu)
                             },
@@ -230,14 +231,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.HalfRed)
                             .constrainAs(menu) {
                                 centerTo(parent)
                             },
@@ -245,7 +246,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.HalfGreen)
                             .constrainAs(action1) {
                                 centerVerticallyTo(menu)
                             },
@@ -261,14 +262,14 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                 ConstraintLayout(
                     modifier = Modifier
                         .size(160.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     val (menu, action1, action2, action3, action4) = createRefs()
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceRed)
                             .constrainAs(menu) {
                                 centerTo(parent)
                             },
@@ -276,7 +277,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Green.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceGreen)
                             .constrainAs(action1) {
                                 centerAround(menu.top)
                                 centerAround(menu.start)
@@ -285,7 +286,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceBlue)
                             .constrainAs(action2) {
                                 centerAround(menu.top)
                                 centerAround(menu.end)
@@ -294,7 +295,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Yellow.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceYellow)
                             .constrainAs(action3) {
                                 centerAround(menu.bottom)
                                 centerAround(menu.start)
@@ -303,7 +304,7 @@ private fun ConstraintLayoutConstrainAsSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .size(26.dp)
-                            .background(Color.Cyan.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceMagenta)
                             .constrainAs(action4) {
                                 centerAround(menu.bottom)
                                 centerAround(menu.end)
@@ -330,7 +331,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
         ConstraintLayout(
             modifier = Modifier
                 .size(160.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             val (text1, text2, text3, text4, barrierLineUI) = createRefs()
@@ -338,7 +339,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(26.dp)
                     .width(60.dp)
-                    .background(Color.Red.copy(alpha = 0.5f))
+                    .background(MyColor.HalfRed)
                     .constrainAs(text1) {
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
@@ -347,7 +348,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(26.dp)
                     .width(20.dp)
-                    .background(Color.Magenta.copy(alpha = 0.5f))
+                    .background(MyColor.HalfYellow)
                     .constrainAs(text2) {
                         start.linkTo(parent.start)
                         top.linkTo(text1.bottom)
@@ -356,7 +357,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(26.dp)
                     .width(80.dp)
-                    .background(Color.Blue.copy(alpha = 0.5f))
+                    .background(MyColor.HalfGreen)
                     .constrainAs(text3) {
                         start.linkTo(parent.start)
                         top.linkTo(text2.bottom)
@@ -365,7 +366,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .height(26.dp)
                     .width(40.dp)
-                    .background(Color.Black.copy(alpha = 0.5f))
+                    .background(MyColor.HalfBlue)
                     .constrainAs(text4) {
                         start.linkTo(parent.start)
                         top.linkTo(text3.bottom)
@@ -376,7 +377,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(26.dp)
-                    .background(Color.Green.copy(alpha = 0.5f))
+                    .background(MyColor.HalfCyan)
                     .constrainAs(action1) {
                         start.linkTo(barrierLine)
                         top.linkTo(parent.top)
@@ -385,7 +386,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(26.dp)
-                    .background(Color.Blue.copy(alpha = 0.5f))
+                    .background(MyColor.HalfGray)
                     .constrainAs(action2) {
                         start.linkTo(barrierLine)
                         top.linkTo(action1.bottom)
@@ -394,7 +395,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(26.dp)
-                    .background(Color.Yellow.copy(alpha = 0.5f))
+                    .background(MyColor.HalfMagenta)
                     .constrainAs(action3) {
                         start.linkTo(barrierLine)
                         top.linkTo(action2.bottom)
@@ -403,7 +404,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
             Box(
                 modifier = Modifier
                     .size(26.dp)
-                    .background(Color.Cyan.copy(alpha = 0.5f))
+                    .background(MyColor.HalfBlack)
                     .constrainAs(action4) {
                         start.linkTo(barrierLine)
                         top.linkTo(action3.bottom)
@@ -411,7 +412,7 @@ private fun ConstraintLayoutBarrierSample(allExpandFlow: Flow<Boolean>) {
             )
 
             VerticalDashedDivider(
-                color = Color.Gray,
+                color = MyColor.HalfGray,
                 modifier = Modifier
                     .constrainAs(barrierLineUI) {
                         start.linkTo(barrierLine)
@@ -440,7 +441,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                     ConstraintLayout(
                         modifier = Modifier
                             .size(160.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp)
                     ) {
                         val guideLine = if ("fromStart" == it) {
@@ -453,7 +454,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Green.copy(alpha = 0.5f))
+                                .background(MyColor.HalfRed)
                                 .constrainAs(action1) {
                                     start.linkTo(guideLine)
                                     top.linkTo(parent.top)
@@ -462,7 +463,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Blue.copy(alpha = 0.5f))
+                                .background(MyColor.HalfYellow)
                                 .constrainAs(action2) {
                                     start.linkTo(guideLine)
                                     top.linkTo(action1.bottom)
@@ -471,7 +472,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Yellow.copy(alpha = 0.5f))
+                                .background(MyColor.HalfGreen)
                                 .constrainAs(action3) {
                                     start.linkTo(guideLine)
                                     top.linkTo(action2.bottom)
@@ -480,7 +481,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Cyan.copy(alpha = 0.5f))
+                                .background(MyColor.HalfBlue)
                                 .constrainAs(action4) {
                                     start.linkTo(guideLine)
                                     top.linkTo(action3.bottom)
@@ -488,7 +489,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         )
 
                         VerticalDashedDivider(
-                            color = Color.Gray,
+                            color = MyColor.HalfGray,
                             modifier = Modifier
                                 .constrainAs(guideLineUI) {
                                     end.linkTo(guideLine)
@@ -504,7 +505,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                     ConstraintLayout(
                         modifier = Modifier
                             .size(160.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp)
                     ) {
                         val guideLine = if ("fromTop" == it) {
@@ -517,7 +518,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Green.copy(alpha = 0.5f))
+                                .background(MyColor.HalfRed)
                                 .constrainAs(action1) {
                                     top.linkTo(guideLine)
                                     start.linkTo(parent.start)
@@ -526,7 +527,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Blue.copy(alpha = 0.5f))
+                                .background(MyColor.HalfYellow)
                                 .constrainAs(action2) {
                                     top.linkTo(guideLine)
                                     start.linkTo(action1.end)
@@ -535,7 +536,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Yellow.copy(alpha = 0.5f))
+                                .background(MyColor.HalfGreen)
                                 .constrainAs(action3) {
                                     top.linkTo(guideLine)
                                     start.linkTo(action2.end)
@@ -544,7 +545,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .size(26.dp)
-                                .background(Color.Cyan.copy(alpha = 0.5f))
+                                .background(MyColor.HalfBlue)
                                 .constrainAs(action4) {
                                     top.linkTo(guideLine)
                                     start.linkTo(action3.end)
@@ -552,7 +553,7 @@ private fun ConstraintLayoutGuideLineSample(allExpandFlow: Flow<Boolean>) {
                         )
 
                         HorizontalDashedDivider(
-                            color = Color.Gray,
+                            color = MyColor.HalfGray,
                             modifier = Modifier
                                 .constrainAs(guideLineUI) {
                                     bottom.linkTo(guideLine)
@@ -590,7 +591,7 @@ private fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
                         ConstraintLayout(
                             modifier = Modifier
                                 .size(160.dp)
-                                .border(2.dp, Color.Red)
+                                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                                 .padding(2.dp)
                         ) {
                             val (action1, action2, action3, action4) = createRefs()
@@ -606,25 +607,25 @@ private fun ConstraintLayoutChainSample(allExpandFlow: Flow<Boolean>) {
                             Box(
                                 modifier = Modifier
                                     .size(26.dp)
-                                    .background(Color.Green.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfRed)
                                     .constrainAs(action1) {},
                             )
                             Box(
                                 modifier = Modifier
                                     .size(26.dp)
-                                    .background(Color.Blue.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfYellow)
                                     .constrainAs(action2) {},
                             )
                             Box(
                                 modifier = Modifier
                                     .size(26.dp)
-                                    .background(Color.Yellow.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfGreen)
                                     .constrainAs(action3) {},
                             )
                             Box(
                                 modifier = Modifier
                                     .size(26.dp)
-                                    .background(Color.Cyan.copy(alpha = 0.5f))
+                                    .background(MyColor.HalfBlue)
                                     .constrainAs(action4) {},
                             )
                         }

@@ -9,14 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
@@ -46,20 +47,22 @@ class RowFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -72,20 +75,22 @@ private fun RowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -98,21 +103,23 @@ private fun RowFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -125,7 +132,7 @@ private fun RowItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
@@ -146,14 +153,16 @@ private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                     horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        Chip(onClick = { }) {
-                            Text(text = it)
-                        }
+                        ElevatedAssistChip(
+                            onClick = { },
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = it) }
+                        )
                     }
                 }
             }
@@ -168,7 +177,7 @@ private fun RowHorizontalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（verticalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -186,14 +195,16 @@ private fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                     verticalAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        Chip(onClick = { }) {
-                            Text(text = it)
-                        }
+                        ElevatedAssistChip(
+                            onClick = { },
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = it) }
+                        )
                     }
                 }
             }
@@ -208,7 +219,7 @@ private fun RowVerticalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（weight）", allExpandFlow, padding = 20.dp) {
@@ -225,18 +236,18 @@ private fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     list.forEach { (tag, weight) ->
-                        Chip(
+                        ElevatedAssistChip(
                             onClick = { },
                             modifier = Modifier.let {
                                 if (weight != null) it.weight(weight) else it
-                            }
-                        ) {
-                            Text(text = tag)
-                        }
+                            },
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = tag) }
+                        )
                     }
                 }
             }
@@ -251,7 +262,7 @@ private fun RowWeightSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（align）", allExpandFlow, padding = 20.dp) {
@@ -269,20 +280,20 @@ private fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(70.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
-                    Chip(
+                    ElevatedAssistChip(
                         onClick = { },
-                    ) {
-                        Text(text = "数码")
-                    }
-                    Chip(
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "数码") }
+                    )
+                    ElevatedAssistChip(
                         onClick = { },
+                        shape = RoundedCornerShape(50),
                         modifier = Modifier.align(alignment),
-                    ) {
-                        Text(text = "舞蹈")
-                    }
+                        label = { Text(text = "舞蹈") }
+                    )
                 }
             }
         }

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -89,9 +90,9 @@ private fun SwitchColorsSample(allExpandFlow: Flow<Boolean>) {
             onCheckedChange = { checked.value = it },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.Blue,
-                checkedTrackColor = Color.Blue.copy(alpha = 0.5f),
+                checkedTrackColor = MyColor.TranslucenceBlue,
                 uncheckedThumbColor = Color.Red,
-                uncheckedTrackColor = Color.Red.copy(alpha = 0.5f),
+                uncheckedTrackColor = MyColor.TranslucenceRed,
             ),
         )
     }

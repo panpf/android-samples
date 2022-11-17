@@ -19,6 +19,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,7 +97,7 @@ private fun BottomAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "BottomAppBar（colors）", allExpandFlow, padding = 20.dp) {
         Column {
             BottomAppBar(
-                backgroundColor = Color.Blue.copy(alpha = 0.6f),
+                backgroundColor = MyColor.TranslucenceRed,
                 contentColor = Color.Red,
             ) {
                 Row(

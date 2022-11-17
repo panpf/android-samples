@@ -22,7 +22,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +30,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ private fun ModalDrawerSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceBlue)
                     )
                 }
             ) {
@@ -77,7 +77,7 @@ private fun ModalDrawerSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(Color.Yellow.copy(alpha = 0.5f))
+                        .background(MyColor.TranslucenceYellow)
                 )
             }
             IconButton(
@@ -126,7 +126,7 @@ private fun ModalDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceBlue)
                     )
                 },
                 drawerShape = RoundedCornerShape(20.dp),
@@ -135,7 +135,7 @@ private fun ModalDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(Color.Yellow.copy(alpha = 0.5f))
+                        .background(MyColor.TranslucenceYellow)
                 )
             }
             IconButton(
@@ -185,7 +185,7 @@ private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceBlue)
                     )
                 }
             ) {
@@ -193,7 +193,7 @@ private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(Color.Yellow.copy(alpha = 0.5f))
+                        .background(MyColor.TranslucenceYellow)
                 )
             }
             IconButton(
@@ -246,7 +246,7 @@ private fun BottomDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .background(Color.Blue.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceBlue)
                     )
                 },
                 drawerShape = RoundedCornerShape(20.dp),
@@ -255,7 +255,7 @@ private fun BottomDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(Color.Yellow.copy(alpha = 0.5f))
+                        .background(MyColor.TranslucenceYellow)
                 )
             }
             IconButton(

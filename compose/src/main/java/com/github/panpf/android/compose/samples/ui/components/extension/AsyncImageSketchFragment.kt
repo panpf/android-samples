@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -169,7 +169,7 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         contentDescription = "",
                         modifier = Modifier
                             .size(viewSize)
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         contentScale = ContentScale.None,
                         alignment = alignment.first,
@@ -248,7 +248,7 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                                     contentDescription = "",
                                     modifier = Modifier
                                         .size(viewSize)
-                                        .background(Color.Red.copy(alpha = 0.5f))
+                                        .background(MaterialTheme.colorScheme.primaryContainer)
                                         .padding(2.dp),
                                     contentScale = items.contentScale,
                                 )
@@ -363,7 +363,7 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .border(2.dp, Color.Magenta),
+                    .border(2.dp, MaterialTheme.colorScheme.primary),
                 contentScale = ContentScale.Crop,
             )
 
@@ -379,7 +379,7 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .border(2.dp, Color.Magenta, RoundedCornerShape(20.dp))
+                    .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp))
                     .clip(RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
             )

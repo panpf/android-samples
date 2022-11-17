@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -38,6 +39,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -76,10 +78,7 @@ class HorizontalPagerFragment : Material3ComposeAppBarFragment() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager", allExpandFlow, padding = 20.dp) {
@@ -87,7 +86,7 @@ private fun HorizontalPagerSample(allExpandFlow: Flow<Boolean>) {
             count = items.size,
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
         ) { index ->
             Box(
@@ -115,10 +114,7 @@ private fun HorizontalPagerSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
@@ -126,7 +122,7 @@ private fun HorizontalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             count = items.size,
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
         ) { index ->
@@ -155,10 +151,7 @@ private fun HorizontalPagerReverseLayoutSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager（itemSpacing）", allExpandFlow, padding = 20.dp) {
@@ -166,7 +159,7 @@ private fun HorizontalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
             count = items.size,
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             itemSpacing = 20.dp
         ) { index ->
@@ -195,10 +188,7 @@ private fun HorizontalPagerItemSpacingSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
@@ -206,7 +196,7 @@ private fun HorizontalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             count = items.size,
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp),
         ) { index ->
@@ -235,10 +225,7 @@ private fun HorizontalPagerContentPaddingSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager（verticalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -258,7 +245,7 @@ private fun HorizontalPagerVerticalAlignmentSample(allExpandFlow: Flow<Boolean>)
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         verticalAlignment = it.first
                     ) { index ->
@@ -291,10 +278,7 @@ private fun HorizontalPagerVerticalAlignmentSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -326,7 +310,7 @@ private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                 ) { index ->
                     Box(
@@ -394,10 +378,7 @@ private fun HorizontalPagerScrollToPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -433,7 +414,7 @@ private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
                 ) { index ->
                     Box(
@@ -501,10 +482,7 @@ private fun HorizontalPagerAnimateScrollToPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -516,7 +494,7 @@ private fun HorizontalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) 
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
                 Box(
@@ -546,10 +524,7 @@ private fun HorizontalPagerScrollInProgressSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -562,7 +537,7 @@ private fun HorizontalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
                 Box(
@@ -593,10 +568,7 @@ private fun HorizontalPagerCurrentPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -607,7 +579,7 @@ private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
                 Box(
@@ -639,7 +611,7 @@ private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally),
                     activeColor = Color.Red,
-                    inactiveColor = Color.Red.copy(alpha = 0.3f),
+                    inactiveColor = MyColor.TranslucenceRed,
                 )
 
                 Spacer(modifier = Modifier.size(10.dp))
@@ -666,10 +638,7 @@ private fun HorizontalPagerIndicatorSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -729,10 +698,7 @@ private fun HorizontalPagerTabRowSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()

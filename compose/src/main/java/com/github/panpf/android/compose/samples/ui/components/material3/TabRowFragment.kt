@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -97,7 +98,7 @@ private fun TabRowColorsSample(allExpandFlow: Flow<Boolean>) {
                 )
             },
             divider = {
-                Divider(thickness = 2.dp, color = Color.Cyan.copy(alpha = 0.5f))
+                Divider(thickness = 2.dp, color = MyColor.TranslucenceCyan)
             }
         ) {
             items.forEachIndexed { index, item ->
@@ -126,10 +127,7 @@ private fun TabRowColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -229,7 +227,7 @@ private fun ScrollableTabRowColorsSample(allExpandFlow: Flow<Boolean>) {
                 )
             },
             divider = {
-                Divider(thickness = 2.dp, color = Color.Cyan.copy(alpha = 0.5f))
+                Divider(thickness = 2.dp, color = MyColor.TranslucenceCyan)
             }
         ) {
             items.forEachIndexed { index, item ->
@@ -258,10 +256,7 @@ private fun ScrollableTabRowColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()

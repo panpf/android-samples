@@ -29,6 +29,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -130,8 +131,8 @@ private fun BottomNavigationColorsSample(allExpandFlow: Flow<Boolean>) {
                         label = {
                             Text(text = item.first)
                         },
-                        selectedContentColor = Color.Yellow.copy(alpha = 0.8f),
-                        unselectedContentColor = Color.Red.copy(alpha = 0.8f),
+                        selectedContentColor = Color.Yellow,
+                        unselectedContentColor = Color.Red,
                     )
                 }
             }
@@ -149,10 +150,11 @@ private fun BottomNavigationColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows.toMutableList().apply {
+        val value1 = this[1]
+        this[1] = this[0]
+        this[0] = value1
+    }.toList()
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(

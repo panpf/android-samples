@@ -6,14 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
@@ -44,20 +45,22 @@ class ColumnFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
-            listOf("数\n码", "汽\n车", "摄\n影").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+            listOf("数码", "汽车", "摄影").forEach {
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -70,20 +73,22 @@ private fun ColumnSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（Full）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
-            listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技", "健\n身", "游\n戏", "文\n学").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+            listOf("数码", "汽车", "摄影", "舞蹈", "音乐", "科技", "健身", "游戏", "文学").forEach {
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -96,21 +101,23 @@ private fun ColumnFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
         Column(
             modifier = Modifier
                 .height(200.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            listOf("数\n码", "汽\n车", "摄\n影", "舞\n蹈", "音\n乐", "科\n技", "健\n身", "游\n戏", "文\n学").forEach {
-                Chip(onClick = { }) {
-                    Text(text = it)
-                }
+            listOf("数码", "汽车", "摄影", "舞蹈", "音乐", "科技", "健身", "游戏", "文学").forEach {
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
             }
         }
     }
@@ -123,7 +130,7 @@ private fun ColumnItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（verticalArrangement）", allExpandFlow, padding = 20.dp) {
@@ -147,14 +154,16 @@ private fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     Column(
                         modifier = Modifier
                             .height(200.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
-                        listOf("数\n码", "汽\n车", "摄\n影").forEach {
-                            Chip(onClick = { }) {
-                                Text(text = it)
-                            }
+                        listOf("数码", "汽车", "摄影").forEach {
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = it) }
+                            )
                         }
                     }
                 }
@@ -170,7 +179,7 @@ private fun ColumnVerticalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -191,14 +200,16 @@ private fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(200.dp)
                             .width(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalAlignment = alignment
                     ) {
-                        listOf("数\n码", "汽\n车", "摄\n影").forEach {
-                            Chip(onClick = { }) {
-                                Text(text = it)
-                            }
+                        listOf("数码", "汽车", "摄影").forEach {
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = it) }
+                            )
                         }
                     }
                 }
@@ -214,31 +225,33 @@ private fun ColumnHorizontalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（weight）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
-                listOf("数\n码" to 1f, "汽\n车" to null, "摄\n影" to null),
-                listOf("数\n码" to 1f, "汽\n车" to 1f, "摄\n影" to null),
-                listOf("数\n码" to 1f, "汽\n车" to 1f, "摄\n影" to 1f),
+                listOf("数码" to 1f, "汽车" to null, "摄影" to null),
+                listOf("数码" to 1f, "汽车" to 1f, "摄影" to null),
+                listOf("数码" to 1f, "汽车" to 1f, "摄影" to 1f),
             ).forEach { list ->
                 Column(
                     modifier = Modifier
                         .height(200.dp)
-                        .border(2.dp, Color.Red)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
                     list.forEach { (tag, weight) ->
-                        Chip(
+                        ElevatedAssistChip(
                             onClick = { },
+                            shape = RoundedCornerShape(50),
                             modifier = Modifier.let {
                                 if (weight != null) it.weight(weight) else it
+                            },
+                            label = {
+                                Text(text = tag)
                             }
-                        ) {
-                            Text(text = tag)
-                        }
+                        )
                     }
                 }
             }
@@ -253,7 +266,7 @@ private fun ColumnWeightSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（align）", allExpandFlow, padding = 20.dp) {
@@ -274,20 +287,20 @@ private fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .height(200.dp)
                             .width(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp)
                     ) {
-                        Chip(
+                        ElevatedAssistChip(
                             onClick = { },
-                        ) {
-                            Text(text = "数\n码")
-                        }
-                        Chip(
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = "数码") }
+                        )
+                        ElevatedAssistChip(
                             onClick = { },
+                            shape = RoundedCornerShape(50),
                             modifier = Modifier.align(alignment),
-                        ) {
-                            Text(text = "舞\n蹈")
-                        }
+                            label = { Text(text = "舞蹈") }
+                        )
                     }
                 }
             }

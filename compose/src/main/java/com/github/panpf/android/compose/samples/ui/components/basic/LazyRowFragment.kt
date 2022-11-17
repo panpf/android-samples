@@ -19,10 +19,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,7 +72,7 @@ class LazyRowFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -85,13 +85,15 @@ private fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -104,7 +106,7 @@ private fun LazyRowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -117,21 +119,29 @@ private fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
 }
 
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyRowContentPaddingSamplePreview() {
+    LazyRowContentPaddingSample(remember { MutableStateFlow(true) })
+}
 
-@OptIn(ExperimentalMaterialApi::class)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -144,14 +154,16 @@ private fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -164,7 +176,7 @@ private fun LazyRowItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -177,14 +189,16 @@ private fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") }
+                )
             }
         }
     }
@@ -197,7 +211,7 @@ private fun LazyRowReverseLayoutSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -222,14 +236,16 @@ private fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                     LazyRow(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
-                            Chip(onClick = { }) {
-                                Text(text = "$index:$item")
-                            }
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = "$index:$item") }
+                            )
                         }
                     }
                 }
@@ -245,7 +261,7 @@ private fun LazyRowHorizontalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -270,14 +286,16 @@ private fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
-                            .border(2.dp, Color.Red)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         verticalAlignment = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
-                            Chip(onClick = { }) {
-                                Text(text = "$index:$item")
-                            }
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = "$index:$item") }
+                            )
                         }
                     }
                 }
@@ -293,7 +311,7 @@ private fun LazyRowVerticalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -306,15 +324,16 @@ private fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false,
             state = rememberLazyListState()
         ) {
             itemsIndexed(list) { index, item ->
-                Chip(onClick = { }) {
-                    Text(text = "$index:$item")
-                }
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = "$index:$item") })
             }
         }
     }
@@ -327,7 +346,7 @@ private fun LazyRowUserScrollEnabledSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -345,14 +364,15 @@ private fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {}) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") })
                 }
             }
             Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
@@ -367,7 +387,7 @@ private fun LazyRowUserVisibleItemIndexSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -383,14 +403,16 @@ private fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {}) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") }
+                    )
                 }
             }
             Text(text = "isScrollInProgress: ${scrollInProgressState.value}")
@@ -405,7 +427,7 @@ private fun LazyRowScrollInProgressSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -437,19 +459,23 @@ private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
                     .weight(1f),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = {
-                        coroutineScope.launch {
-                            lazyListState.animateScrollToItem(index)
+                    ElevatedAssistChip(
+                        onClick = {
+                            coroutineScope.launch {
+                                lazyListState.animateScrollToItem(index)
+                            }
+                        },
+                        shape = RoundedCornerShape(50),
+                        label = {
+                            Text(text = "$index:$item")
                         }
-                    }) {
-                        Text(text = "$index:$item")
-                    }
+                    )
                 }
             }
             IconButton(
@@ -479,7 +505,7 @@ private fun LazyRowAnimateScrollToItemSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -496,7 +522,7 @@ private fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 contentPadding = PaddingValues(10.dp)
             ) {
@@ -504,16 +530,18 @@ private fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                     items = list.value,
                     key = { _, item -> item }
                 ) { _, item ->
-                    Chip(
+                    ElevatedAssistChip(
                         onClick = {
                             list.value = list.value.toMutableList().apply {
                                 remove(item)
                             }.toList()
                         },
-                        modifier = Modifier.animateItemPlacement()
-                    ) {
-                        Text(text = item)
-                    }
+                        shape = RoundedCornerShape(50),
+                        modifier = Modifier.animateItemPlacement(),
+                        label = {
+                            Text(text = item)
+                        }
+                    )
                 }
             }
         }
@@ -527,7 +555,7 @@ private fun LazyRowAnimateItemPlacementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -544,13 +572,15 @@ private fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                 state = lazyListState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Red)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 itemsIndexed(list) { index, item ->
-                    Chip(onClick = { }) {
-                        Text(text = "$index:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = "$index:$item") }
+                    )
                 }
             }
             Text(text = layoutInfoState.let { listLayoutInfoState ->
@@ -595,7 +625,7 @@ private fun LazyRowLayoutInfoSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
     val groupList = remember {
@@ -613,7 +643,7 @@ private fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             groupList.forEachIndexed { groupIndex, group ->
@@ -624,13 +654,21 @@ private fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
                             .width(70.dp)
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
                     ) {
-                        Text(text = group.first, modifier = Modifier.align(Alignment.Center))
+                        Text(
+                            text = group.first,
+                            modifier = Modifier.align(Alignment.Center),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 }
                 itemsIndexed(group.second) { itemIndex, item ->
-                    Chip(onClick = { }) {
-                        Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
-                    }
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = {
+                            Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
+                        }
+                    )
                 }
             }
         }
@@ -644,7 +682,7 @@ private fun LazyRowStickerHeaderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -659,7 +697,7 @@ private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.Red)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
         ) {
             itemsIndexed(
@@ -674,9 +712,11 @@ private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             ) { index, item ->
                 when (item) {
                     is String -> {
-                        Chip(onClick = { }) {
-                            Text(text = "$index:$item")
-                        }
+                        ElevatedAssistChip(
+                            onClick = { },
+                            shape = RoundedCornerShape(50),
+                            label = { Text(text = "$index:$item") }
+                        )
                     }
                     is Int -> {
                         FilledTonalIconButton(onClick = { }) {

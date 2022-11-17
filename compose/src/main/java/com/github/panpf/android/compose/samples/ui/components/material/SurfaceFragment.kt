@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4a.toast.ktx.showLongToast
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -85,7 +86,7 @@ private fun SurfaceColorSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Surface（color）", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
-            color = Color.Red.copy(alpha = 0.5f)
+            color = MyColor.TranslucenceRed
         ) {
             Box {
                 Button(
@@ -114,7 +115,7 @@ private fun SurfaceShapeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "Surface（shape）", allExpandFlow, padding = 20.dp) {
         Surface(
             modifier = Modifier.size(150.dp),
-            color = Color.Red.copy(alpha = 0.5f),
+            color = MyColor.TranslucenceRed,
             shape = RoundedCornerShape(20.dp),
         ) {
             Box {
@@ -195,7 +196,7 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceRed)
                             .padding(4.dp)
                     ) {
                         Button(
@@ -208,7 +209,7 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
                         }
                         Surface(
                             modifier = Modifier.fillMaxSize(),
-                            color = Color.Green.copy(alpha = 0.5f)
+                            color = MyColor.TranslucenceGreen
                         ) {
                             Box {
                                 Button(
@@ -234,7 +235,7 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Red.copy(alpha = 0.5f))
+                            .background(MyColor.TranslucenceRed)
                             .padding(4.dp)
                     ) {
                         Button(
@@ -248,7 +249,7 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(Color.Green.copy(alpha = 0.5f)),
+                                .background(MyColor.TranslucenceGreen),
                         ) {
                             Button(
                                 onClick = {

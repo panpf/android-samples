@@ -31,6 +31,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -114,7 +115,7 @@ private fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "NavigationRail（colors）", allExpandFlow, padding = 20.dp) {
         NavigationRail(
             modifier = Modifier.height(300.dp),
-            backgroundColor = Color.Yellow.copy(alpha = 0.5f)
+            backgroundColor = MyColor.TranslucenceYellow
         ) {
             items.forEachIndexed { index, itemPair ->
                 if (index > 0) {
@@ -150,10 +151,7 @@ private fun NavigationRailColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(

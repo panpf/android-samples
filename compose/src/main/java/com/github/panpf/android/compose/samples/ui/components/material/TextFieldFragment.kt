@@ -27,6 +27,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -447,7 +448,7 @@ private fun TextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Blue.copy(alpha = 0.5f),
+                backgroundColor = MyColor.TranslucenceBlue,
                 textColor = Color.White,
                 cursorColor = Color.Cyan
             ),
@@ -559,7 +560,7 @@ private fun OutlinedTextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                backgroundColor = Color.Blue.copy(alpha = 0.5f),
+                backgroundColor = MyColor.TranslucenceBlue,
                 textColor = Color.White,
                 cursorColor = Color.Cyan,
                 unfocusedBorderColor = Color.Green,

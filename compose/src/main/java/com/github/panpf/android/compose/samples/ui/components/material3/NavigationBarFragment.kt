@@ -30,6 +30,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -106,7 +107,7 @@ private fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
     }
     ExpandableItem3(title = "NavigationBar（colors）", allExpandFlow, padding = 20.dp) {
         NavigationBar(
-            containerColor = Color.Yellow.copy(alpha = 0.5f)
+            containerColor = MyColor.TranslucenceYellow
         ) {
             items.forEachIndexed { index, itemPair ->
                 NavigationBarItem(
@@ -124,9 +125,9 @@ private fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.Blue,
                         selectedTextColor = Color.Magenta,
-                        indicatorColor = Color.Green.copy(alpha = 0.5f),
-                        unselectedIconColor = Color.Blue.copy(alpha = 0.5f),
-                        unselectedTextColor = Color.Magenta.copy(alpha = 0.5f),
+                        indicatorColor = MyColor.TranslucenceGreen,
+                        unselectedIconColor = MyColor.TranslucenceBlue,
+                        unselectedTextColor = MyColor.TranslucenceMagenta,
                     )
                 )
             }
@@ -144,10 +145,7 @@ private fun NavigationBarColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = remember {
-        listOf(Color.Blue, Color.Magenta, Color.Cyan, Color.Red, Color.Yellow, Color.Green)
-            .map { it.copy(alpha = 0.5f) }
-    }
+    val colors = MyColor.rainbows
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
