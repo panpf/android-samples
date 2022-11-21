@@ -151,7 +151,7 @@ private fun NavigationRailColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(

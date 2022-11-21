@@ -40,6 +40,15 @@ object MyColor {
     val TranslucenceBlack = Color.Black.copy(alpha = 0.5f)
 
     val rainbows = listOf(
+        Color.Blue,
+        Color.Magenta,
+        Color.Green,
+        Color.Red,
+        Color.Cyan,
+        Color.Yellow,
+    )
+
+    val halfRainbows = listOf(
         HalfBlue,
         HalfMagenta,
         HalfGreen,
@@ -58,7 +67,7 @@ object MyColor {
     )
 }
 
-val rainbowColorsBrush = Brush.sweepGradient(MyColor.rainbows)
+val rainbowColorsBrush = Brush.sweepGradient(MyColor.halfRainbows)
 
 val blackWhiteColorFilter: ColorFilter =
     ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })

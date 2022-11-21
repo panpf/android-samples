@@ -127,7 +127,7 @@ private fun TabRowColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -256,7 +256,7 @@ private fun ScrollableTabRowColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()

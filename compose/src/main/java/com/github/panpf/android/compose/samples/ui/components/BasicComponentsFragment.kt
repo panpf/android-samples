@@ -26,10 +26,13 @@ class BasicComponentsFragment : Material3ComposeAppBarFragment() {
                 Link("Image", R.id.action_global_imageFragment),
                 Link("LazyColumn", R.id.action_global_lazyColumnFragment),
                 Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
+                Link("LazyHorizontalStaggeredGrid", R.id.action_global_lazyHorizontalStaggeredGridFragment),
                 Link("LazyRow", R.id.action_global_lazyRowFragment),
                 Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
+                Link("LazyVerticalStaggeredGrid", R.id.action_global_lazyVerticalStaggeredGridFragment),
                 Link("Popup", R.id.action_global_popupFragment),
                 Link("Row", R.id.action_global_rowFragment),
+                Link("Spacer", R.id.action_global_spacerFragment),
             )
         }
         LinkList(links) { _, link ->

@@ -279,6 +279,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/lazyHorizontalStaggeredGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyHorizontalStaggeredGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyHorizontalStaggeredGridFragment"
+        app:destination="@id/lazyHorizontalStaggeredGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/lazyRowFragment"
         android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyRowFragment" />
     <action
@@ -301,6 +312,17 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/lazyVerticalStaggeredGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyVerticalStaggeredGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyVerticalStaggeredGridFragment"
+        app:destination="@id/lazyVerticalStaggeredGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/popupFragment"
         android:name="com.github.panpf.android.compose.samples.ui.components.basic.PopupFragment" />
     <action
@@ -317,6 +339,17 @@
     <action
         android:id="@+id/action_global_rowFragment"
         app:destination="@id/rowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/spacerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.components.basic.SpacerFragment" />
+    <action
+        android:id="@+id/action_global_spacerFragment"
+        app:destination="@id/spacerFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

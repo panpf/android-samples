@@ -63,7 +63,7 @@ class BottomSheetScaffoldFragment : MaterialComposeAppBarFragment() {
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 private fun BottomSheetScaffoldSample() {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val pagerItems = remember {
         listOf(
             "消息" to R.drawable.ic_message,

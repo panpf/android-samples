@@ -44,7 +44,7 @@ class BackdropScaffoldFragment : MaterialComposeAppBarFragment() {
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 private fun BackdropScaffoldSample() {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val menuItems = remember {
         listOf(
             "消息" to R.drawable.ic_message,

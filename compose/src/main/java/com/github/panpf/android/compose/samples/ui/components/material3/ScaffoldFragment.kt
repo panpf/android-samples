@@ -51,7 +51,7 @@ class ScaffoldFragment : Material3ComposeAppBarFragment() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 private fun ScaffoldSample() {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val pagerItems = remember {
         listOf(
             "消息" to R.drawable.ic_message,

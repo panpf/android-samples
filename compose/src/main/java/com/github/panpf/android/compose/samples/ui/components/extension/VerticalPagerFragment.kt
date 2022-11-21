@@ -72,7 +72,7 @@ class VerticalPagerFragment : Material3ComposeAppBarFragment() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager", allExpandFlow, padding = 20.dp) {
@@ -109,7 +109,7 @@ private fun VerticalPagerSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
@@ -147,7 +147,7 @@ private fun VerticalPagerReverseLayoutSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerItemSpacingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager（itemSpacing）", allExpandFlow, padding = 20.dp) {
@@ -185,7 +185,7 @@ private fun VerticalPagerItemSpacingSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
@@ -223,7 +223,7 @@ private fun VerticalPagerContentPaddingSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -278,7 +278,7 @@ private fun VerticalPagerVerticalAlignmentSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -386,7 +386,7 @@ private fun VerticalPagerScrollToPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -494,7 +494,7 @@ private fun VerticalPagerAnimateScrollToPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -537,7 +537,7 @@ private fun VerticalPagerScrollInProgressSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
@@ -582,7 +582,7 @@ private fun VerticalPagerCurrentPageSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
+    val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()

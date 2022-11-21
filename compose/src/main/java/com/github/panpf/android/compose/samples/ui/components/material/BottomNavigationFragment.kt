@@ -150,7 +150,7 @@ private fun BottomNavigationColorsSamplePreview() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows.toMutableList().apply {
+    val colors = MyColor.halfRainbows.toMutableList().apply {
         val value1 = this[1]
         this[1] = this[0]
         this[0] = value1
