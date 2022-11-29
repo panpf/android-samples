@@ -2,6 +2,7 @@ package com.github.panpf.android.compose.samples.ui.components.material3
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,8 +38,8 @@ import kotlinx.coroutines.launch
 
 class ScaffoldFragment : Material3ComposeAppBarFragment() {
 
-    override fun getTitle(): String {
-        return "Scaffold"
+    override fun getTitle(): String? {
+        return null
     }
 
     @Composable
@@ -74,6 +75,7 @@ private fun ScaffoldSample() {
         topBar = {
             TopAppBar(
                 title = { Text("Scaffold - Material3") },
+                windowInsets = WindowInsets(0.dp)
             )
         },
         content = { innerPadding ->

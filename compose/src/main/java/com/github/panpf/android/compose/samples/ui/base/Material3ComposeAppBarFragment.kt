@@ -19,10 +19,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -35,9 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
+import com.github.panpf.tools4a.dimen.ktx.px2dp
+import com.github.panpf.tools4a.display.ktx.getStatusBarHeight
 
 abstract class Material3ComposeAppBarFragment : Fragment() {
 
@@ -59,7 +66,7 @@ abstract class Material3ComposeAppBarFragment : Fragment() {
         }
     }
 
-    open fun getTitle(): String {
+    open fun getTitle(): String? {
         return requireContext().resources.getString(R.string.app_name)
     }
 
@@ -71,25 +78,34 @@ abstract class Material3ComposeAppBarFragment : Fragment() {
 @Composable
 fun MyTopAppBarScaffold3(title: String? = null, content: @Composable () -> Unit) {
     val context = LocalContext.current
-    val finalTitle = remember {
-        title ?: context.resources.getString(R.string.app_name)
+    val statusBarHeight = remember {
+        context.getStatusBarHeight().px2dp.dp
     }
     MyTheme3 {
         Surface {
             Column(modifier = Modifier.fillMaxSize()) {
                 val colorScheme = MaterialTheme.colorScheme
-                TopAppBar(
-                    title = {
-                        Text(text = finalTitle)
-                    },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = colorScheme.primary,
-                        scrolledContainerColor = colorScheme.primary,
-                        navigationIconContentColor = colorScheme.onPrimary,
-                        titleContentColor = colorScheme.onPrimary,
-                        actionIconContentColor = colorScheme.onPrimary,
-                    )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(statusBarHeight)
+                        .background(colorScheme.primary)
                 )
+                if (title != null) {
+                    TopAppBar(
+                        title = {
+                            Text(text = title)
+                        },
+                        windowInsets = WindowInsets(0.dp),
+                        colors = TopAppBarDefaults.smallTopAppBarColors(
+                            containerColor = colorScheme.primary,
+                            scrolledContainerColor = colorScheme.primary,
+                            navigationIconContentColor = colorScheme.onPrimary,
+                            titleContentColor = colorScheme.onPrimary,
+                            actionIconContentColor = colorScheme.onPrimary,
+                        )
+                    )
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -105,7 +121,7 @@ fun MyTopAppBarScaffold3(title: String? = null, content: @Composable () -> Unit)
 @Preview
 @Composable
 fun MyTopAppBarScaffold3Preview() {
-    MyTopAppBarScaffold3 {
+    MyTopAppBarScaffold3("Sample") {
 
     }
 }

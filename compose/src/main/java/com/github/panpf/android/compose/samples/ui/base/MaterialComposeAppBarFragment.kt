@@ -63,7 +63,7 @@ abstract class MaterialComposeAppBarFragment : Fragment() {
         }
     }
 
-    open fun getTitle(): String {
+    open fun getTitle(): String? {
         return requireContext().resources.getString(R.string.app_name)
     }
 
@@ -75,9 +75,6 @@ abstract class MaterialComposeAppBarFragment : Fragment() {
 @Composable
 fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) {
     val context = LocalContext.current
-    val finalTitle = remember {
-        title ?: context.resources.getString(R.string.app_name)
-    }
     val statusBarHeight = remember {
         context.getStatusBarHeight().px2dp.dp
     }
@@ -92,13 +89,15 @@ fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) 
                             .height(statusBarHeight)
                             .background(colors.primary)
                     )
-                    TopAppBar(
-                        title = {
-                            Text(text = finalTitle)
-                        },
-                        backgroundColor = colors.primary,
-                        contentColor = colors.onPrimary
-                    )
+                    if (title != null) {
+                        TopAppBar(
+                            title = {
+                                Text(text = title)
+                            },
+                            backgroundColor = colors.primary,
+                            contentColor = colors.onPrimary
+                        )
+                    }
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -124,7 +123,7 @@ fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) 
 @Preview
 @Composable
 fun MyTopAppBarScaffoldPreview() {
-    MyTopAppBarScaffold {
+    MyTopAppBarScaffold("Sample") {
 
     }
 }
