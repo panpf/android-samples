@@ -49,8 +49,8 @@ import kotlinx.coroutines.launch
 
 class BottomSheetScaffoldFragment : MaterialComposeAppBarFragment() {
 
-    override fun getTitle(): String {
-        return "BottomSheetScaffold"
+    override fun getTitle(): String? {
+        return null
     }
 
     @Composable

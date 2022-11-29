@@ -30,8 +30,8 @@ import kotlinx.coroutines.launch
 
 class BackdropScaffoldFragment : MaterialComposeAppBarFragment() {
 
-    override fun getTitle(): String {
-        return "BackdropScaffold"
+    override fun getTitle(): String? {
+        return null
     }
 
     @Composable
