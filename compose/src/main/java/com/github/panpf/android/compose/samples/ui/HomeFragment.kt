@@ -16,11 +16,11 @@ class HomeFragment : Material3ComposeAppBarFragment() {
         val links = remember {
             listOf(
                 Link("Layout", R.id.action_global_layoutFragment),
-                Link("Lists and grids", R.id.action_global_listFragment),
-                Link("Image and graphics", R.id.action_global_imagesFragment),
-                Link("Accompanist Components", R.id.action_global_accompanistComponentsFragment),
+                Link("List Grid", R.id.action_global_listFragment),
+                Link("Images", R.id.action_global_imagesFragment),
                 Link("Material Components", R.id.action_global_materialComponentsFragment),
                 Link("Material3 Components", R.id.action_global_material3ComponentsFragment),
+                Link("Accompanist Components", R.id.action_global_accompanistComponentsFragment),
                 Link("Window", R.id.action_global_windowFragment),
                 Link("Modifier", R.id.action_global_modifierFragment),
                 Link("Animation（Implementation）"),   // todo Implementation
