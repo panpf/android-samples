@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.basic
+package com.github.panpf.android.compose.samples.ui.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

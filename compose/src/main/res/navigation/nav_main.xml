@@ -188,14 +188,14 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
 
-    <!-- components - basic -->
+    <!-- layout -->
 
     <fragment
-        android:id="@+id/basicComponentsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.BasicComponentsFragment" />
+        android:id="@+id/layoutFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.LayoutFragment" />
     <action
-        android:id="@+id/action_global_basicComponentsFragment"
-        app:destination="@id/basicComponentsFragment"
+        android:id="@+id/action_global_layoutFragment"
+        app:destination="@id/layoutFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -203,7 +203,7 @@
 
     <fragment
         android:id="@+id/boxFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.BoxFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.BoxFragment" />
     <action
         android:id="@+id/action_global_boxFragment"
         app:destination="@id/boxFragment"
@@ -214,7 +214,7 @@
 
     <fragment
         android:id="@+id/columnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.ColumnFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.ColumnFragment" />
     <action
         android:id="@+id/action_global_columnFragment"
         app:destination="@id/columnFragment"
@@ -224,19 +224,8 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/dialogFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.DialogFragment" />
-    <action
-        android:id="@+id/action_global_dialogFragment"
-        app:destination="@id/dialogFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
         android:id="@+id/constraintLayoutFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.ConstraintLayoutFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.ConstraintLayoutFragment" />
     <action
         android:id="@+id/action_global_constraintLayoutFragment"
         app:destination="@id/constraintLayoutFragment"
@@ -246,96 +235,8 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/imageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.ImageFragment" />
-    <action
-        android:id="@+id/action_global_imageFragment"
-        app:destination="@id/imageFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyColumnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyColumnFragment" />
-    <action
-        android:id="@+id/action_global_lazyColumnFragment"
-        app:destination="@id/lazyColumnFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyHorizontalGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyHorizontalGridFragment" />
-    <action
-        android:id="@+id/action_global_lazyHorizontalGridFragment"
-        app:destination="@id/lazyHorizontalGridFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyHorizontalStaggeredGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyHorizontalStaggeredGridFragment" />
-    <action
-        android:id="@+id/action_global_lazyHorizontalStaggeredGridFragment"
-        app:destination="@id/lazyHorizontalStaggeredGridFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyRowFragment" />
-    <action
-        android:id="@+id/action_global_lazyRowFragment"
-        app:destination="@id/lazyRowFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyVerticalGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyVerticalGridFragment" />
-    <action
-        android:id="@+id/action_global_lazyVerticalGridFragment"
-        app:destination="@id/lazyVerticalGridFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/lazyVerticalStaggeredGridFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.LazyVerticalStaggeredGridFragment" />
-    <action
-        android:id="@+id/action_global_lazyVerticalStaggeredGridFragment"
-        app:destination="@id/lazyVerticalStaggeredGridFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/popupFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.PopupFragment" />
-    <action
-        android:id="@+id/action_global_popupFragment"
-        app:destination="@id/popupFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
         android:id="@+id/rowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.RowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.RowFragment" />
     <action
         android:id="@+id/action_global_rowFragment"
         app:destination="@id/rowFragment"
@@ -346,7 +247,7 @@
 
     <fragment
         android:id="@+id/spacerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.basic.SpacerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.SpacerFragment" />
     <action
         android:id="@+id/action_global_spacerFragment"
         app:destination="@id/spacerFragment"
@@ -356,14 +257,61 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
 
-    <!-- components - extension -->
+    <!-- window -->
 
     <fragment
-        android:id="@+id/extensionComponentsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.ExtensionComponentsFragment" />
+        android:id="@+id/windowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.WindowFragment" />
     <action
-        android:id="@+id/action_global_extensionComponentsFragment"
-        app:destination="@id/extensionComponentsFragment"
+        android:id="@+id/action_global_windowFragment"
+        app:destination="@id/windowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/dialogFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.window.DialogFragment" />
+    <action
+        android:id="@+id/action_global_dialogFragment"
+        app:destination="@id/dialogFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/popupFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.window.PopupFragment" />
+    <action
+        android:id="@+id/action_global_popupFragment"
+        app:destination="@id/popupFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <!-- image -->
+
+    <fragment
+        android:id="@+id/imagesFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.ImagesFragment" />
+    <action
+        android:id="@+id/action_global_imagesFragment"
+        app:destination="@id/imagesFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.ImageFragment" />
+    <action
+        android:id="@+id/action_global_imageFragment"
+        app:destination="@id/imageFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -371,7 +319,7 @@
 
     <fragment
         android:id="@+id/asyncImageSketchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.AsyncImageSketchFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageSketchFragment" />
     <action
         android:id="@+id/action_global_asyncImageSketchFragment"
         app:destination="@id/asyncImageSketchFragment"
@@ -382,7 +330,7 @@
 
     <fragment
         android:id="@+id/asyncImageCoilFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.AsyncImageCoilFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageCoilFragment" />
     <action
         android:id="@+id/action_global_asyncImageCoilFragment"
         app:destination="@id/asyncImageCoilFragment"
@@ -391,9 +339,103 @@
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
+
+    <!-- list -->
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.ListFragment" />
+    <action
+        android:id="@+id/action_global_listFragment"
+        app:destination="@id/listFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyColumnFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyColumnFragment" />
+    <action
+        android:id="@+id/action_global_lazyColumnFragment"
+        app:destination="@id/lazyColumnFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyHorizontalGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyHorizontalGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyHorizontalGridFragment"
+        app:destination="@id/lazyHorizontalGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyHorizontalStaggeredGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyHorizontalStaggeredGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyHorizontalStaggeredGridFragment"
+        app:destination="@id/lazyHorizontalStaggeredGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyRowFragment" />
+    <action
+        android:id="@+id/action_global_lazyRowFragment"
+        app:destination="@id/lazyRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyVerticalGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyVerticalGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyVerticalGridFragment"
+        app:destination="@id/lazyVerticalGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/lazyVerticalStaggeredGridFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.list.LazyVerticalStaggeredGridFragment" />
+    <action
+        android:id="@+id/action_global_lazyVerticalStaggeredGridFragment"
+        app:destination="@id/lazyVerticalStaggeredGridFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <!-- components - Accompanist -->
+
+    <fragment
+        android:id="@+id/accompanistComponentsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.components.AccompanistComponentsFragment" />
+    <action
+        android:id="@+id/action_global_accompanistComponentsFragment"
+        app:destination="@id/accompanistComponentsFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
     <fragment
         android:id="@+id/flowRowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.FlowRowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.FlowRowFragment" />
     <action
         android:id="@+id/action_global_flowRowFragment"
         app:destination="@id/flowRowFragment"
@@ -404,7 +446,7 @@
 
     <fragment
         android:id="@+id/flowColumnFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.FlowColumnFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.FlowColumnFragment" />
     <action
         android:id="@+id/action_global_flowColumnFragment"
         app:destination="@id/flowColumnFragment"
@@ -415,7 +457,7 @@
 
     <fragment
         android:id="@+id/horizontalPagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.HorizontalPagerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.HorizontalPagerFragment" />
     <action
         android:id="@+id/action_global_horizontalPagerFragment"
         app:destination="@id/horizontalPagerFragment"
@@ -426,7 +468,7 @@
 
     <fragment
         android:id="@+id/swipeRefreshPagingFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.SwipeRefreshPagingFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.SwipeRefreshPagingFragment" />
     <action
         android:id="@+id/action_global_swipeRefreshPagingFragment"
         app:destination="@id/swipeRefreshPagingFragment"
@@ -437,7 +479,7 @@
 
     <fragment
         android:id="@+id/verticalPagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.VerticalPagerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.VerticalPagerFragment" />
     <action
         android:id="@+id/action_global_verticalPagerFragment"
         app:destination="@id/verticalPagerFragment"
@@ -448,7 +490,7 @@
 
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.components.extension.WebViewFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.components.accompanist.WebViewFragment" />
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"

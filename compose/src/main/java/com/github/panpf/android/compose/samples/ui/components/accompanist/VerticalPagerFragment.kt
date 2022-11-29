@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.extension
+package com.github.panpf.android.compose.samples.ui.components.accompanist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.extension
+package com.github.panpf.android.compose.samples.ui.components.accompanist
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box

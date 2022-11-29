@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components
+package com.github.panpf.android.compose.samples.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -9,10 +9,10 @@ import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 
-class BasicComponentsFragment : Material3ComposeAppBarFragment() {
+class LayoutFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Basic Components"
+        return "Layout"
     }
 
     @Composable
@@ -21,16 +21,9 @@ class BasicComponentsFragment : Material3ComposeAppBarFragment() {
             listOf(
                 Link("Box", R.id.action_global_boxFragment),
                 Link("Column", R.id.action_global_columnFragment),
-                Link("Dialog", R.id.action_global_dialogFragment),
                 Link("ConstraintLayout", R.id.action_global_constraintLayoutFragment),
-                Link("Image", R.id.action_global_imageFragment),
-                Link("LazyColumn", R.id.action_global_lazyColumnFragment),
-                Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
-                Link("LazyHorizontalStaggeredGrid", R.id.action_global_lazyHorizontalStaggeredGridFragment),
-                Link("LazyRow", R.id.action_global_lazyRowFragment),
-                Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
-                Link("LazyVerticalStaggeredGrid", R.id.action_global_lazyVerticalStaggeredGridFragment),
-                Link("Popup", R.id.action_global_popupFragment),
+                Link("FlowColumn", R.id.action_global_flowColumnFragment),
+                Link("FlowRow", R.id.action_global_flowRowFragment),
                 Link("Row", R.id.action_global_rowFragment),
                 Link("Spacer", R.id.action_global_spacerFragment),
             )

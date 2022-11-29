@@ -1,17 +1,22 @@
-package com.github.panpf.android.compose.samples.ui.components.basic
+package com.github.panpf.android.compose.samples.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,34 +40,33 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class LazyColumnFragment : Material3ComposeAppBarFragment() {
+class LazyRowFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "LazyColumn"
+        return "LazyRow"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            LazyColumnSample(allExpandFlow)
-            LazyColumnContentPaddingSample(allExpandFlow)
-            LazyColumnItemSpacedSample(allExpandFlow)
-            LazyColumnReverseLayoutSample(allExpandFlow)
-            LazyColumnVerticalArrangementSample(allExpandFlow)
-            LazyColumnHorizontalAlignmentSample(allExpandFlow)
-            LazyColumnUserScrollEnabledSample(allExpandFlow)
-            LazyColumnUserVisibleItemIndexSample(allExpandFlow)
-            LazyColumnScrollInProgressSample(allExpandFlow)
-            LazyColumnAnimateScrollToItemSample(allExpandFlow)
-            LazyColumnAnimateItemPlacementSample(allExpandFlow)
-            LazyColumnLayoutInfoSample(allExpandFlow)
-            LazyColumnStickerHeaderSample(allExpandFlow)
-            LazyColumnMultiTypeSample(allExpandFlow)
+            LazyRowSample(allExpandFlow)
+            LazyRowContentPaddingSample(allExpandFlow)
+            LazyRowItemSpacedSample(allExpandFlow)
+            LazyRowReverseLayoutSample(allExpandFlow)
+            LazyRowHorizontalArrangementSample(allExpandFlow)
+            LazyRowVerticalAlignmentSample(allExpandFlow)
+            LazyRowUserScrollEnabledSample(allExpandFlow)
+            LazyRowUserVisibleItemIndexSample(allExpandFlow)
+            LazyRowScrollInProgressSample(allExpandFlow)
+            LazyRowAnimateScrollToItemSample(allExpandFlow)
+            LazyRowAnimateItemPlacementSample(allExpandFlow)
+            LazyRowLayoutInfoSample(allExpandFlow)
+            LazyRowStickerHeaderSample(allExpandFlow)
+            LazyRowMultiTypeSample(allExpandFlow)
         }
     }
 }
@@ -70,18 +74,17 @@ class LazyColumnFragment : Material3ComposeAppBarFragment() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem3(title = "LazyColumn", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -98,25 +101,24 @@ private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnSamplePreview() {
-    LazyColumnSample(remember { MutableStateFlow(true) })
+private fun LazyRowSamplePreview() {
+    LazyRowSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem3(title = "LazyColumn（contentPadding）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（contentPadding）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(10.dp)
@@ -134,28 +136,27 @@ private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnContentPaddingSamplePreview() {
-    LazyColumnContentPaddingSample(remember { MutableStateFlow(true) })
+private fun LazyRowContentPaddingSamplePreview() {
+    LazyRowContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem3(title = "LazyColumn（ItemSpaced）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（ItemSpaced）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             itemsIndexed(list) { index, item ->
                 ElevatedAssistChip(
@@ -170,25 +171,24 @@ private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnItemSpacedSamplePreview() {
-    LazyColumnItemSpacedSample(remember { MutableStateFlow(true) })
+private fun LazyRowItemSpacedSamplePreview() {
+    LazyRowItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem3(title = "LazyColumn（reverseLayout）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（reverseLayout）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
@@ -206,36 +206,39 @@ private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnReverseLayoutSamplePreview() {
-    LazyColumnReverseLayoutSample(remember { MutableStateFlow(true) })
+private fun LazyRowReverseLayoutSamplePreview() {
+    LazyRowReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
-    ExpandableItem3(title = "LazyColumn（verticalArrangement）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+    ExpandableItem3(title = "LazyRow（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
+        Column {
             listOf(
-                Arrangement.Top to "Top",
+                Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
-                Arrangement.Bottom to "Bottom",
+                Arrangement.End to "End",
                 null to "Space",
-                Arrangement.SpaceBetween to "Space\nBetween",
-                Arrangement.SpaceAround to "Space\nAround",
-                Arrangement.SpaceEvenly to "Space\nEvenly",
-            ).forEach { (arrangement, name) ->
+                Arrangement.SpaceBetween to "SpaceBetween",
+                Arrangement.SpaceAround to "SpaceAround",
+                Arrangement.SpaceEvenly to "SpaceEvenly",
+            ).forEachIndexed { index, (arrangement, name) ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
                 Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
-                    LazyColumn(
+                    Text(text = name)
+                    LazyRow(
                         modifier = Modifier
-                            .height(240.dp)
+                            .fillMaxWidth()
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         itemsIndexed(list) { index, item ->
                             ElevatedAssistChip(
@@ -253,73 +256,74 @@ private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnVerticalArrangementSamplePreview() {
-    LazyColumnVerticalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyRowHorizontalArrangementSamplePreview() {
+    LazyRowHorizontalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    val list = remember {
-        listOf("数码", "汽车", "摄影", "舞蹈")
-    }
-    ExpandableItem3(title = "LazyColumn（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                Alignment.Start to "Start",
-                Alignment.CenterHorizontally to "Center\nHorizontally",
-                Alignment.End to "End",
-            ).forEach { (arrangement, name) ->
-                Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
-                    LazyColumn(
-                        modifier = Modifier
-                            .height(240.dp)
-                            .width(100.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        horizontalAlignment = arrangement
-                    ) {
-                        itemsIndexed(list) { index, item ->
-                            ElevatedAssistChip(
-                                onClick = { },
-                                shape = RoundedCornerShape(50),
-                                label = { Text(text = "$index:$item") }
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun LazyColumnHorizontalAlignmentSamplePreview() {
-    LazyColumnHorizontalAlignmentSample(remember { MutableStateFlow(true) })
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
             "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
         )
     }
-    ExpandableItem3(
-        title = "LazyColumn（userScrollEnabled - false）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（verticalAlignment）", allExpandFlow, padding = 20.dp) {
+        Column {
+            listOf(
+                Alignment.Top to "Top",
+                Alignment.CenterVertically to "CenterVertically",
+                Alignment.Bottom to "Bottom",
+            ).forEachIndexed { index, (arrangement, name) ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                Column {
+                    Text(text = name)
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                            .padding(2.dp),
+                        verticalAlignment = arrangement
+                    ) {
+                        itemsIndexed(list) { index, item ->
+                            ElevatedAssistChip(
+                                onClick = { },
+                                shape = RoundedCornerShape(50),
+                                label = { Text(text = "$index:$item") }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyRowVerticalAlignmentSamplePreview() {
+    LazyRowVerticalAlignmentSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    ExpandableItem3(title = "LazyRow（userScrollEnabled - false）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false,
@@ -329,8 +333,7 @@ private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
                 ElevatedAssistChip(
                     onClick = { },
                     shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
+                    label = { Text(text = "$index:$item") })
             }
         }
     }
@@ -338,14 +341,14 @@ private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnUserScrollEnabledSamplePreview() {
-    LazyColumnUserScrollEnabledSample(remember { MutableStateFlow(true) })
+private fun LazyRowUserScrollEnabledSamplePreview() {
+    LazyRowUserScrollEnabledSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -356,12 +359,11 @@ private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
-    ExpandableItem3(title = "LazyColumn（firstVisibleItemIndex）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（firstVisibleItemIndex）", allExpandFlow, padding = 20.dp) {
         Column {
-            LazyColumn(
+            LazyRow(
                 modifier = Modifier
-                    .height(240.dp)
-                    .width(100.dp)
+                    .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
@@ -370,8 +372,7 @@ private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                     ElevatedAssistChip(
                         onClick = { },
                         shape = RoundedCornerShape(50),
-                        label = { Text(text = "$index:$item") }
-                    )
+                        label = { Text(text = "$index:$item") })
                 }
             }
             Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
@@ -381,14 +382,14 @@ private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnUserVisibleItemIndexSamplePreview() {
-    LazyColumnUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
+private fun LazyRowUserVisibleItemIndexSamplePreview() {
+    LazyRowUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -397,12 +398,11 @@ private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
-    ExpandableItem3(title = "LazyColumn（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
-            LazyColumn(
+            LazyRow(
                 modifier = Modifier
-                    .height(240.dp)
-                    .width(100.dp)
+                    .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
@@ -422,14 +422,14 @@ private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnScrollInProgressSamplePreview() {
-    LazyColumnScrollInProgressSample(remember { MutableStateFlow(true) })
+private fun LazyRowScrollInProgressSamplePreview() {
+    LazyRowScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -438,8 +438,8 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem3(title = "LazyColumn（animateScrollToItem）", allExpandFlow, padding = 20.dp) {
-        Column {
+    ExpandableItem3(title = "LazyRow（animateScrollToItem）", allExpandFlow, padding = 20.dp) {
+        Row {
             IconButton(
                 onClick = {
                     val firstVisibleItemIndex = lazyListState.firstVisibleItemIndex
@@ -449,19 +449,19 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_up),
-                    contentDescription = "back"
+                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    contentDescription = "before"
                 )
             }
-            LazyColumn(
+            LazyRow(
                 modifier = Modifier
-                    .height(240.dp)
-                    .width(100.dp)
+                    .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp),
+                    .padding(2.dp)
+                    .weight(1f),
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
@@ -487,11 +487,11 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
-                    contentDescription = "forward",
+                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    contentDescription = "next",
                 )
             }
         }
@@ -500,14 +500,14 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnAnimateScrollToItemSamplePreview() {
-    LazyColumnAnimateScrollToItemSample(remember { MutableStateFlow(true) })
+private fun LazyRowAnimateScrollToItemSamplePreview() {
+    LazyRowAnimateScrollToItemSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         mutableStateOf(
             listOf(
@@ -516,15 +516,15 @@ private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
             ).mapIndexed { index, item -> "$index:$item" }
         )
     }
-    ExpandableItem3(title = "LazyColumn（animateItemPlacement）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（animateItemPlacement）", allExpandFlow, padding = 20.dp) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = "点击 item 删除它，然后触发动画")
-            LazyColumn(
+            LazyRow(
                 modifier = Modifier
-                    .height(240.dp)
-                    .width(100.dp)
+                    .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp)
+                    .padding(2.dp),
+                contentPadding = PaddingValues(10.dp)
             ) {
                 itemsIndexed(
                     items = list.value,
@@ -550,14 +550,14 @@ private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnAnimateItemPlacementSamplePreview() {
-    LazyColumnAnimateItemPlacementSample(remember { MutableStateFlow(true) })
+private fun LazyRowAnimateItemPlacementSamplePreview() {
+    LazyRowAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -566,13 +566,12 @@ private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     }
     val lazyListState = rememberLazyListState()
     val layoutInfoState = remember { derivedStateOf { lazyListState.layoutInfo } }
-    ExpandableItem3(title = "LazyColumn（layoutInfo）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyRow（layoutInfo）", allExpandFlow, padding = 20.dp) {
         Column {
-            LazyColumn(
+            LazyRow(
                 state = lazyListState,
                 modifier = Modifier
-                    .height(240.dp)
-                    .width(100.dp)
+                    .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
@@ -621,14 +620,14 @@ private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnLayoutInfoSamplePreview() {
-    LazyColumnLayoutInfoSample(remember { MutableStateFlow(true) })
+private fun LazyRowLayoutInfoSamplePreview() {
+    LazyRowLayoutInfoSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
     val groupList = remember {
         listOf(
             "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
@@ -639,24 +638,25 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
             groupName to strings
         }
     }
-    ExpandableItem3(title = "LazyColumn（stickyHeader）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（stickyHeader）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
+                .height(50.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
             groupList.forEachIndexed { groupIndex, group ->
                 stickyHeader {
-                    Column(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .width(70.dp)
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
                     ) {
                         Text(
                             text = group.first,
-                            modifier = Modifier.padding(10.dp),
+                            modifier = Modifier.align(Alignment.Center),
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -665,7 +665,9 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
                     ElevatedAssistChip(
                         onClick = { },
                         shape = RoundedCornerShape(50),
-                        label = { Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item") }
+                        label = {
+                            Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item")
+                        }
                     )
                 }
             }
@@ -675,14 +677,14 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnStickerHeaderSamplePreview() {
-    LazyColumnStickerHeaderSample(remember { MutableStateFlow(true) })
+private fun LazyRowStickerHeaderSamplePreview() {
+    LazyRowStickerHeaderSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf<Any>(
             "数码", R.drawable.ic_arrow_left, "汽车", "摄影", R.drawable.ic_arrow_right,
@@ -691,11 +693,10 @@ private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             R.drawable.ic_games, "时尚"
         )
     }
-    ExpandableItem3(title = "LazyColumn（MultiType）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
+    ExpandableItem3(title = "LazyRow（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyRow(
             modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
+                .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
         ) {
@@ -730,6 +731,6 @@ private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyColumnMultiTypeSamplePreview() {
-    LazyColumnMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyRowMultiTypeSamplePreview() {
+    LazyRowMultiTypeSample(remember { MutableStateFlow(true) })
 }

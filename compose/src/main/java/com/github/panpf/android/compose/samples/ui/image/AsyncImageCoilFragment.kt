@@ -1,5 +1,8 @@
-package com.github.panpf.android.compose.samples.ui.components.extension
+package com.github.panpf.android.compose.samples.ui.image
 
+import android.content.Context
+import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -23,6 +26,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Precision
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
@@ -37,46 +43,43 @@ import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColor
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
-import com.github.panpf.sketch.compose.AsyncImage
-import com.github.panpf.sketch.fetch.newAssetUri
-import com.github.panpf.sketch.fetch.newResourceUri
-import com.github.panpf.sketch.request.DisplayRequest
-import com.github.panpf.sketch.resize.Precision
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AsyncImageSketchFragment : Material3ComposeAppBarFragment() {
+class AsyncImageCoilFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "AsyncImage - Sketch"
+        return "AsyncImage - Coil"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            SketchAsyncImageResourceSample(allExpandFlow)
-            SketchAsyncImageAssetSample(allExpandFlow)
-            SketchAsyncImageHttpSample(allExpandFlow)
-            SketchAsyncImageAlignmentSample(allExpandFlow)
-            SketchAsyncImageContentScaleSample(allExpandFlow)
-            SketchAsyncImageAlphaSample(allExpandFlow)
-            SketchAsyncImageClipSample(allExpandFlow)
-            SketchAsyncImageBorderSample(allExpandFlow)
-            SketchAsyncImageColorFilterSample(allExpandFlow)
-            SketchAsyncImageBlurSample(allExpandFlow)
+            CoilAsyncImageResourceSample(allExpandFlow)
+            CoilAsyncImageAssetSample(allExpandFlow)
+            CoilAsyncImageHttpSample(allExpandFlow)
+            CoilAsyncImageAlignmentSample(allExpandFlow)
+            CoilAsyncImageContentScaleSample(allExpandFlow)
+            CoilAsyncImageAlphaSample(allExpandFlow)
+            CoilAsyncImageClipSample(allExpandFlow)
+            CoilAsyncImageBorderSample(allExpandFlow)
+            CoilAsyncImageColorFilterSample(allExpandFlow)
+            CoilAsyncImageBlurSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-private fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（Resource）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
-            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
-                placeholder(R.drawable.im_placeholder)
-            },
+            model = ImageRequest.Builder(context)
+                .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                .placeholder(R.drawable.im_placeholder)
+                .build(),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
         )
@@ -85,18 +88,20 @@ private fun SketchAsyncImageResourceSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageResourceSamplePreview() {
-    SketchAsyncImageResourceSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageResourceSamplePreview() {
+    CoilAsyncImageResourceSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（Asset）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
-            request = DisplayRequest(LocalContext.current, newAssetUri("dog.jpg")) {
-                placeholder(R.drawable.im_placeholder)
-            },
+            model = ImageRequest.Builder(context)
+                .data(newCoilAssetUri("dog.jpg"))
+                .placeholder(R.drawable.im_placeholder)
+                .build(),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
         )
@@ -105,18 +110,20 @@ private fun SketchAsyncImageAssetSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageAssetSamplePreview() {
-    SketchAsyncImageAssetSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageAssetSamplePreview() {
+    CoilAsyncImageAssetSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（Http）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
-            request = DisplayRequest(LocalContext.current, httpPhotoUrl) {
-                placeholder(R.drawable.im_placeholder)
-            },
+            model = ImageRequest.Builder(context)
+                .data(httpPhotoUrl)
+                .placeholder(R.drawable.im_placeholder)
+                .build(),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
         )
@@ -125,15 +132,16 @@ private fun SketchAsyncImageHttpSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageHttpSamplePreview() {
-    SketchAsyncImageHttpSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageHttpSamplePreview() {
+    CoilAsyncImageHttpSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
     val photo = horPhoto
-    ExpandableItem3(title = "SketchAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Alignment.TopStart to "TopStart",
@@ -155,20 +163,15 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
                     val targetSize = photo.calculateTargetSize(viewSizePx.toInt(), false)
                     AsyncImage(
-                        request = DisplayRequest(
-                            LocalContext.current,
-                            newResourceUri(photo.resId)
-                        ) {
-                            placeholder(R.drawable.im_placeholder)
-                            resize(
-                                targetSize.width.toInt(),
-                                targetSize.height.toInt(),
-                                Precision.EXACTLY
-                            )
-                        },
+                        model = ImageRequest.Builder(context)
+                            .data(context.newCoilResourceUri(photo.resId))
+                            .placeholder(R.drawable.im_placeholder)
+                            .size(targetSize.width.toInt(), targetSize.height.toInt())
+                            .precision(Precision.EXACT)
+                            .build(),
                         contentDescription = "",
                         modifier = Modifier
-                            .size(viewSize)
+                            .size(110.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         contentScale = ContentScale.None,
@@ -182,13 +185,14 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageAlignmentSamplePreview() {
-    SketchAsyncImageAlignmentSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageAlignmentSamplePreview() {
+    CoilAsyncImageAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+private fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
     val items = remember {
         val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
         val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
@@ -208,7 +212,7 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
             ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
         )
     }
-    ExpandableItem3(title = "SketchAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
         Column {
             items.forEachIndexed { index, items ->
                 if (index != 0) {
@@ -234,20 +238,15 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                                 val targetSize = photoItem.photo
                                     .calculateTargetSize(viewSizePx.toInt(), photoItem.big)
                                 AsyncImage(
-                                    request = DisplayRequest(
-                                        LocalContext.current,
-                                        newResourceUri(photoItem.photo.resId)
-                                    ) {
-                                        placeholder(R.drawable.im_placeholder)
-                                        resize(
-                                            targetSize.width.toInt(),
-                                            targetSize.height.toInt(),
-                                            Precision.EXACTLY
-                                        )
-                                    },
+                                    model = ImageRequest.Builder(context)
+                                        .data(context.newCoilResourceUri(photoItem.photo.resId))
+                                        .placeholder(R.drawable.im_placeholder)
+                                        .size(targetSize.width.toInt(), targetSize.height.toInt())
+                                        .precision(Precision.EXACT)
+                                        .build(),
                                     contentDescription = "",
                                     modifier = Modifier
-                                        .size(viewSize)
+                                        .size(110.dp)
                                         .background(MaterialTheme.colorScheme.primaryContainer)
                                         .padding(2.dp),
                                     contentScale = items.contentScale,
@@ -263,18 +262,20 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageContentScaleSamplePreview() {
-    SketchAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageContentScaleSamplePreview() {
+    CoilAsyncImageContentScaleSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（alpha）", allExpandFlow, padding = 20.dp) {
         AsyncImage(
-            request = DisplayRequest(LocalContext.current, newResourceUri(R.drawable.dog_hor)) {
-                placeholder(R.drawable.im_placeholder)
-            },
+            model = ImageRequest.Builder(context)
+                .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                .placeholder(R.drawable.im_placeholder)
+                .build(),
             contentDescription = "",
             modifier = Modifier.size(200.dp),
             alpha = 0.5f
@@ -284,22 +285,21 @@ private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageAlphaSamplePreview() {
-    SketchAsyncImageAlphaSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageAlphaSamplePreview() {
+    CoilAsyncImageAlphaSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（shape）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -310,12 +310,10 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -326,12 +324,10 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -344,22 +340,21 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageClipSamplePreview() {
-    SketchAsyncImageClipSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageClipSamplePreview() {
+    CoilAsyncImageClipSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（border）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（border）", allExpandFlow, padding = 20.dp) {
         Row {
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -370,12 +365,10 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -387,12 +380,10 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
 
             AsyncImage(
-                request = DisplayRequest(
-                    LocalContext.current,
-                    newResourceUri(R.drawable.dog_hor)
-                ) {
-                    placeholder(R.drawable.im_placeholder)
-                },
+                model = ImageRequest.Builder(context)
+                    .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                    .placeholder(R.drawable.im_placeholder)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
@@ -406,24 +397,23 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageBorderSamplePreview() {
-    SketchAsyncImageBorderSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageBorderSamplePreview() {
+    CoilAsyncImageBorderSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（colorFilter）", allExpandFlow, padding = 20.dp) {
         Row {
             Column {
                 Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
                 AsyncImage(
-                    request = DisplayRequest(
-                        LocalContext.current,
-                        newResourceUri(R.drawable.dog_hor)
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                    },
+                    model = ImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = blackWhiteColorFilter
@@ -433,12 +423,10 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column {
                 Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
                 AsyncImage(
-                    request = DisplayRequest(
-                        LocalContext.current,
-                        newResourceUri(R.drawable.dog_hor)
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                    },
+                    model = ImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = inversionOfNegativeColorFilter
@@ -448,12 +436,10 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column {
                 Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
                 AsyncImage(
-                    request = DisplayRequest(
-                        LocalContext.current,
-                        newResourceUri(R.drawable.dog_hor)
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                    },
+                    model = ImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
                     contentDescription = "",
                     modifier = Modifier.size(100.dp),
                     colorFilter = newColorFilterByContrastAndBrightness()
@@ -465,25 +451,24 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageColorFilterSamplePreview() {
-    SketchAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageColorFilterSamplePreview() {
+    CoilAsyncImageColorFilterSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "SketchAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
+private fun CoilAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
+    val context = LocalContext.current
+    ExpandableItem3(title = "CoilAsyncImage（blur）", allExpandFlow, padding = 20.dp) {
         Column {
             Text(text = "仅支持 Android 12 以上版本")
             Spacer(modifier = Modifier.size(10.dp))
             Row {
                 AsyncImage(
-                    request = DisplayRequest(
-                        LocalContext.current,
-                        newResourceUri(R.drawable.dog_hor)
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                    },
+                    model = ImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
                     modifier = Modifier
@@ -495,12 +480,10 @@ private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
                 )
                 Spacer(modifier = Modifier.size(10.dp))
                 AsyncImage(
-                    request = DisplayRequest(
-                        LocalContext.current,
-                        newResourceUri(R.drawable.dog_hor)
-                    ) {
-                        placeholder(R.drawable.im_placeholder)
-                    },
+                    model = ImageRequest.Builder(context)
+                        .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                        .placeholder(R.drawable.im_placeholder)
+                        .build(),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
                     modifier = Modifier
@@ -517,6 +500,14 @@ private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SketchAsyncImageBlurSamplePreview() {
-    SketchAsyncImageBlurSample(remember { MutableStateFlow(true) })
+private fun CoilAsyncImageBlurSamplePreview() {
+    CoilAsyncImageBlurSample(remember { MutableStateFlow(true) })
+}
+
+private fun Context.newCoilResourceUri(@DrawableRes id: Int): Uri {
+    return Uri.parse("android.resource://${packageName}/${id}")
+}
+
+private fun newCoilAssetUri(@Suppress("SameParameterValue") path: String): Uri {
+    return Uri.parse("file://filled/android_asset/$path")
 }

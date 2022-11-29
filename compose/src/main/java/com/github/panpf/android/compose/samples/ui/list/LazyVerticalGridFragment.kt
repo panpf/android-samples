@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.basic
+package com.github.panpf.android.compose.samples.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,7 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.FilledTonalIconButton
@@ -42,49 +40,50 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
-class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
+class LazyVerticalGridFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "LazyHorizontalGrid"
+        return "LazyVerticalGrid"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            LazyHorizontalGridSample(allExpandFlow)
-            LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow)
-            LazyHorizontalGridContentPaddingSample(allExpandFlow)
-            LazyHorizontalGridItemSpacedSample(allExpandFlow)
-            LazyHorizontalGridReverseLayoutSample(allExpandFlow)
-            LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
-            LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
-            LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
-            LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
-            LazyHorizontalGridScrollInProgressSample(allExpandFlow)
-            LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
-            LazyHorizontalGridSpanSample(allExpandFlow)
-            LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
-            LazyHorizontalGridLayoutInfoSample(allExpandFlow)
-            LazyHorizontalGridMultiTypeSample(allExpandFlow)
+            LazyVerticalGridSample(allExpandFlow)
+            LazyVerticalGridColumnsDynamicCellsSample(allExpandFlow)
+            LazyVerticalGridContentPaddingSample(allExpandFlow)
+            LazyVerticalGridItemSpacedSample(allExpandFlow)
+            LazyVerticalGridReverseLayoutSample(allExpandFlow)
+            LazyVerticalGridVerticalArrangementSample(allExpandFlow)
+            LazyVerticalGridHorizontalArrangementSample(allExpandFlow)
+            LazyVerticalGridUserScrollEnabledSample(allExpandFlow)
+            LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow)
+            LazyVerticalGridScrollInProgressSample(allExpandFlow)
+            LazyVerticalGridAnimateScrollToItemSample(allExpandFlow)
+            LazyVerticalGridSpanSample(allExpandFlow)
+            LazyVerticalGridAnimateItemPlacementSample(allExpandFlow)
+            LazyVerticalGridLayoutInfoSample(allExpandFlow)
+            LazyVerticalGridMultiTypeSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    ExpandableItem3(title = "LazyHorizontalGrid", allExpandFlow, padding = 20.dp) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+    ExpandableItem3(title = "LazyVerticalGrid", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -108,39 +107,29 @@ private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridSamplePreview() {
-    LazyHorizontalGridSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridSamplePreview() {
+    LazyVerticalGridSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
-        title = "LazyHorizontalGrid（rows - AdaptiveCells）",
+        title = "LazyVerticalGrid（columns - AdaptiveCells）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            IconButton(
-                onClick = {
-                    if (gridHeight.value > 80.dp) {
-                        gridHeight.value -= 60.dp
-                    }
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Image(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
-            }
-            LazyHorizontalGrid(
-                rows = GridCells.Adaptive(80.dp),
+        Column(modifier = Modifier.fillMaxWidth()) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(80.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(gridHeight.value)
+                    .width(gridHeight.value)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
                 items(count = 50) { index ->
                     Box(
@@ -157,14 +146,30 @@ private fun LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Bool
                     }
                 }
             }
-            IconButton(
-                onClick = {
-                    gridHeight.value += 60.dp
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+            Row(modifier = Modifier.fillMaxWidth()) {
+                IconButton(
+                    onClick = {
+                        if (gridHeight.value > 80.dp) {
+                            gridHeight.value -= 60.dp
+                        }
+                    }, modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Image(
+                        painterResource(id = R.drawable.ic_subtract),
+                        contentDescription = "subtract"
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        gridHeight.value += 60.dp
+                    }, modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                }
             }
         }
     }
@@ -172,24 +177,24 @@ private fun LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridColumnsDynamicCellsSamplePreview() {
-    LazyHorizontalGridColumnsDynamicCellsSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridColumnsDynamicCellsSamplePreview() {
+    LazyVerticalGridColumnsDynamicCellsSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（contentPadding）",
+        title = "LazyVerticalGrid（contentPadding）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
@@ -214,24 +219,24 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridContentPaddingSamplePreview() {
-    LazyHorizontalGridContentPaddingSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridContentPaddingSamplePreview() {
+    LazyVerticalGridContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（ItemSpaced）",
+        title = "LazyVerticalGrid（ItemSpaced）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -257,24 +262,24 @@ private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridItemSpacedSamplePreview() {
-    LazyHorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridItemSpacedSamplePreview() {
+    LazyVerticalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（reverseLayout）",
+        title = "LazyVerticalGrid（reverseLayout）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
@@ -299,44 +304,41 @@ private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridReverseLayoutSamplePreview() {
-    LazyHorizontalGridReverseLayoutSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridReverseLayoutSamplePreview() {
+    LazyVerticalGridReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（horizontalArrangement）",
+        title = "LazyVerticalGrid（verticalArrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
-                Arrangement.Start to "Start",
+                Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
-                Arrangement.End to "End",
+                Arrangement.Bottom to "Bottom",
                 null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
+            ).forEach { (arrangement, name) ->
                 Column {
                     Text(text = name)
-                    LazyHorizontalGrid(
-                        rows = GridCells.Fixed(2),
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
+                            .width(110.dp)
+                            .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
                     ) {
-                        items(count = 9) { index ->
+                        items(count = 5) { index ->
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -359,42 +361,39 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
-    LazyHorizontalGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridVerticalArrangementSamplePreview() {
+    LazyVerticalGridVerticalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（verticalArrangement）",
+        title = "LazyVerticalGrid（horizontalArrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
-                Arrangement.Top to "Top",
+                Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
-                Arrangement.Bottom to "Bottom",
+                Arrangement.End to "End",
                 null to "Space",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
+            ).forEach { (arrangement, name) ->
                 Column {
                     Text(text = name)
-                    LazyHorizontalGrid(
-                        rows = GridCells.Fixed(1),
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(1),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
+                            .width(110.dp)
+                            .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
                     ) {
                         items(count = 9) { index ->
                             Box(
@@ -418,24 +417,24 @@ private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridVerticalArrangementSamplePreview() {
-    LazyHorizontalGridVerticalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridHorizontalArrangementSamplePreview() {
+    LazyVerticalGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（userScrollEnabled = false）",
+        title = "LazyVerticalGrid（userScrollEnabled = false）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false
@@ -460,29 +459,29 @@ private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolea
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
-    LazyHorizontalGridUserScrollEnabledSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridUserScrollEnabledSamplePreview() {
+    LazyVerticalGridUserScrollEnabledSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val lazyListState = rememberLazyGridState(3)
+    val lazyListState = rememberLazyGridState(4)
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
     ExpandableItem3(
-        title = "LazyHorizontalGrid（firstVisibleItemIndex）",
+        title = "LazyVerticalGrid（firstVisibleItemIndex）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column {
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
@@ -509,27 +508,27 @@ private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boo
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
-    LazyHorizontalGridUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridUserVisibleItemIndexSamplePreview() {
+    LazyVerticalGridUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val lazyListState = rememberLazyGridState(3)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
     ExpandableItem3(
-        title = "LazyHorizontalGrid（isScrollInProgress）",
+        title = "LazyVerticalGrid（isScrollInProgress）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column {
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
@@ -556,43 +555,43 @@ private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridScrollInProgressSamplePreview() {
-    LazyHorizontalGridScrollInProgressSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridScrollInProgressSamplePreview() {
+    LazyVerticalGridScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val lazyListState = rememberLazyGridState(3)
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
-        title = "LazyHorizontalGrid（animateScrollToItem）",
+        title = "LazyVerticalGrid（animateScrollToItem）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Row {
+        Column {
             IconButton(
                 onClick = {
                     val firstVisibleItemIndex = lazyListState.firstVisibleItemIndex
-                    if (firstVisibleItemIndex >= 3) {
+                    if (firstVisibleItemIndex >= 4) {
                         coroutineScope.launch {
-                            lazyListState.animateScrollToItem(firstVisibleItemIndex - 3)
+                            lazyListState.animateScrollToItem(firstVisibleItemIndex - 4)
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "before"
                 )
             }
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
                 modifier = Modifier
-                    .weight(1f)
-                    .height(200.dp)
+                    .fillMaxWidth()
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
@@ -615,16 +614,16 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
             IconButton(
                 onClick = {
                     val firstVisibleItemIndex = lazyListState.firstVisibleItemIndex
-                    if (firstVisibleItemIndex < 50 - 3) {
+                    if (firstVisibleItemIndex < 50 - 4) {
                         coroutineScope.launch {
-                            lazyListState.animateScrollToItem(firstVisibleItemIndex + 3)
+                            lazyListState.animateScrollToItem(firstVisibleItemIndex + 4)
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "next",
                 )
             }
@@ -634,20 +633,20 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
-    LazyHorizontalGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridAnimateScrollToItemSamplePreview() {
+    LazyVerticalGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    ExpandableItem3(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+    ExpandableItem3(title = "LazyVerticalGrid（span）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -669,8 +668,8 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
             ) { index ->
                 Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .width(80.dp)
+                        .fillMaxWidth()
+                        .height(80.dp)
                         .background(colors[index % colors.size])
                 ) {
                     Text(
@@ -686,14 +685,14 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridSpanSamplePreview() {
-    LazyHorizontalGridSpanSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridSpanSamplePreview() {
+    LazyVerticalGridSpanSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = remember {
         mutableStateOf(
@@ -705,18 +704,19 @@ private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boo
         )
     }
     ExpandableItem3(
-        title = "LazyHorizontalGrid（animateItemPlacement）",
+        title = "LazyVerticalGrid（animateItemPlacement）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = "点击 item 删除它，然后触发动画")
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp)
                     .padding(2.dp)
             ) {
                 itemsIndexed(
@@ -752,24 +752,24 @@ private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boo
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
-    LazyHorizontalGridAnimateItemPlacementSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridAnimateItemPlacementSamplePreview() {
+    LazyVerticalGridAnimateItemPlacementSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
-    ExpandableItem3(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyVerticalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
         Column {
-            LazyHorizontalGrid(
+            LazyVerticalGrid(
                 state = lazyGridState,
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
@@ -825,13 +825,13 @@ private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridLayoutInfoSamplePreview() {
-    LazyHorizontalGridLayoutInfoSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridLayoutInfoSamplePreview() {
+    LazyVerticalGridLayoutInfoSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = buildList<Any> {
         repeat(49) {
@@ -845,12 +845,12 @@ private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         set(18, R.drawable.ic_check)
         set(40, R.drawable.ic_info)
     }.toList()
-    ExpandableItem3(title = "LazyHorizontalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+    ExpandableItem3(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -905,6 +905,6 @@ private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridMultiTypeSamplePreview() {
-    LazyHorizontalGridMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalGridMultiTypeSamplePreview() {
+    LazyVerticalGridMultiTypeSample(remember { MutableStateFlow(true) })
 }

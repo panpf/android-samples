@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.extension
+package com.github.panpf.android.compose.samples.ui.components.accompanist
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column

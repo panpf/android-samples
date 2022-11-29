@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.components.basic
+package com.github.panpf.android.compose.samples.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -9,13 +9,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
@@ -38,53 +38,54 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class LazyHorizontalStaggeredGridFragment : Material3ComposeAppBarFragment() {
+class LazyVerticalStaggeredGridFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "LazyHorizontalStaggeredGrid"
+        return "LazyVerticalStaggeredGrid"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            LazyHorizontalStaggeredGridSample(allExpandFlow)
-            LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
-            LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow)
-            LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow)
-            LazyHorizontalStaggeredGridHorizontalArrangementSample(allExpandFlow)
-            LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow)
-            LazyHorizontalStaggeredGridUserScrollEnabledSample(allExpandFlow)
-            LazyHorizontalStaggeredGridUserVisibleItemIndexSample(allExpandFlow)
-            LazyHorizontalStaggeredGridScrollInProgressSample(allExpandFlow)
-            LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow)
-            LazyHorizontalStaggeredGridLayoutInfoSample(allExpandFlow)
-            LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow)
+            LazyVerticalStaggeredGridSample(allExpandFlow)
+            LazyVerticalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
+            LazyVerticalStaggeredGridContentPaddingSample(allExpandFlow)
+            LazyVerticalStaggeredGridItemSpacedSample(allExpandFlow)
+            LazyVerticalStaggeredGridVerticalArrangementSample(allExpandFlow)
+            LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow)
+            LazyVerticalStaggeredGridUserScrollEnabledSample(allExpandFlow)
+            LazyVerticalStaggeredGridUserVisibleItemIndexSample(allExpandFlow)
+            LazyVerticalStaggeredGridScrollInProgressSample(allExpandFlow)
+            LazyVerticalStaggeredGridAnimateScrollToItemSample(allExpandFlow)
+            LazyVerticalStaggeredGridLayoutInfoSample(allExpandFlow)
+            LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow)
         }
     }
 }
 
 private fun getAspectRation(index: Int): Float =
     when {
-        index.plus(1) % 3 == 0 -> 1.2f
-        index.plus(1) % 7 == 0 -> 1.5f
+        index.plus(1) % 3 == 0 -> 0.8f
+        index.plus(1) % 7 == 0 -> 0.5f
         else -> 1f
     }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
-    ExpandableItem3(title = "LazyHorizontalStaggeredGrid", allExpandFlow, padding = 20.dp) {
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
+    ExpandableItem3(title = "LazyVerticalStaggeredGrid", allExpandFlow, padding = 20.dp) {
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -109,42 +110,39 @@ private fun LazyHorizontalStaggeredGridSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridSamplePreview() {
-    LazyHorizontalStaggeredGridSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridSamplePreview() {
+    LazyVerticalStaggeredGridSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（rows - AdaptiveCells）",
+        title = "LazyVerticalStaggeredGrid（columns - AdaptiveCells）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            IconButton(
-                onClick = {
-                    if (gridHeight.value > 80.dp) {
-                        gridHeight.value -= 60.dp
-                    }
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Image(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
-            }
-            LazyHorizontalStaggeredGrid(
-                rows = StaggeredGridCells.Adaptive(80.dp),
+        Column(modifier = Modifier.fillMaxWidth()) {
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Adaptive(80.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(gridHeight.value)
+                    .width(gridHeight.value)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
-                items(count = 50) { index ->
+                itemsIndexed(items) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -153,21 +151,37 @@ private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: 
                             .border(1.dp, colors[index % colors.size])
                     ) {
                         Text(
-                            text = index.plus(1).toString(),
+                            text = item,
                             modifier = Modifier
                                 .align(Alignment.Center)
                         )
                     }
                 }
             }
-            IconButton(
-                onClick = {
-                    gridHeight.value += 60.dp
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+            Row(modifier = Modifier.fillMaxWidth()) {
+                IconButton(
+                    onClick = {
+                        if (gridHeight.value > 80.dp) {
+                            gridHeight.value -= 60.dp
+                        }
+                    }, modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Image(
+                        painterResource(id = R.drawable.ic_subtract),
+                        contentDescription = "subtract"
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        gridHeight.value += 60.dp
+                    }, modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                }
             }
         }
     }
@@ -175,30 +189,37 @@ private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSamplePreview() {
-    LazyHorizontalStaggeredGridColumnsDynamicCellsSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridColumnsDynamicCellsSamplePreview() {
+    LazyVerticalStaggeredGridColumnsDynamicCellsSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（contentPadding）",
+        title = "LazyVerticalStaggeredGrid（contentPadding）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
-            items(count = 50) { index ->
+            itemsIndexed(items) { index, item ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -207,7 +228,7 @@ private fun LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow: Flow<
                         .border(1.dp, colors[index % colors.size])
                 ) {
                     Text(
-                        text = index.plus(1).toString(),
+                        text = item,
                         modifier = Modifier
                             .align(Alignment.Center)
                     )
@@ -219,31 +240,38 @@ private fun LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow: Flow<
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridContentPaddingSamplePreview() {
-    LazyHorizontalStaggeredGridContentPaddingSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridContentPaddingSamplePreview() {
+    LazyVerticalStaggeredGridContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（ItemSpaced）",
+        title = "LazyVerticalStaggeredGrid（ItemSpaced）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items(count = 50) { index ->
+            itemsIndexed(items) { index, item ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -252,7 +280,7 @@ private fun LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Bool
                         .border(1.dp, colors[index % colors.size])
                 ) {
                     Text(
-                        text = index.plus(1).toString(),
+                        text = item,
                         modifier = Modifier
                             .align(Alignment.Center)
                     )
@@ -264,83 +292,26 @@ private fun LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridItemSpacedSamplePreview() {
-    LazyHorizontalStaggeredGridItemSpacedSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridItemSpacedSamplePreview() {
+    LazyVerticalStaggeredGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
-    ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（horizontalArrangement）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        Column {
-            listOf(
-                Arrangement.Start to "Start",
-                Arrangement.Center to "Center",
-                Arrangement.End to "End",
-                null to "Space",
-                Arrangement.SpaceBetween to "SpaceBetween",
-                Arrangement.SpaceAround to "SpaceAround",
-                Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
-                    Text(text = name)
-                    LazyHorizontalStaggeredGrid(
-                        rows = StaggeredGridCells.Fixed(2),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
-                    ) {
-                        items(count = 9) { index ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(getAspectRation(index))
-                                    .background(colors[index % colors.size].copy(alpha = 0.5f))
-                                    .border(1.dp, colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = index.plus(1).toString(),
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+    val items = buildList {
+        repeat(5) {
+            add((it + 1).toString())
         }
     }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun LazyHorizontalStaggeredGridHorizontalArrangementSamplePreview() {
-    LazyHorizontalStaggeredGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
-}
-
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.rainbows
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（verticalArrangement）",
+        title = "LazyVerticalStaggeredGrid（verticalArrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
@@ -349,30 +320,28 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
+            ).forEach { (arrangement, name) ->
                 Column {
                     Text(text = name)
-                    LazyHorizontalStaggeredGrid(
-                        rows = StaggeredGridCells.Fixed(1),
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Fixed(2),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
+                            .width(110.dp)
+                            .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
                     ) {
-                        items(count = 9) { index ->
+                        itemsIndexed(items) { index, item ->
                             Box(
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .fillMaxWidth()
+                                    .aspectRatio(getAspectRation(index))
                                     .background(colors[index % colors.size].copy(alpha = 0.5f))
                                     .border(1.dp, colors[index % colors.size])
                             ) {
                                 Text(
-                                    text = index.plus(1).toString(),
+                                    text = item,
                                     modifier = Modifier
                                         .align(Alignment.Center)
                                 )
@@ -387,30 +356,100 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridVerticalArrangementSamplePreview() {
-    LazyHorizontalStaggeredGridVerticalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridVerticalArrangementSamplePreview() {
+    LazyVerticalStaggeredGridVerticalArrangementSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = buildList {
+        repeat(9) {
+            add((it + 1).toString())
+        }
+    }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（userScrollEnabled = false）",
+        title = "LazyVerticalStaggeredGrid（horizontalArrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+            listOf(
+                Arrangement.Start to "Start",
+                Arrangement.Center to "Center",
+                Arrangement.End to "End",
+                null to "Space",
+                Arrangement.SpaceBetween to "SpaceBetween",
+                Arrangement.SpaceAround to "SpaceAround",
+                Arrangement.SpaceEvenly to "SpaceEvenly",
+            ).forEach { (arrangement, name) ->
+                Column {
+                    Text(text = name)
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Fixed(1),
+                        modifier = Modifier
+                            .width(110.dp)
+                            .height(200.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                            .padding(2.dp),
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                    ) {
+                        itemsIndexed(items) { index, item ->
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(colors[index % colors.size].copy(alpha = 0.5f))
+                                    .border(1.dp, colors[index % colors.size])
+                            ) {
+                                Text(
+                                    text = item,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyVerticalStaggeredGridHorizontalArrangementSamplePreview() {
+    LazyVerticalStaggeredGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyVerticalStaggeredGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
+    ExpandableItem3(
+        title = "LazyVerticalStaggeredGrid（userScrollEnabled = false）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             userScrollEnabled = false
         ) {
-            items(count = 50) { index ->
+            itemsIndexed(items) { index, item ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -419,7 +458,7 @@ private fun LazyHorizontalStaggeredGridUserScrollEnabledSample(allExpandFlow: Fl
                         .border(1.dp, colors[index % colors.size])
                 ) {
                     Text(
-                        text = index.plus(1).toString(),
+                        text = item,
                         modifier = Modifier
                             .align(Alignment.Center)
                     )
@@ -431,35 +470,42 @@ private fun LazyHorizontalStaggeredGridUserScrollEnabledSample(allExpandFlow: Fl
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridUserScrollEnabledSamplePreview() {
-    LazyHorizontalStaggeredGridUserScrollEnabledSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridUserScrollEnabledSamplePreview() {
+    LazyVerticalStaggeredGridUserScrollEnabledSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
-    val lazyListState = rememberLazyStaggeredGridState(3)
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
+    val lazyListState = rememberLazyStaggeredGridState(4)
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（firstVisibleItemIndex）",
+        title = "LazyVerticalStaggeredGrid（firstVisibleItemIndex）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column {
-            LazyHorizontalStaggeredGrid(
-                rows = StaggeredGridCells.Fixed(3),
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
-                items(count = 50) { index ->
+                itemsIndexed(items) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -468,7 +514,7 @@ private fun LazyHorizontalStaggeredGridUserVisibleItemIndexSample(allExpandFlow:
                             .border(1.dp, colors[index % colors.size])
                     ) {
                         Text(
-                            text = index.plus(1).toString(),
+                            text = item,
                             modifier = Modifier
                                 .align(Alignment.Center)
                         )
@@ -482,33 +528,40 @@ private fun LazyHorizontalStaggeredGridUserVisibleItemIndexSample(allExpandFlow:
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridUserVisibleItemIndexSamplePreview() {
-    LazyHorizontalStaggeredGridUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridUserVisibleItemIndexSamplePreview() {
+    LazyVerticalStaggeredGridUserVisibleItemIndexSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     val lazyListState = rememberLazyStaggeredGridState(3)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（isScrollInProgress）",
+        title = "LazyVerticalStaggeredGrid（isScrollInProgress）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column {
-            LazyHorizontalStaggeredGrid(
-                rows = StaggeredGridCells.Fixed(3),
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
-                items(count = 50) { index ->
+                itemsIndexed(items) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -517,7 +570,7 @@ private fun LazyHorizontalStaggeredGridScrollInProgressSample(allExpandFlow: Flo
                             .border(1.dp, colors[index % colors.size])
                     ) {
                         Text(
-                            text = index.plus(1).toString(),
+                            text = item,
                             modifier = Modifier
                                 .align(Alignment.Center)
                         )
@@ -531,49 +584,56 @@ private fun LazyHorizontalStaggeredGridScrollInProgressSample(allExpandFlow: Flo
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridScrollInProgressSamplePreview() {
-    LazyHorizontalStaggeredGridScrollInProgressSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridScrollInProgressSamplePreview() {
+    LazyVerticalStaggeredGridScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     val lazyListState = rememberLazyStaggeredGridState(3)
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（animateScrollToItem）",
+        title = "LazyVerticalStaggeredGrid（animateScrollToItem）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Row {
+        Column {
             IconButton(
                 onClick = {
                     val firstVisibleItemIndex = lazyListState.firstVisibleItemIndex
-                    if (firstVisibleItemIndex >= 3) {
+                    if (firstVisibleItemIndex >= 4) {
                         coroutineScope.launch {
-                            lazyListState.animateScrollToItem(firstVisibleItemIndex - 3)
+                            lazyListState.animateScrollToItem(firstVisibleItemIndex - 4)
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "before"
                 )
             }
-            LazyHorizontalStaggeredGrid(
-                rows = StaggeredGridCells.Fixed(3),
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(4),
                 modifier = Modifier
-                    .weight(1f)
-                    .height(200.dp)
+                    .fillMaxWidth()
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
                 state = lazyListState
             ) {
-                items(count = 50) { index ->
+                itemsIndexed(items) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -582,7 +642,7 @@ private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: 
                             .border(1.dp, colors[index % colors.size])
                     ) {
                         Text(
-                            text = index.plus(1).toString(),
+                            text = item,
                             modifier = Modifier
                                 .align(Alignment.Center)
                         )
@@ -592,16 +652,16 @@ private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: 
             IconButton(
                 onClick = {
                     val firstVisibleItemIndex = lazyListState.firstVisibleItemIndex
-                    if (firstVisibleItemIndex < 50 - 3) {
+                    if (firstVisibleItemIndex < items.size - 4) {
                         coroutineScope.launch {
-                            lazyListState.animateScrollToItem(firstVisibleItemIndex + 3)
+                            lazyListState.animateScrollToItem(firstVisibleItemIndex + 4)
                         }
                     }
                 },
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "next",
                 )
             }
@@ -611,33 +671,40 @@ private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridAnimateScrollToItemSamplePreview() {
-    LazyHorizontalStaggeredGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridAnimateScrollToItemSamplePreview() {
+    LazyVerticalStaggeredGridAnimateScrollToItemSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
+        }
+    }
     val lazyGridState = rememberLazyStaggeredGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（layoutInfo）",
+        title = "LazyVerticalStaggeredGrid（layoutInfo）",
         allExpandFlow,
         padding = 20.dp
     ) {
         Column {
-            LazyHorizontalStaggeredGrid(
+            LazyVerticalStaggeredGrid(
                 state = lazyGridState,
-                rows = StaggeredGridCells.Fixed(3),
+                columns = StaggeredGridCells.Fixed(4),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(360.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
-                items(count = 50) { index ->
+                itemsIndexed(items) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -646,7 +713,7 @@ private fun LazyHorizontalStaggeredGridLayoutInfoSample(allExpandFlow: Flow<Bool
                             .border(1.dp, colors[index % colors.size])
                     ) {
                         Text(
-                            text = index.plus(1).toString(),
+                            text = item,
                             modifier = Modifier
                                 .align(Alignment.Center)
                         )
@@ -687,14 +754,14 @@ private fun LazyHorizontalStaggeredGridLayoutInfoSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridLayoutInfoSamplePreview() {
-    LazyHorizontalStaggeredGridLayoutInfoSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridLayoutInfoSamplePreview() {
+    LazyVerticalStaggeredGridLayoutInfoSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
     val items = buildList<Any> {
         repeat(49) {
@@ -709,15 +776,15 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
         set(40, R.drawable.ic_info)
     }.toList()
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（MultiType）",
+        title = "LazyVerticalStaggeredGrid（MultiType）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(360.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
@@ -741,7 +808,7 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
                                 .border(1.dp, colors[index % colors.size])
                         ) {
                             Text(
-                                text = index.plus(1).toString(),
+                                text = item,
                                 modifier = Modifier
                                     .align(Alignment.Center)
                             )
@@ -773,6 +840,6 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridMultiTypeSamplePreview() {
-    LazyHorizontalStaggeredGridMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridMultiTypeSamplePreview() {
+    LazyVerticalStaggeredGridMultiTypeSample(remember { MutableStateFlow(true) })
 }
