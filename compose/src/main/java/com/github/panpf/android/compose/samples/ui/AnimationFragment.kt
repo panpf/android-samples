@@ -20,8 +20,8 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
         val links = remember {
             listOf(
                 Link("AnimatedVisibility", R.id.action_global_animatedVisibilityFragment),
+                Link("AnimatedContent", R.id.action_global_animatedContentFragment),
                 // todo animate*AsState
-                //  AnimatedContent
                 //  animateContentSize
                 //  Crossfade
                 //  updateTransition
