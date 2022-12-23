@@ -23,7 +23,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
                 Link("Accompanist", R.id.action_global_accompanistFragment),
                 Link("Window", R.id.action_global_windowFragment),
                 Link("Modifier", R.id.action_global_modifierFragment),
-                Link("Animation（Implementation）"),   // todo Implementation
+                Link("Animation", R.id.action_global_animationFragment),
                 Link("Theme（Implementation）"),   // todo Implementation
                 Link("Gestures（Implementation）"),   // todo Implementation
                 Link("Navigation（Implementation）"),   // todo Implementation

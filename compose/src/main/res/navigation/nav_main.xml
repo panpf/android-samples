@@ -1109,4 +1109,29 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <!-- animation -->
+
+    <fragment
+        android:id="@+id/animationFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.AnimationFragment" />
+    <action
+        android:id="@+id/action_global_animationFragment"
+        app:destination="@id/animationFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/animatedVisibilityFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimatedVisibilityFragment" />
+    <action
+        android:id="@+id/action_global_animatedVisibilityFragment"
+        app:destination="@id/animatedVisibilityFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>
