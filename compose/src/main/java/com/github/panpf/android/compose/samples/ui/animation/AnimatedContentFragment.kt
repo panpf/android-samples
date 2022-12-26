@@ -12,6 +12,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +22,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,6 +54,7 @@ class AnimatedContentFragment : Material3ComposeAppBarFragment() {
             AnimatedContentSample(allExpandFlow)
             AnimatedContentTransitionSpecSample(allExpandFlow)
             AnimatedContentTransitionSpecSizeSample(allExpandFlow)
+            AnimatedContentTransitionSpecContentAlignmentSample(allExpandFlow)
         }
     }
 }
@@ -164,53 +165,52 @@ private fun AnimatedContentTransitionSpecSizeSample(allExpandFlow: Flow<Boolean>
         allExpandFlow,
         padding = 20.dp
     ) {
-        AnimatedContent(
-            targetState = expanded,
-            transitionSpec = {
-                ContentTransform(
-                    targetContentEnter = fadeIn(animationSpec = tween(150, 150)),
-                    initialContentExit = fadeOut(animationSpec = tween(150))
-                ).using(
-                    SizeTransform { initialSize, targetSize ->
-                        if (targetState) {
-                            keyframes {
-                                // Expand horizontally first.
-                                IntSize(targetSize.width, initialSize.height) at 150
-                                durationMillis = 300
-                            }
-                        } else {
-                            keyframes {
-                                // Shrink vertically first.
-                                IntSize(initialSize.width, targetSize.height) at 150
-                                durationMillis = 300
+        Box(modifier = Modifier
+            .background(MaterialTheme.colorScheme.primary)
+            .clickable { expanded = !expanded }
+        ) {
+            AnimatedContent(
+                targetState = expanded,
+                contentAlignment = Alignment.TopEnd,
+                transitionSpec = {
+                    ContentTransform(
+                        targetContentEnter = fadeIn(animationSpec = tween(150, 150)),
+                        initialContentExit = fadeOut(animationSpec = tween(150))
+                    ).using(
+                        SizeTransform { initialSize, targetSize ->
+                            if (targetState) {
+                                keyframes {
+                                    // Expand horizontally first.
+                                    IntSize(targetSize.width, initialSize.height) at 150
+                                    durationMillis = 300
+                                }
+                            } else {
+                                keyframes {
+                                    // Shrink vertically first.
+                                    IntSize(initialSize.width, targetSize.height) at 150
+                                    durationMillis = 300
+                                }
                             }
                         }
-                    }
-                )
-            }
-        ) { targetExpanded ->
-            if (targetExpanded) {
-                Text(
-                    text = text,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary)
-                        .clickable { expanded = !expanded }
-                        .padding(10.dp)
-                )
-            } else {
-                IconButton(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(MaterialTheme.colorScheme.primary),
-                    onClick = { expanded = !expanded }
-                ) {
+                    )
+                }
+            ) { targetExpanded ->
+                if (targetExpanded) {
+                    Text(
+                        text = text,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                    )
+                } else {
                     Icon(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(10.dp),
                         painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "expand",
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.align(Alignment.End)
                     )
                 }
             }
@@ -222,4 +222,85 @@ private fun AnimatedContentTransitionSpecSizeSample(allExpandFlow: Flow<Boolean>
 @Composable
 private fun AnimatedContentTransitionSpecSizeSamplePreview() {
     AnimatedContentTransitionSpecSizeSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun AnimatedContentTransitionSpecContentAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    var expanded by remember { mutableStateOf(false) }
+    val text =
+        "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。\n          ----摘自《盗墓笔记》 - 云顶天宫（下）第一章 五圣雪山，网址：http://www.daomubiji.com/yun-ding-tian-gong-15.html"
+    ExpandableItem3(
+        title = "AnimatedContent（transitionSpec - contentAlignment）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        listOf(
+            "TopStart" to Alignment.TopStart,
+            "TopCenter" to Alignment.TopCenter,
+            "TopEnd" to Alignment.TopEnd,
+        ).forEachIndexed { index, pair ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+            Text(text = pair.first)
+            Box(modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .clickable { expanded = !expanded }
+            ) {
+                AnimatedContent(
+                    targetState = expanded,
+                    contentAlignment = pair.second,
+                    transitionSpec = {
+                        ContentTransform(
+                            targetContentEnter = fadeIn(animationSpec = tween(1500, 1500)),
+                            initialContentExit = fadeOut(animationSpec = tween(1500))
+                        ).using(
+                            SizeTransform { initialSize, targetSize ->
+                                if (targetState) {
+                                    keyframes {
+                                        // Expand horizontally first.
+                                        IntSize(targetSize.width, initialSize.height) at 1500
+                                        durationMillis = 3000
+                                    }
+                                } else {
+                                    keyframes {
+                                        // Shrink vertically first.
+                                        IntSize(initialSize.width, targetSize.height) at 1500
+                                        durationMillis = 3000
+                                    }
+                                }
+                            }
+                        )
+                    }
+                ) { targetExpanded ->
+                    if (targetExpanded) {
+                        Text(
+                            text = text,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp)
+                        )
+                    } else {
+                        Icon(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .padding(10.dp),
+                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            contentDescription = "expand",
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun AnimatedContentTransitionSpecContentAlignmentSamplePreview() {
+    AnimatedContentTransitionSpecContentAlignmentSample(remember { MutableStateFlow(true) })
 }
