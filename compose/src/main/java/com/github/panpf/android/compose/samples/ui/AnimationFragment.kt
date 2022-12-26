@@ -22,15 +22,15 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
                 Link("AnimatedVisibility", R.id.action_global_animatedVisibilityFragment),
                 Link("AnimatedContent", R.id.action_global_animatedContentFragment),
                 Link("animatedContentSize", R.id.action_global_animatedContentSizeFragment),
-                // todo animate*AsState
-                //  Crossfade
-                //  updateTransition
-                //  rememberInfiniteTransition
-                //  Animatable
-                //  Animation
-                //  AnimationSpec
-                //  Easing
-                //  AnimationVector
+                Link("animate*AsState", R.id.action_global_animateAsStateFragment),
+                // todo Crossfade
+                // todo updateTransition
+                // todo rememberInfiniteTransition
+                // todo Animatable
+                // todo Animation
+                // todo AnimationSpec
+                // todo Easing
+                // todo AnimationVector
             )
         }
         LinkList(links) { _, link ->

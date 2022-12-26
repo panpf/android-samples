@@ -1156,4 +1156,15 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/animateAsStateFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimateAsStateFragment" />
+    <action
+        android:id="@+id/action_global_animateAsStateFragment"
+        app:destination="@id/animateAsStateFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>
