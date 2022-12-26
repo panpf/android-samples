@@ -1145,4 +1145,15 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/animatedContentSizeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimatedContentSizeFragment" />
+    <action
+        android:id="@+id/action_global_animatedContentSizeFragment"
+        app:destination="@id/animatedContentSizeFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>

@@ -21,8 +21,8 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
             listOf(
                 Link("AnimatedVisibility", R.id.action_global_animatedVisibilityFragment),
                 Link("AnimatedContent", R.id.action_global_animatedContentFragment),
+                Link("animatedContentSize", R.id.action_global_animatedContentSizeFragment),
                 // todo animate*AsState
-                //  animateContentSize
                 //  Crossfade
                 //  updateTransition
                 //  rememberInfiniteTransition
