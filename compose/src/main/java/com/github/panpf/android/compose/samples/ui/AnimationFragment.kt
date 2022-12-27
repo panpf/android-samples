@@ -23,8 +23,8 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
                 Link("AnimatedContent", R.id.action_global_animatedContentFragment),
                 Link("animatedContentSize", R.id.action_global_animatedContentSizeFragment),
                 Link("animate*AsState", R.id.action_global_animateAsStateFragment),
+                Link("updateTransition", R.id.action_global_updateTransitionFragment),
                 // todo Crossfade
-                // todo updateTransition
                 // todo rememberInfiniteTransition
                 // todo Animatable
                 // todo Animation

@@ -78,6 +78,7 @@ private fun AnimateFloatAsStateSample(allExpandFlow: Flow<Boolean>) {
                 .background(MaterialTheme.colorScheme.primary)
                 .size(100.dp)
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "alpha: ${alpha.format("", 1)}")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { show = !show }) {
@@ -100,10 +101,17 @@ private fun AnimateIntAsStateSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "animateIntAsState", allExpandFlow, padding = 20.dp) {
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(percent))
-                .background(MaterialTheme.colorScheme.primary)
+                .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
                 .size(100.dp)
-        )
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(percent))
+                    .background(MaterialTheme.colorScheme.primary)
+                    .size(100.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "RoundedCornerShape percent: $percent")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
@@ -131,6 +139,7 @@ private fun AnimateDpAsStateSample(allExpandFlow: Flow<Boolean>) {
                 .padding(padding)
                 .background(MaterialTheme.colorScheme.primary)
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "padding: ${padding.value.toInt()}.dp")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
@@ -156,6 +165,7 @@ private fun AnimateColorAsStateSample(allExpandFlow: Flow<Boolean>) {
                 .background(bgColor)
                 .size(100.dp)
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = "background: (" +
                     "red=${bgColor.red.format("", 1)}, " +
@@ -198,6 +208,7 @@ private fun AnimateSizeAsStateSample(allExpandFlow: Flow<Boolean>) {
                     .size(size.width.dp, size.height.dp)
             )
         }
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "size: (width=${size.width.toInt()}.dp, height=${size.height.toInt()}.dp)")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
@@ -237,6 +248,7 @@ private fun AnimateOffsetAsStateSample(allExpandFlow: Flow<Boolean>) {
                     .size(40.dp)
             )
         }
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "offset: (x=${offset.x.toInt()}.dp, y=${offset.y.toInt()}.dp)")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
@@ -272,6 +284,7 @@ private fun AnimateRectAsStateSample(allExpandFlow: Flow<Boolean>) {
                     .size(rect.width.dp, rect.height.dp)
             )
         }
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Rect: (left=${rect.left.toInt()}.dp, top=${rect.top.toInt()}.dp, right=${rect.right.toInt()}.dp, bottom=${rect.bottom.toInt()}.dp)")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
@@ -308,6 +321,7 @@ private fun AnimateValueAsStateSample(allExpandFlow: Flow<Boolean>) {
                     .align(Alignment.Center)
             )
         }
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Block(width=${block.width.toInt()}.dp, height=${block.height.toInt()}.dp, roundedCornerPercent=${block.roundedCornerPercent})")
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { enabled = !enabled }) {
