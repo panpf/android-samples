@@ -1200,4 +1200,37 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/animationSpecFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimationSpecFragment" />
+    <action
+        android:id="@+id/action_global_animationSpecFragment"
+        app:destination="@id/animationSpecFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/easingFragment"-->
+<!--        android:name="com.github.panpf.android.compose.samples.ui.animation.EasingFragment" />-->
+<!--    <action-->
+<!--        android:id="@+id/action_global_easingFragment"-->
+<!--        app:destination="@id/easingFragment"-->
+<!--        app:enterAnim="@anim/nav_enter"-->
+<!--        app:exitAnim="@anim/nav_exit"-->
+<!--        app:popEnterAnim="@anim/nav_pop_enter"-->
+<!--        app:popExitAnim="@anim/nav_pop_exit" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/animationVectorFragment"-->
+<!--        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimationVectorFragment" />-->
+<!--    <action-->
+<!--        android:id="@+id/action_global_animationVectorFragment"-->
+<!--        app:destination="@id/animationVectorFragment"-->
+<!--        app:enterAnim="@anim/nav_enter"-->
+<!--        app:exitAnim="@anim/nav_exit"-->
+<!--        app:popEnterAnim="@anim/nav_pop_enter"-->
+<!--        app:popExitAnim="@anim/nav_pop_exit" />-->
 </navigation>
