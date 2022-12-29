@@ -427,7 +427,7 @@ private fun AnimationSpecRepeatableSample(allExpandFlow: Flow<Boolean>) {
                         Spacer(modifier = Modifier.width(20.dp))
                     }
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = pair.first)
+                        Text(text = pair.first, fontSize = 12.sp)
                         Image(
                             painter = painterResource(id = R.drawable.dog_hor),
                             contentDescription = "dog",
