@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -49,7 +50,8 @@ fun ExpandableText(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    val inspectionMode = LocalInspectionMode.current
+    var expanded by remember { mutableStateOf(inspectionMode) }
     AnimatedContent(
         targetState = expanded,
         contentAlignment = Alignment.TopEnd,
