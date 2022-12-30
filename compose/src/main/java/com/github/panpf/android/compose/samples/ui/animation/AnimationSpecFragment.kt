@@ -10,8 +10,10 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.StartOffsetType
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.repeatable
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -31,6 +33,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,11 +71,12 @@ class AnimationSpecFragment : Material3ComposeAppBarFragment() {
             AnimationSpecTweenSample(allExpandFlow)
             AnimationSpecKeyframesSample(allExpandFlow)
             AnimationSpecRepeatableSample(allExpandFlow)
-            // todo AnimationSpecInfiniteRepeatableSample(allExpandFlow)
-            // todo AnimationSpecSnapSample(allExpandFlow)
+            AnimationSpecInfiniteRepeatableSample(allExpandFlow)
+            AnimationSpecSnapSample(allExpandFlow)
         }
     }
 }
+
 
 @Composable
 private fun AnimationSpecSpringSample(allExpandFlow: Flow<Boolean>) {
@@ -164,6 +168,7 @@ private fun AnimationSpecSpringSample(allExpandFlow: Flow<Boolean>) {
 private fun AnimationSpecSpringSamplePreview() {
     AnimationSpecSpringSample(remember { MutableStateFlow(true) })
 }
+
 
 @Composable
 private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
@@ -265,6 +270,7 @@ private fun AnimationSpecTweenSamplePreview() {
     AnimationSpecTweenSample(remember { MutableStateFlow(true) })
 }
 
+
 @Composable
 private fun AnimationSpecKeyframesSample(allExpandFlow: Flow<Boolean>) {
     val title = """
@@ -332,6 +338,7 @@ private fun AnimationSpecKeyframesSample(allExpandFlow: Flow<Boolean>) {
 private fun AnimationSpecKeyframesSamplePreview() {
     AnimationSpecKeyframesSample(remember { MutableStateFlow(true) })
 }
+
 
 @Composable
 private fun AnimationSpecRepeatableSample(allExpandFlow: Flow<Boolean>) {
@@ -463,4 +470,187 @@ private fun AnimationSpecRepeatableSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun AnimationSpecRepeatableSamplePreview() {
     AnimationSpecRepeatableSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun AnimationSpecInfiniteRepeatableSample(allExpandFlow: Flow<Boolean>) {
+    val title = """
+        |infiniteRepeatable 和 Repeatable 类似，但它会无限重复，参数如下
+        |   * animation：具体的动画，只能使用 tween 或 keyFrames  
+        |   * repeatMode：重复模式，指定下一次动画如何开始。
+        |       - RepeatMode.Restart： 从头开始
+        |       - RepeatMode.Reverse： 反向开始
+        |   * initialStartOffset：指定初始偏移量。
+        |       - offsetMillis： 偏移时间，单位毫秒
+        |       - offsetType： 偏移类型。
+        |           ~ StartOffsetType.Delay： 延迟指定偏移时间再启动动画。
+        |           ~ StartOffsetType.FastForward： 快速跳到指定偏移时间，然后启动动画。
+    """.trimMargin()
+    val list = listOf(
+        "repeatMode=Restart" to (remember { Animatable(0f) } to infiniteRepeatable<Float>(
+            animation = tween(durationMillis = 1000),
+            repeatMode = RepeatMode.Restart
+        )),
+        "repeatMode=Reverse" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 1000),
+            repeatMode = RepeatMode.Reverse
+        )),
+        "durationMillis=1000" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 1000),
+            repeatMode = RepeatMode.Restart
+        )),
+        "durationMillis=2000" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 2000),
+            repeatMode = RepeatMode.Restart
+        )),
+        "easing=FastOutSlowIn" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 2000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Restart
+        )),
+        "easing=Linear" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 2000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        )),
+        "offsetType=Delay" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 2000),
+            repeatMode = RepeatMode.Restart,
+            initialStartOffset = StartOffset(
+                offsetMillis = 1000,
+                offsetType = StartOffsetType.Delay
+            )
+        )),
+        "offsetType=FastForward" to (remember { Animatable(0f) } to infiniteRepeatable(
+            animation = tween(durationMillis = 2000),
+            repeatMode = RepeatMode.Restart,
+            initialStartOffset = StartOffset(
+                offsetMillis = 1000,
+                offsetType = StartOffsetType.FastForward
+            )
+        )),
+    )
+
+    list.forEach { pair ->
+        LaunchedEffect(list) {
+            pair.second.first.animateTo(
+                targetValue = 1f,
+                animationSpec = pair.second.second
+            )
+        }
+    }
+
+    ExpandableItem3(
+        title = "AnimationSpec（infiniteRepeatable）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        ExpandableText(text = title)
+
+        Spacer(modifier = Modifier.height(20.dp))
+        list.chunked(2).forEachIndexed { index, pairs ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+            Row {
+                pairs.forEachIndexed { index1, pair ->
+                    if (index1 > 0) {
+                        Spacer(modifier = Modifier.width(20.dp))
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = pair.first, fontSize = 12.sp)
+                        Image(
+                            painter = painterResource(id = R.drawable.dog_hor),
+                            contentDescription = "dog",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(RoundedCornerShape(50))
+                                .rotate(360 * pair.second.first.value),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun AnimationSpecInfiniteRepeatableSamplePreview() {
+    AnimationSpecInfiniteRepeatableSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun AnimationSpecSnapSample(allExpandFlow: Flow<Boolean>) {
+    val title = """
+        |snap 是特殊的 AnimationSpec，它会在延迟指定时间后立即将值切换到结束值。参数如下
+        |   * delayMillis：延迟一段时间后启动动画，单位毫秒。默认值为 0
+    """.trimMargin()
+    val list = listOf(
+        "delayMillis=0" to (remember { Animatable(0f) } to snap<Float>()),
+        "delayMillis=1000" to (remember { Animatable(0f) } to snap(delayMillis = 1000)),
+    )
+
+    val coroutineScope = rememberCoroutineScope()
+    ExpandableItem3(
+        title = "AnimationSpec（snap）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        ExpandableText(text = title)
+
+        Spacer(modifier = Modifier.height(20.dp))
+        list.chunked(2).forEachIndexed { index, pairs ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+            Row {
+                pairs.forEachIndexed { index1, pair ->
+                    if (index1 > 0) {
+                        Spacer(modifier = Modifier.width(20.dp))
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = pair.first, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        BoxWithConstraints(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(20.dp)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                        ) {
+                            val blockSize = maxHeight
+                            Box(
+                                modifier = Modifier
+                                    .offset((maxWidth - blockSize) * pair.second.first.value, 0.dp)
+                                    .size(blockSize)
+                                    .background(MaterialTheme.colorScheme.tertiary)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = {
+            list.forEach { pair ->
+                coroutineScope.launch {
+                    pair.second.first.snapTo(0f)
+                    pair.second.first.animateTo(
+                        targetValue = 1f,
+                        animationSpec = pair.second.second
+                    )
+                }
+            }
+        }) {
+            Text(text = "Play")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun AnimationSpecSnapSamplePreview() {
+    AnimationSpecSnapSample(remember { MutableStateFlow(true) })
 }
