@@ -27,8 +27,7 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
                 Link("Crossfade", R.id.action_global_crossfadeFragment),
                 Link("rememberInfiniteTransition", R.id.action_global_rememberInfiniteTransitionFragment),
                 Link("AnimationSpec", R.id.action_global_animationSpecFragment),
-//                Link("Easing", R.id.action_global_easingFragment),
-//                Link("AnimationVector", R.id.action_global_animationVectorFragment),
+                Link("Easing", R.id.action_global_easingFragment),
                 // todo Animatable
                 // todo Animation
             )
