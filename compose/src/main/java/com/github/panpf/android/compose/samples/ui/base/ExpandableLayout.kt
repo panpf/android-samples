@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -79,6 +80,7 @@ fun BaseExpandableItem(
     allExpand: Flow<Boolean>,
     color: Color,
     padding: Dp = 0.dp,
+    desc: String? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val expandedBgColor = color.copy(0.3f)
@@ -125,6 +127,10 @@ fun BaseExpandableItem(
                     .fillMaxWidth()
                     .padding(padding)
             ) {
+                if (desc != null) {
+                    ExpandableText(text = desc)
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
                 content()
             }
         }
@@ -136,10 +142,11 @@ fun ExpandableItem(
     title: String,
     allExpand: Flow<Boolean>,
     padding: Dp = 0.dp,
+    desc: String? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val primaryColor = androidx.compose.material.MaterialTheme.colors.primary
-    BaseExpandableItem(title, allExpand, primaryColor, padding, content)
+    BaseExpandableItem(title, allExpand, primaryColor, padding, desc, content)
 }
 
 @Composable
@@ -147,10 +154,11 @@ fun ExpandableItem3(
     title: String,
     allExpand: Flow<Boolean>,
     padding: Dp = 0.dp,
+    desc: String? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val primaryColor = androidx.compose.material3.MaterialTheme.colorScheme.primary
-    BaseExpandableItem(title, allExpand, primaryColor, padding, content)
+    BaseExpandableItem(title, allExpand, primaryColor, padding, desc, content)
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)

@@ -24,11 +24,11 @@ class HomeFragment : Material3ComposeAppBarFragment() {
                 Link("Window", R.id.action_global_windowFragment),
                 Link("Modifier", R.id.action_global_modifierFragment),
                 Link("Animation", R.id.action_global_animationFragment),
+                Link("Gestures", R.id.action_global_gesturesFragment),
                 Link("Theme（Implementation）"),   // todo Implementation
-                Link("Gestures（Implementation）"),   // todo Implementation
                 Link("Navigation（Implementation）"),   // todo Implementation
-                Link("Custom（Implementation）"),   // todo Implementation
                 Link("Draw（Implementation）"),   // todo Implementation
+                Link("Custom（Implementation）"),   // todo Implementation
                 Link("Cases（Implementation）"),  // todo Implementation banner
                 Link("Other（Implementation）"),  // todo Implementation Placeholder, Drawable Painter
             )

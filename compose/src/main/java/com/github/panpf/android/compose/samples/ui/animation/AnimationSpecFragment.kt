@@ -95,7 +95,7 @@ class AnimationSpecFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun AnimationSpecSpringSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |像弹簧一样的弹性动画，无法自定义动画持续时间，参数如下：
         |   * dampingRatio：阻尼比。值越大阻尼越大，弹性越小。默认值为 1f（Spring.DampingRatioNoBouncy），无阻尼也无弹性
         |   * stiffness：刚度。值越小，动画持续时间越长。默认值为 1500f（Spring.StiffnessMedium）
@@ -131,11 +131,9 @@ private fun AnimationSpecSpringSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "AnimationSpec（spring）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         Row {
             attrList.forEachIndexed { index, attrPair ->
                 if (index > 0) {
@@ -187,7 +185,7 @@ private fun AnimationSpecSpringSamplePreview() {
 
 @Composable
 private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |在指定的时间内使用缓和曲线在起始值和结束值之间添加动画效果，可自定义动画持续时间，参数如下：
         |   * durationMillis：动画持续时间，单位毫秒。值越大动画时间越长。默认值为 300（AnimationConstants.DefaultDurationMillis）
         |   * delayMillis：延迟一段时间后启动动画，单位毫秒。默认值为 0
@@ -232,11 +230,9 @@ private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "AnimationSpec（tween）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         Row {
             attrList.forEachIndexed { index, attrPair ->
                 if (index > 0) {
@@ -288,7 +284,7 @@ private fun AnimationSpecTweenSamplePreview() {
 
 @Composable
 private fun AnimationSpecKeyframesSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |keyframes 允许以动画持续时间中的时间戳来定义帧，keyframes 会自动在两个帧之间执行动画，每个帧都可以指定不同的 Easing
         |
         |您可以选择在 0 毫秒和最大持续时间处指定值。如果不指定，它们将分别默认为动画的起始值和结束值
@@ -305,11 +301,9 @@ private fun AnimationSpecKeyframesSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "AnimationSpec（keyframes）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth()
@@ -357,7 +351,7 @@ private fun AnimationSpecKeyframesSamplePreview() {
 
 @Composable
 private fun AnimationSpecRepeatableSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |repeatable 可以重复运行基于时长的动画（tween 或 keyFrames），参数如下
         |   * iterations：指定重复次数
         |   * animation：具体的动画，只能使用 tween 或 keyFrames  
@@ -434,11 +428,9 @@ private fun AnimationSpecRepeatableSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "AnimationSpec（repeatable）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         list.chunked(2).forEachIndexed { index, pairs ->
             if (index > 0) {
                 Spacer(modifier = Modifier.height(10.dp))
@@ -490,7 +482,7 @@ private fun AnimationSpecRepeatableSamplePreview() {
 
 @Composable
 private fun AnimationSpecInfiniteRepeatableSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |infiniteRepeatable 和 Repeatable 类似，但它会无限重复，参数如下
         |   * animation：具体的动画，只能使用 tween 或 keyFrames  
         |   * repeatMode：重复模式，指定下一次动画如何开始。
@@ -557,11 +549,9 @@ private fun AnimationSpecInfiniteRepeatableSample(allExpandFlow: Flow<Boolean>) 
     ExpandableItem3(
         title = "AnimationSpec（infiniteRepeatable）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         list.chunked(2).forEachIndexed { index, pairs ->
             if (index > 0) {
                 Spacer(modifier = Modifier.height(10.dp))
@@ -598,7 +588,7 @@ private fun AnimationSpecInfiniteRepeatableSamplePreview() {
 
 @Composable
 private fun AnimationSpecSnapSample(allExpandFlow: Flow<Boolean>) {
-    val title = """
+    val desc = """
         |snap 是特殊的 AnimationSpec，它会在延迟指定时间后立即将值切换到结束值。参数如下
         |   * delayMillis：延迟一段时间后启动动画，单位毫秒。默认值为 0
     """.trimMargin()
@@ -611,11 +601,9 @@ private fun AnimationSpecSnapSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "AnimationSpec（snap）",
         allExpandFlow,
-        padding = 20.dp
+        padding = 20.dp,
+        desc = desc,
     ) {
-        ExpandableText(text = title)
-
-        Spacer(modifier = Modifier.height(20.dp))
         list.chunked(2).forEachIndexed { index, pairs ->
             if (index > 0) {
                 Spacer(modifier = Modifier.height(10.dp))

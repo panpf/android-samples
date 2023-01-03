@@ -1222,4 +1222,29 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <!-- gestures -->
+
+    <fragment
+        android:id="@+id/gesturesFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.GesturesFragment" />
+    <action
+        android:id="@+id/action_global_gesturesFragment"
+        app:destination="@id/gesturesFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/clickableFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.ClickableFragment" />
+    <action
+        android:id="@+id/action_global_clickableFragment"
+        app:destination="@id/clickableFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>
