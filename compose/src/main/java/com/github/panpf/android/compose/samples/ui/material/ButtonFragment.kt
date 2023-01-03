@@ -68,7 +68,7 @@ private fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（Text）", allExpandFlow, padding = 20.dp) {
         Button(onClick = {
-            context.showShortToast("You tapped me!")
+            context.showShortToast("You click me!")
         }) {
             Text(text = "Send")
         }
@@ -86,7 +86,7 @@ private fun ButtonContentTextSamplePreview() {
 private fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button（Icon）", allExpandFlow, padding = 20.dp) {
-        Button(onClick = { context.showShortToast("You tapped me!") }) {
+        Button(onClick = { context.showShortToast("You click me!") }) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
@@ -108,7 +108,7 @@ private fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（shape)", allExpandFlow, padding = 20.dp) {
         Button(
             shape = RoundedCornerShape(50),
-            onClick = { context.showShortToast("You tapped me!") }
+            onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
@@ -137,7 +137,7 @@ private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                     disabledBackgroundColor = Color.Gray,
                     disabledContentColor = Color.White,
                 ),
-                onClick = { context.showShortToast("You tapped me!") }
+                onClick = { context.showShortToast("You click me!") }
             ) {
                 Icon(
                     painterResource(id = R.drawable.ic_arrow_down),
@@ -157,7 +157,7 @@ private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                     disabledContentColor = Color.White,
                 ),
                 enabled = false,
-                onClick = { context.showShortToast("You tapped me!") }
+                onClick = { context.showShortToast("You click me!") }
             ) {
                 Icon(
                     painterResource(id = R.drawable.ic_arrow_down),
@@ -184,7 +184,7 @@ private fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
                 defaultElevation = 10.dp,
                 pressedElevation = 0.dp
             ),
-            onClick = { context.showShortToast("You tapped me!") }
+            onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
@@ -207,7 +207,7 @@ private fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（border）", allExpandFlow, padding = 20.dp) {
         Button(
             border = BorderStroke(1.dp, Color.Cyan),
-            onClick = { context.showShortToast("You tapped me!") }
+            onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
@@ -230,7 +230,7 @@ private fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（contentPadding）", allExpandFlow, padding = 20.dp) {
         Button(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
-            onClick = { context.showShortToast("You tapped me!") }
+            onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
@@ -251,7 +251,7 @@ private fun ButtonContentPaddingSamplePreview() {
 private fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
-        OutlinedButton(onClick = { context.showShortToast("You tapped me!") }) {
+        OutlinedButton(onClick = { context.showShortToast("You click me!") }) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
@@ -272,7 +272,7 @@ private fun OutlinedButtonSamplePreview() {
 private fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("TextButton", allExpandFlow, padding = 20.dp) {
-        TextButton(onClick = { context.showShortToast("You tapped me!") }) {
+        TextButton(onClick = { context.showShortToast("You click me!") }) {
             Text(text = "Send")
         }
     }
@@ -289,7 +289,7 @@ private fun TextButtonSamplePreview() {
 private fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
-        IconButton(onClick = { context.showShortToast("You tapped me!") }) {
+        IconButton(onClick = { context.showShortToast("You click me!") }) {
             Icon(
                 painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
@@ -334,7 +334,7 @@ private fun IconToggleButtonSamplePreview() {
 private fun FloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FloatingActionButton", allExpandFlow, padding = 20.dp) {
-        FloatingActionButton(onClick = { context.showShortToast("You tapped me!") }) {
+        FloatingActionButton(onClick = { context.showShortToast("You click me!") }) {
             Text(text = "Send")
         }
     }
@@ -353,7 +353,7 @@ private fun FloatingActionButtonShapeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("FloatingActionButton（Shape）", allExpandFlow, padding = 20.dp) {
         FloatingActionButton(
             shape = CircleShape,
-            onClick = { context.showShortToast("You tapped me!") },
+            onClick = { context.showShortToast("You click me!") },
         ) {
             Text(text = "Send")
         }
@@ -374,7 +374,7 @@ private fun FloatingActionButtonColorSample(allExpandFlow: Flow<Boolean>) {
         FloatingActionButton(
             backgroundColor = Color.Cyan,
             contentColor = Color.Magenta,
-            onClick = { context.showShortToast("You tapped me!") },
+            onClick = { context.showShortToast("You click me!") },
         ) {
             Text(text = "Send")
         }

@@ -58,7 +58,7 @@ private fun ModifierClickableSample(allExpandFlow: Flow<Boolean>) {
                         .size(60.dp)
                         .background(colorScheme.primaryContainer)
                         .clickable {
-                            context.showShortToast("You tapped me!")
+                            context.showShortToast("You click me!")
                         }
                 )
             }
@@ -93,7 +93,7 @@ private fun ModifierClickableCombinedSample(allExpandFlow: Flow<Boolean>) {
                                 context.showShortToast("You double tapped me!")
                             },
                             onClick = {
-                                context.showShortToast("You tapped me!")
+                                context.showShortToast("You click me!")
                             },
                         )
                 )
