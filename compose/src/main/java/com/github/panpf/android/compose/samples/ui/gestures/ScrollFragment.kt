@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
@@ -157,7 +159,13 @@ private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "left"
                 )
             }
-            Text(text = "${scrollState.value}", modifier = Modifier.align(CenterVertically))
+            Text(
+                text = "${scrollState.value}",
+                modifier = Modifier
+                    .width(30.dp)
+                    .align(CenterVertically),
+                textAlign = TextAlign.Center
+            )
             IconButton(onClick = {
                 coroutineScope.launch {
                     scrollState.animateScrollBy(100f)
