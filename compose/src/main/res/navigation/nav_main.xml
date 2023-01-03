@@ -1238,11 +1238,22 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/clickableFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.gestures.ClickableFragment" />
+        android:id="@+id/clickFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.ClickFragment" />
     <action
-        android:id="@+id/action_global_clickableFragment"
-        app:destination="@id/clickableFragment"
+        android:id="@+id/action_global_clickFragment"
+        app:destination="@id/clickFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/scrollFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.ScrollFragment" />
+    <action
+        android:id="@+id/action_global_scrollFragment"
+        app:destination="@id/scrollFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

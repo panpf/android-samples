@@ -28,28 +28,28 @@ import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFr
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ClickableFragment : Material3ComposeAppBarFragment() {
+class ClickFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Clickable"
+        return "Click"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            ClickableSample(allExpandFlow)
-            CombinedClickableSample(allExpandFlow)
-            DetectTapGesturesSample(allExpandFlow)
+            ClickClickableSample(allExpandFlow)
+            ClickCombinedClickableSample(allExpandFlow)
+            ClickDetectTapGesturesSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-private fun ClickableSample(allExpandFlow: Flow<Boolean>) {
+private fun ClickClickableSample(allExpandFlow: Flow<Boolean>) {
     var clickCount by remember { mutableStateOf(0) }
     ExpandableItem3(
-        title = "clickable",
+        title = "Click（clickable）",
         allExpandFlow,
         padding = 20.dp,
         desc = "Modifier.clickable() 用来接收单击事件，并为组件添加点击时的涟漪效果",
@@ -76,17 +76,17 @@ private fun ClickableSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ClickableSamplePreview() {
-    ClickableSample(remember { MutableStateFlow(true) })
+private fun ClickClickableSamplePreview() {
+    ClickClickableSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun CombinedClickableSample(allExpandFlow: Flow<Boolean>) {
+private fun ClickCombinedClickableSample(allExpandFlow: Flow<Boolean>) {
     var clickCount by remember { mutableStateOf(0) }
     ExpandableItem3(
-        title = "combinedClickable",
+        title = "Click（combinedClickable）",
         allExpandFlow,
         padding = 20.dp,
         desc = "Modifier.combinedClickable 可一次性接收单击、双击、长按三种事件，并为组件添加点击时的涟漪效果",
@@ -123,18 +123,18 @@ private fun CombinedClickableSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun CombinedClickableSamplePreview() {
-    CombinedClickableSample(remember { MutableStateFlow(true) })
+private fun ClickCombinedClickableSamplePreview() {
+    ClickCombinedClickableSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-private fun DetectTapGesturesSample(allExpandFlow: Flow<Boolean>) {
+private fun ClickDetectTapGesturesSample(allExpandFlow: Flow<Boolean>) {
     var clickCount by remember { mutableStateOf(0) }
     val colorScheme = MaterialTheme.colorScheme
     var background by remember { mutableStateOf(colorScheme.primary) }
     ExpandableItem3(
-        title = "detectTapGestures",
+        title = "Click（detectTapGestures）",
         allExpandFlow,
         padding = 20.dp,
         desc = "detectTapGestures 可一次性接收单击、双击、长按、按下四种事件，但不会为组件添加点击时的涟漪效果",
@@ -181,6 +181,6 @@ private fun DetectTapGesturesSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun DetectTapGesturesSamplePreview() {
-    DetectTapGesturesSample(remember { MutableStateFlow(true) })
+private fun ClickDetectTapGesturesSamplePreview() {
+    ClickDetectTapGesturesSample(remember { MutableStateFlow(true) })
 }

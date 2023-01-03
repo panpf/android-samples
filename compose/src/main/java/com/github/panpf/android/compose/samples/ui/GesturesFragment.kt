@@ -19,7 +19,11 @@ class GesturesFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("Clickable", R.id.action_global_clickableFragment),
+                Link("Click", R.id.action_global_clickFragment),
+                Link("Scroll", R.id.action_global_scrollFragment),
+                // todo Link("Drag", R.id.action_global_scrollFragment),
+                // todo Link("Swipe", R.id.action_global_scrollFragment),
+                // todo Link("Transform", R.id.action_global_scrollFragment),
             )
         }
         LinkList(links) { _, link ->
