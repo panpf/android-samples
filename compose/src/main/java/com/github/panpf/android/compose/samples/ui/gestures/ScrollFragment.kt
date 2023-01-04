@@ -6,7 +6,7 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,8 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalDensity
@@ -103,7 +102,7 @@ private fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        Column(modifier = Modifier.align(CenterHorizontally)) {
+        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             IconButton(onClick = {
                 coroutineScope.launch {
                     scrollState.animateScrollBy(-100f)
@@ -114,7 +113,10 @@ private fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "up"
                 )
             }
-            Text(text = "${scrollState.value}", modifier = Modifier.align(CenterHorizontally))
+            Text(
+                text = "${scrollState.value}",
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
             IconButton(onClick = {
                 coroutineScope.launch {
                     scrollState.animateScrollBy(100f)
@@ -169,7 +171,7 @@ private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        Row(modifier = Modifier.align(CenterHorizontally)) {
+        Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             IconButton(onClick = {
                 coroutineScope.launch {
                     scrollState.animateScrollBy(-100f)
@@ -184,7 +186,7 @@ private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
                 text = "${scrollState.value}",
                 modifier = Modifier
                     .width(30.dp)
-                    .align(CenterVertically),
+                    .align(Alignment.CenterVertically),
                 textAlign = TextAlign.Center
             )
             IconButton(onClick = {
@@ -223,7 +225,7 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = desc,
     ) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = CenterVertically) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 BoxWithConstraints(
                     Modifier
@@ -249,17 +251,35 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
                                 .coerceIn(0, maxWidthInt - maxHeightInt)
                         }
                     }
-                    Box(
+                    Row(
                         modifier = Modifier
                             .offset(x = with(LocalDensity.current) { xOffset.toDp() }, y = 0.dp)
                             .size(maxHeight)
-                            .background(MaterialTheme.colorScheme.primary)
-                    )
+                            .background(MaterialTheme.colorScheme.primary),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_left),
+                            contentDescription = "left",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_right),
+                            contentDescription = "right",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                        )
+                    }
                 }
                 Text("offset: $xDeltaTotal")
             }
 
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = CenterHorizontally) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 BoxWithConstraints(
                     Modifier
                         .size(50.dp, 150.dp)
@@ -284,12 +304,27 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
                                 .coerceIn(0, maxHeightInt - maxWidthInt)
                         }
                     }
-                    Box(
+                    Column(
                         modifier = Modifier
                             .offset(x = 0.dp, y = with(LocalDensity.current) { yOffset.toDp() })
                             .size(maxWidth)
-                            .background(MaterialTheme.colorScheme.primary)
-                    )
+                            .background(MaterialTheme.colorScheme.primary),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_up),
+                            contentDescription = "up",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            contentDescription = "down",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                        )
+                    }
                 }
                 Text("offset: $yDeltaTotal")
             }
