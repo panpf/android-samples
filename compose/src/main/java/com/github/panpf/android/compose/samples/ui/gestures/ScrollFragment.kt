@@ -1,13 +1,20 @@
 package com.github.panpf.android.compose.samples.ui.gestures
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,11 +23,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +57,7 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
         ExpandableLayout { allExpandFlow ->
             ScrollVerticalScrollSample(allExpandFlow)
             ScrollHorizontalScrollSample(allExpandFlow)
-            // todo ScrollScrollableSample(allExpandFlow)
+            ScrollScrollableSample(allExpandFlow)
             // todo ScrollNestedScrollSample(allExpandFlow)
         }
     }
@@ -57,12 +70,16 @@ private const val text =
 
 @Composable
 private fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        verticalScroll 修饰符提供一种最简单的垂直滚动方法，可让用户在元素内容边界大于最大尺寸约束时滚动元素。您无需转换或偏移内容。
+    """.trimIndent()
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
     ExpandableItem3(
         title = "Scroll（verticalScroll）",
         allExpandFlow,
         padding = 20.dp,
+        desc = desc,
     ) {
         Text(text = "reverseScrolling=false")
         Text(
@@ -121,12 +138,16 @@ private fun ScrollVerticalScrollSamplePreview() {
 
 @Composable
 private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        horizontalScroll 修饰符提供一种最简单的横向滚动方法，可让用户在元素内容边界大于最大尺寸约束时滚动元素。您无需转换或偏移内容。
+    """.trimIndent()
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
     ExpandableItem3(
         title = "Scroll（horizontalScroll）",
         allExpandFlow,
         padding = 20.dp,
+        desc = desc,
     ) {
         Text(text = "reverseScrolling=false")
         Text(
@@ -184,4 +205,100 @@ private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun ScrollHorizontalScrollSamplePreview() {
     ScrollHorizontalScrollSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        |       scrollable 可检测滚动手势，但不会偏移其内容。必须配合 ScrollableState 才能正常工作。
+        |       构造 ScrollableState 时，您必须提供一个 consumeScrollDelta 函数，该函数将在每个滚动步骤调用（通过手势输入、流畅滚动或快速滑动），并且增量以像素为单位。
+        |       该函数必须返回所消耗的滚动距离，以确保在存在具有 scrollable 修饰符的嵌套元素时，可以正确传播相应事件。
+    """.trimMargin()
+    var xDeltaTotal by remember { mutableStateOf(0f) }
+    var yDeltaTotal by remember { mutableStateOf(0f) }
+    ExpandableItem3(
+        title = "Scroll（scrollable）",
+        allExpandFlow,
+        padding = 20.dp,
+        desc = desc,
+    ) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = CenterVertically) {
+            Column(modifier = Modifier.weight(1f)) {
+                BoxWithConstraints(
+                    Modifier
+                        .size(150.dp, 50.dp)
+                        .scrollable(
+                            orientation = Orientation.Horizontal,
+                            // Scrollable state: describes how to consume
+                            // scrolling delta and update offset
+                            state = rememberScrollableState { delta ->
+                                xDeltaTotal += delta
+                                delta
+                            }
+                        )
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                        .clipToBounds(),
+                ) {
+                    val maxWidthInt = with(LocalDensity.current) { maxWidth.toPx() }.toInt()
+                    val maxHeightInt = with(LocalDensity.current) { maxHeight.toPx() }.toInt()
+                    val xOffset by remember {
+                        derivedStateOf {
+                            xDeltaTotal
+                                .toInt()
+                                .coerceIn(0, maxWidthInt - maxHeightInt)
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .offset(x = with(LocalDensity.current) { xOffset.toDp() }, y = 0.dp)
+                            .size(maxHeight)
+                            .background(MaterialTheme.colorScheme.primary)
+                    )
+                }
+                Text("offset: $xDeltaTotal")
+            }
+
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = CenterHorizontally) {
+                BoxWithConstraints(
+                    Modifier
+                        .size(50.dp, 150.dp)
+                        .scrollable(
+                            orientation = Orientation.Vertical,
+                            // Scrollable state: describes how to consume
+                            // scrolling delta and update offset
+                            state = rememberScrollableState { delta ->
+                                yDeltaTotal += delta
+                                delta
+                            }
+                        )
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                        .clipToBounds(),
+                ) {
+                    val maxWidthInt = with(LocalDensity.current) { maxWidth.toPx() }.toInt()
+                    val maxHeightInt = with(LocalDensity.current) { maxHeight.toPx() }.toInt()
+                    val yOffset by remember {
+                        derivedStateOf {
+                            yDeltaTotal
+                                .toInt()
+                                .coerceIn(0, maxHeightInt - maxWidthInt)
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .offset(x = 0.dp, y = with(LocalDensity.current) { yOffset.toDp() })
+                            .size(maxWidth)
+                            .background(MaterialTheme.colorScheme.primary)
+                    )
+                }
+                Text("offset: $yDeltaTotal")
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun ScrollScrollableSamplePreview() {
+    ScrollScrollableSample(remember { MutableStateFlow(true) })
 }
