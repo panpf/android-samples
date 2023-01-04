@@ -22,6 +22,8 @@ class ImagesFragment : Material3ComposeAppBarFragment() {
                 Link("Image", R.id.action_global_imageFragment),
                 Link("AsyncImage - Coil", R.id.action_global_asyncImageCoilFragment),
                 Link("AsyncImage - Sketch", R.id.action_global_asyncImageSketchFragment),
+                Link("AsyncImage - List - Coil", R.id.action_global_asyncImageListCoilFragment),
+                Link("AsyncImage - List - Sketch", R.id.action_global_asyncImageListSketchFragment),
             )
         }
         LinkList(links) { _, link ->

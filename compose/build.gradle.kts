@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.panpf.tools4j)
     implementation(libs.panpf.tools4k)
     implementation(libs.panpf.tools4k)
+    implementation(libs.panpf.sketch3)
+    implementation(libs.panpf.sketch3.extensions)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
 }

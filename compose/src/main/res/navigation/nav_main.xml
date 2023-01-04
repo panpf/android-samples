@@ -329,11 +329,33 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/asyncImageListSketchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageListSketchFragment" />
+    <action
+        android:id="@+id/action_global_asyncImageListSketchFragment"
+        app:destination="@id/asyncImageListSketchFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/asyncImageCoilFragment"
         android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageCoilFragment" />
     <action
         android:id="@+id/action_global_asyncImageCoilFragment"
         app:destination="@id/asyncImageCoilFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/asyncImageListCoilFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageListCoilFragment" />
+    <action
+        android:id="@+id/action_global_asyncImageListCoilFragment"
+        app:destination="@id/asyncImageListCoilFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
