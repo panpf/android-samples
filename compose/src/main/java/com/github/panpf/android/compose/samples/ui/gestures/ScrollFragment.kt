@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -57,7 +59,7 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollVerticalScrollSample(allExpandFlow)
             ScrollHorizontalScrollSample(allExpandFlow)
             ScrollScrollableSample(allExpandFlow)
-            // todo ScrollNestedScrollSample(allExpandFlow)
+            ScrollNestedScrollSample(allExpandFlow)
             // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
@@ -337,4 +339,52 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun ScrollScrollableSamplePreview() {
     ScrollScrollableSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun ScrollNestedScrollSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        |       Compose 支持嵌套滚动，可让多个组件对一个滚动手势做出回应。部分 Compose 组件和修饰符原生支持自动嵌套滚动，包括：verticalScroll、horizontalScroll、scrollable、Lazy API 和 TextField，下面仅演示 verticalScroll
+    """.trimMargin()
+    ExpandableItem3(
+        title = "NestedScroll（Auto）",
+        allExpandFlow,
+        padding = 20.dp,
+        desc = desc,
+    ) {
+        Column(
+            modifier = Modifier
+                .height(300.dp)
+                .width(200.dp)
+                .background(MaterialTheme.colorScheme.primary.copy(0.5f))
+                .verticalScroll(rememberScrollState())
+                .padding(32.dp)
+        ) {
+            repeat(3) {
+                if (it > 0) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+                Box(
+                    modifier = Modifier
+                        .height(160.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primary)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(
+                        "1\n\n2\n\n3\n\n4\n\n5\n\n6\n\n7\n\n8",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun ScrollNestedScrollSamplePreview() {
+    ScrollNestedScrollSample(remember { MutableStateFlow(true) })
 }
