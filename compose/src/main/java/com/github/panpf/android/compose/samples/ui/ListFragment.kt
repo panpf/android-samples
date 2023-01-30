@@ -12,7 +12,7 @@ import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 class ListFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "List Grid"
+        return "List&Grid"
     }
 
     @Composable

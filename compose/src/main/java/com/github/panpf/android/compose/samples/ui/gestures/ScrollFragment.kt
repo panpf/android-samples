@@ -58,6 +58,7 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollHorizontalScrollSample(allExpandFlow)
             ScrollScrollableSample(allExpandFlow)
             // todo ScrollNestedScrollSample(allExpandFlow)
+            // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
 }
