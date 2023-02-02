@@ -50,11 +50,9 @@ class MaterialFragment : MaterialComposeAppBarFragment() {
             )
         }
         LinkList(links) { _, link ->
-            val nav = link.nav
-            if (nav is Int) {
-                findNavController().navigate(nav)
-            } else if (nav is NavDirections) {
-                findNavController().navigate(nav)
+            when (val nav = link.nav) {
+                is Int -> findNavController().navigate(nav)
+                is NavDirections -> findNavController().navigate(nav)
             }
         }
     }

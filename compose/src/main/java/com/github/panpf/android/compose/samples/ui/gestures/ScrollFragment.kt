@@ -59,7 +59,8 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollVerticalScrollSample(allExpandFlow)
             ScrollHorizontalScrollSample(allExpandFlow)
             ScrollScrollableSample(allExpandFlow)
-            ScrollNestedScrollSample(allExpandFlow)
+            ScrollNestedScrollAutoSample(allExpandFlow)
+            // todo ScrollNestedScrollCustomSample(allExpandFlow)
             // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
@@ -343,7 +344,7 @@ private fun ScrollScrollableSamplePreview() {
 
 
 @Composable
-private fun ScrollNestedScrollSample(allExpandFlow: Flow<Boolean>) {
+private fun ScrollNestedScrollAutoSample(allExpandFlow: Flow<Boolean>) {
     val desc = """
         |       Compose 支持嵌套滚动，可让多个组件对一个滚动手势做出回应。部分 Compose 组件和修饰符原生支持自动嵌套滚动，包括：verticalScroll、horizontalScroll、scrollable、Lazy API 和 TextField，下面仅演示 verticalScroll
     """.trimMargin()
@@ -385,6 +386,6 @@ private fun ScrollNestedScrollSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ScrollNestedScrollSamplePreview() {
-    ScrollNestedScrollSample(remember { MutableStateFlow(true) })
+private fun ScrollNestedScrollAutoSamplePreview() {
+    ScrollNestedScrollAutoSample(remember { MutableStateFlow(true) })
 }

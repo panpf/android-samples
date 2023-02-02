@@ -20,18 +20,16 @@ class GesturesFragment : Material3ComposeAppBarFragment() {
         val links = remember {
             listOf(
                 Link("Click", R.id.action_global_clickFragment),
+                Link("Drag", R.id.action_global_dragFragment),
+                Link("Multitouch", R.id.action_global_multitouchFragment),
                 Link("Scroll", R.id.action_global_scrollFragment),
-                // todo Link("Drag", R.id.action_global_scrollFragment),
-                // todo Link("Swipe", R.id.action_global_scrollFragment),
-                // todo Link("Transform", R.id.action_global_scrollFragment),
+                Link("Swip", R.id.action_global_swipFragment),
             )
         }
         LinkList(links) { _, link ->
-            val nav = link.nav
-            if (nav is Int) {
-                findNavController().navigate(nav)
-            } else if (nav is NavDirections) {
-                findNavController().navigate(nav)
+            when (val nav = link.nav) {
+                is Int -> findNavController().navigate(nav)
+                is NavDirections -> findNavController().navigate(nav)
             }
         }
     }

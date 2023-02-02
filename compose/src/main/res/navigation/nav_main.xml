@@ -1271,11 +1271,44 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/dragFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.DragFragment" />
+    <action
+        android:id="@+id/action_global_dragFragment"
+        app:destination="@id/dragFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/multitouchFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.MultitouchFragment" />
+    <action
+        android:id="@+id/action_global_multitouchFragment"
+        app:destination="@id/multitouchFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/scrollFragment"
         android:name="com.github.panpf.android.compose.samples.ui.gestures.ScrollFragment" />
     <action
         android:id="@+id/action_global_scrollFragment"
         app:destination="@id/scrollFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/swipFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.SwipFragment" />
+    <action
+        android:id="@+id/action_global_swipFragment"
+        app:destination="@id/swipFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
