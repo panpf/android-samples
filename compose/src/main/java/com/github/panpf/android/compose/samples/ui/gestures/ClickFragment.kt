@@ -46,7 +46,7 @@ class ClickFragment : Material3ComposeAppBarFragment() {
 
 
 @Composable
-private fun ClickClickableSample(allExpandFlow: Flow<Boolean>) {
+fun ClickClickableSample(allExpandFlow: Flow<Boolean>) {
     var clickCount by remember { mutableStateOf(0) }
     ExpandableItem3(
         title = "Click（clickable）",
@@ -83,7 +83,7 @@ private fun ClickClickableSamplePreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ClickCombinedClickableSample(allExpandFlow: Flow<Boolean>) {
+fun ClickCombinedClickableSample(allExpandFlow: Flow<Boolean>) {
     var clickCount by remember { mutableStateOf(0) }
     ExpandableItem3(
         title = "Click（combinedClickable）",

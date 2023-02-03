@@ -72,7 +72,7 @@ private const val text =
 
 
 @Composable
-private fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
+fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
     val desc = """
         verticalScroll 修饰符提供一种最简单的垂直滚动方法，可让用户在元素内容边界大于最大尺寸约束时滚动元素。您无需转换或偏移内容。
     """.trimIndent()
@@ -143,7 +143,7 @@ private fun ScrollVerticalScrollSamplePreview() {
 
 
 @Composable
-private fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
+fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
     val desc = """
         horizontalScroll 修饰符提供一种最简单的横向滚动方法，可让用户在元素内容边界大于最大尺寸约束时滚动元素。您无需转换或偏移内容。
     """.trimIndent()
