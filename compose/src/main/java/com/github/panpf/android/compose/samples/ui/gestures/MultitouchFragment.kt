@@ -1,11 +1,16 @@
 package com.github.panpf.android.compose.samples.ui.gestures
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,9 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -41,30 +47,60 @@ class MultitouchFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun MultitouchPanningSample(allExpandFlow: Flow<Boolean>) {
-    var clickCount by remember { mutableStateOf(0) }
+    val desc = """
+        Modifier.transformable() 修饰符可以检测平移、缩放和旋转多点触控手势，
+        transformable 同样仅报告变化增量，您需要保存状态并通过 graphicsLayer 修饰符来应用变化
+    """.trimIndent()
+    // set up all transformation states
+    var scale by remember { mutableStateOf(1f) }
+    var rotation by remember { mutableStateOf(0f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+    val state = rememberTransformableState { zoomChange, offsetChange, rotationChange ->
+        scale *= zoomChange
+        rotation += rotationChange
+        offset += offsetChange
+    }
+    var lockRotationOnZoomPan by remember { mutableStateOf(false) }
     ExpandableItem3(
-        title = "Multitouch（panning）",
+        title = "Multitouch（transformable）",
         allExpandFlow,
         padding = 20.dp,
-        desc = "Modifier.clickable() 用来接收单击事件，并为组件添加点击时的涟漪效果",
+        desc = desc,
     ) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+            Checkbox(
+                checked = lockRotationOnZoomPan,
+                onCheckedChange = {
+                    lockRotationOnZoomPan = it
+                }
+            )
+            Text(text = "缩放时禁用旋转", modifier = Modifier.align(Alignment.CenterVertically))
+        }
         Box(
             modifier = Modifier
-                .size(100.dp)
-                .background(MaterialTheme.colorScheme.primary)
-                .clickable {
-                    clickCount++
-                }
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(width = 1.dp, color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
         ) {
-            Text(
-                text = clickCount.toString(),
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.align(Alignment.Center)
+            Box(
+                Modifier
+                    // apply other transformations like rotation and zoom
+                    // on the pizza slice emoji
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        rotationZ = rotation,
+                        translationX = offset.x,
+                        translationY = offset.y
+                    )
+                    // add transformable to listen to multitouch transformation events
+                    // after offset
+                    .transformable(state = state, lockRotationOnZoomPan = lockRotationOnZoomPan)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .size(160.dp)
+                    .align(Alignment.Center)
             )
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "点击计数 +1", fontSize = 12.sp)
     }
 }
 
