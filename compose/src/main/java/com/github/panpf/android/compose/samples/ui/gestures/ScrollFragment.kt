@@ -10,14 +10,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -34,10 +37,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
@@ -46,6 +54,7 @@ import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFr
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class ScrollFragment : Material3ComposeAppBarFragment() {
 
@@ -60,7 +69,8 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollHorizontalScrollSample(allExpandFlow)
             ScrollScrollableSample(allExpandFlow)
             ScrollNestedScrollAutoSample(allExpandFlow)
-            // todo ScrollNestedScrollCustomSample(allExpandFlow)
+            ScrollNestedScrollCustomSample(allExpandFlow)
+            // todo ScrollNestedScrollCustomDispatcherSample(allExpandFlow)
             // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
@@ -388,4 +398,94 @@ private fun ScrollNestedScrollAutoSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun ScrollNestedScrollAutoSamplePreview() {
     ScrollNestedScrollAutoSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun ScrollNestedScrollCustomSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        |       Compose 支持嵌套滚动，可让多个组件对一个滚动手势做出回应。部分 Compose 组件和修饰符原生支持自动嵌套滚动，包括：verticalScroll、horizontalScroll、scrollable、Lazy API 和 TextField，下面仅演示 verticalScroll
+    """.trimMargin()
+    val topAppBaeHeightSize = 64.dp
+    val topAppBaeHeightSizePx = with(LocalDensity.current) { topAppBaeHeightSize.toPx() }
+    var topAppBarOffsetY by remember { mutableStateOf(0f) }
+    ExpandableItem3(
+        title = "NestedScroll（Custom）",
+        allExpandFlow,
+        padding = 20.dp,
+        desc = desc,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+                .clipToBounds()
+                .nestedScroll(remember {
+                    object : NestedScrollConnection {
+                        override fun onPreScroll(
+                            available: Offset,
+                            source: NestedScrollSource
+                        ): Offset {
+                            val delta = available.y
+//                            val oldTopAppBarOffsetY = topAppBarOffsetY
+                            val newTopAppBarOffsetY =
+                                (topAppBarOffsetY + delta).coerceIn(-topAppBaeHeightSizePx, 0f)
+                            topAppBarOffsetY = newTopAppBarOffsetY
+//                            return Offset(x = 0f, y = newTopAppBarOffsetY - oldTopAppBarOffsetY)
+                            return Offset.Zero
+                        }
+                    }
+                })
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(top = topAppBaeHeightSize),
+                content = {
+                    items(20) { index ->
+                        Text(
+                            text = "Item ${index + 1}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp)
+                        )
+                    }
+                })
+
+            Row(
+                modifier = Modifier
+                    .offset { IntOffset(x = 0, y = topAppBarOffsetY.roundToInt()) }
+                    .fillMaxWidth()
+                    .height(topAppBaeHeightSize)
+                    .background(MaterialTheme.colorScheme.primary),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    contentDescription = "back",
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .size(topAppBaeHeightSize)
+                        .padding(14.dp),
+                )
+                Text(
+                    text = "Title", modifier = Modifier.weight(1f),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_more),
+                    contentDescription = "more",
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .size(topAppBaeHeightSize)
+                        .padding(14.dp),
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun ScrollNestedScrollCustomSamplePreview() {
+    ScrollNestedScrollCustomSample(remember { MutableStateFlow(true) })
 }

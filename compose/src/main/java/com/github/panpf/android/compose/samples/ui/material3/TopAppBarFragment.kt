@@ -75,7 +75,7 @@ private fun TopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(painter = painterResource(id = it.second), contentDescription = "action")
                     }
                 }
             }
