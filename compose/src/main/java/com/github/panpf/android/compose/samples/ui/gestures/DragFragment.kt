@@ -91,6 +91,13 @@ private fun DragDraggableSample(allExpandFlow: Flow<Boolean>) {
                     ) {
                         Box(
                             modifier = Modifier
+                                .let {
+                                    if (move) {
+                                        it.offset { IntOffset(x = offset.value.toInt(), y = 0) }
+                                    } else {
+                                        it
+                                    }
+                                }
                                 .size(maxHeight * 0.5f)
                                 .align(Alignment.Center)
                                 .draggable(
@@ -99,13 +106,6 @@ private fun DragDraggableSample(allExpandFlow: Flow<Boolean>) {
                                         offset.value += delta
                                     }
                                 )
-                                .let {
-                                    if (move) {
-                                        it.offset { IntOffset(x = offset.value.toInt(), y = 0) }
-                                    } else {
-                                        it
-                                    }
-                                }
                                 .background(MaterialTheme.colorScheme.primary),
                         ) {
                             Text(
@@ -142,6 +142,13 @@ private fun DragDraggableSample(allExpandFlow: Flow<Boolean>) {
                         ) {
                             Box(
                                 modifier = Modifier
+                                    .let {
+                                        if (move) {
+                                            it.offset { IntOffset(x = 0, y = offset.value.toInt()) }
+                                        } else {
+                                            it
+                                        }
+                                    }
                                     .size(maxWidth * 0.7f)
                                     .align(Alignment.Center)
                                     .draggable(
@@ -150,13 +157,6 @@ private fun DragDraggableSample(allExpandFlow: Flow<Boolean>) {
                                             offset.value += delta
                                         }
                                     )
-                                    .let {
-                                        if (move) {
-                                            it.offset { IntOffset(x = 0, y = offset.value.toInt()) }
-                                        } else {
-                                            it
-                                        }
-                                    }
                                     .background(MaterialTheme.colorScheme.primary),
                             ) {
                                 Text(
@@ -211,14 +211,6 @@ private fun DragDetectDragGesturesSample(allExpandFlow: Flow<Boolean>) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(maxHeight * 0.5f)
-                                .align(Alignment.Center)
-                                .pointerInput(Unit) {
-                                    detectDragGestures { change, dragAmount ->
-                                        change.consume()
-                                        offset.value += Offset(dragAmount.x, dragAmount.y)
-                                    }
-                                }
                                 .let {
                                     if (move) {
                                         it.offset {
@@ -229,6 +221,14 @@ private fun DragDetectDragGesturesSample(allExpandFlow: Flow<Boolean>) {
                                         }
                                     } else {
                                         it
+                                    }
+                                }
+                                .size(maxHeight * 0.5f)
+                                .align(Alignment.Center)
+                                .pointerInput(Unit) {
+                                    detectDragGestures { change, dragAmount ->
+                                        change.consume()
+                                        offset.value += Offset(dragAmount.x, dragAmount.y)
                                     }
                                 }
                                 .background(MaterialTheme.colorScheme.primary),

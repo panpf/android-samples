@@ -90,8 +90,8 @@
 //        }
 //        TopAppBar(
 //            modifier = Modifier
-//                .height(toolbarHeight)
 //                .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) },
+//                .height(toolbarHeight)
 //            title = { Text("toolbar offset is ${toolbarOffsetHeightPx.value}") }
 //        )
 //    }

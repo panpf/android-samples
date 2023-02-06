@@ -170,7 +170,6 @@ private fun SwipSwipeableAnchorsSample(allExpandFlow: Flow<Boolean>) {
             repeat(anchorsCount) { index ->
                 Box(
                     modifier = Modifier
-                        .align(Alignment.CenterStart)
                         .offset {
                             val partLength = 1 / (anchorsCount - 1f)
                             val progress = index * partLength
@@ -178,6 +177,7 @@ private fun SwipSwipeableAnchorsSample(allExpandFlow: Flow<Boolean>) {
                                 (progress * (maxWidthPx - (thumbSizePx))) + (thumbSizePx / 2) - (stepSizePx / 2)
                             IntOffset(x = offset.roundToInt(), y = 0)
                         }
+                        .align(Alignment.CenterStart)
                         .size(stepSize)
                         .clip(RoundedCornerShape(50))
                         .background(MaterialTheme.colorScheme.primary)
@@ -277,7 +277,6 @@ private fun SwipSwipeableThresholdsSample(allExpandFlow: Flow<Boolean>) {
                 repeat(stepCount) { index ->
                     Box(
                         modifier = Modifier
-                            .align(Alignment.CenterStart)
                             .offset {
                                 val partLength = 1 / (stepCount - 1f)
                                 val progress = index * partLength
@@ -285,6 +284,7 @@ private fun SwipSwipeableThresholdsSample(allExpandFlow: Flow<Boolean>) {
                                     (progress * (maxWidthPx - (thumbSizePx))) + (thumbSizePx / 2) - (stepSizePx / 2)
                                 IntOffset(x = offset.roundToInt(), y = 0)
                             }
+                            .align(Alignment.CenterStart)
                             .width(stepSize)
                             .height(trackSize)
 //                        .clip(RoundedCornerShape(50))
