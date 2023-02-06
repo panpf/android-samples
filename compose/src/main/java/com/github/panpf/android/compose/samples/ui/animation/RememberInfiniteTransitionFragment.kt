@@ -76,7 +76,7 @@ private fun RememberInfiniteTransitionSample(allExpandFlow: Flow<Boolean>) {
             repeatMode = RepeatMode.Reverse
         )
     )
-    ExpandableItem3(title = "updateTransition", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "rememberInfiniteTransition", allExpandFlow, padding = 20.dp) {
         Box(
             modifier = Modifier
                 .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
