@@ -1,8 +1,11 @@
 package com.github.panpf.android.compose.samples.ui.gestures
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
@@ -35,13 +38,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollDispatcher
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,8 +75,8 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollHorizontalScrollSample(allExpandFlow)
             ScrollScrollableSample(allExpandFlow)
             ScrollNestedScrollAutoSample(allExpandFlow)
-            ScrollNestedScrollCustomSample(allExpandFlow)
-            // todo ScrollNestedScrollCustomDispatcherSample(allExpandFlow)
+            ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow)
+            ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow)
             // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
@@ -402,15 +408,16 @@ private fun ScrollNestedScrollAutoSamplePreview() {
 
 
 @Composable
-private fun ScrollNestedScrollCustomSample(allExpandFlow: Flow<Boolean>) {
+private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: Flow<Boolean>) {
+    // todo 补充说明 NestedScroll 的 NestedScrollConnection 说明
     val desc = """
-        |       Compose 支持嵌套滚动，可让多个组件对一个滚动手势做出回应。部分 Compose 组件和修饰符原生支持自动嵌套滚动，包括：verticalScroll、horizontalScroll、scrollable、Lazy API 和 TextField，下面仅演示 verticalScroll
-    """.trimMargin()
+        
+    """.trimIndent()
     val topAppBaeHeightSize = 64.dp
     val topAppBaeHeightSizePx = with(LocalDensity.current) { topAppBaeHeightSize.toPx() }
     var topAppBarOffsetY by remember { mutableStateOf(0f) }
     ExpandableItem3(
-        title = "NestedScroll（Custom）",
+        title = "NestedScroll（Parent: NestedScrollConnection）",
         allExpandFlow,
         padding = 20.dp,
         desc = desc,
@@ -486,6 +493,122 @@ private fun ScrollNestedScrollCustomSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ScrollNestedScrollCustomSamplePreview() {
-    ScrollNestedScrollCustomSample(remember { MutableStateFlow(true) })
+private fun ScrollNestedScrollParentNestedScrollConnectionSamplePreview() {
+    ScrollNestedScrollParentNestedScrollConnectionSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow: Flow<Boolean>) {
+    // todo 补充说明 NestedScroll 的 NestedScrollDispatcher 说明
+    val desc = """
+        |       
+    """.trimMargin()
+    val bottomBlockSize = 120.dp
+    val topBlockSize = 60.dp
+    val bottomBlockSizePx = with(LocalDensity.current) { bottomBlockSize.toPx() }
+    val topBlockSizePx = with(LocalDensity.current) { topBlockSize.toPx() }
+    var bottomBlockOffsetX by remember { mutableStateOf(0f) }
+    var topBlockOffsetX by remember { mutableStateOf(0f) }
+    var boxWidthPx = 0f
+    val nestedScrollDispatcher = remember { NestedScrollDispatcher() }
+    ExpandableItem3(
+        title = "NestedScroll（Child: NestedScrollDispatcher）",
+        allExpandFlow,
+        padding = 20.dp,
+        desc = desc,
+    ) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(bottomBlockSize)
+                .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                .clipToBounds()
+                .nestedScroll(remember {
+                    object : NestedScrollConnection {
+                        override fun onPreScroll(
+                            available: Offset,
+                            source: NestedScrollSource
+                        ): Offset {
+                            val delta = available.x
+                            val oldTopBlockOffsetX = topBlockOffsetX
+                            val newTopBlockOffsetX = (topBlockOffsetX + delta)
+                                .coerceIn(
+                                    -(boxWidthPx - topBlockSizePx) / 2,
+                                    (boxWidthPx - topBlockSizePx) / 2
+                                )
+                            topBlockOffsetX = newTopBlockOffsetX
+                            return Offset(x = newTopBlockOffsetX - oldTopBlockOffsetX, y = 0f)
+                        }
+                    }
+                })
+        ) {
+            boxWidthPx = with(LocalDensity.current) { maxWidth.toPx() }
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(x = bottomBlockOffsetX.roundToInt(), y = 0) }
+                    .align(Alignment.Center)
+                    .size(bottomBlockSize)
+                    .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.8f))
+                    .nestedScroll(rememberNestedScrollInteropConnection(), nestedScrollDispatcher)
+                    .draggable(
+                        orientation = Orientation.Horizontal,
+                        state = rememberDraggableState { delta ->
+                            // 先让父组件消费
+                            val parentsConsumed = nestedScrollDispatcher.dispatchPreScroll(
+                                available = Offset(x = delta, y = 0f),
+                                source = NestedScrollSource.Drag
+                            )
+
+                            // 自己再消费父组件剩下的
+                            val adjustedAvailableX = delta - parentsConsumed.x
+                            val oldBottomBlockOffsetX = bottomBlockOffsetX
+                            val newBottomBlockOffsetX = (bottomBlockOffsetX + adjustedAvailableX)
+                                .coerceIn(
+                                    -(boxWidthPx - bottomBlockSizePx) / 2,
+                                    (boxWidthPx - bottomBlockSizePx) / 2
+                                )
+                            bottomBlockOffsetX = newBottomBlockOffsetX
+
+                            // 再让父组件消费自己剩下的
+                            val weConsumed = newBottomBlockOffsetX - oldBottomBlockOffsetX
+                            val totalConsumed = Offset(x = weConsumed, y = 0f) + parentsConsumed
+                            val left = adjustedAvailableX - weConsumed
+                            nestedScrollDispatcher.dispatchPostScroll(
+                                consumed = totalConsumed,
+                                available = Offset(x = left, y = 0f),
+                                source = NestedScrollSource.Drag
+                            )
+                        }
+                    )
+            )
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(x = topBlockOffsetX.roundToInt(), y = 0) }
+                    .align(Alignment.Center)
+                    .size(topBlockSize)
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.8f))
+            ) {
+                Row(modifier = Modifier.align(Alignment.Center)) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                        contentDescription = "left",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        contentDescription = "right",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSamplePreview() {
+    ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(remember { MutableStateFlow(true) })
 }
