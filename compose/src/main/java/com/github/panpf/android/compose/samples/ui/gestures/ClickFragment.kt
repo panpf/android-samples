@@ -4,7 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -144,24 +147,30 @@ private fun ClickDetectTapGesturesSample(allExpandFlow: Flow<Boolean>) {
                 .size(100.dp)
                 .background(background)
                 .pointerInput(Unit) {
-                    // todo 检测到取消时恢复 background
                     detectTapGestures(
                         onPress = {
-                            background = colorScheme.tertiary
                         },
                         onDoubleTap = {
-                            background = colorScheme.primary
                             clickCount += 2
                         },
                         onLongPress = {
-                            background = colorScheme.primary
                             clickCount--
                         },
                         onTap = {
-                            background = colorScheme.primary
                             clickCount++
                         }
                     )
+                }
+                .pointerInput(Unit) {
+                    forEachGesture {
+                        awaitPointerEventScope {
+                            awaitFirstDown()
+                            background = colorScheme.tertiary
+
+                            waitForUpOrCancellation()
+                            background = colorScheme.primary
+                        }
+                    }
                 }
         ) {
             Text(
