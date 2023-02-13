@@ -81,6 +81,7 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollNestedScrollAutoSample(allExpandFlow)
             ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow)
             ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow)
+            // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
 }
@@ -412,9 +413,12 @@ private fun ScrollNestedScrollAutoSamplePreview() {
 
 @Composable
 private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: Flow<Boolean>) {
-    // todo 补充说明 NestedScroll 的 NestedScrollConnection 说明
     val desc = """
-        自定义
+        通过 Modifier.nestedScroll() 函数可以实现自定义嵌套滚动，它有两个参数
+            NestedScrollConnection：当前组件作为父组件时通过 NestedScrollConnection 接收子组件传递的滚动事件并优先消费事件
+            NestedScrollDispatcher：当前组件作为子组件时通过 NestedScrollDispatcher 将滚动事件传递给父组件，让其先消费，然后自己再消费剩余的事件
+        
+        本实例演示仅作为父组件时，通过 NestedScrollConnection 优先消费事件来隐藏或显示 title bar
     """.trimIndent()
     val topAppBaeHeightSize = 64.dp
     val topAppBaeHeightSizePx = with(LocalDensity.current) { topAppBaeHeightSize.toPx() }
@@ -504,10 +508,15 @@ private fun ScrollNestedScrollParentNestedScrollConnectionSamplePreview() {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow: Flow<Boolean>) {
-    // todo 补充说明 NestedScroll 的 NestedScrollDispatcher 说明
     val desc = """
-        |       
-    """.trimMargin()
+        通过 Modifier.nestedScroll() 函数可以实现自定义嵌套滚动，它有两个参数
+            NestedScrollConnection：当前组件作为父组件时通过 NestedScrollConnection 接收子组件传递的滚动事件并优先消费事件
+            NestedScrollDispatcher：当前组件作为子组件时通过 NestedScrollDispatcher 将滚动事件传递给父组件，让其先消费，然后自己再消费剩余的事件
+        
+        本实例演示仅作为子组件时，通过 NestedScrollDispatcher 将滚动事件传递给父组件，让其先消费，然后自己再消费剩余的事件。
+        
+        大色红可以接收触摸事件并左右移动，但必须要先将小色快移动到边缘大色块自身才会开始移动
+    """.trimIndent()
     val bottomBlockSize = 120.dp
     val topBlockSize = 60.dp
     val bottomBlockSizePx = with(LocalDensity.current) { bottomBlockSize.toPx() }
@@ -585,13 +594,6 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExp
                             )
                         }
                     )
-            )
-            Box(
-                modifier = Modifier
-                    .offset { IntOffset(x = topBlockOffsetX.roundToInt(), y = 0) }
-                    .align(Alignment.Center)
-                    .size(topBlockSize)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.8f))
             ) {
                 Row(modifier = Modifier.align(Alignment.Center)) {
                     Icon(
@@ -606,6 +608,13 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExp
                     )
                 }
             }
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(x = topBlockOffsetX.roundToInt(), y = 0) }
+                    .align(Alignment.Center)
+                    .size(topBlockSize)
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.8f))
+            )
         }
     }
 }
