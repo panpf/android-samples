@@ -30,4 +30,9 @@ class AppListViewModel(application: Application) : AndroidViewModel(application)
     }
 }
 
-data class App(val name: String, val packageName: String, val versionName: String, val versionCode: Int)
+data class App(
+    val name: String,
+    val packageName: String,
+    val versionName: String,
+    val versionCode: Int
+)

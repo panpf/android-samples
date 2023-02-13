@@ -21,10 +21,16 @@ class ListFragment : Material3ComposeAppBarFragment() {
             listOf(
                 Link("LazyColumn", R.id.action_global_lazyColumnFragment),
                 Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
-                Link("LazyHorizontalStaggeredGrid", R.id.action_global_lazyHorizontalStaggeredGridFragment),
+                Link(
+                    "LazyHorizontalStaggeredGrid",
+                    R.id.action_global_lazyHorizontalStaggeredGridFragment
+                ),
                 Link("LazyRow", R.id.action_global_lazyRowFragment),
                 Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
-                Link("LazyVerticalStaggeredGrid", R.id.action_global_lazyVerticalStaggeredGridFragment),
+                Link(
+                    "LazyVerticalStaggeredGrid",
+                    R.id.action_global_lazyVerticalStaggeredGridFragment
+                ),
             )
         }
         LinkList(links) { _, link ->

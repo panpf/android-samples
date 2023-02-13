@@ -119,9 +119,11 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                         .size(100.dp, 50.dp)
                         .background(MyColor.HalfBlue)
                 )
-                Spacer(modifier = Modifier
-                    .size(10.dp)
-                    .background(MyColor.HalfYellow))
+                Spacer(
+                    modifier = Modifier
+                        .size(10.dp)
+                        .background(MyColor.HalfYellow)
+                )
                 Box(
                     modifier = Modifier
                         .size(100.dp, 50.dp)
@@ -136,9 +138,11 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                         .size(100.dp, 50.dp)
                         .background(MyColor.HalfBlue)
                 )
-                Spacer(modifier = Modifier
-                    .size(10.dp)
-                    .background(MyColor.HalfGreen))
+                Spacer(
+                    modifier = Modifier
+                        .size(10.dp)
+                        .background(MyColor.HalfGreen)
+                )
                 Box(
                     modifier = Modifier
                         .size(100.dp, 50.dp)
