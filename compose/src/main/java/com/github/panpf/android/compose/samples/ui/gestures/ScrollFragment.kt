@@ -209,7 +209,7 @@ fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
             Text(
                 text = "${scrollState.value}",
                 modifier = Modifier
-                    .width(30.dp)
+                    .width(60.dp)
                     .align(Alignment.CenterVertically),
                 textAlign = TextAlign.Center
             )
@@ -515,7 +515,7 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExp
         
         本实例演示仅作为子组件时，通过 NestedScrollDispatcher 将滚动事件传递给父组件，让其先消费，然后自己再消费剩余的事件。
         
-        大色块可以接收触摸事件并左右移动，但必须要先将小色快移动到边缘位置大色块自身才会开始移动
+        大色块可以接收触摸事件并左右移动，但要先等小色快移动到边缘位置大色块自身才会开始移动
     """.trimIndent()
     val bottomBlockSize = 120.dp
     val topBlockSize = 60.dp
