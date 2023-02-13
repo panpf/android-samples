@@ -20,6 +20,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -29,11 +34,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -77,10 +80,10 @@ private fun ModalBottomSheetLayoutSample(allExpandFlow: Flow<Boolean>) {
             sheetContent = {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     listOf(
-                        "分享" to R.drawable.ic_share,
-                        "通讯录" to R.drawable.ic_phone,
-                        "关于" to R.drawable.ic_info,
-                        "设置" to R.drawable.ic_settings,
+                        "分享" to Icons.Filled.Share,
+                        "通讯录" to Icons.Filled.Phone,
+                        "关于" to Icons.Filled.Info,
+                        "设置" to Icons.Filled.Settings,
                     ).forEach { item ->
                         Row(
                             modifier = Modifier
@@ -92,10 +95,7 @@ private fun ModalBottomSheetLayoutSample(allExpandFlow: Flow<Boolean>) {
                                 }
                                 .padding(20.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(id = item.second),
-                                contentDescription = item.first
-                            )
+                            Icon(imageVector = item.second, contentDescription = item.first)
                             Spacer(modifier = Modifier.size(10.dp))
                             Text(
                                 text = item.first,
@@ -166,10 +166,10 @@ private fun ModalBottomSheetLayoutSheetShapeSample(allExpandFlow: Flow<Boolean>)
             sheetContent = {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     listOf(
-                        "分享" to R.drawable.ic_share,
-                        "通讯录" to R.drawable.ic_phone,
-                        "关于" to R.drawable.ic_info,
-                        "设置" to R.drawable.ic_settings,
+                        "分享" to Icons.Filled.Share,
+                        "通讯录" to Icons.Filled.Phone,
+                        "关于" to Icons.Filled.Info,
+                        "设置" to Icons.Filled.Settings,
                     ).forEach { item ->
                         Row(
                             modifier = Modifier
@@ -181,10 +181,7 @@ private fun ModalBottomSheetLayoutSheetShapeSample(allExpandFlow: Flow<Boolean>)
                                 }
                                 .padding(20.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(id = item.second),
-                                contentDescription = item.first
-                            )
+                            Icon(imageVector = item.second, contentDescription = item.first)
                             Spacer(modifier = Modifier.size(10.dp))
                             Text(
                                 text = item.first,

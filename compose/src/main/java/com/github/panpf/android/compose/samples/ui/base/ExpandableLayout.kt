@@ -1,7 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.base
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -28,13 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.panpf.android.compose.samples.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -67,9 +68,11 @@ fun ExpandableLayout(
                 .padding(20.dp)
         ) {
             val allExpand by allExpandFlow.collectAsState()
-            val iconId =
-                if (allExpand) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-            Image(painterResource(id = iconId), contentDescription = "")
+            Icon(
+                imageVector = if (allExpand)
+                    Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                contentDescription = ""
+            )
         }
     }
 }
@@ -117,8 +120,11 @@ fun BaseExpandableItem(
                 modifier = Modifier.weight(1f)
             )
 
-            val iconId = if (expand) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-            Image(painterResource(id = iconId), contentDescription = "")
+            Icon(
+                imageVector = if (expand)
+                    Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                contentDescription = ""
+            )
         }
 
         AnimatedVisibility(visible = expand) {

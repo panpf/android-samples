@@ -1,15 +1,18 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -26,10 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -104,11 +105,10 @@ private fun ModalNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                val icon =
-                    if (drawerState.isOpen) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
+                Icon(
+                    imageVector = if (drawerState.isOpen)
+                        Icons.Filled.KeyboardArrowLeft else Icons.Filled.KeyboardArrowRight,
+                    contentDescription = "expand"
                 )
             }
         }
@@ -171,11 +171,10 @@ private fun DismissibleNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                val icon =
-                    if (drawerState.isOpen) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
+                Icon(
+                    imageVector = if (drawerState.isOpen)
+                        Icons.Filled.KeyboardArrowLeft else Icons.Filled.KeyboardArrowRight,
+                    contentDescription = "expand"
                 )
             }
         }

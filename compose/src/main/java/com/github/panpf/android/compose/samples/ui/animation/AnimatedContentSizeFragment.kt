@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +69,7 @@ private fun AnimatedContentSizeSample(allExpandFlow: Flow<Boolean>) {
                 size = (size + 20).coerceAtMost(120)
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_add),
+                    imageVector = Icons.Filled.Add,
                     contentDescription = "add"
                 )
             }

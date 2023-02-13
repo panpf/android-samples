@@ -18,16 +18,17 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -88,7 +89,7 @@ private fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("Button（Icon）", allExpandFlow, padding = 20.dp) {
         Button(onClick = { context.showShortToast("You click me!") }) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -111,7 +112,7 @@ private fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -140,7 +141,7 @@ private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                 onClick = { context.showShortToast("You click me!") }
             ) {
                 Icon(
-                    painterResource(id = R.drawable.ic_arrow_down),
+                    imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = "",
                 )
             }
@@ -160,7 +161,7 @@ private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
                 onClick = { context.showShortToast("You click me!") }
             ) {
                 Icon(
-                    painterResource(id = R.drawable.ic_arrow_down),
+                    imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = "",
                 )
             }
@@ -187,7 +188,7 @@ private fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -210,7 +211,7 @@ private fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -233,7 +234,7 @@ private fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             onClick = { context.showShortToast("You click me!") }
         ) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -253,7 +254,7 @@ private fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
         OutlinedButton(onClick = { context.showShortToast("You click me!") }) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
                 tint = Color.Red
             )
@@ -291,7 +292,7 @@ private fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
         IconButton(onClick = { context.showShortToast("You click me!") }) {
             Icon(
-                painterResource(id = R.drawable.ic_arrow_down),
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -313,10 +314,9 @@ private fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
             checked = checked.value,
             onCheckedChange = { checked.value = it }
         ) {
-            val iconResId =
-                if (checked.value) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             Icon(
-                painterResource(id = iconResId),
+                imageVector = if (checked.value)
+                    Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                 contentDescription = "",
             )
         }
@@ -397,7 +397,7 @@ private fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
             text = { Text(text = "Expand") },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
+                    imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = ""
                 )
             }

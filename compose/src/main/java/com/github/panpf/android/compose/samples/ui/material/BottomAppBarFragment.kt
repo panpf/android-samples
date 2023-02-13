@@ -7,15 +7,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -44,10 +47,10 @@ class BottomAppBarFragment : MaterialComposeAppBarFragment() {
 private fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val context = LocalContext.current
@@ -64,10 +67,7 @@ private fun BottomAppBarSample(allExpandFlow: Flow<Boolean>) {
                                 .weight(1f),
                             onClick = { context.showShortToast(it.first) }
                         ) {
-                            Icon(
-                                painter = painterResource(id = it.second),
-                                contentDescription = it.first
-                            )
+                            Icon(imageVector = it.second, contentDescription = it.first)
                         }
                     }
                 }
@@ -87,10 +87,10 @@ private fun BottomAppBarSamplePreview() {
 private fun BottomAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val context = LocalContext.current
@@ -110,10 +110,7 @@ private fun BottomAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
                                 .weight(1f),
                             onClick = { context.showShortToast(it.first) }
                         ) {
-                            Icon(
-                                painter = painterResource(id = it.second),
-                                contentDescription = "back"
-                            )
+                            Icon(imageVector = it.second, contentDescription = it.first)
                         }
                     }
                 }

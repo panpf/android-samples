@@ -9,18 +9,22 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -50,10 +54,10 @@ private fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val context = LocalContext.current
@@ -76,16 +80,13 @@ private fun DropdownMenuSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            painter = painterResource(id = pair.second),
-                            contentDescription = pair.first
-                        )
+                        Icon(imageVector = pair.second, contentDescription = pair.first)
                         Spacer(modifier = Modifier.size(16.dp))
                         Text(text = pair.first, modifier = Modifier.weight(1f))
                         Spacer(modifier = Modifier.size(16.dp))
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            contentDescription = pair.first
+                            imageVector = Icons.Filled.KeyboardArrowRight,
+                            contentDescription = "open"
                         )
                     }
                 }
@@ -106,10 +107,10 @@ private fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val context = LocalContext.current
@@ -133,16 +134,13 @@ private fun DropdownMenuOffsetSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            painter = painterResource(id = pair.second),
-                            contentDescription = pair.first
-                        )
+                        Icon(imageVector = pair.second, contentDescription = pair.first)
                         Spacer(modifier = Modifier.size(16.dp))
                         Text(text = pair.first, modifier = Modifier.weight(1f))
                         Spacer(modifier = Modifier.size(16.dp))
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            contentDescription = pair.first
+                            imageVector = Icons.Filled.KeyboardArrowRight,
+                            contentDescription = "open"
                         )
                     }
                 }
@@ -163,10 +161,10 @@ private fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
     val expanded = remember { mutableStateOf(false) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val context = LocalContext.current
@@ -194,16 +192,13 @@ private fun DropdownMenuLimitDismissSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            painter = painterResource(id = pair.second),
-                            contentDescription = pair.first
-                        )
+                        Icon(imageVector = pair.second, contentDescription = pair.first)
                         Spacer(modifier = Modifier.size(16.dp))
                         Text(text = pair.first, modifier = Modifier.weight(1f))
                         Spacer(modifier = Modifier.size(16.dp))
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            contentDescription = pair.first
+                            imageVector = Icons.Filled.KeyboardArrowRight,
+                            contentDescription = "open"
                         )
                     }
                 }

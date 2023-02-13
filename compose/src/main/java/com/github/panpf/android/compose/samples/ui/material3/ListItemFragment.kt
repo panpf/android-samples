@@ -1,5 +1,8 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -8,10 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -46,13 +47,13 @@ private fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
             },
             leadingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_phone),
+                    imageVector = Icons.Filled.Phone,
                     contentDescription = "phone"
                 )
             },
             trailingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "more"
                 )
             },
@@ -80,13 +81,13 @@ private fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
             },
             leadingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_phone),
+                    imageVector = Icons.Filled.Phone,
                     contentDescription = "phone"
                 )
             },
             trailingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "more"
                 )
             },
@@ -117,13 +118,13 @@ private fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
             },
             leadingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_phone),
+                    imageVector = Icons.Filled.Phone,
                     contentDescription = "phone"
                 )
             },
             trailingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "more"
                 )
             },
@@ -154,13 +155,13 @@ private fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
             },
             leadingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_phone),
+                    imageVector = Icons.Filled.Phone,
                     contentDescription = "phone"
                 )
             },
             trailingContent = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "more"
                 )
             },

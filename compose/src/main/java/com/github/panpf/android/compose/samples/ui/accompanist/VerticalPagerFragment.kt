@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.accompanist
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,6 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,11 +30,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -303,8 +304,8 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .height(46.dp)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_up),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowUp,
                         contentDescription = "before"
                     )
                 }
@@ -342,8 +343,8 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .height(46.dp)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_down),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
                         contentDescription = "next",
                     )
                 }
@@ -411,8 +412,8 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
                         .height(46.dp)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_up),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowUp,
                         contentDescription = "before"
                     )
                 }
@@ -450,8 +451,8 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
                         .height(46.dp)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_down),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
                         contentDescription = "next",
                     )
                 }

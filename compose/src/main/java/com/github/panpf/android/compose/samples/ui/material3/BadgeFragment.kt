@@ -1,6 +1,7 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -10,10 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -79,7 +78,7 @@ private fun BadgeIconSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Badge（Icon）", allExpandFlow, padding = 20.dp) {
         Badge {
             Icon(
-                painter = painterResource(id = R.drawable.ic_close),
+                imageVector = Icons.Filled.Close,
                 contentDescription = null,
                 tint = Color.White
             )

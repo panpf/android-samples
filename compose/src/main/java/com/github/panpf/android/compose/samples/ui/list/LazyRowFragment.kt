@@ -1,7 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +19,18 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,10 +41,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -451,8 +458,8 @@ private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowLeft,
                     contentDescription = "before"
                 )
             }
@@ -489,8 +496,8 @@ private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "next",
                 )
             }
@@ -686,11 +693,11 @@ private fun LazyRowStickerHeaderSamplePreview() {
 @Composable
 private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
-        listOf<Any>(
-            "数码", R.drawable.ic_arrow_left, "汽车", "摄影", R.drawable.ic_arrow_right,
-            R.drawable.ic_arrow_down, "舞蹈", R.drawable.ic_check, "二次元", "音乐", "科技", "健身",
-            "游戏", R.drawable.ic_clear, "文学", R.drawable.ic_close, "运动", "生活", "美食", "动物",
-            R.drawable.ic_games, "时尚"
+        listOf(
+            "数码", Icons.Filled.KeyboardArrowLeft, "汽车", "摄影", Icons.Filled.KeyboardArrowRight,
+            Icons.Filled.KeyboardArrowDown, "舞蹈", Icons.Filled.Check, "二次元", "音乐", "科技", "健身",
+            "游戏", Icons.Filled.Clear, "文学", Icons.Filled.Close, "运动", "生活", "美食", "动物",
+            Icons.Filled.Menu, "时尚"
         )
     }
     ExpandableItem3(title = "LazyRow（MultiType）", allExpandFlow, padding = 20.dp) {
@@ -718,9 +725,9 @@ private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
                             label = { Text(text = "$index:$item") }
                         )
                     }
-                    is Int -> {
+                    is ImageVector -> {
                         FilledTonalIconButton(onClick = { }) {
-                            Image(painter = painterResource(id = item), contentDescription = "icon")
+                            Icon(imageVector = item, contentDescription = "icon")
                         }
                     }
                 }

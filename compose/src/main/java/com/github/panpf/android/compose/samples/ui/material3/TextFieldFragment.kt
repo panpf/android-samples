@@ -1,12 +1,15 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,14 +20,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -228,10 +229,7 @@ private fun TextFieldLeadingIconSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             leadingIcon = {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_phone),
-                    contentDescription = ""
-                )
+                Icon(imageVector = Icons.Filled.Phone, contentDescription = "")
             }
         )
     }
@@ -254,8 +252,8 @@ private fun TextFieldTrailingIconSample(allExpandFlow: Flow<Boolean>) {
             value = inputText.value,
             onValueChange = { inputText.value = it },
             trailingIcon = {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_close),
+                Icon(
+                    imageVector = Icons.Filled.Close,
                     contentDescription = "",
                     modifier = Modifier.clickable {
                         inputText.value = ""

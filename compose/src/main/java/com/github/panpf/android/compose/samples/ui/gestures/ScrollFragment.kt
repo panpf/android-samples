@@ -26,6 +26,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,12 +54,10 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -77,7 +81,6 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollNestedScrollAutoSample(allExpandFlow)
             ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow)
             ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow)
-            // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
         }
     }
 }
@@ -129,7 +132,7 @@ fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
                 }
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_up),
+                    imageVector = Icons.Filled.KeyboardArrowUp,
                     contentDescription = "up"
                 )
             }
@@ -143,7 +146,7 @@ fun ScrollVerticalScrollSample(allExpandFlow: Flow<Boolean>) {
                 }
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
+                    imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = "down"
                 )
             }
@@ -198,7 +201,7 @@ fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
                 }
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    imageVector = Icons.Filled.KeyboardArrowLeft,
                     contentDescription = "left"
                 )
             }
@@ -215,7 +218,7 @@ fun ScrollHorizontalScrollSample(allExpandFlow: Flow<Boolean>) {
                 }
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "right"
                 )
             }
@@ -280,13 +283,13 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_left),
+                            imageVector = Icons.Filled.KeyboardArrowLeft,
                             contentDescription = "left",
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
                         )
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
+                            imageVector = Icons.Filled.KeyboardArrowRight,
                             contentDescription = "right",
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
@@ -333,13 +336,13 @@ private fun ScrollScrollableSample(allExpandFlow: Flow<Boolean>) {
                         verticalArrangement = Arrangement.Center,
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_up),
+                            imageVector = Icons.Filled.KeyboardArrowUp,
                             contentDescription = "up",
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
                         )
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            imageVector = Icons.Filled.KeyboardArrowDown,
                             contentDescription = "down",
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
@@ -411,7 +414,7 @@ private fun ScrollNestedScrollAutoSamplePreview() {
 private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: Flow<Boolean>) {
     // todo 补充说明 NestedScroll 的 NestedScrollConnection 说明
     val desc = """
-        
+        自定义
     """.trimIndent()
     val topAppBaeHeightSize = 64.dp
     val topAppBaeHeightSizePx = with(LocalDensity.current) { topAppBaeHeightSize.toPx() }
@@ -467,7 +470,7 @@ private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: 
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    imageVector = Icons.Filled.KeyboardArrowLeft,
                     contentDescription = "back",
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
@@ -479,7 +482,7 @@ private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: 
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_more),
+                    imageVector = Icons.Filled.MoreVert,
                     contentDescription = "more",
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
@@ -592,12 +595,12 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExp
             ) {
                 Row(modifier = Modifier.align(Alignment.Center)) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
                         contentDescription = "left",
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        imageVector = Icons.Filled.KeyboardArrowRight,
                         contentDescription = "right",
                         tint = MaterialTheme.colorScheme.onPrimary
                     )

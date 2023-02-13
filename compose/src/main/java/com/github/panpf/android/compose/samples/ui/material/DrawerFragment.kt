@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,8 +11,14 @@ import androidx.compose.material.BottomDrawer
 import androidx.compose.material.BottomDrawerValue
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalDrawer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberBottomDrawerState
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -23,10 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -92,11 +95,10 @@ private fun ModalDrawerSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                val icon =
-                    if (drawerState.isOpen) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
+                Icon(
+                    imageVector = if (drawerState.isOpen)
+                        Icons.Filled.KeyboardArrowLeft else Icons.Filled.KeyboardArrowRight,
+                    contentDescription = "expand"
                 )
             }
         }
@@ -150,11 +152,10 @@ private fun ModalDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                 },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                val icon =
-                    if (drawerState.isOpen) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
+                Icon(
+                    imageVector = if (drawerState.isOpen)
+                        Icons.Filled.KeyboardArrowLeft else Icons.Filled.KeyboardArrowRight,
+                    contentDescription = "expand"
                 )
             }
         }
@@ -209,14 +210,11 @@ private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.BottomCenter)
             ) {
                 val icon = when (drawerState.currentValue) {
-                    BottomDrawerValue.Closed -> R.drawable.ic_arrow_up
-                    BottomDrawerValue.Open -> R.drawable.ic_arrow_up
-                    BottomDrawerValue.Expanded -> R.drawable.ic_arrow_down
+                    BottomDrawerValue.Closed -> Icons.Filled.KeyboardArrowUp
+                    BottomDrawerValue.Open -> Icons.Filled.KeyboardArrowUp
+                    BottomDrawerValue.Expanded -> Icons.Filled.KeyboardArrowDown
                 }
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
-                )
+                Icon(imageVector = icon, contentDescription = "menu")
             }
         }
     }
@@ -271,14 +269,11 @@ private fun BottomDrawerDrawerShapeSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier.align(Alignment.BottomCenter)
             ) {
                 val icon = when (drawerState.currentValue) {
-                    BottomDrawerValue.Closed -> R.drawable.ic_arrow_up
-                    BottomDrawerValue.Open -> R.drawable.ic_arrow_up
-                    BottomDrawerValue.Expanded -> R.drawable.ic_arrow_down
+                    BottomDrawerValue.Closed -> Icons.Filled.KeyboardArrowUp
+                    BottomDrawerValue.Open -> Icons.Filled.KeyboardArrowUp
+                    BottomDrawerValue.Expanded -> Icons.Filled.KeyboardArrowDown
                 }
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = "menu"
-                )
+                Icon(imageVector = icon, contentDescription = "menu")
             }
         }
     }

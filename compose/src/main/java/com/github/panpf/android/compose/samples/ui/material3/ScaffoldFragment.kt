@@ -5,6 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
@@ -24,11 +29,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -55,10 +58,10 @@ private fun ScaffoldSample() {
     val colors = MyColor.halfRainbows
     val pagerItems = remember {
         listOf(
-            "消息" to R.drawable.ic_message,
-            "通讯录" to R.drawable.ic_phone,
-            "发现" to R.drawable.ic_games,
-            "运动" to R.drawable.ic_sports_baseball,
+            "推荐" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "发现" to Icons.Filled.Place,
+            "消息" to Icons.Filled.Email,
         )
     }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -105,10 +108,7 @@ private fun ScaffoldSample() {
                 pagerItems.forEachIndexed { index, itemPair ->
                     NavigationBarItem(
                         icon = {
-                            Icon(
-                                painter = painterResource(id = itemPair.second),
-                                contentDescription = "icon"
-                            )
+                            Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                         },
                         label = { Text(text = itemPair.first) },
                         selected = index == navigationSelectedIndex.value,

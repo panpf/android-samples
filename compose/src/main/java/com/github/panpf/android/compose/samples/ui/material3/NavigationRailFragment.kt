@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,6 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -24,11 +28,9 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -62,10 +64,10 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     ExpandableItem3(title = "NavigationRail", allExpandFlow, padding = 20.dp) {
@@ -84,10 +86,7 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
                     },
                     label = { Text(text = itemPair.first) },
                     icon = {
-                        Icon(
-                            painter = painterResource(id = itemPair.second),
-                            contentDescription = "icon"
-                        )
+                        Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                     }
                 )
             }
@@ -107,10 +106,10 @@ private fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     ExpandableItem3(title = "NavigationRail（colors）", allExpandFlow, padding = 20.dp) {
@@ -129,10 +128,7 @@ private fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
                     },
                     label = { Text(text = itemPair.first) },
                     icon = {
-                        Icon(
-                            painter = painterResource(id = itemPair.second),
-                            contentDescription = "icon"
-                        )
+                        Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                     },
                     colors = NavigationRailItemDefaults.colors(
                         selectedIconColor = Color.Blue,
@@ -161,10 +157,10 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val items = remember {
         listOf(
-            "首页" to R.drawable.ic_home,
-            "通讯录" to R.drawable.ic_phone,
-            "游戏" to R.drawable.ic_games,
-            "设置" to R.drawable.ic_settings,
+            "首页" to Icons.Filled.Home,
+            "通讯录" to Icons.Filled.Phone,
+            "游戏" to Icons.Filled.PlayArrow,
+            "设置" to Icons.Filled.Settings,
         )
     }
     val pagerState = rememberPagerState(selectedIndex.value)
@@ -184,10 +180,7 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
                 items.forEachIndexed { index, itemPair ->
                     NavigationRailItem(
                         icon = {
-                            Image(
-                                painter = painterResource(id = itemPair.second),
-                                contentDescription = "icon"
-                            )
+                            Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                         },
                         label = { Text(text = itemPair.first) },
                         selected = index == selectedIndex.value,

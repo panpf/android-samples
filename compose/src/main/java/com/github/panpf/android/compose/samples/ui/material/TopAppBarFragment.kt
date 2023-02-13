@@ -7,15 +7,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -42,8 +42,8 @@ class TopAppBarFragment : MaterialComposeAppBarFragment() {
 private fun TopAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -66,7 +66,7 @@ private fun TopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             }
@@ -85,8 +85,8 @@ private fun TopAppBarSamplePreview() {
 private fun TopAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -109,7 +109,7 @@ private fun TopAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             },

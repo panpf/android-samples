@@ -21,6 +21,11 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,13 +33,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
-import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.launch
 
 class ScaffoldFragment : MaterialComposeAppBarFragment() {
@@ -50,14 +52,13 @@ class ScaffoldFragment : MaterialComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ScaffoldSample() {
     val pagerItems = remember {
         listOf(
-            "消息" to R.drawable.ic_message,
-            "发现" to R.drawable.ic_games,
-            "运动" to R.drawable.ic_sports_baseball,
+            "推荐" to Icons.Filled.Home,
+            "发现" to Icons.Filled.Place,
+            "消息" to Icons.Filled.Email,
         )
     }
     val scaffoldState = rememberScaffoldState()
@@ -80,7 +81,7 @@ private fun ScaffoldSample() {
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_menu),
+                            imageVector = Icons.Filled.Menu,
                             contentDescription = "menu",
                         )
                     }
@@ -118,10 +119,7 @@ private fun ScaffoldSample() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            painter = painterResource(id = itemPair.second),
-                            contentDescription = "icon"
-                        )
+                        Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                         Text(text = itemPair.first)
                     }
                 }

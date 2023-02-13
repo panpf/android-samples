@@ -2,6 +2,8 @@ package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -12,11 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -61,7 +61,7 @@ private fun AlertDialogSample(allExpandFlow: Flow<Boolean>) {
                 AlertDialog(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "icon"
                         )
                     },
@@ -123,7 +123,7 @@ private fun AlertDialogLimitDismissSample(allExpandFlow: Flow<Boolean>) {
                 AlertDialog(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "icon"
                         )
                     },
@@ -189,7 +189,7 @@ private fun AlertDialogShapeSample(allExpandFlow: Flow<Boolean>) {
                 AlertDialog(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "icon"
                         )
                     },
@@ -252,7 +252,7 @@ private fun AlertDialogColorsSample(allExpandFlow: Flow<Boolean>) {
                 AlertDialog(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "icon",
                         )
                     },
@@ -318,7 +318,7 @@ private fun AlertDialogTonalElevationSample(allExpandFlow: Flow<Boolean>) {
                 AlertDialog(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = "icon",
                         )
                     },

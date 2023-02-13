@@ -14,14 +14,17 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -47,10 +50,10 @@ private fun BackdropScaffoldSample() {
     val colors = MyColor.halfRainbows
     val menuItems = remember {
         listOf(
-            "消息" to R.drawable.ic_message,
-            "通讯录" to R.drawable.ic_phone,
-            "发现" to R.drawable.ic_games,
-            "运动" to R.drawable.ic_sports_baseball,
+            "推荐" to Icons.Filled.Home,
+            "消息" to Icons.Filled.Email,
+            "通讯录" to Icons.Filled.Phone,
+            "发现" to Icons.Filled.Place,
         )
     }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -69,10 +72,7 @@ private fun BackdropScaffoldSample() {
                 menuItems.forEachIndexed { _, itemPair ->
                     ListItem(
                         icon = {
-                            Icon(
-                                painter = painterResource(id = itemPair.second),
-                                contentDescription = "icon"
-                            )
+                            Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
                         },
                         text = { Text(text = itemPair.first) },
                         modifier = Modifier.clickable {

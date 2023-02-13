@@ -23,7 +23,17 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,13 +43,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -66,17 +74,17 @@ private fun BottomSheetScaffoldSample() {
     val colors = MyColor.halfRainbows
     val pagerItems = remember {
         listOf(
-            "消息" to R.drawable.ic_message,
-            "通讯录" to R.drawable.ic_phone,
-            "发现" to R.drawable.ic_games,
-            "运动" to R.drawable.ic_sports_baseball,
+            "消息" to Icons.Filled.Email,
+            "通讯录" to Icons.Filled.Phone,
+            "发现" to Icons.Filled.Place,
+            "收藏" to Icons.Filled.Star,
         )
     }
     val menuItems = listOf(
-        "首页" to R.drawable.ic_home,
-        "分享" to R.drawable.ic_share,
-        "关于" to R.drawable.ic_info,
-        "设置" to R.drawable.ic_settings,
+        "首页" to Icons.Filled.Home,
+        "分享" to Icons.Filled.Share,
+        "关于" to Icons.Filled.Info,
+        "设置" to Icons.Filled.Settings,
     )
     val snackbarHostState = remember { SnackbarHostState() }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
@@ -129,10 +137,7 @@ private fun BottomSheetScaffoldSample() {
                             .padding(20.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            painter = painterResource(id = pair.second),
-                            contentDescription = "icon"
-                        )
+                        Icon(imageVector = pair.second, contentDescription = pair.first)
                         Spacer(modifier = Modifier.size(16.dp))
                         Text(text = pair.first)
                     }
@@ -145,10 +150,9 @@ private fun BottomSheetScaffoldSample() {
                     .fillMaxSize()
                     .height(300.dp)
             ) {
-                val icon = if (bottomSheetScaffoldState.bottomSheetState.isCollapsed)
-                    R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
                 Icon(
-                    painter = painterResource(id = icon),
+                    imageVector = if (bottomSheetScaffoldState.bottomSheetState.isCollapsed)
+                        Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                     contentDescription = "up",
                     modifier = Modifier.align(Alignment.TopCenter),
                 )

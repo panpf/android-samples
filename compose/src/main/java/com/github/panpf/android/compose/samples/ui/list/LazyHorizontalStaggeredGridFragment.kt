@@ -1,7 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +18,17 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGri
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -134,7 +144,7 @@ private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: 
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
-                Image(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
+                Icon(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
             }
             LazyHorizontalStaggeredGrid(
                 rows = StaggeredGridCells.Adaptive(80.dp),
@@ -167,7 +177,7 @@ private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: 
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
-                Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Close, contentDescription = "add")
             }
         }
     }
@@ -559,8 +569,8 @@ private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: 
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowLeft,
                     contentDescription = "before"
                 )
             }
@@ -600,8 +610,8 @@ private fun LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow: 
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowRight,
                     contentDescription = "next",
                 )
             }
@@ -701,12 +711,12 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
             add((it + 1).toString())
         }
     }.toMutableList().apply {
-        set(1, R.drawable.ic_arrow_left)
-        set(3, R.drawable.ic_add)
-        set(10, R.drawable.ic_games)
-        set(17, R.drawable.ic_arrow_down)
-        set(18, R.drawable.ic_check)
-        set(40, R.drawable.ic_info)
+        set(1, Icons.Filled.KeyboardArrowLeft)
+        set(3, Icons.Filled.Add)
+        set(10, Icons.Filled.Menu)
+        set(17, Icons.Filled.KeyboardArrowDown)
+        set(18, Icons.Filled.Check)
+        set(40, Icons.Filled.Info)
     }.toList()
     ExpandableItem3(
         title = "LazyHorizontalStaggeredGrid（MultiType）",
@@ -747,7 +757,7 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
                             )
                         }
                     }
-                    is Int -> {
+                    is ImageVector -> {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -758,10 +768,7 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
                                 modifier = Modifier
                                     .align(Alignment.Center)
                             ) {
-                                Image(
-                                    painter = painterResource(id = item),
-                                    contentDescription = "icon"
-                                )
+                                Icon(imageVector = item, contentDescription = "icon")
                             }
                         }
                     }

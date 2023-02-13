@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.accompanist
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,6 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
@@ -31,11 +34,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -299,8 +300,8 @@ private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .width(46.dp)
                         .fillMaxHeight()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
                         contentDescription = "before"
                     )
                 }
@@ -338,8 +339,8 @@ private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         .width(46.dp)
                         .fillMaxHeight()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowRight,
                         contentDescription = "next",
                     )
                 }
@@ -403,8 +404,8 @@ private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean
                         .width(46.dp)
                         .fillMaxHeight()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
                         contentDescription = "before"
                     )
                 }
@@ -442,8 +443,8 @@ private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean
                         .width(46.dp)
                         .fillMaxHeight()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowRight,
                         contentDescription = "next",
                     )
                 }

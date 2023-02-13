@@ -8,15 +8,16 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
@@ -156,7 +157,7 @@ private fun ChipLeadingIconSample(allExpandFlow: Flow<Boolean>) {
                     onClick = { context.showShortToast(it) },
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_games),
+                            imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     }
@@ -202,13 +203,13 @@ private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
                     },
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_games),
+                            imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_info),
+                            imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
                     }

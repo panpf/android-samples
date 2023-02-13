@@ -3,6 +3,8 @@ package com.github.panpf.android.compose.samples.ui.material3
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,10 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -51,8 +51,8 @@ class TopAppBarFragment : Material3ComposeAppBarFragment() {
 private fun TopAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -75,7 +75,7 @@ private fun TopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "action")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             }
@@ -95,8 +95,8 @@ private fun TopAppBarSamplePreview() {
 private fun TopAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -119,7 +119,7 @@ private fun TopAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             },
@@ -145,8 +145,8 @@ private fun TopAppBarColorsSamplePreview() {
 private fun CenterAlignedTopAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -169,7 +169,7 @@ private fun CenterAlignedTopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             }
@@ -189,8 +189,8 @@ private fun CenterAlignedTopAppBarSamplePreview() {
 private fun MediumTopAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -213,7 +213,7 @@ private fun MediumTopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             }
@@ -233,8 +233,8 @@ private fun MediumTopAppBarSamplePreview() {
 private fun LargeTopAppBarSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
         listOf(
-            "分享" to R.drawable.ic_share,
-            "更多" to R.drawable.ic_more,
+            "分享" to Icons.Filled.Share,
+            "更多" to Icons.Filled.MoreVert,
         )
     }
     val context = LocalContext.current
@@ -257,7 +257,7 @@ private fun LargeTopAppBarSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier.fillMaxHeight(),
                         onClick = { context.showShortToast(it.first) }
                     ) {
-                        Icon(painter = painterResource(id = it.second), contentDescription = "back")
+                        Icon(imageVector = it.second, contentDescription = it.first)
                     }
                 }
             }

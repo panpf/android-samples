@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -220,7 +222,7 @@ private fun LinearProgressIndicatorDeterminateSample(allExpandFlow: Flow<Boolean
                     progress.value = (progress.value + 0.1f).coerceAtMost(1.0f)
                 }
             ) {
-                Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }
@@ -262,7 +264,7 @@ private fun LinearProgressIndicatorDeterminateSizeSample(allExpandFlow: Flow<Boo
                     progress.value = (progress.value + 0.1f).coerceAtMost(1.0f)
                 }
             ) {
-                Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }
@@ -305,7 +307,7 @@ private fun LinearProgressIndicatorDeterminateColorSample(allExpandFlow: Flow<Bo
                     progress.value = (progress.value + 0.1f).coerceAtMost(1.0f)
                 }
             ) {
-                Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }
@@ -348,7 +350,7 @@ private fun LinearProgressIndicatorDeterminateClipSample(allExpandFlow: Flow<Boo
                     progress.value = (progress.value + 0.1f).coerceAtMost(1.0f)
                 }
             ) {
-                Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }

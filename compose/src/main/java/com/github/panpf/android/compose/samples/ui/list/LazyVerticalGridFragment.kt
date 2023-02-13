@@ -21,7 +21,17 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -156,7 +167,7 @@ private fun LazyVerticalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolea
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
-                    Image(
+                    Icon(
                         painterResource(id = R.drawable.ic_subtract),
                         contentDescription = "subtract"
                     )
@@ -168,7 +179,7 @@ private fun LazyVerticalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolea
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
-                    Image(painterResource(id = R.drawable.ic_add), contentDescription = "add")
+                    Icon(imageVector = Icons.Filled.Close, contentDescription = "add")
                 }
             }
         }
@@ -582,8 +593,8 @@ private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolea
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_up),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowUp,
                     contentDescription = "before"
                 )
             }
@@ -622,8 +633,8 @@ private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolea
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = "next",
                 )
             }
@@ -838,12 +849,12 @@ private fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             add((it + 1).toString())
         }
     }.toMutableList().apply {
-        set(1, R.drawable.ic_arrow_left)
-        set(3, R.drawable.ic_add)
-        set(10, R.drawable.ic_games)
-        set(17, R.drawable.ic_arrow_down)
-        set(18, R.drawable.ic_check)
-        set(40, R.drawable.ic_info)
+        set(1, Icons.Filled.KeyboardArrowLeft)
+        set(3, Icons.Filled.Add)
+        set(10, Icons.Filled.Menu)
+        set(17, Icons.Filled.KeyboardArrowDown)
+        set(18, Icons.Filled.Check)
+        set(40, Icons.Filled.Info)
     }.toList()
     ExpandableItem3(title = "LazyVerticalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
@@ -879,7 +890,7 @@ private fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
                             )
                         }
                     }
-                    is Int -> {
+                    is ImageVector -> {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -890,10 +901,7 @@ private fun LazyVerticalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
                                 modifier = Modifier
                                     .align(Alignment.Center)
                             ) {
-                                Image(
-                                    painter = painterResource(id = item),
-                                    contentDescription = "icon"
-                                )
+                                Icon(imageVector = item, contentDescription = "icon")
                             }
                         }
                     }

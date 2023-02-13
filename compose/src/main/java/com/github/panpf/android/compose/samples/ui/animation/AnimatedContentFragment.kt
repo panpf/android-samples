@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -73,7 +76,7 @@ private fun AnimatedContentSample(allExpandFlow: Flow<Boolean>) {
         Row {
             FilledIconButton(onClick = { count++ }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_add),
+                    imageVector = Icons.Filled.Add,
                     contentDescription = "add"
                 )
             }
@@ -132,7 +135,7 @@ private fun AnimatedContentTransitionSpecSample(allExpandFlow: Flow<Boolean>) {
         Row {
             FilledIconButton(onClick = { count++ }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_add),
+                    imageVector = Icons.Filled.Add,
                     contentDescription = "add"
                 )
             }
@@ -208,7 +211,7 @@ private fun AnimatedContentTransitionSpecSizeSample(allExpandFlow: Flow<Boolean>
                         modifier = Modifier
                             .size(40.dp)
                             .padding(10.dp),
-                        painter = painterResource(id = R.drawable.ic_arrow_down),
+                        imageVector = Icons.Filled.KeyboardArrowDown,
                         contentDescription = "expand",
                         tint = MaterialTheme.colorScheme.onPrimary,
                     )
@@ -288,7 +291,7 @@ private fun AnimatedContentTransitionSpecContentAlignmentSample(allExpandFlow: F
                             modifier = Modifier
                                 .size(40.dp)
                                 .padding(10.dp),
-                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            imageVector = Icons.Filled.KeyboardArrowDown,
                             contentDescription = "expand",
                             tint = MaterialTheme.colorScheme.onPrimary,
                         )
