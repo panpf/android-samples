@@ -27,11 +27,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -80,8 +81,7 @@ class ScrollFragment : Material3ComposeAppBarFragment() {
             ScrollScrollableSample(allExpandFlow)
             ScrollNestedScrollAutoSample(allExpandFlow)
             ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow)
-            ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow)
-            // todo ScrollNestedScrollInteropWithViewSample(allExpandFlow)
+            ScrollNestedScrollChildNestedScrollDispatcherSample(allExpandFlow)
         }
     }
 }
@@ -470,29 +470,18 @@ private fun ScrollNestedScrollParentNestedScrollConnectionSample(allExpandFlow: 
                     .offset { IntOffset(x = 0, y = topAppBarOffsetY.roundToInt()) }
                     .fillMaxWidth()
                     .height(topAppBaeHeightSize)
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(MaterialTheme.colorScheme.tertiary),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowLeft,
+                    modifier = Modifier
+                        .size(topAppBaeHeightSize)
+                        .padding(18.dp),
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "back",
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .size(topAppBaeHeightSize)
-                        .padding(14.dp),
+                    tint = MaterialTheme.colorScheme.onTertiary
                 )
-                Text(
-                    text = "Title", modifier = Modifier.weight(1f),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                )
-                Icon(
-                    imageVector = Icons.Filled.MoreVert,
-                    contentDescription = "more",
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .size(topAppBaeHeightSize)
-                        .padding(14.dp),
-                )
+                Text(text = "Title", color = MaterialTheme.colorScheme.onTertiary, fontSize = 20.sp)
             }
         }
     }
@@ -507,7 +496,7 @@ private fun ScrollNestedScrollParentNestedScrollConnectionSamplePreview() {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExpandFlow: Flow<Boolean>) {
+private fun ScrollNestedScrollChildNestedScrollDispatcherSample(allExpandFlow: Flow<Boolean>) {
     val desc = """
         通过 Modifier.nestedScroll() 函数可以实现自定义嵌套滚动，它有两个参数
             NestedScrollConnection：当前组件作为父组件时通过 NestedScrollConnection 接收子组件传递的滚动事件并优先消费事件
@@ -621,6 +610,6 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(allExp
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ScrollNestedScrollChildNestedScrollDispatcherDispatcherSamplePreview() {
-    ScrollNestedScrollChildNestedScrollDispatcherDispatcherSample(remember { MutableStateFlow(true) })
+private fun ScrollNestedScrollChildNestedScrollDispatcherSamplePreview() {
+    ScrollNestedScrollChildNestedScrollDispatcherSample(remember { MutableStateFlow(true) })
 }

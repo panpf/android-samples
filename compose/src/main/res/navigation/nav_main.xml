@@ -1304,6 +1304,28 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
+        android:id="@+id/scrollNestedScrollInteropWithViewFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.ScrollNestedScrollInteropWithViewFragment" />
+    <action
+        android:id="@+id/action_global_scrollNestedScrollInteropWithViewFragment"
+        app:destination="@id/scrollNestedScrollInteropWithViewFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/scrollNestedScrollInteropWithComposeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.ScrollNestedScrollInteropWithComposeFragment" />
+    <action
+        android:id="@+id/action_global_scrollNestedScrollInteropWithComposeFragment"
+        app:destination="@id/scrollNestedScrollInteropWithComposeFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
         android:id="@+id/swipFragment"
         android:name="com.github.panpf.android.compose.samples.ui.gestures.SwipFragment" />
     <action

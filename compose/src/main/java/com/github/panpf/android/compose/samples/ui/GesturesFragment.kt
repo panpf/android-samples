@@ -23,6 +23,8 @@ class GesturesFragment : Material3ComposeAppBarFragment() {
                 Link("Drag", R.id.action_global_dragFragment),
                 Link("Multitouch", R.id.action_global_multitouchFragment),
                 Link("Scroll", R.id.action_global_scrollFragment),
+                Link("Scroll - NestedScroll - Interop - View", R.id.action_global_scrollNestedScrollInteropWithViewFragment),
+                Link("Scroll - NestedScroll - Interop - Compose", R.id.action_global_scrollNestedScrollInteropWithComposeFragment),
                 Link("Swip", R.id.action_global_swipFragment),
             )
         }
