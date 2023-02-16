@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
@@ -57,7 +58,7 @@ class DrawScopeDrawFragment : Material3ComposeAppBarFragment() {
             DrawScopeDrawCircleSample(allExpandFlow)
             DrawScopeDrawImageSample(allExpandFlow)
             // todo DrawScopeDrawIntoCanvasSample(allExpandFlow)
-            // todo DrawScopeDrawLineSample(allExpandFlow)
+            DrawScopeDrawLineSample(allExpandFlow)
             // todo DrawScopeDrawOutlineSample(allExpandFlow)
             // todo DrawScopeDrawOvalSample(allExpandFlow)
             // todo DrawScopeDrawPathSample(allExpandFlow)
@@ -380,6 +381,113 @@ private fun DrawScopeDrawImageSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun DrawScopeDrawImageSamplePreview() {
     DrawScopeDrawImageSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyThemeColors3.current
+    ExpandableItem3(title = "DrawScope - drawLine", allExpandFlow, padding = 20.dp) {
+        val smallCanvasModifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .border(1.dp, colors.primaryTranslucency)
+        val strokeWidthBig = with(LocalDensity.current) { 6.dp.toPx() }
+
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "默认配置，宽度是 1 个像素", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        color = colors.tertiary,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "修改 strokeWidth 参数为 5 个像素", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        color = colors.tertiary,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = strokeWidthBig
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "修改 cap 参数让线条变的圆润", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        color = colors.tertiary,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = strokeWidthBig,
+                        cap = StrokeCap.Round
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        brush = Brush.linearGradient(
+                            listOf(colors.primary, colors.tertiary, colors.primary)
+                        ),
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = strokeWidthBig,
+                        cap = StrokeCap.Round
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        brush = Brush.radialGradient(
+                            listOf(colors.primary, colors.tertiary, colors.primary)
+                        ),
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = strokeWidthBig,
+                        cap = StrokeCap.Round
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawLine(
+                        brush = rainbowColorsBrush,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = strokeWidthBig,
+                        cap = StrokeCap.Round
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun DrawScopeDrawLineSamplePreview() {
+    DrawScopeDrawLineSample(remember { MutableStateFlow(true) })
 }
 
 
