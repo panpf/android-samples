@@ -1335,4 +1335,48 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/graphicsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.GraphicsFragment" />
+    <action
+        android:id="@+id/action_global_graphicsFragment"
+        app:destination="@id/graphicsFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/drawScopeDrawFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.graphics.DrawScopeDrawFragment" />
+    <action
+        android:id="@+id/action_global_drawScopeDrawFragment"
+        app:destination="@id/drawScopeDrawFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/drawScopeTransformFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.graphics.DrawScopeTransformFragment" />
+    <action
+        android:id="@+id/action_global_drawScopeTransformFragment"
+        app:destination="@id/drawScopeTransformFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/paintFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.graphics.PaintFragment" />
+    <action
+        android:id="@+id/action_global_paintFragment"
+        app:destination="@id/paintFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
 </navigation>

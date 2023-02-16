@@ -15,22 +15,22 @@ class HomeFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("Layout", R.id.action_global_layoutFragment),
-                Link("List&Grid", R.id.action_global_listFragment),
-                Link("Images", R.id.action_global_imagesFragment),
-                Link("Material", R.id.action_global_materialFragment),
-                Link("Material3", R.id.action_global_material3Fragment),
                 Link("Accompanist", R.id.action_global_accompanistFragment),
-                Link("Window", R.id.action_global_windowFragment),
-                Link("Modifier", R.id.action_global_modifierFragment),
                 Link("Animation", R.id.action_global_animationFragment),
                 Link("Gestures", R.id.action_global_gesturesFragment),
-                Link("Theme（Implementation）"),   // todo Implementation
+                Link("Graphics", R.id.action_global_graphicsFragment),
+                Link("Images", R.id.action_global_imagesFragment),
+                Link("Layout", R.id.action_global_layoutFragment),
+                Link("List&Grid", R.id.action_global_listFragment),
+                Link("Material", R.id.action_global_materialFragment),
+                Link("Material3", R.id.action_global_material3Fragment),
+                Link("Modifier", R.id.action_global_modifierFragment),
                 Link("Navigation（Implementation）"),   // todo Implementation
-                Link("Draw（Implementation）"),   // todo Implementation
-                Link("Custom（Implementation）"),   // todo Implementation
-                Link("Cases（Implementation）"),  // todo Implementation banner
-                Link("Other（Implementation）"),  // todo Implementation Placeholder, Drawable Painter
+                Link("Theme（Implementation）"),   // todo Implementation
+//                Link("Custom（Implementation）"),   // todo Implementation
+//                Link("Cases（Implementation）"),  // todo Implementation banner
+//                Link("Other（Implementation）"),  // todo Implementation Placeholder, Drawable Painter
+                Link("Window", R.id.action_global_windowFragment),
             )
         }
         LinkList(links) { _, link ->
