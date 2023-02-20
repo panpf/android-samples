@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -14,7 +15,9 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
@@ -168,3 +171,8 @@ data class ContentScaleItem(
     val name: String,
     val sampleResList: List<PhotoItem>
 )
+
+@Composable
+fun Dp.toPx(): Float {
+    return with(LocalDensity.current) { this@toPx.toPx() }
+}
