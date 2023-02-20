@@ -64,9 +64,9 @@ class PaintFragment : Material3ComposeAppBarFragment() {
             // todo PaintColorFilterSample(allExpandFlow)
             // todo PaintFilterQualitySample(allExpandFlow)
             PaintIsAntiAliasSample(allExpandFlow)
-            PaintPathEffectSample(allExpandFlow)
             // todo PaintShaderSample(allExpandFlow)
             PaintStrokeSample(allExpandFlow)
+            PaintStrokePathEffectSample(allExpandFlow)
             // todo PaintStyleSample(allExpandFlow)
         }
     }
@@ -300,17 +300,159 @@ private fun PaintIsAntiAliasSamplePreview() {
 }
 
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
-private fun PaintPathEffectSample(allExpandFlow: Flow<Boolean>) {
+private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
+    val desc = """
+        cap：设置线条首尾的样式：
+            StrokeCap.BUTT：无
+            StrokeCap.SQUARE：方形
+            StrokeCap.ROUND： 半圆形
+        注意： StrokeCap.ROUND、StrokeCap.SQUARE 会在线长度的基础上首尾添加一个通过 setStrokeWidth 设置的宽度。因此 ROUND 和 SQUARE 样式的线条明显长一点
+    """.trimIndent()
+    val colors = MyThemeColors3.current
+    ExpandableItem3(title = "Paint - stroke", allExpandFlow, padding = 20.dp, desc = desc) {
+        val smallCanvasModifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .border(1.dp, colors.primaryTranslucency)
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "strokeWidth - 10.dp", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawRect(
+                        color = colors.tertiary,
+                        topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
+                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
+                        style = Stroke(width = 9.dp.toPx())
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "strokeWidth - 3.dp", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawRect(
+                        color = colors.tertiary,
+                        topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
+                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
+                        style = Stroke(width = 3.dp.toPx())
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            val textMeasurer = rememberTextMeasurer()
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "cap", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    val padding = 10.dp.toPx()
+                    val lineSpace = 4.dp.toPx()
+                    val lineSize = 5.dp.toPx()
+                    val textFontSize = 12.sp
+                    var top = padding
+                    listOf(
+                        "Butt" to StrokeCap.Butt,
+                        "Square" to StrokeCap.Square,
+                        "Round" to StrokeCap.Round
+                    ).forEachIndexed { index, pair ->
+                        val (name, cap) = pair
+                        if (index > 0) {
+                            top += lineSpace
+                        }
+                        val textLayoutResult = textMeasurer.measure(
+                            AnnotatedString(name),
+                            style = TextStyle(fontSize = textFontSize)
+                        )
+                        drawText(
+                            textLayoutResult,
+                            topLeft = Offset(padding, top)
+                        )
+                        top += textLayoutResult.size.height + 2.dp.toPx()
+                        drawLine(
+                            colors.tertiary,
+                            start = Offset(padding, top),
+                            end = Offset(size.width - padding, top),
+                            strokeWidth = lineSize,
+                            cap = cap
+                        )
+                        top += lineSize
+                    }
+                }
+            }
+        }
+
+        val padding = 20.dp.toPx()
+        val getPath: (size: Size) -> Path = { size ->
+            Path().apply {
+                moveTo(padding, padding)
+                lineTo(size.width - padding, padding)
+                lineTo(size.width - padding, size.height / 2)
+                lineTo(padding, size.height / 2)
+                lineTo(padding, size.height - padding)
+                lineTo(size.width - padding, size.height - padding)
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "strokeJoin - Miter", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawPath(
+                        color = colors.tertiary,
+                        path = getPath(size),
+                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Miter)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "strokeJoin - Round", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawPath(
+                        color = colors.tertiary,
+                        path = getPath(size),
+                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Round)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                SubtitleText(text = "strokeJoin - Bevel", line = 2)
+                Canvas(modifier = smallCanvasModifier) {
+                    drawPath(
+                        color = colors.tertiary,
+                        path = getPath(size),
+                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Bevel)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun PaintStrokeSamplePreview() {
+    PaintStrokeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
     val desc = """
         pathEffect 用于在绘制路径时给路径添加特效，有以下几种实现
         1. cornerPathEffect：拐角处绘制成圆角
         2. dashPathEffect：虚线效果
-        3. stampedPathEffect：用一个个小印章形代替虚线效果中的实线部分绘制路径
+        3. stampedPathEffect：用一个个小印章形状代替虚线效果中的实线部分绘制路径
         4. chainPathEffect：将两个 PathEffect 先后应用于路径上 
     """.trimIndent()
     val colors = MyThemeColors3.current
-    ExpandableItem3(title = "Paint - pathEffect", allExpandFlow, padding = 20.dp, desc = desc) {
+    ExpandableItem3(title = "Paint - stroke - pathEffect", allExpandFlow, padding = 20.dp, desc = desc) {
         val smallCanvasModifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
@@ -538,148 +680,6 @@ private fun PaintPathEffectSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun PaintPathEffectSamplePreview() {
-    PaintPathEffectSample(remember { MutableStateFlow(true) })
-}
-
-
-@OptIn(ExperimentalTextApi::class)
-@Composable
-private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
-    val desc = """
-        cap：设置线条首尾的样式：
-            StrokeCap.BUTT：无
-            StrokeCap.SQUARE：方形
-            StrokeCap.ROUND： 半圆形
-        注意： StrokeCap.ROUND、StrokeCap.SQUARE 会在线长度的基础上首尾添加一个通过 setStrokeWidth 设置的宽度。因此 ROUND 和 SQUARE 样式的线条明显长一点
-    """.trimIndent()
-    val colors = MyThemeColors3.current
-    ExpandableItem3(title = "Paint - stroke", allExpandFlow, padding = 20.dp, desc = desc) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "strokeWidth - 10.dp", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    drawRect(
-                        color = colors.tertiary,
-                        topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
-                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
-                        style = Stroke(width = 9.dp.toPx())
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "strokeWidth - 3.dp", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    drawRect(
-                        color = colors.tertiary,
-                        topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
-                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
-                        style = Stroke(width = 3.dp.toPx())
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            val textMeasurer = rememberTextMeasurer()
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "cap", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    val padding = 10.dp.toPx()
-                    val lineSpace = 4.dp.toPx()
-                    val lineSize = 5.dp.toPx()
-                    val textFontSize = 12.sp
-                    var top = padding
-                    listOf(
-                        "Butt" to StrokeCap.Butt,
-                        "Square" to StrokeCap.Square,
-                        "Round" to StrokeCap.Round
-                    ).forEachIndexed { index, pair ->
-                        val (name, cap) = pair
-                        if (index > 0) {
-                            top += lineSpace
-                        }
-                        val textLayoutResult = textMeasurer.measure(
-                            AnnotatedString(name),
-                            style = TextStyle(fontSize = textFontSize)
-                        )
-                        drawText(
-                            textLayoutResult,
-                            topLeft = Offset(padding, top)
-                        )
-                        top += textLayoutResult.size.height + 2.dp.toPx()
-                        drawLine(
-                            colors.tertiary,
-                            start = Offset(padding, top),
-                            end = Offset(size.width - padding, top),
-                            strokeWidth = lineSize,
-                            cap = cap
-                        )
-                        top += lineSize
-                    }
-                }
-            }
-        }
-
-        val padding = 20.dp.toPx()
-        val getPath: (size: Size) -> Path = { size ->
-            Path().apply {
-                moveTo(padding, padding)
-                lineTo(size.width - padding, padding)
-                lineTo(size.width - padding, size.height / 2)
-                lineTo(padding, size.height / 2)
-                lineTo(padding, size.height - padding)
-                lineTo(size.width - padding, size.height - padding)
-            }
-        }
-
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "strokeJoin - Miter", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    drawPath(
-                        color = colors.tertiary,
-                        path = getPath(size),
-                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Miter)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "strokeJoin - Round", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    drawPath(
-                        color = colors.tertiary,
-                        path = getPath(size),
-                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Round)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "strokeJoin - Bevel", line = 2)
-                Canvas(modifier = smallCanvasModifier) {
-                    drawPath(
-                        color = colors.tertiary,
-                        path = getPath(size),
-                        style = Stroke(width = 10.dp.toPx(), join = StrokeJoin.Bevel)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun PaintStrokeSamplePreview() {
-    PaintStrokeSample(remember { MutableStateFlow(true) })
+private fun PaintStrokePathEffectSamplePreview() {
+    PaintStrokePathEffectSample(remember { MutableStateFlow(true) })
 }
