@@ -70,7 +70,9 @@ object MyColor {
     )
 }
 
-val rainbowColorsBrush = Brush.sweepGradient(MyColor.halfRainbows)
+val rainbowColorsBrush = Brush.sweepGradient(
+    colors = MyColor.halfRainbows + MyColor.halfRainbows.first()
+)
 
 val blackWhiteColorFilter: ColorFilter =
     ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
