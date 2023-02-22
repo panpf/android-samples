@@ -24,7 +24,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
                 Link("List&Grid", R.id.action_global_listFragment),
                 Link("Material", R.id.action_global_materialFragment),
                 Link("Material3", R.id.action_global_material3Fragment),
-                Link("Modifier", R.id.action_global_modifierFragment),
+                Link("Modifiers", R.id.action_global_modifierFragment),
                 Link("Navigation（Implementation）"),   // todo Implementation
                 Link("Theme（Implementation）"),   // todo Implementation
 //                Link("Custom（Implementation）"),   // todo Implementation
