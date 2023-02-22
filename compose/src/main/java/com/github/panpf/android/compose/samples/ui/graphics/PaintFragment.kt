@@ -60,6 +60,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
+import com.github.panpf.android.compose.samples.ui.base.computeTrianglePath
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
 import com.github.panpf.android.compose.samples.ui.base.toPx
@@ -1264,11 +1265,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                         style = Stroke(
                             width = strokeSize,
                             pathEffect = PathEffect.stampedPathEffect(
-                                shape = Path().apply {
-                                    moveTo(strokeSize / 2, 0f)
-                                    lineTo(strokeSize, strokeSize)
-                                    lineTo(0f, strokeSize)
-                                },
+                                shape = computeTrianglePath(strokeSize),
                                 advance = 60f,
                                 phase = 0f,
                                 style = StampedPathEffectStyle.Morph
@@ -1289,11 +1286,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                         style = Stroke(
                             width = strokeSize,
                             pathEffect = PathEffect.stampedPathEffect(
-                                shape = Path().apply {
-                                    moveTo(strokeSize / 2, 0f)
-                                    lineTo(strokeSize, strokeSize)
-                                    lineTo(0f, strokeSize)
-                                },
+                                shape = computeTrianglePath(strokeSize),
                                 advance = 60f,
                                 phase = 0f,
                                 style = StampedPathEffectStyle.Rotate
@@ -1314,11 +1307,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                         style = Stroke(
                             width = strokeSize,
                             pathEffect = PathEffect.stampedPathEffect(
-                                shape = Path().apply {
-                                    moveTo(strokeSize / 2, 0f)
-                                    lineTo(strokeSize, strokeSize)
-                                    lineTo(0f, strokeSize)
-                                },
+                                shape = computeTrianglePath(strokeSize),
                                 advance = 60f,
                                 phase = 0f,
                                 style = StampedPathEffectStyle.Translate
@@ -1354,11 +1343,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                         style = Stroke(
                             width = strokeSize,
                             pathEffect = PathEffect.stampedPathEffect(
-                                shape = Path().apply {
-                                    moveTo(strokeSize / 2, 0f)
-                                    lineTo(strokeSize, strokeSize)
-                                    lineTo(0f, strokeSize)
-                                },
+                                shape = computeTrianglePath(strokeSize),
                                 advance = 60f,
                                 phase = phaseState,
                                 style = StampedPathEffectStyle.Translate

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -22,6 +23,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
 import com.github.panpf.android.compose.samples.R.drawable
+import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.sin
 
 object MyColor {
     val HalfBlue = Color(127, 127, 255)
@@ -177,4 +181,40 @@ data class ContentScaleItem(
 @Composable
 fun Dp.toPx(): Float {
     return with(LocalDensity.current) { this@toPx.toPx() }
+}
+
+fun computePentagramPath(size: Size): Path {
+    val centerPoint = Offset(size.width / 2, size.height / 2)
+    val radius = min(centerPoint.x, centerPoint.y)
+    val getPoint: (angle: Float) -> Offset = { angle ->
+        Offset(
+            x = (centerPoint.x + (radius * cos(angle * Math.PI / 180f))).toFloat(),
+            y = (centerPoint.y + (radius * sin(angle * Math.PI / 180f))).toFloat()
+        )
+    }
+    val point1 = getPoint(270f + (0 * 72f))
+    val point2 = getPoint(270f + (1 * 72f))
+    val point3 = getPoint(270f + (2 * 72f))
+    val point4 = getPoint(270f + (3 * 72f))
+    val point5 = getPoint(270f + (4 * 72f))
+    return Path().apply {
+        moveTo(point5.x, point5.y)
+        lineTo(point2.x, point2.y)
+        lineTo(point4.x, point4.y)
+        lineTo(point1.x, point1.y)
+        lineTo(point3.x, point3.y)
+        close()
+    }
+}
+
+fun computeTrianglePath(size: Float): Path {
+    return Path().apply {
+        moveTo(size / 2, 0f)
+        lineTo(size, size)
+        lineTo(0f, size)
+    }
+}
+
+fun computeTrianglePath(size: Size): Path {
+    return computeTrianglePath(min(size.width, size.height))
 }

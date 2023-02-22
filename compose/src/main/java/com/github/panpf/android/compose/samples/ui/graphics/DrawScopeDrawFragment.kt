@@ -42,14 +42,12 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.SubtitleText
+import com.github.panpf.android.compose.samples.ui.base.computePentagramPath
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.math.cos
-import kotlin.math.min
 import kotlin.math.roundToInt
-import kotlin.math.sin
 
 class DrawScopeDrawFragment : Material3ComposeAppBarFragment() {
 
@@ -742,35 +740,11 @@ private fun DrawScopeDrawPathSample(allExpandFlow: Flow<Boolean>) {
             .aspectRatio(1f)
             .border(1.dp, colors.primaryTranslucency)
 
-        val getPentagramPath: (size: Size) -> Path = { size ->
-            val centerPoint = Offset(size.width / 2, size.height / 2)
-            val radius = min(centerPoint.x, centerPoint.y)
-            val getPoint: (angle: Float) -> Offset = { angle ->
-                Offset(
-                    x = (centerPoint.x + (radius * cos(angle * Math.PI / 180f))).toFloat(),
-                    y = (centerPoint.y + (radius * sin(angle * Math.PI / 180f))).toFloat()
-                )
-            }
-            val point1 = getPoint(270f + (0 * 72f))
-            val point2 = getPoint(270f + (1 * 72f))
-            val point3 = getPoint(270f + (2 * 72f))
-            val point4 = getPoint(270f + (3 * 72f))
-            val point5 = getPoint(270f + (4 * 72f))
-            Path().apply {
-                moveTo(point5.x, point5.y)
-                lineTo(point2.x, point2.y)
-                lineTo(point4.x, point4.y)
-                lineTo(point1.x, point1.y)
-                lineTo(point3.x, point3.y)
-                close()
-            }
-        }
-
         Row(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.weight(1f)) {
                 SubtitleText(text = "默认配置", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
-                    drawPath(path = getPentagramPath(size), color = colors.tertiary)
+                    drawPath(path = computePentagramPath(size), color = colors.tertiary)
                 }
             }
 
@@ -780,7 +754,7 @@ private fun DrawScopeDrawPathSample(allExpandFlow: Flow<Boolean>) {
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
-                        path = getPentagramPath(size),
+                        path = computePentagramPath(size),
                         color = colors.tertiary,
                         style = stroke
                     )
@@ -791,7 +765,7 @@ private fun DrawScopeDrawPathSample(allExpandFlow: Flow<Boolean>) {
             Column(modifier = Modifier.weight(1f)) {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
-                    drawPath(path = getPentagramPath(size), brush = rainbowColorsBrush)
+                    drawPath(path = computePentagramPath(size), brush = rainbowColorsBrush)
                 }
             }
         }
