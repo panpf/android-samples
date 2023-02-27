@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4j.math.ktx.format
@@ -43,8 +45,15 @@ class UpdateTransitionFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            Transition 可管理一个或多个动画作为其子项，并在多个状态之间同时运行这些动画。
+            您可以使用某个 animate* 扩展函数来定义此过渡效果中的子动画。
+            对于涉及多个可组合函数的更复杂的过渡，可使用 createChildTransition 来创建子过渡
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             UpdateTransitionSample(allExpandFlow)
+            // todo createChildTransition
         }
     }
 }

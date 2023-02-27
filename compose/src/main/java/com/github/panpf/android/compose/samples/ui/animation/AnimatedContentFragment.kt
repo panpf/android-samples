@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,7 +54,15 @@ class AnimatedContentFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            AnimatedContent 可组合项会在内容根据目标状态发生变化时，为内容添加动画效果。
+            默认情况下，初始内容淡出，然后目标内容淡入（此行为称为淡出后淡入）。您可以为 transitionSpec 参数指定 ContentTransform 对象，以自定义此动画行为。
+            EnterTransition 定义了目标内容应如何显示，ExitTransition 则定义了初始内容应如何消失。
+            SizeTransform 定义了大小应如何在初始内容与目标内容之间添加动画效果。
+            就像 AnimatedVisibility 一样，animateEnterExit 修饰符可以在 AnimatedContent 的内容 lambda 内使用。使用此修饰符可将 EnterAnimation 和 ExitAnimation 分别应用于每个直接或间接子项。
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             AnimatedContentSample(allExpandFlow)
             AnimatedContentTransitionSpecSample(allExpandFlow)
             AnimatedContentTransitionSpecSizeSample(allExpandFlow)

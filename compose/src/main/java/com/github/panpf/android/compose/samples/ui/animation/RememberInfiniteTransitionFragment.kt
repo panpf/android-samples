@@ -14,6 +14,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4j.math.ktx.format
@@ -42,7 +44,12 @@ class RememberInfiniteTransitionFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            InfiniteTransition 可以像 Transition 一样保存一个或多个子动画，但是，这些动画一进入组合阶段就开始运行，除非被移除，否则不会停止。
+            您可以使用 rememberInfiniteTransition 创建 InfiniteTransition 实例。
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             RememberInfiniteTransitionSample(allExpandFlow)
         }
     }

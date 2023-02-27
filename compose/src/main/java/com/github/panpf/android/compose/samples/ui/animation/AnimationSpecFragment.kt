@@ -67,19 +67,17 @@ class AnimationSpecFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
-        val desc = remember {
-            """
-                |AnimationSpec 用来自定义动画的规范，分类如下:
-                |   * FiniteAnimationSpec：有限动画
-                |       - DurationBasedAnimationSpec：基于时长的动画
-                |           ~ TweenSpec：在起始值和中间值之间过度的动画。可以自定义持续时间
-                |           ~ KeyframesSpec：需要你定义每一帧的值以及规范的动画。可以自定义持续时间
-                |           ~ SnapSpec：立即切换到结束值的动画。可以自定义持续时间
-                |       - RepeatableSpec：重复执行 DurationBasedAnimationSpec 动画
-                |       - SpringSpec：弹性动画。无法自定义持续时间
-                |   * InfiniteAnimationSpec：无限动画
-            """.trimMargin()
-        }
+        val desc = """
+            |AnimationSpec 用来自定义动画的规范，分类如下:
+            |   * FiniteAnimationSpec：有限动画
+            |       - DurationBasedAnimationSpec：基于时长的动画
+            |           ~ TweenSpec：在起始值和中间值之间过度的动画。可以自定义持续时间
+            |           ~ KeyframesSpec：需要你定义每一帧的值以及规范的动画。可以自定义持续时间
+            |           ~ SnapSpec：立即切换到结束值的动画。可以自定义持续时间
+            |       - RepeatableSpec：重复执行 DurationBasedAnimationSpec 动画
+            |       - SpringSpec：弹性动画。无法自定义持续时间
+            |   * InfiniteAnimationSpec：无限动画
+        """.trimMargin()
         ExpandableLayout { allExpandFlow ->
             ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             AnimationSpecSpringSample(allExpandFlow)

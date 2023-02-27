@@ -79,15 +79,11 @@ class EasingFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
-        val desc = remember {
-            """
-                Easing 用于为基于时长的 AnimationSpec 操作（如 tween 或 keyframes）调整动画的小数值。这样可让动画值加速和减速，而不是以恒定的速率移动。小数是介于 0（起始值）和 1.0（结束值）之间的值，表示动画中的当前点。
-
-                Easing 实际上是一个函数，它取一个介于 0 和 1.0 之间的小数值并返回一个浮点数。返回的值可能位于边界之外，表示过冲或下冲。
-                
-                Compose 提供多种内置 Easing 函数，可以满足绝大多数的需求。
-            """.trimIndent()
-        }
+        val desc = """
+            Easing 用于为基于时长的 AnimationSpec 操作（如 tween 或 keyframes）调整动画的小数值。这样可让动画值加速和减速，而不是以恒定的速率移动。小数是介于 0（起始值）和 1.0（结束值）之间的值，表示动画中的当前点。
+            Easing 实际上是一个函数，它取一个介于 0 和 1.0 之间的小数值并返回一个浮点数。返回的值可能位于边界之外，表示过冲或下冲。
+            Compose 提供多种内置 Easing 函数，可以满足绝大多数的需求。
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
             ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             EasingLinearSample(allExpandFlow)

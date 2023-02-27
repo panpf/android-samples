@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +37,11 @@ class CrossfadeFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            Crossfade 可使用淡入淡出动画在两个布局之间添加动画效果。通过切换传递给 current 参数的值，可以使用淡入淡出动画来切换内容。
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             CrossfadeSample(allExpandFlow)
         }
     }

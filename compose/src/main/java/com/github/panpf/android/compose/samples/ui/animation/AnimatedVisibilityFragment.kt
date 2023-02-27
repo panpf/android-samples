@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -65,12 +66,20 @@ class AnimatedVisibilityFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            AnimatedVisibility 可组合项可以为内容的出现和消失添加动画效果。
+            默认情况下，内容以淡入和扩大的方式出现，以淡出和缩小的方式消失。您可以通过指定 EnterTransition 和 ExitTransition 来自定义这种过渡效果。
+            AnimatedVisibility 中的内容（直接或间接子项）可以使用 animateEnterExit 修饰符为每个子项指定不同的动画行为
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             AnimatedVisibilitySample(allExpandFlow)
             AnimatedVisibilityEnterExitFadeSample(allExpandFlow)
             AnimatedVisibilityEnterExitScaleSample(allExpandFlow)
             AnimatedVisibilityEnterExitSlideSample(allExpandFlow)
             AnimatedVisibilityEnterExitExpandSample(allExpandFlow)
+            // todo 为子项添加进入和退出动画效果 https://developer.android.com/jetpack/compose/animation?hl=zh-cn#animatedvisibility-enter-exit
+            // todo 添加自定义动画 https://developer.android.com/jetpack/compose/animation?hl=zh-cn#animatedvisibility-add-custom-animation
         }
     }
 }

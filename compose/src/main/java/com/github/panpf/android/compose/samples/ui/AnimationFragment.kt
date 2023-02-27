@@ -31,7 +31,7 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
                 ),
                 Link("AnimationSpec", R.id.action_global_animationSpecFragment),
                 Link("Easing", R.id.action_global_easingFragment),
-                // todo Animatable
+                Link("Animatable", R.id.action_global_animatableFragment),
                 // todo Animation
             )
         }

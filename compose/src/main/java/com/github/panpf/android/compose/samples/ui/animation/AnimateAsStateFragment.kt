@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.ExpandableText
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.github.panpf.tools4j.math.ktx.format
@@ -53,7 +54,12 @@ class AnimateAsStateFragment : Material3ComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
+        val desc = """
+            animate*AsState 函数用于为单个值添加动画效果。您只需提供结束值（或目标值），该 API 就会从当前值开始向指定值播放动画。
+            Compose 为 Float、Color、Dp、Size、Offset、Rect、Int、IntOffset 和 IntSize 提供开箱即用的 animate*AsState 函数。
+        """.trimIndent()
         ExpandableLayout { allExpandFlow ->
+            ExpandableText(text = desc, modifier = Modifier.padding(20.dp))
             AnimateFloatAsStateSample(allExpandFlow)
             AnimateIntAsStateSample(allExpandFlow)
             AnimateDpAsStateSample(allExpandFlow)
