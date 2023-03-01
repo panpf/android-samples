@@ -9,10 +9,10 @@ import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 
-class AnimationFragment : Material3ComposeAppBarFragment() {
+class AnimationsFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Animation"
+        return "Animations"
     }
 
     @Composable
@@ -32,7 +32,7 @@ class AnimationFragment : Material3ComposeAppBarFragment() {
                 Link("AnimationSpec", R.id.action_global_animationSpecFragment),
                 Link("Easing", R.id.action_global_easingFragment),
                 Link("Animatable", R.id.action_global_animatableFragment),
-                // todo Animation
+                Link("Animation", R.id.action_global_animationFragment),
             )
         }
         LinkList(links) { _, link ->

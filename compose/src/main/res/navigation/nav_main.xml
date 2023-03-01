@@ -1136,11 +1136,11 @@
     <!-- animation -->
 
     <fragment
-        android:id="@+id/animationFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.AnimationFragment" />
+        android:id="@+id/animationsFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.AnimationsFragment" />
     <action
-        android:id="@+id/action_global_animationFragment"
-        app:destination="@id/animationFragment"
+        android:id="@+id/action_global_animationsFragment"
+        app:destination="@id/animationsFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -1386,6 +1386,17 @@
     <action
         android:id="@+id/action_global_animatableFragment"
         app:destination="@id/animatableFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/animationFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimationFragment" />
+    <action
+        android:id="@+id/action_global_animationFragment"
+        app:destination="@id/animationFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

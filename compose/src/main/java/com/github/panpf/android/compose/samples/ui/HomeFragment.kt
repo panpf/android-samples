@@ -16,7 +16,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
         val links = remember {
             listOf(
                 Link("Accompanist", R.id.action_global_accompanistFragment),
-                Link("Animation", R.id.action_global_animationFragment),
+                Link("Animations", R.id.action_global_animationsFragment),
                 Link("Gestures", R.id.action_global_gesturesFragment),
                 Link("Graphics", R.id.action_global_graphicsFragment),
                 Link("Images", R.id.action_global_imagesFragment),
