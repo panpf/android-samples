@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
     app:startDestination="@id/homeFragment">
+    <!--    app:startDestination="@id/zoomImageFragment">-->
 
     <fragment
         android:id="@+id/homeFragment"
@@ -356,6 +357,17 @@
     <action
         android:id="@+id/action_global_asyncImageListCoilFragment"
         app:destination="@id/asyncImageListCoilFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/zoomImageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.ZoomImageFragment" />
+    <action
+        android:id="@+id/action_global_ZoomImageFragment"
+        app:destination="@id/zoomImageFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
