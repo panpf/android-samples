@@ -9,7 +9,10 @@ import androidx.compose.animation.core.spring
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.util.VelocityTracker
+import androidx.compose.ui.input.pointer.util.addPointerInputChange
+import androidx.compose.ui.unit.Velocity
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -21,8 +24,8 @@ class MyZoomState(
     @FloatRange(from = 0.0) initialScale: Float = minScale,
 ) {
     private val velocityTracker = VelocityTracker()
-    private val _translateX = Animatable(initialTranslateX)
-    private val _translateY = Animatable(initialTranslateY)
+    private val _translationX = Animatable(initialTranslateX)
+    private val _translationY = Animatable(initialTranslateY)
     private val _scale = Animatable(initialScale)
     // todo rotate
 
@@ -31,38 +34,38 @@ class MyZoomState(
     }
 
     /**
-     * The current scale value for [Zoomable]
+     * The current scale value for [MyZoomImage]
      */
     @get:FloatRange(from = 0.0)
     val scale: Float
         get() = _scale.value
 
     /**
-     * The current translateX value for [Zoomable]
+     * The current translationX value for [MyZoomImage]
      */
     @get:FloatRange(from = 0.0)
-    val translateX: Float
-        get() = _translateX.value
+    val translationX: Float
+        get() = _translationX.value
 
     /**
-     * The current translateY value for [Zoomable]
+     * The current translationY value for [MyZoomImage]
      */
     @get:FloatRange(from = 0.0)
-    val translateY: Float
-        get() = _translateY.value
+    val translationY: Float
+        get() = _translationY.value
 
     internal val zooming: Boolean
         get() = scale > minScale
 
     /**
-     * Instantly sets scale of [Zoomable] to given [scale]
+     * Instantly sets scale of [MyZoomImage] to given [scale]
      */
     suspend fun snapScaleTo(scale: Float) = coroutineScope {
         _scale.snapTo(scale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
     }
 
     /**
-     * Animates scale of [Zoomable] to given [scale]
+     * Animates scale of [MyZoomImage] to given [scale]
      */
     suspend fun animateScaleTo(
         scale: Float,
@@ -76,90 +79,15 @@ class MyZoomState(
         )
     }
 
-    private suspend fun fling(velocity: Offset) = coroutineScope {
-        Log.d("MyZoomState", "velocity: $velocity, translateX: $translateX, translateY: $translateY")
-        launch {
-            _translateX.animateDecay(
-//                velocity.x / 2f,
-                velocity.x,
-                exponentialDecay()
-            )
-        }
-        launch {
-            _translateY.animateDecay(
-                velocity.y,
-//                velocity.y / 2f,
-                exponentialDecay()
-            )
-        }
+    suspend fun snapDoubleTapScale(offset: Offset? = null) {
+        snapScaleTo(nextDoubleTapScale())
     }
 
-    internal suspend fun drag(dragDistance: Offset) = coroutineScope {
-        launch {
-            _translateX.snapTo((_translateX.value + dragDistance.x))
-        }
-        launch {
-            _translateY.snapTo((_translateY.value + dragDistance.y))
-        }
+    suspend fun animateDoubleTapScale(offset: Offset? = null) {
+        animateScaleTo(nextDoubleTapScale())
     }
 
-    internal suspend fun dragEnd() {
-        val velocity = velocityTracker.calculateVelocity()
-        fling(Offset(velocity.x * -1, velocity.y * -1))
-    }
-
-    internal suspend fun updateBounds(maxX: Float, maxY: Float) = coroutineScope {
-        _translateY.updateBounds(-maxY, maxY)
-        _translateX.updateBounds(-maxX, maxX)
-    }
-
-    internal suspend fun onZoomChange(zoomChange: Float) = snapScaleTo(scale * zoomChange)
-
-    internal fun addPosition(timeMillis: Long, position: Offset) {
-        velocityTracker.addPosition(timeMillis = timeMillis, position = position)
-    }
-
-    internal fun resetTracking() {
-        velocityTracker.resetTracking()
-    }
-
-    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
-        val lowerBounds = _translateX.lowerBound ?: return false
-        val upperBounds = _translateX.upperBound ?: return false
-        if (lowerBounds == 0f && upperBounds == 0f) return true
-
-        val newPosition = _translateX.value + dragDistance.x
-        if (newPosition <= lowerBounds) {
-            return true
-        }
-
-        if (newPosition >= upperBounds) {
-            return true
-        }
-        return false
-    }
-
-    internal fun isVerticalDragFinish(dragDistance: Offset): Boolean {
-        val lowerBounds = _translateY.lowerBound ?: return false
-        val upperBounds = _translateY.upperBound ?: return false
-        if (lowerBounds == 0f && upperBounds == 0f) return true
-
-        val newPosition = _translateY.value + dragDistance.y
-        if (newPosition <= lowerBounds) {
-            return true
-        }
-
-        if (newPosition >= upperBounds) {
-            return true
-        }
-        return false
-    }
-
-    internal suspend fun onDoubleTap() {
-        animateScaleTo(nextScale())
-    }
-
-    private fun nextScale(): Float {
+    fun nextDoubleTapScale(): Float {
         val scaleSteps = arrayOf(minScale, maxScale)
         val currentScale = scale
         val currentScaleIndex =
@@ -171,23 +99,114 @@ class MyZoomState(
         }
     }
 
-    override fun toString(): String = "ZoomableState(" +
-            "minScale=$minScale, " +
-            "maxScale=$maxScale, " +
-            "translateX=$translateX, " +
-            "translateY=$translateY, " +
-            "scale=$scale" +
-            ")"
+    internal fun dragStart() {
+        Log.d("MyZoomState", "dragStart. resetTracking")
+        velocityTracker.resetTracking()
+    }
+
+    internal suspend fun drag(change: PointerInputChange, dragAmount: Offset) {
+        val newTranslateX = (_translationX.value + dragAmount.x)
+        val newTranslateY = (_translationY.value + dragAmount.y)
+        Log.d(
+            "MyZoomState",
+            "drag. dragAmount=$dragAmount, newTranslate=Offset(${newTranslateX}, ${newTranslateY})"
+        )
+        velocityTracker.addPointerInputChange(change)
+        coroutineScope {
+            launch {
+                _translationX.snapTo(newTranslateX)
+            }
+            launch {
+                _translationY.snapTo(newTranslateY)
+            }
+        }
+    }
+
+    internal suspend fun dragEnd() {
+        Log.d("MyZoomState", "dragEnd")
+        fling(velocityTracker.calculateVelocity())
+    }
+
+    internal fun dragCancel() {
+//        Log.d("MyZoomState", "dragCancel")
+    }
+
+    internal suspend fun transform(zoomChange: Float, panChange: Offset, rotationChange: Float) =
+        snapScaleTo(scale * zoomChange)
+
+    internal suspend fun updateBounds(maxX: Float, maxY: Float) = coroutineScope {
+        // todo updateBounds
+        _translationY.updateBounds(-maxY, maxY)
+        _translationX.updateBounds(-maxX, maxX)
+    }
+
+    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
+        val lowerBounds = _translationX.lowerBound ?: return false
+        val upperBounds = _translationX.upperBound ?: return false
+        if (lowerBounds == 0f && upperBounds == 0f) return true
+
+        val newPosition = _translationX.value + dragDistance.x
+        if (newPosition <= lowerBounds) {
+            return true
+        }
+
+        if (newPosition >= upperBounds) {
+            return true
+        }
+        return false
+    }
+
+    internal fun isVerticalDragFinish(dragDistance: Offset): Boolean {
+        val lowerBounds = _translationY.lowerBound ?: return false
+        val upperBounds = _translationY.upperBound ?: return false
+        if (lowerBounds == 0f && upperBounds == 0f) return true
+
+        val newPosition = _translationY.value + dragDistance.y
+        if (newPosition <= lowerBounds) {
+            return true
+        }
+
+        if (newPosition >= upperBounds) {
+            return true
+        }
+        return false
+    }
+
+    private suspend fun fling(velocity: Velocity) = coroutineScope {
+        Log.d(
+            "MyZoomState",
+            "fling. start. velocity=$velocity, translation=(${_translationX.value}, ${_translationY.value})"
+        )
+        launch {
+            _translationX.animateDecay(velocity.x, exponentialDecay()) {
+                Log.d(
+                    "MyZoomState",
+                    "fling. running. velocity=$velocity, translation=(${_translationX.value}, ${_translationY.value})"
+                )
+            }
+        }
+        launch {
+            _translationY.animateDecay(velocity.y, exponentialDecay()) {
+                Log.d(
+                    "MyZoomState",
+                    "fling. running. velocity=$velocity, translation=(${_translationX.value}, ${_translationY.value})"
+                )
+            }
+        }
+    }
+
+    override fun toString(): String =
+        "ZoomableState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translationX=$translationX, translationY=$translationY)"
 
     companion object {
         /**
-         * The default [Saver] implementation for [ZoomableState].
+         * The default [Saver] implementation for [MyZoomState].
          */
         val Saver: Saver<MyZoomState, *> = listSaver(
             save = {
                 listOf(
-                    it.translateX,
-                    it.translateY,
+                    it.translationX,
+                    it.translationY,
                     it.scale,
                     it.minScale,
                     it.maxScale,

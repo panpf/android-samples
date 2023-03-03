@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
-    <!--    app:startDestination="@id/zoomImageFragment">-->
+    app:startDestination="@id/zoomImageFragment">
+    <!--    app:startDestination="@id/homeFragment">-->
 
     <fragment
         android:id="@+id/homeFragment"

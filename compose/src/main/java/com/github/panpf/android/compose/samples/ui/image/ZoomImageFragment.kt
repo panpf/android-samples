@@ -3,7 +3,6 @@ package com.github.panpf.android.compose.samples.ui.image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,9 +41,11 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
         val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
         val items = listOf("My", "Rerere", "Tlaster", "Birdly")
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
             HorizontalPager(
                 count = items.size,
                 state = pagerState,
@@ -88,8 +89,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                             painter = painterResource(id = R.drawable.dog_hor),
                             contentDescription = "",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
+                                .fillMaxSize()
                                 .birdlyZoomable(),
                         )
                     }

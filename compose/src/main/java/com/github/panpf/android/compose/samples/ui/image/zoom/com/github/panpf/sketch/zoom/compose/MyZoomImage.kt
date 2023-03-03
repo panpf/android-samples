@@ -58,31 +58,30 @@ private fun Modifier.createZoomModifier(state: MyZoomState): Modifier = composed
     Log.d("ZoomImage", "state: $state")
     val coroutineScope = rememberCoroutineScope()
     Modifier
-        .graphicsLayer(
-            scaleX = state.scale,
-            scaleY = state.scale,
-            translationX = state.translateX * state.scale,
-            translationY = state.translateY * state.scale
-//            translationX = state.translateX,
-//            translationY = state.translateY
-        )
+        .graphicsLayer {
+            scaleX = state.scale
+            scaleY = state.scale
+            translationX = state.translationX * state.scale
+            translationY = state.translationY * state.scale
+//            translationX = state.translationX,
+//            translationY = state.translationY
+        }
         .pointerInput(Unit) {
-            detectTapGestures(onDoubleTap = {
+            detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
-                    state.onDoubleTap()
+                    state.animateDoubleTapScale(offset)
                 }
             })
         }
         .pointerInput(Unit) {
             detectDragGestures(
                 onDragStart = {
-                    state.resetTracking()
+                    state.dragStart()
                 },
                 onDrag = { change, dragAmount ->
 //                    change.consume()
                     coroutineScope.launch {
-                        state.drag(dragAmount)
-                        state.addPosition(change.uptimeMillis, change.position)
+                        state.drag(change, dragAmount)
                     }
                 },
                 onDragEnd = {
@@ -90,12 +89,17 @@ private fun Modifier.createZoomModifier(state: MyZoomState): Modifier = composed
                         state.dragEnd()
                     }
                 },
+                onDragCancel = {
+                    coroutineScope.launch {
+                        state.dragCancel()
+                    }
+                }
             )
         }
         .transformable(
-            state = rememberTransformableState { zoomChange: Float, _: Offset, _: Float ->
+            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
                 coroutineScope.launch {
-                    state.onZoomChange(zoomChange)
+                    state.transform(zoomChange, panChange, rotationChange)
                 }
             },
             lockRotationOnZoomPan = true
