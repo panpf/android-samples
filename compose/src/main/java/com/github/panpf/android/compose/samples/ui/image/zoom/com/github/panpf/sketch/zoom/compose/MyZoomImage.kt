@@ -58,14 +58,6 @@ private fun Modifier.createZoomModifier(state: MyZoomState): Modifier = composed
     Log.d("ZoomImage", "state: $state")
     val coroutineScope = rememberCoroutineScope()
     Modifier
-        .graphicsLayer {
-            scaleX = state.scale
-            scaleY = state.scale
-            translationX = state.translationX * state.scale
-            translationY = state.translationY * state.scale
-//            translationX = state.translationX,
-//            translationY = state.translationY
-        }
         .pointerInput(Unit) {
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
@@ -104,4 +96,10 @@ private fun Modifier.createZoomModifier(state: MyZoomState): Modifier = composed
             },
             lockRotationOnZoomPan = true
         )
+        .graphicsLayer {
+            scaleX = state.scale
+            scaleY = state.scale
+            translationX = state.translationX
+            translationY = state.translationY
+        }
 }
