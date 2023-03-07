@@ -46,6 +46,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -145,7 +146,7 @@ private fun AnimationSpecSpringSample(allExpandFlow: Flow<Boolean>) {
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                         Text(
-                            text = "${pair.first}: ${pair.second.value.format("", 1)}",
+                            text = "${pair.first}\n${pair.second.value.format("", 1)}",
                             fontSize = 12.sp
                         )
                         BoxWithConstraints(
@@ -192,10 +193,10 @@ private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
     var enabled by remember { mutableStateOf(false) }
     val attrList = listOf(
         "durationMillis" to listOf(
-            "100\n" to 100,
-            "300\n (Default)" to 300,
-            "1000\n" to 1000,
-            "3000\n" to 3000,
+            "100" to 100,
+            "300(Default)" to 300,
+            "1000" to 1000,
+            "3000" to 3000,
         ).map {
             it.first to animateFloatAsState(
                 targetValue = if (enabled) 1f else 0f,
@@ -203,10 +204,10 @@ private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
             )
         },
         "delayMillis" to listOf(
-            "0\n (Default)" to 0,
-            "300\n" to 300,
-            "1000\n" to 1000,
-            "3000\n" to 3000,
+            "0(Default)" to 0,
+            "300" to 300,
+            "1000" to 1000,
+            "3000" to 3000,
         ).map {
             it.first to animateFloatAsState(
                 targetValue = if (enabled) 1f else 0f,
@@ -214,10 +215,10 @@ private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
             )
         },
         "easing" to listOf(
-            "FastOutSlowIn\n (Default)" to FastOutSlowInEasing,
-            "LinearOutSlowIn\n" to LinearOutSlowInEasing,
-            "FastOutLinearIn\n" to FastOutLinearInEasing,
-            "Linear\n" to LinearEasing,
+            "FastOutSlowIn(Default)" to FastOutSlowInEasing,
+            "LinearOutSlowIn" to LinearOutSlowInEasing,
+            "FastOutLinearIn" to FastOutLinearInEasing,
+            "Linear" to LinearEasing,
         ).map {
             it.first to animateFloatAsState(
                 targetValue = if (enabled) 1f else 0f,
@@ -237,14 +238,26 @@ private fun AnimationSpecTweenSample(allExpandFlow: Flow<Boolean>) {
                     Spacer(modifier = Modifier.width(20.dp))
                 }
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = attrPair.first, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = attrPair.first,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                     Spacer(modifier = Modifier.height(10.dp))
                     attrPair.second.forEachIndexed { index, pair ->
                         if (index > 0) {
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                         Text(
-                            text = "${pair.first}: ${pair.second.value.format("", 1)}",
+                            text = pair.first,
+                            fontSize = 12.sp,
+                            lineHeight = 15.sp,
+                            modifier = Modifier.height(30.dp)
+                        )
+                        Text(
+                            text = pair.second.value.format("", 1),
                             fontSize = 12.sp
                         )
                         BoxWithConstraints(
