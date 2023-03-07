@@ -15,6 +15,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
+                Link("ZoomImage", R.id.action_global_ZoomImageFragment),
                 Link("Accompanist", R.id.action_global_accompanistFragment),
                 Link("Animations", R.id.action_global_animationsFragment),
                 Link("Gestures", R.id.action_global_gesturesFragment),

@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
@@ -96,10 +97,12 @@ private fun Modifier.createZoomModifier(state: MyZoomState): Modifier = composed
             },
             lockRotationOnZoomPan = true
         )
+        .clipToBounds()
         .graphicsLayer {
             scaleX = state.scale
             scaleY = state.scale
             translationX = state.translationX
             translationY = state.translationY
+//            transformOrigin = TransformOrigin(0f, 0f)
         }
 }

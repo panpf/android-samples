@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.spring
 import androidx.compose.runtime.saveable.Saver
@@ -60,8 +61,11 @@ class MyZoomState(
     /**
      * Instantly sets scale of [MyZoomImage] to given [scale]
      */
-    suspend fun snapScaleTo(scale: Float) = coroutineScope {
-        _scale.snapTo(scale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
+    suspend fun snapScaleTo(scale: Float) {
+        Log.d("MyZoomState", "snapScaleTo. scale=$scale")
+        coroutineScope {
+            _scale.snapTo(scale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
+        }
     }
 
     /**
@@ -69,14 +73,17 @@ class MyZoomState(
      */
     suspend fun animateScaleTo(
         scale: Float,
-        animationSpec: AnimationSpec<Float> = spring(),
+        animationSpec: AnimationSpec<Float> = spring(stiffness = Spring.StiffnessLow),
         initialVelocity: Float = 0f,
-    ) = coroutineScope {
-        _scale.animateTo(
-            targetValue = scale.coerceIn(minimumValue = minScale, maximumValue = maxScale),
-            animationSpec = animationSpec,
-            initialVelocity = initialVelocity,
-        )
+    ) {
+        Log.d("MyZoomState", "animateScaleTo. scale=$scale")
+        coroutineScope {
+            _scale.animateTo(
+                targetValue = scale.coerceIn(minimumValue = minScale, maximumValue = maxScale),
+                animationSpec = animationSpec,
+                initialVelocity = initialVelocity,
+            )
+        }
     }
 
     suspend fun snapDoubleTapScale(offset: Offset? = null) {
