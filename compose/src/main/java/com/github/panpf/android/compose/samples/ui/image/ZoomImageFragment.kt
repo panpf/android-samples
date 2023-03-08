@@ -34,7 +34,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
-import me.rerere.zoomableimage.RerereZoomableImage
 import moe.tlaster.zoomable.TlasterZoomable
 import moe.tlaster.zoomable.rememberTlasterZoomableState
 import nl.birdly.zoombox.birdlyZoomable
@@ -50,7 +49,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
-        val items = listOf("My", "Rerere", "Tlaster", "Birdly")
+        val items = listOf("My", "Tlaster", "Birdly")
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -70,14 +69,6 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                     }
 
                     1 -> {
-                        RerereZoomableImage(
-                            painter = painterResource(id = R.drawable.dog_hor),
-                            contentDescription = "",
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
-
-                    2 -> {
                         TlasterZoomable(
                             state = rememberTlasterZoomableState(),
                             modifier = Modifier.fillMaxSize(),
@@ -90,7 +81,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                         }
                     }
 
-                    3 -> {
+                    2 -> {
                         Image(
                             painter = painterResource(id = R.drawable.dog_hor),
                             contentDescription = "",
