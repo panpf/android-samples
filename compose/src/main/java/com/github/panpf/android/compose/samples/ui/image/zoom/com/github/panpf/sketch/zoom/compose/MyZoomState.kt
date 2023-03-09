@@ -98,7 +98,7 @@ class MyZoomState(
         val scaleSteps = arrayOf(minScale, maxScale)
         val currentScale = scale
         val currentScaleIndex =
-            scaleSteps.find { (it + 0.1f) >= currentScale }?.let { scaleSteps.indexOf(it) } ?: -1
+            scaleSteps.findLast { currentScale >= (it - 0.1f) }?.let { scaleSteps.indexOf(it) } ?: -1
         return if (currentScaleIndex != -1) {
             scaleSteps[(currentScaleIndex + 1) % scaleSteps.size]
         } else {
