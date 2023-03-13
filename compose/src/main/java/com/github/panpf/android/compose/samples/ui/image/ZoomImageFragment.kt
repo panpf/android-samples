@@ -37,6 +37,8 @@ import kotlinx.coroutines.launch
 import moe.tlaster.zoomable.TlasterZoomable
 import moe.tlaster.zoomable.rememberTlasterZoomableState
 import nl.birdly.zoombox.birdlyZoomable
+import soup.compose.photo.ExperimentalPhotoApi
+import soup.compose.photo.PhotoBox
 
 class ZoomImageFragment : Material3ComposeAppBarFragment() {
 
@@ -44,12 +46,12 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
         return "ZoomImage"
     }
 
-    @OptIn(ExperimentalPagerApi::class)
+    @OptIn(ExperimentalPagerApi::class, ExperimentalPhotoApi::class)
     @Composable
     override fun DrawContent() {
         val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
-        val items = listOf("My", "Tlaster", "Birdly")
+        val items = listOf("My", "Tlaster", "Birdly", "Photo")
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -89,6 +91,19 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                                 .fillMaxSize()
                                 .birdlyZoomable(),
                         )
+                    }
+
+                    3 -> {
+                        PhotoBox(
+                            modifier = Modifier.fillMaxSize(),
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.dog_hor),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
                     }
                 }
             }
