@@ -1,5 +1,6 @@
 package nl.birdly.zoombox.gesture.transform
 
+import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import nl.birdly.zoombox.BirdlyZoomableState
 import nl.birdly.zoombox.util.minMax
@@ -20,12 +21,23 @@ class OnPinchToZoomGestureHandler : OnPinchGestureHandler {
             zoomRange.endInclusive,
             gestureZoom * zoomState.scale
         )
-        onZoomUpdated(zoomState.copy(
-            scale = newScale,
-            offset = Offset(
-                zoomState.offset.x + -pan.x * newScale + (newScale - zoomState.scale) * centroid.x,
-                zoomState.offset.y + -pan.y * newScale + (newScale - zoomState.scale) * centroid.y,
-            )
-        ))
+        val addPanOffset = Offset(
+            x = -pan.x * newScale,
+            y = -pan.y * newScale
+        )
+        val addCentroidOffset = Offset(
+            x = (newScale - zoomState.scale) * centroid.x,
+            y = (newScale - zoomState.scale) * centroid.y
+        )
+        val newOffset = zoomState.offset + addPanOffset + addCentroidOffset
+//        val newOffset = Offset(
+//            zoomState.offset.x + -pan.x * newScale + (newScale - zoomState.scale) * centroid.x,
+//            zoomState.offset.y + -pan.y * newScale + (newScale - zoomState.scale) * centroid.y,
+//        )
+        Log.d(
+            "BirdlyZoomable",
+            "OnPinchToZoomGesture. newScale=$newScale, centroid=$centroid, addPanOffset=$addPanOffset, addCentroidOffset=$addCentroidOffset, newOffset=$newOffset"
+        )
+        onZoomUpdated(zoomState.copy(scale = newScale, offset = newOffset))
     }
 }

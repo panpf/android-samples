@@ -1,6 +1,5 @@
 package com.github.panpf.sketch.zoom.compose
 
-import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -8,19 +7,13 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.graphicsLayer
@@ -69,26 +62,23 @@ private fun Modifier.createZoomModifier(
     painter: Painter,
     contentScale: ContentScale
 ): Modifier = composed {
-    Log.d("ZoomImage", "state: $state")
-    var spaceSize by remember { mutableStateOf(Size.Zero) }
+    // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(spaceSize, painter, contentScale, state.scale) {
-        val boundsSize = computeBounds(
-            spaceSize = spaceSize,
-            contentSize = painter.intrinsicSize,
-            contentScale = contentScale,
-            scale = state.scale
-        )
-        state.updateBounds(boundsSize.x, boundsSize.y)
-    }
     Modifier
         .onGloballyPositioned {
-            spaceSize = it.size.toSize()
+            state.spaceSize = it.size.toSize()
+            val contentSize = it.size.toSize()
+            state.contentSize = contentSize
+            val imageSize = painter.intrinsicSize
+            state.realContentSize =
+                imageSize.times(contentScale.computeScaleFactor(imageSize, contentSize))
         }
         .pointerInput(Unit) {
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
-                    state.animateDoubleTapScale(offset)
+                    state.animateDoubleTapScale(
+                        centroidInContent = state.touchPointToCentroidInContent(offset)
+                    )
                 }
             })
         }
@@ -127,37 +117,9 @@ private fun Modifier.createZoomModifier(
         .graphicsLayer {
             scaleX = state.scale
             scaleY = state.scale
-            translationX = state.translationX
-            translationY = state.translationY
-//            transformOrigin = TransformOrigin(0f, 0f)
+            translationX = state.translation.x
+            translationY = state.translation.y
+            transformOrigin = state.transformOrigin
         }
-}
-
-private fun computeBounds(
-    spaceSize: Size,
-    contentSize: Size,
-    contentScale: ContentScale,
-    scale: Float
-): Offset {
-    val contentScaledSize =
-        contentSize.times(contentScale.computeScaleFactor(contentSize, spaceSize))
-    val contentScaledScaledSize = contentScaledSize.times(scale)
-    val maxX = (contentScaledScaledSize.width - spaceSize.width)
-        .coerceAtLeast(0F) / 2f
-    val maxY = (contentScaledScaledSize.height - spaceSize.height)
-        .coerceAtLeast(0F) / 2f
-    return Offset(maxX, maxY).apply {
-        Log.d(
-            "MyZoomState",
-            """
-                computeBounds. bounds=$this,
-                spaceSize=$spaceSize, 
-                contentScale=${contentScale}, 
-                scale=$scale, 
-                contentSize=$contentSize, 
-                contentScaledSize=$contentScaledSize, 
-                contentScaledScaledSize=$contentScaledScaledSize, 
-            """.trimIndent()
-        )
-    }
+//        .rotate(0f)// todo rotation
 }

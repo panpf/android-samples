@@ -70,4 +70,6 @@ dependencies {
     implementation(libs.panpf.sketch3.extensions)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
+
+    androidTestImplementation(libs.bundles.test)
 }
