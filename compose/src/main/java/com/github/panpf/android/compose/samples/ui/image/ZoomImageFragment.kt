@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -22,7 +21,6 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -33,10 +31,15 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.MyZoomVisibleRectImage
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeValidSizeOfContent
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeValidVisibleRectOfContent
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.toShortString
 import com.github.panpf.sketch.zoom.compose.MyZoomImage
 import com.github.panpf.sketch.zoom.compose.rememberMyZoomState
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -145,7 +148,6 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
 private fun MyZoomImageSample() {
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
-    val checkedState = remember { mutableStateOf(true) }
     Box(modifier = Modifier.fillMaxSize()) {
         val myZoomState = rememberMyZoomState()
         val zoomIn = remember {
@@ -161,65 +163,74 @@ private fun MyZoomImageSample() {
             state = myZoomState,
         )
 
-        Column(
-            Modifier
-                .align(Alignment.BottomStart)
-                .padding(20.dp)
-        ) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                Checkbox(checked = checkedState.value, onCheckedChange = {
-                    checkedState.value = !checkedState.value
-                })
-                IconButton(
-                    modifier = Modifier
-                        .background(colors.tertiary, CircleShape),
-                    onClick = {
-                        coroutineScope.launch {
-                            if (checkedState.value) {
-                                myZoomState.animateDoubleTapScale()
-                            } else {
-                                myZoomState.snapDoubleTapScale()
-                            }
-                        }
+        MyZoomVisibleRectImage(
+            painter = painterResource(id = R.drawable.dog_hor),
+            modifier = Modifier.align(Alignment.BottomStart),
+            state = myZoomState,
+        )
+
+        Column(Modifier.padding(10.dp)) {
+            Text(
+                text = """
+                    scale: ${myZoomState.scale}
+                    translation: ${myZoomState.translation.toShortString()}
+                    visibleRect: ${myZoomState.visibleRectOfContent.toShortString()}
+                    visibleCenter: ${myZoomState.visibleCenterOfContent.toShortString()}
+                    validVisibleRect: ${
+                        computeValidVisibleRectOfContent(
+                            contentSize = myZoomState.contentSize,
+                            validSize = computeValidSizeOfContent(myZoomState.contentSize, myZoomState.realContentSize),
+                            visibleRectOfContent = myZoomState.visibleRectOfContent
+                        ).toShortString()
                     }
-                ) {
-                    if (zoomIn.value) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_zoom_in),
-                            contentDescription = "zoom in",
-                            tint = colors.onTertiary
-                        )
-                    } else {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_zoom_out),
-                            contentDescription = "zoom out",
-                            tint = colors.onTertiary
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            val textStyle = LocalTextStyle.current.copy(
-                shadow = Shadow(
-                    offset = Offset(4f, 4f),
-                    blurRadius = 2f
+                """.trimIndent(),
+                color = Color.White,
+                fontSize = 13.sp,
+                lineHeight = 16.sp,
+                style = LocalTextStyle.current.copy(
+                    shadow = Shadow(offset = Offset(4f, 4f), blurRadius = 2f),
                 )
             )
-            Column {
-                Text(
-                    text = "scale: ${myZoomState.scale}",
-                    color = Color.White,
-                    style = textStyle
+        }
+
+        Row(
+            Modifier
+                .align(Alignment.BottomEnd)
+                .padding(20.dp), horizontalArrangement = Arrangement.End
+        ) {
+            IconButton(
+                modifier = Modifier
+                    .background(colors.tertiary, CircleShape),
+                onClick = {
+                    coroutineScope.launch {
+                        myZoomState.snapDoubleTapScale()
+                    }
+                }
+            ) {
+                val icon =
+                    if (zoomIn.value) R.drawable.ic_add to "snap zoom in" else R.drawable.ic_subtract to "snap zoom out"
+                Icon(
+                    painter = painterResource(id = icon.first),
+                    contentDescription = icon.second,
+                    tint = colors.onTertiary
                 )
-                Text(
-                    text = "translation: ${myZoomState.translation}",
-                    color = Color.White,
-                    style = textStyle
-                )
-                Text(
-                    text = "centerOfContent: ${myZoomState.centerOfContent}",
-                    color = Color.White,
-                    style = textStyle
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            IconButton(
+                modifier = Modifier
+                    .background(colors.tertiary, CircleShape),
+                onClick = {
+                    coroutineScope.launch {
+                        myZoomState.animateDoubleTapScale()
+                    }
+                }
+            ) {
+                val icon =
+                    if (zoomIn.value) R.drawable.ic_zoom_in to "zoom in" else R.drawable.ic_zoom_out to "zoom out"
+                Icon(
+                    painter = painterResource(id = icon.first),
+                    contentDescription = icon.second,
+                    tint = colors.onTertiary
                 )
             }
         }
