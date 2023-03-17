@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.toSize
 import kotlinx.coroutines.launch
 
@@ -64,10 +64,9 @@ private fun Modifier.createZoomModifier(
     // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
     Modifier
-        .onGloballyPositioned {
-            state.spaceSize = it.size.toSize()
-            val contentSize = it.size.toSize()
-            state.contentSize = contentSize
+        .onSizeChanged {
+            state.spaceSize = it.toSize()
+            state.contentSize = it.toSize()
             state.coreSize = painter.intrinsicSize
             state.coreScale = contentScale
         }
@@ -103,14 +102,6 @@ private fun Modifier.createZoomModifier(
                 }
             )
         }
-        .transformable(
-            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
-                coroutineScope.launch {
-                    state.transform(zoomChange, panChange, rotationChange)
-                }
-            },
-            lockRotationOnZoomPan = true
-        )
         .clipToBounds()
         .graphicsLayer {
             scaleX = state.scale
@@ -119,5 +110,13 @@ private fun Modifier.createZoomModifier(
             translationY = state.translation.y
             transformOrigin = state.transformOrigin
         }
+        .transformable(
+            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
+                coroutineScope.launch {
+                    state.transform(zoomChange, panChange, rotationChange)
+                }
+            },
+            lockRotationOnZoomPan = true
+        )
 //        .rotate(0f)// todo rotation
 }
