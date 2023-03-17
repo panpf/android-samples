@@ -4,6 +4,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.isUnspecified
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ScaleFactor
+import androidx.compose.ui.layout.times
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -32,7 +35,7 @@ internal fun computeTranslationBoundsWithTopLeftScale(
 /**
  * 计算 content 当前可见的中心坐标，不会超过 content 的范围
  */
-internal fun computeVisibleCenterOfScaledContent(
+internal fun computeScaledContentVisibleCenter(
     spaceSize: Size,
     contentSize: Size,
     scale: Float,
@@ -77,7 +80,7 @@ internal fun computeContentScaleTranslation(
         y = newScaledContentSize.height * contentScaleCenterPercentage.y
     )
     val currentCenter =
-        computeVisibleCenterOfScaledContent(spaceSize, contentSize, scale, translation)
+        computeScaledContentVisibleCenter(spaceSize, contentSize, scale, translation)
 //    if (newScale > scale) {
     return currentCenter - newScaledContentScaleCenter
 //    } else {
@@ -85,7 +88,7 @@ internal fun computeContentScaleTranslation(
 //    }
 }
 
-internal fun computeVisibleRectOfScaledContentWithTopLeftScale(
+internal fun computeScaledContentVisibleRectWithTopLeftScale(
     spaceSize: Size,
     contentSize: Size,
     scale: Float,
@@ -141,6 +144,15 @@ fun Rect.restoreScale(scale: Float): Rect {
     )
 }
 
+fun Rect.restoreScale(scaleFactor: ScaleFactor): Rect {
+    return Rect(
+        left = (left / scaleFactor.scaleX),
+        top = (top / scaleFactor.scaleY),
+        right = (right / scaleFactor.scaleX),
+        bottom = (bottom / scaleFactor.scaleY)
+    )
+}
+
 fun Offset.toShortString(): String = "(${x.toStringAsFixed(1)}, ${y.toStringAsFixed(1)})"
 
 fun Rect.toShortString() = "(" +
@@ -171,5 +183,83 @@ internal fun Float.toStringAsFixed(digits: Int): String {
         // If we do not have any decimal points, return the int
         // based string representation
         rounded.toInt().toString()
+    }
+}
+
+fun computeScaleFactor(
+    contentSize: Size,
+    coreSize: Size,
+    coreScale: ContentScale = ContentScale.Fit
+): ScaleFactor {
+    if (contentSize.isUnspecified || coreSize.isUnspecified) {
+        return ScaleFactor(scaleX = 1f, scaleY = 1f)
+    }
+    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    return coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
+}
+
+fun computeScaledCoreSize(
+    contentSize: Size,
+    coreSize: Size,
+    coreScale: ContentScale = ContentScale.Fit
+): Size {
+    if (contentSize.isUnspecified || coreSize.isUnspecified) {
+        return Size.Zero
+    }
+    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    val scaleFactor = coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
+    return coreSize.times(scaleFactor)
+}
+
+fun computeScaledCoreRectOfContent(
+    contentSize: Size,
+    coreSize: Size,
+    coreScale: ContentScale = ContentScale.Fit
+): Rect {
+    if (contentSize.isUnspecified || coreSize.isUnspecified) {
+        return Rect.Zero
+    }
+    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    val scaleFactor = coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
+    val scaledCoreSize = coreSize.times(scaleFactor)
+    val left = (contentSize.width - scaledCoreSize.width) / 2
+    val top = (contentSize.height - scaledCoreSize.height) / 2
+    return Rect(
+        left = left,
+        top = top,
+        right = left + scaledCoreSize.width,
+        bottom = top + scaledCoreSize.height
+    )
+}
+
+fun computeScaledCoreVisibleRect(
+    contentSize: Size,
+    visibleRectOfContent: Rect,
+    coreSize: Size,
+    coreScale: ContentScale = ContentScale.Fit,
+): Rect {
+    if (contentSize.isUnspecified || coreSize.isUnspecified) {
+        return Rect.Zero
+    }
+    val coreRectOfContent = computeScaledCoreRectOfContent(
+        contentSize = contentSize,
+        coreSize = coreSize,
+        coreScale = coreScale
+    )
+    return if (
+        visibleRectOfContent.left >= coreRectOfContent.right ||
+        visibleRectOfContent.top >= coreRectOfContent.bottom ||
+        visibleRectOfContent.bottom <= coreRectOfContent.top ||
+        visibleRectOfContent.right <= coreRectOfContent.left
+    ) {
+        Rect(0f, 0f, 0f, 0f)
+    } else {
+        val left = (visibleRectOfContent.left - coreRectOfContent.left).coerceAtLeast(0f)
+        val top = (visibleRectOfContent.top - coreRectOfContent.top).coerceAtLeast(0f)
+        val right = (visibleRectOfContent.right - coreRectOfContent.left).coerceAtLeast(0f)
+            .coerceAtMost(coreRectOfContent.width)
+        val bottom = (visibleRectOfContent.bottom - coreRectOfContent.top).coerceAtLeast(0f)
+            .coerceAtMost(coreRectOfContent.height)
+        Rect(left, top, right, bottom)
     }
 }

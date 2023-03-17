@@ -37,8 +37,6 @@ import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFr
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.MyZoomVisibleRectImage
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeValidSizeOfContent
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeValidVisibleRectOfContent
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.toShortString
 import com.github.panpf.sketch.zoom.compose.MyZoomImage
 import com.github.panpf.sketch.zoom.compose.rememberMyZoomState
@@ -174,15 +172,9 @@ private fun MyZoomImageSample() {
                 text = """
                     scale: ${myZoomState.scale}
                     translation: ${myZoomState.translation.toShortString()}
-                    visibleRect: ${myZoomState.visibleRectOfContent.toShortString()}
-                    visibleCenter: ${myZoomState.visibleCenterOfContent.toShortString()}
-                    validVisibleRect: ${
-                        computeValidVisibleRectOfContent(
-                            contentSize = myZoomState.contentSize,
-                            validSize = computeValidSizeOfContent(myZoomState.contentSize, myZoomState.realContentSize),
-                            visibleRectOfContent = myZoomState.visibleRectOfContent
-                        ).toShortString()
-                    }
+                    visibleRect: ${myZoomState.contentVisibleRect.toShortString()}
+                    visibleCenter: ${myZoomState.contentVisibleCenter.toShortString()}
+                    coreVisibleRect: ${myZoomState.coreVisibleRect.toShortString()}
                 """.trimIndent(),
                 color = Color.White,
                 fontSize = 13.sp,

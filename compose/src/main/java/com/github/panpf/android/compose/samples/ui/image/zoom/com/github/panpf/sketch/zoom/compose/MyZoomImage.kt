@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.times
 import androidx.compose.ui.unit.toSize
 import kotlinx.coroutines.launch
 
@@ -69,9 +68,8 @@ private fun Modifier.createZoomModifier(
             state.spaceSize = it.size.toSize()
             val contentSize = it.size.toSize()
             state.contentSize = contentSize
-            val imageSize = painter.intrinsicSize
-            state.realContentSize =
-                imageSize.times(contentScale.computeScaleFactor(imageSize, contentSize))
+            state.coreSize = painter.intrinsicSize
+            state.coreScale = contentScale
         }
         .pointerInput(Unit) {
             detectTapGestures(onDoubleTap = { offset ->

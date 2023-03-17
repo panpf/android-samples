@@ -18,11 +18,15 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.input.pointer.util.addPointerInputChange
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleRectWithTopLeftScale
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledCoreRectOfContent
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledCoreVisibleRect
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeTranslationBoundsWithTopLeftScale
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeVisibleCenterOfScaledContent
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeVisibleRectOfScaledContentWithTopLeftScale
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.restoreScale
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -49,6 +53,8 @@ class MyZoomState(
             field = value
             if (changed) {
                 updateTranslationBounds("spaceSizeChanged")
+                resetFixedInfos()
+                resetTransformInfos()
             }
         }
     var contentSize: Size = Size.Unspecified
@@ -57,20 +63,33 @@ class MyZoomState(
             field = value
             if (changed) {
                 updateTranslationBounds("contentSizeChanged")
+                resetFixedInfos()
+                resetTransformInfos()
             }
         }
-    var realContentSize: Size = Size.Unspecified
+    var coreSize: Size = Size.Unspecified
         internal set(value) {
             val changed = value != field
             field = value
             if (changed) {
-                updateTranslationBounds("realContentSizeChanged")
+                updateTranslationBounds("coreSizeChanged")
+                resetFixedInfos()
+                resetTransformInfos()
+            }
+        }
+    var coreScale: ContentScale = ContentScale.Fit
+        internal set(value) {
+            val changed = value != field
+            field = value
+            if (changed) {
+                updateTranslationBounds("coreScaleChanged")
+                resetFixedInfos()
+                resetTransformInfos()
             }
         }
 
-    init {
-        require(minScale < maxScale) { "minScale must be < maxScale" }
-    }
+    val zooming: Boolean
+        get() = scale > minScale
 
     /**
      * The current scale value for [MyZoomImage]
@@ -86,28 +105,26 @@ class MyZoomState(
         get() = _translation.value
 
 
-    val visibleCenterOfScaledContent: Offset
-        get() = computeVisibleCenterOfScaledContent(
-            spaceSize = spaceSize,
-            contentSize = contentSize,
-            scale = scale,
-            translation = translation
-        )
-    val visibleCenterOfContent: Offset
-        get() = visibleCenterOfScaledContent / scale
+    var scaledContentVisibleCenter: Offset = Offset.Zero
+        private set
+    var contentVisibleCenter: Offset = Offset.Zero
+        private set
 
-    val visibleRectOfScaledContent: Rect
-        get() = computeVisibleRectOfScaledContentWithTopLeftScale(
-            spaceSize = spaceSize,
-            contentSize = contentSize,
-            scale = scale,
-            translation = translation
-        )
-    val visibleRectOfContent: Rect
-        get() = visibleRectOfScaledContent.restoreScale(scale)
+    var scaledContentVisibleRect: Rect = Rect.Zero
+        private set
+    var contentVisibleRect: Rect = Rect.Zero
+        private set
 
-    internal val zooming: Boolean
-        get() = scale > minScale
+    var coreRectOfContent: Rect = Rect.Zero
+        private set
+    var scaledCoreVisibleRect: Rect = Rect.Zero
+        private set
+    var coreVisibleRect: Rect = Rect.Zero
+        private set
+
+    init {
+        require(minScale < maxScale) { "minScale must be < maxScale" }
+    }
 
     /**
      * Instantly sets scale of [MyZoomImage] to given [scale]
@@ -131,6 +148,7 @@ class MyZoomState(
             _scale.snapTo(newScale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
             updateTranslationBounds("snapScaleTo")
             _translation.snapTo(targetValue = _translation.value + translation)
+            resetTransformInfos()
         }
     }
 
@@ -171,6 +189,7 @@ class MyZoomState(
                 ) {
                     Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
                     updateTranslationBounds("animateScaleToScaling")
+                    resetTransformInfos()
                 }
             }
             launch {
@@ -182,6 +201,7 @@ class MyZoomState(
                     )
                 ) {
                     Log.d("MyZoomState", "animateScaleTo. running. translation=${this.value}")
+                    resetTransformInfos()
                 }
             }
         }
@@ -237,6 +257,7 @@ class MyZoomState(
         coroutineScope {
             launch {
                 _translation.snapTo(newTranslation)
+                resetTransformInfos()
             }
         }
     }
@@ -293,6 +314,7 @@ class MyZoomState(
         launch {
             _translation.animateDecay(Offset(velocity.x, velocity.y), exponentialDecay()) {
                 Log.d("MyZoomState", "fling. running. velocity=$velocity, translation=$translation")
+                resetTransformInfos()
             }
         }
     }
@@ -301,16 +323,61 @@ class MyZoomState(
         "ZoomableState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translation=$translation"
 
     private fun updateTranslationBounds(caller: String) {
+        // todo 使用 coreSize
         val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, scale)
         _translation.updateBounds(
             lowerBound = Offset(bounds.left, bounds.top),
             upperBound = Offset(bounds.right, bounds.bottom)
         )
-//        _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         Log.d(
             "MyZoomState",
             "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$scale"
         )
+    }
+
+    private fun resetFixedInfos() {
+        coreRectOfContent = computeScaledCoreRectOfContent(
+            contentSize = contentSize,
+            coreSize = coreSize,
+            coreScale = coreScale
+        )
+    }
+
+    private fun resetTransformInfos() {
+        scaledContentVisibleCenter = computeScaledContentVisibleCenter(
+            spaceSize = spaceSize,
+            contentSize = contentSize,
+            scale = scale,
+            translation = translation
+        )
+        contentVisibleCenter = scaledContentVisibleCenter / scale
+
+        scaledContentVisibleRect = computeScaledContentVisibleRectWithTopLeftScale(
+            spaceSize = spaceSize,
+            contentSize = contentSize,
+            scale = scale,
+            translation = translation
+        )
+        contentVisibleRect = scaledContentVisibleRect.restoreScale(scale)
+
+        scaledCoreVisibleRect = computeScaledCoreVisibleRect(
+            contentSize = contentSize,
+            visibleRectOfContent = contentVisibleRect,
+            coreSize = coreSize,
+            coreScale = coreScale,
+        )
+
+        val coreScaleFactor = computeScaleFactor(
+            contentSize = contentSize,
+            coreSize = coreSize,
+            coreScale = coreScale
+        )
+        coreVisibleRect = computeScaledCoreVisibleRect(
+            contentSize = contentSize,
+            visibleRectOfContent = contentVisibleRect,
+            coreSize = coreSize,
+            coreScale = coreScale,
+        ).restoreScale(coreScaleFactor)
     }
 
     companion object {

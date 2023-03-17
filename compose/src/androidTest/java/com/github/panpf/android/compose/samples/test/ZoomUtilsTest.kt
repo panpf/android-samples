@@ -4,8 +4,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeTranslationBoundsWithTopLeftScale
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeVisibleCenterOfScaledContent
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -92,7 +92,7 @@ class ZoomUtilsTest {
     }
 
     @Test
-    fun testComputeVisibleCenterOfContent() {
+    fun testComputeScaledContentVisibleCenter() {
         val unspecifiedSize = Size.Unspecified
         val spaceSize = Size(1080f, 1920f)
         val contentSize = Size(1080f, 1920f)
@@ -101,158 +101,158 @@ class ZoomUtilsTest {
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(-2000f, -3000f)",
             Offset(1080f, 1920f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(-2000f, -3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(-2000f, -3000f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(-810f, -1440f)",
             Offset(1080f, 1920f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(-810f, -1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(-810f, -1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(-540f, -960f)",
             Offset(1080f, 1920f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(-540f, -960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(-540f, -960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(-270f, -480f)",
             Offset(810f, 1440f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(-270f, -480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(-270f, -480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(0f, 0f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(0f, 0f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(0f, 0f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(270f, 480f)",
             Offset(270f, 480f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(270f, 480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(540f, 960f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(540f, 960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(540f, 960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(810f, 1440f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(810f, 1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(810f, 1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=1f, translation=Offset(2000f, 3000f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 1f, Offset(2000f, 3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 1f, Offset(2000f, 3000f))
         )
 
         /* scale=0.5f */
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(-2000f, -3000f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(-2000f, -3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(-2000f, -3000f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(-810f, -1440f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(-810f, -1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(-810f, -1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(-540f, -960f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(-540f, -960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(-540f, -960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(-270f, -480f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(-270f, -480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(-270f, -480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(0f, 0f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(0f, 0f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(0f, 0f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(270f, 480f)",
             Offset(270f, 480f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(270f, 480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(540f, 960f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(540f, 960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(540f, 960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(810f, 1440f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(810f, 1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(810f, 1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=0.5f, translation=Offset(2000f, 3000f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 0.5f, Offset(2000f, 3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 0.5f, Offset(2000f, 3000f))
         )
 
         /* scale=2f */
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(-2000f, -3000f)",
             Offset(2160f, 3840f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(-2000f, -3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(-2000f, -3000f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(-810f, -1440f)",
             Offset(1350f, 2400f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(-810f, -1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(-810f, -1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(-540f, -960f)",
             Offset(1080f, 1920f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(-540f, -960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(-540f, -960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(-270f, -480f)",
             Offset(810f, 1440f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(-270f, -480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(-270f, -480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(0f, 0f)",
             Offset(540f, 960f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(0f, 0f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(0f, 0f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(270f, 480f)",
             Offset(270f, 480f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(270f, 480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(540f, 960f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(540f, 960f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(540f, 960f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(810f, 1440f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(810f, 1440f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(810f, 1440f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$contentSize, scale=2f, translation=Offset(2000f, 3000f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, contentSize, 2f, Offset(2000f, 3000f))
+            computeScaledContentVisibleCenter(spaceSize, contentSize, 2f, Offset(2000f, 3000f))
         )
 
         // unspecifiedSize
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$unspecifiedSize, scale=2f, translation=Offset(270f, 480f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(unspecifiedSize, contentSize, 2f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(unspecifiedSize, contentSize, 2f, Offset(270f, 480f))
         )
         Assert.assertEquals(
             "spaceSize=$spaceSize, contentSize=$unspecifiedSize, scale=2f, translation=Offset(270f, 480f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(spaceSize, unspecifiedSize, 2f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(spaceSize, unspecifiedSize, 2f, Offset(270f, 480f))
         )
         Assert.assertEquals(
             "spaceSize=$unspecifiedSize, contentSize=$unspecifiedSize, scale=2f, translation=Offset(270f, 480f)",
             Offset(0f, 0f),
-            computeVisibleCenterOfScaledContent(unspecifiedSize, unspecifiedSize, 2f, Offset(270f, 480f))
+            computeScaledContentVisibleCenter(unspecifiedSize, unspecifiedSize, 2f, Offset(270f, 480f))
         )
     }
 }
