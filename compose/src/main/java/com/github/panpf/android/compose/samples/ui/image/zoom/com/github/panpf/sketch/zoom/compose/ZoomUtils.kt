@@ -79,13 +79,9 @@ internal fun computeContentScaleTranslation(
         x = newScaledContentSize.width * contentScaleCenterPercentage.x,
         y = newScaledContentSize.height * contentScaleCenterPercentage.y
     )
-    val currentCenter =
+    val scaledContentVisibleCenter =
         computeScaledContentVisibleCenter(spaceSize, contentSize, scale, translation)
-//    if (newScale > scale) {
-    return currentCenter - newScaledContentScaleCenter
-//    } else {
-//        return currentCenter * (newScale / scale) - contentNewScaleCenter
-//    }
+    return scaledContentVisibleCenter - newScaledContentScaleCenter
 }
 
 internal fun computeScaledContentVisibleRectWithTopLeftScale(
