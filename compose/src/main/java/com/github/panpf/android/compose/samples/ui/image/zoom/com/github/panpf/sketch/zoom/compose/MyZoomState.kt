@@ -3,9 +3,9 @@ package com.github.panpf.sketch.zoom.compose
 import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationConstants
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.saveable.Saver
@@ -20,6 +20,7 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
+import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
@@ -40,8 +41,8 @@ class MyZoomState(
 ) {
 
     private val velocityTracker = VelocityTracker()
-    private val _translation =
-        Animatable(Offset(initialTranslateX, initialTranslateY), Offset.VectorConverter)
+    private val _translationX = Animatable(initialTranslateX)
+    private val _translationY = Animatable(initialTranslateY)
     private val _scale = Animatable(initialScale)
     // todo rotate
 
@@ -99,10 +100,22 @@ class MyZoomState(
         get() = _scale.value
 
     /**
+     * The current translation x value for [MyZoomImage]
+     */
+    val translationX: Float
+        get() = _translationX.value
+
+    /**
+     * The current translation y value for [MyZoomImage]
+     */
+    val translationY: Float
+        get() = _translationY.value
+
+    /**
      * The current translation value for [MyZoomImage]
      */
     val translation: Offset
-        get() = _translation.value
+        get() = Offset(_translationX.value, _translationY.value)
 
 
     var scaledContentVisibleCenter: Offset = Offset.Zero
@@ -147,7 +160,8 @@ class MyZoomState(
         coroutineScope {
             _scale.snapTo(newScale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
             updateTranslationBounds("snapScaleTo")
-            _translation.snapTo(targetValue = _translation.value + translation)
+            _translationX.snapTo(targetValue = _translationX.value + translation.x)
+            _translationY.snapTo(targetValue = _translationY.value + translation.y)
             resetTransformInfos()
         }
     }
@@ -158,8 +172,7 @@ class MyZoomState(
     suspend fun animateScaleTo(
         newScale: Float,
         centroidInContent: Offset = Offset(0.5f, 0.5f),
-//        animationDurationMillis: Int = AnimationConstants.DefaultDurationMillis,
-        animationDurationMillis: Int = 3000,
+        animationDurationMillis: Int = if (BuildConfig.DEBUG) 3000 else AnimationConstants.DefaultDurationMillis,
         animationEasing: Easing = FastOutSlowInEasing,
         initialVelocity: Float = 0f,
     ) {
@@ -193,14 +206,26 @@ class MyZoomState(
                 }
             }
             launch {
-                _translation.animateTo(
-                    targetValue = _translation.value + translation,
+                _translationX.animateTo(
+                    targetValue = _translationX.value + translation.x,
                     animationSpec = tween(
                         durationMillis = animationDurationMillis,
                         easing = animationEasing
                     )
                 ) {
-                    Log.d("MyZoomState", "animateScaleTo. running. translation=${this.value}")
+                    Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
+                    resetTransformInfos()
+                }
+            }
+            launch {
+                _translationY.animateTo(
+                    targetValue = _translationY.value + translation.y,
+                    animationSpec = tween(
+                        durationMillis = animationDurationMillis,
+                        easing = animationEasing
+                    )
+                ) {
+                    Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
                     resetTransformInfos()
                 }
             }
@@ -248,7 +273,10 @@ class MyZoomState(
     }
 
     internal suspend fun drag(change: PointerInputChange, dragAmount: Offset) {
-        val newTranslation = (_translation.value + dragAmount)
+        val newTranslation = Offset(
+            x = _translationX.value + dragAmount.x,
+            y = _translationY.value + dragAmount.y
+        )
         Log.d(
             "MyZoomState",
             "drag. running. dragAmount=$dragAmount, newTranslation=$newTranslation"
@@ -256,7 +284,8 @@ class MyZoomState(
         velocityTracker.addPointerInputChange(change)
         coroutineScope {
             launch {
-                _translation.snapTo(newTranslation)
+                _translationX.snapTo(newTranslation.x)
+                _translationY.snapTo(newTranslation.y)
                 resetTransformInfos()
             }
         }
@@ -312,8 +341,20 @@ class MyZoomState(
     private suspend fun fling(velocity: Velocity) = coroutineScope {
         Log.i("MyZoomState", "fling. velocity=$velocity, translation=$translation")
         launch {
-            _translation.animateDecay(Offset(velocity.x, velocity.y), exponentialDecay()) {
-                Log.d("MyZoomState", "fling. running. velocity=$velocity, translation=$translation")
+            _translationX.animateDecay(velocity.x, exponentialDecay()) {
+                Log.d(
+                    "MyZoomState",
+                    "fling. running. velocity=$velocity, translationX=${this.value}"
+                )
+                resetTransformInfos()
+            }
+        }
+        launch {
+            _translationY.animateDecay(velocity.y, exponentialDecay()) {
+                Log.d(
+                    "MyZoomState",
+                    "fling. running. velocity=$velocity, translationY=${this.value}"
+                )
                 resetTransformInfos()
             }
         }
@@ -325,10 +366,8 @@ class MyZoomState(
     private fun updateTranslationBounds(caller: String) {
         // todo 使用 coreSize
         val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, scale)
-        _translation.updateBounds(
-            lowerBound = Offset(bounds.left, bounds.top),
-            upperBound = Offset(bounds.right, bounds.bottom)
-        )
+        _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
+        _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         Log.d(
             "MyZoomState",
             "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$scale"
@@ -387,8 +426,8 @@ class MyZoomState(
         val Saver: Saver<MyZoomState, *> = listSaver(
             save = {
                 listOf(
-                    it.translation.x,
-                    it.translation.y,
+                    it.translationX,
+                    it.translationY,
                     it.scale,
                     it.minScale,
                     it.maxScale,

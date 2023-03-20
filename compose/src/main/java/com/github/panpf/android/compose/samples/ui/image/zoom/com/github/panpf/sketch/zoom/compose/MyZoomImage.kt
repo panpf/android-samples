@@ -106,8 +106,8 @@ private fun Modifier.createZoomModifier(
         .graphicsLayer {
             scaleX = state.scale
             scaleY = state.scale
-            translationX = state.translation.x
-            translationY = state.translation.y
+            translationX = state.translationX
+            translationY = state.translationY
             transformOrigin = state.transformOrigin
         }
         .transformable(
