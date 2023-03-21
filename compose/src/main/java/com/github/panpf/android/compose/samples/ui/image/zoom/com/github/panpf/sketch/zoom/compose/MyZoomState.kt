@@ -143,7 +143,15 @@ class MyZoomState(
     /**
      * Instantly sets scale of [MyZoomImage] to given [scale]
      */
-    suspend fun snapScaleTo(newScale: Float, percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
+    suspend fun snapScaleTo(
+        newScale: Float,
+        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)
+    ) {
+        val finalPercentageCentroidOfContent = if (newScale < scale) {
+            Offset(0.5f, 0.5f)
+        } else {
+            percentageCentroidOfContent
+        }
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val translation = computeContentScaleTranslation(
@@ -152,11 +160,11 @@ class MyZoomState(
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
-            contentScaleCenterPercentage = percentageCentroidOfContent
+            contentScaleCenterPercentage = finalPercentageCentroidOfContent
         )
         Log.d(
             "MyZoomState",
-            "snapScaleTo. $scale -> $newScale, percentageCentroidOfContent=$percentageCentroidOfContent, translation=$translation"
+            "snapScaleTo. $scale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
         )
         coroutineScope {
             _scale.snapTo(newScale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
@@ -179,17 +187,22 @@ class MyZoomState(
     ) {
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
+        val finalPercentageCentroidOfContent = if (newScale < scale) {
+            Offset(0.5f, 0.5f)
+        } else {
+            percentageCentroidOfContent
+        }
         val translation = computeContentScaleTranslation(
             scale = scale,
             spaceSize = spaceSize,
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
-            contentScaleCenterPercentage = percentageCentroidOfContent
+            contentScaleCenterPercentage = finalPercentageCentroidOfContent
         )
         Log.i(
             "MyZoomState",
-            "animateScaleTo. $scale -> $newScale, percentageCentroidOfContent=$percentageCentroidOfContent, translation=$translation"
+            "animateScaleTo. $scale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
         )
         coroutineScope {
             launch {
@@ -235,13 +248,19 @@ class MyZoomState(
 
     suspend fun snapDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
         val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i("MyZoomState", "snapDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent")
+        Log.i(
+            "MyZoomState",
+            "snapDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent"
+        )
         snapScaleTo(nextDoubleTapScale, percentageCentroidOfContent)
     }
 
     suspend fun animateDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
         val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i("MyZoomState", "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent")
+        Log.i(
+            "MyZoomState",
+            "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent"
+        )
         animateScaleTo(nextDoubleTapScale(), percentageCentroidOfContent)
     }
 
