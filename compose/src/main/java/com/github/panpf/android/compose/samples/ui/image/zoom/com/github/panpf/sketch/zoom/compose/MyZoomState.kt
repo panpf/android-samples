@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
 import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computePercentageCentroidOfContentByTouchPoint
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleRectWithTopLeftScale
@@ -142,7 +143,7 @@ class MyZoomState(
     /**
      * Instantly sets scale of [MyZoomImage] to given [scale]
      */
-    suspend fun snapScaleTo(newScale: Float, centroidInContent: Offset = Offset(0.5f, 0.5f)) {
+    suspend fun snapScaleTo(newScale: Float, percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val translation = computeContentScaleTranslation(
@@ -151,11 +152,11 @@ class MyZoomState(
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
-            contentScaleCenterPercentage = centroidInContent
+            contentScaleCenterPercentage = percentageCentroidOfContent
         )
         Log.d(
             "MyZoomState",
-            "snapScaleTo. $scale -> $newScale, centroidInContent=$centroidInContent, translation=$translation"
+            "snapScaleTo. $scale -> $newScale, percentageCentroidOfContent=$percentageCentroidOfContent, translation=$translation"
         )
         coroutineScope {
             _scale.snapTo(newScale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
@@ -171,7 +172,7 @@ class MyZoomState(
      */
     suspend fun animateScaleTo(
         newScale: Float,
-        centroidInContent: Offset = Offset(0.5f, 0.5f),
+        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),
         animationDurationMillis: Int = if (BuildConfig.DEBUG) 3000 else AnimationConstants.DefaultDurationMillis,
         animationEasing: Easing = FastOutSlowInEasing,
         initialVelocity: Float = 0f,
@@ -184,11 +185,11 @@ class MyZoomState(
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
-            contentScaleCenterPercentage = centroidInContent
+            contentScaleCenterPercentage = percentageCentroidOfContent
         )
         Log.i(
             "MyZoomState",
-            "animateScaleTo. $scale -> $newScale, centroidInContent=$centroidInContent, translation=$translation"
+            "animateScaleTo. $scale -> $newScale, percentageCentroidOfContent=$percentageCentroidOfContent, translation=$translation"
         )
         coroutineScope {
             launch {
@@ -232,26 +233,26 @@ class MyZoomState(
         }
     }
 
-    suspend fun snapDoubleTapScale(centroidInContent: Offset = Offset(0.5f, 0.5f)) {
+    suspend fun snapDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
         val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i("MyZoomState", "snapDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale")
-        snapScaleTo(nextDoubleTapScale, centroidInContent)
+        Log.i("MyZoomState", "snapDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent")
+        snapScaleTo(nextDoubleTapScale, percentageCentroidOfContent)
     }
 
-    suspend fun animateDoubleTapScale(centroidInContent: Offset = Offset(0.5f, 0.5f)) {
+    suspend fun animateDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
         val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i("MyZoomState", "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale")
-        animateScaleTo(nextDoubleTapScale(), centroidInContent)
+        Log.i("MyZoomState", "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent")
+        animateScaleTo(nextDoubleTapScale(), percentageCentroidOfContent)
     }
 
-    fun touchPointToCentroidInContent(touchPoint: Offset): Offset {
-        val contentSize = contentSize
-        return if (contentSize.isSpecified) {
-            // todo 现在只是默认最小比例的情况下，还得兼容已经有缩放和位移的情况
-            Offset(x = touchPoint.x / contentSize.width, y = touchPoint.y / contentSize.height)
-        } else {
-            Offset.Zero
-        }
+    fun touchPointToPercentageCentroidOfContent(touchPoint: Offset): Offset {
+        return computePercentageCentroidOfContentByTouchPoint(
+            spaceSize = spaceSize,
+            contentSize = contentSize,
+            scale = scale,
+            translation = translation,
+            touchPoint = touchPoint
+        )
     }
 
     fun nextDoubleTapScale(): Float {
@@ -303,8 +304,9 @@ class MyZoomState(
     internal suspend fun transform(
         zoomChange: Float,
         @Suppress("UNUSED_PARAMETER") panChange: Offset,
-        @Suppress("UNUSED_PARAMETER") rotationChange: Float
-    ) = snapScaleTo(scale * zoomChange)
+        @Suppress("UNUSED_PARAMETER") rotationChange: Float,
+        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),   // todo 尚未利用
+    ) = snapScaleTo(scale * zoomChange, percentageCentroidOfContent = Offset(0.5f, 0.5f))
 
 //    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
 //        val lowerBounds = _translationX.lowerBound ?: return false

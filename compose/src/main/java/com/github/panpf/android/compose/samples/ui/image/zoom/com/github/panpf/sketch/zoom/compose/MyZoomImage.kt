@@ -7,6 +7,8 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -22,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.toSize
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.centroid
 import kotlinx.coroutines.launch
 
 @Composable
@@ -63,6 +66,7 @@ private fun Modifier.createZoomModifier(
 ): Modifier = composed {
     // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
+    val centroid = remember { mutableStateOf(Offset.Zero) }
     Modifier
         .onSizeChanged {
             state.spaceSize = it.toSize()
@@ -74,7 +78,7 @@ private fun Modifier.createZoomModifier(
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
                     state.animateDoubleTapScale(
-                        centroidInContent = state.touchPointToCentroidInContent(offset)
+                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(offset)
                     )
                 }
             })
@@ -110,10 +114,18 @@ private fun Modifier.createZoomModifier(
             translationY = state.translationY
             transformOrigin = state.transformOrigin
         }
+        .centroid {
+            centroid.value = it
+        }
         .transformable(
             state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
                 coroutineScope.launch {
-                    state.transform(zoomChange, panChange, rotationChange)
+                    state.transform(
+                        zoomChange = zoomChange,
+                        panChange = panChange,
+                        rotationChange = rotationChange,
+                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(centroid.value)
+                    )
                 }
             },
             lockRotationOnZoomPan = true

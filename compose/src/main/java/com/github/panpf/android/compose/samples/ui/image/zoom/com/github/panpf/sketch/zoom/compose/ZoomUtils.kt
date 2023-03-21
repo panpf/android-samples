@@ -259,3 +259,26 @@ fun computeScaledCoreVisibleRect(
         Rect(left, top, right, bottom)
     }
 }
+
+/**
+ * 将用户的触摸点转换为 content 上的百分比重心
+ */
+fun computePercentageCentroidOfContentByTouchPoint(
+    spaceSize: Size,
+    contentSize: Size,
+    scale: Float,
+    translation: Offset,
+    touchPoint: Offset
+): Offset {
+    if (spaceSize.isUnspecified || contentSize.isUnspecified) {
+        return Offset.Zero
+    }
+    val pointOfContent = Offset(
+        x = touchPoint.x - translation.x,
+        y = touchPoint.y - translation.y,
+    )
+    return Offset(
+        x = ((pointOfContent.x / scale) / contentSize.width).coerceIn(0f, 1f),
+        y = ((pointOfContent.y / scale) / contentSize.height).coerceIn(0f, 1f),
+    )
+}
