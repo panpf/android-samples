@@ -143,6 +143,7 @@ class MyZoomState(
     /**
      * Instantly sets scale of [MyZoomImage] to given [scale]
      */
+    // todo 默认都用触摸位置为中心点
     suspend fun snapScaleTo(
         newScale: Float,
         percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)
@@ -181,66 +182,129 @@ class MyZoomState(
     suspend fun animateScaleTo(
         newScale: Float,
         percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),
+        position: Offset,
         animationDurationMillis: Int = if (BuildConfig.DEBUG) 3000 else AnimationConstants.DefaultDurationMillis,
         animationEasing: Easing = FastOutSlowInEasing,
         initialVelocity: Float = 0f,
     ) {
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
-        val finalPercentageCentroidOfContent = if (newScale < scale) {
+        val currentScale = scale
+        val finalPercentageCentroidOfContent = if (newScale < currentScale) {
             Offset(0.5f, 0.5f)
         } else {
             percentageCentroidOfContent
         }
-        val translation = computeContentScaleTranslation(
-            scale = scale,
-            spaceSize = spaceSize,
-            contentSize = contentSize,
-            translation = translation,
-            newScale = newScale,
-            contentScaleCenterPercentage = finalPercentageCentroidOfContent
-        )
-        Log.i(
-            "MyZoomState",
-            "animateScaleTo. $scale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
-        )
-        coroutineScope {
-            launch {
-                _scale.animateTo(
-                    targetValue = newScale.coerceIn(minScale, maxScale),
-                    animationSpec = tween(
-                        durationMillis = animationDurationMillis,
-                        easing = animationEasing
-                    ),
-                    initialVelocity = initialVelocity,
-                ) {
-                    Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
-                    updateTranslationBounds("animateScaleToScaling")
-                    resetTransformInfos()
+        if (newScale > currentScale) {
+            updateTranslationBounds("animateScaleToScaling", newScale)
+            val translation = computeContentScaleTranslation(
+                scale = currentScale,
+                spaceSize = spaceSize,
+                contentSize = contentSize,
+                translation = translation,
+                newScale = newScale,
+                contentScaleCenterPercentage = finalPercentageCentroidOfContent
+            ).let {
+                it.copy(
+                    x = it.x.coerceIn(_translationX.lowerBound, _translationX.upperBound),
+                    y = it.y.coerceIn(_translationY.lowerBound, _translationY.upperBound),
+                )
+            }
+            //        val translation = computeContentScaleTranslation2(position, translation, currentScale, newScale)
+            Log.i(
+                "MyZoomState",
+                "animateScaleTo. $currentScale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
+            )
+            coroutineScope {
+                launch {
+                    _scale.animateTo(
+                        targetValue = newScale.coerceIn(minScale, maxScale),
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        ),
+                        initialVelocity = initialVelocity,
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        resetTransformInfos()
+                    }
+                }
+                launch {
+                    _translationX.animateTo(
+                        targetValue = _translationX.value + translation.x,
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        )
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
+                        resetTransformInfos()
+                    }
+                }
+                launch {
+                    _translationY.animateTo(
+                        targetValue = _translationY.value + translation.y,
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        )
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
+                        resetTransformInfos()
+                    }
                 }
             }
-            launch {
-                _translationX.animateTo(
-                    targetValue = _translationX.value + translation.x,
-                    animationSpec = tween(
-                        durationMillis = animationDurationMillis,
-                        easing = animationEasing
-                    )
-                ) {
-                    Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
-                    resetTransformInfos()
+        } else {
+            val translation = computeContentScaleTranslation(
+                scale = currentScale,
+                spaceSize = spaceSize,
+                contentSize = contentSize,
+                translation = translation,
+                newScale = newScale,
+                contentScaleCenterPercentage = finalPercentageCentroidOfContent
+            )
+            Log.i(
+                "MyZoomState",
+                "animateScaleTo. $currentScale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
+            )
+            coroutineScope {
+                launch {
+                    _scale.animateTo(
+                        targetValue = newScale.coerceIn(minScale, maxScale),
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        ),
+                        initialVelocity = initialVelocity,
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        updateTranslationBounds("animateScaleToScaling")
+                        resetTransformInfos()
+                    }
                 }
-            }
-            launch {
-                _translationY.animateTo(
-                    targetValue = _translationY.value + translation.y,
-                    animationSpec = tween(
-                        durationMillis = animationDurationMillis,
-                        easing = animationEasing
-                    )
-                ) {
-                    Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
-                    resetTransformInfos()
+                launch {
+                    _translationX.animateTo(
+                        targetValue = _translationX.value + translation.x,
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        )
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
+                        resetTransformInfos()
+                    }
+                }
+                launch {
+                    _translationY.animateTo(
+                        targetValue = _translationY.value + translation.y,
+                        animationSpec = tween(
+                            durationMillis = animationDurationMillis,
+                            easing = animationEasing
+                        )
+                    ) {
+                        Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
+                        resetTransformInfos()
+                    }
                 }
             }
         }
@@ -255,13 +319,15 @@ class MyZoomState(
         snapScaleTo(nextDoubleTapScale, percentageCentroidOfContent)
     }
 
-    suspend fun animateDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
+    suspend fun animateDoubleTapScale(
+        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f), position: Offset
+    ) {
         val nextDoubleTapScale = nextDoubleTapScale()
         Log.i(
             "MyZoomState",
             "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent"
         )
-        animateScaleTo(nextDoubleTapScale(), percentageCentroidOfContent)
+        animateScaleTo(nextDoubleTapScale(), percentageCentroidOfContent, position)
     }
 
     fun touchPointToPercentageCentroidOfContent(touchPoint: Offset): Offset {
@@ -384,14 +450,15 @@ class MyZoomState(
     override fun toString(): String =
         "ZoomableState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translation=$translation"
 
-    private fun updateTranslationBounds(caller: String) {
+    private fun updateTranslationBounds(caller: String, newScale: Float? = null) {
         // todo 使用 coreSize
-        val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, scale)
+        val newScale = newScale ?: scale
+        val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, newScale)
         _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
         _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         Log.d(
             "MyZoomState",
-            "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$scale"
+            "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$newScale"
         )
     }
 

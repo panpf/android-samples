@@ -2,16 +2,16 @@ package com.github.panpf.android.compose.samples.ui.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -20,7 +20,9 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -32,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
@@ -61,7 +64,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
-        val items = listOf("My", "Tlaster", "Birdly", "Photo")
+        val items = listOf("AI", "My", "Tlaster", "Birdly", "Photo")
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -146,6 +149,8 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
 private fun MyZoomImageSample() {
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
+    val animateDoubleTapScaleState = remember { mutableStateOf(true) }
+    val settingsDialogState = remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()) {
         val myZoomState = rememberMyZoomState()
         val zoomIn = remember {
@@ -159,6 +164,7 @@ private fun MyZoomImageSample() {
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             state = myZoomState,
+            animateDoubleTapScale = animateDoubleTapScaleState.value
         )
 
         MyZoomVisibleRectImage(
@@ -188,42 +194,45 @@ private fun MyZoomImageSample() {
         Row(
             Modifier
                 .align(Alignment.BottomEnd)
-                .padding(20.dp), horizontalArrangement = Arrangement.End
+                .padding(20.dp)
+                .background(colors.tertiary.copy(alpha = 0.8f), RoundedCornerShape(50)),
+            horizontalArrangement = Arrangement.End
         ) {
             IconButton(
-                modifier = Modifier
-                    .background(colors.tertiary, CircleShape),
                 onClick = {
                     coroutineScope.launch {
-                        myZoomState.snapDoubleTapScale()
+                        if (animateDoubleTapScaleState.value) {
+                            myZoomState.animateDoubleTapScale(position = Offset.Zero)
+                        } else {
+                            myZoomState.snapDoubleTapScale()
+                        }
                     }
                 }
             ) {
-                val icon =
-                    if (zoomIn.value) R.drawable.ic_add to "snap zoom in" else R.drawable.ic_subtract to "snap zoom out"
+                val icon = if (zoomIn.value)
+                    R.drawable.ic_zoom_in to "zoom in" else R.drawable.ic_zoom_out to "zoom out"
                 Icon(
                     painter = painterResource(id = icon.first),
                     contentDescription = icon.second,
                     tint = colors.onTertiary
                 )
             }
-            Spacer(modifier = Modifier.size(10.dp))
             IconButton(
-                modifier = Modifier
-                    .background(colors.tertiary, CircleShape),
                 onClick = {
-                    coroutineScope.launch {
-                        myZoomState.animateDoubleTapScale()
-                    }
+                    settingsDialogState.value = true
                 }
             ) {
-                val icon =
-                    if (zoomIn.value) R.drawable.ic_zoom_in to "zoom in" else R.drawable.ic_zoom_out to "zoom out"
                 Icon(
-                    painter = painterResource(id = icon.first),
-                    contentDescription = icon.second,
+                    painter = painterResource(id = R.drawable.ic_settings),
+                    contentDescription = "Settings",
                     tint = colors.onTertiary
                 )
+            }
+        }
+
+        if (settingsDialogState.value) {
+            SettingsDialog(animateDoubleTapScaleState) {
+                settingsDialogState.value = false
             }
         }
     }
@@ -233,4 +242,37 @@ private fun MyZoomImageSample() {
 @Composable
 private fun MyZoomImageSamplePreview() {
     MyZoomImageSample()
+}
+
+@Composable
+private fun SettingsDialog(
+    animateDoubleTapScaleState: MutableState<Boolean>,
+    onDismissRequest: () -> Unit
+) {
+    Dialog(onDismissRequest) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .background(Color.White, shape = RoundedCornerShape(20.dp))
+                .padding(vertical = 20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        animateDoubleTapScaleState.value = !animateDoubleTapScaleState.value
+                    }
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "双击缩放动画", modifier = Modifier.weight(1f))
+                Checkbox(
+                    checked = animateDoubleTapScaleState.value,
+                    onCheckedChange = {
+                        animateDoubleTapScaleState.value = !animateDoubleTapScaleState.value
+                    }
+                )
+            }
+        }
+    }
 }

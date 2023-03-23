@@ -84,6 +84,12 @@ internal fun computeContentScaleTranslation(
     return scaledContentVisibleCenter - newScaledContentScaleCenter
 }
 
+fun computeContentScaleTranslation2(position: Offset, translation: Offset, scale: Float, targetScale: Float): Offset{
+    val targetOffsetX = (position.x - (position.x - translation.x) * targetScale / scale)
+    val targetOffsetY = (position.y - (position.y - translation.y) * targetScale / scale)
+    return Offset(targetOffsetX, targetOffsetY)
+}
+
 internal fun computeScaledContentVisibleRectWithTopLeftScale(
     spaceSize: Size,
     contentSize: Size,

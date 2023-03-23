@@ -1,5 +1,6 @@
 package com.github.panpf.sketch.zoom.compose
 
+import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -33,15 +34,21 @@ fun MyZoomImage(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     state: MyZoomState = rememberMyZoomState(),
+    animateDoubleTapScale: Boolean = true,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
-    colorFilter: ColorFilter? = null
+    colorFilter: ColorFilter? = null,
 ) {
     Image(
         painter = painter,
         contentDescription = contentDescription,
-        modifier = modifier.then(Modifier.createZoomModifier(state, painter, contentScale)),
+        modifier = modifier.then(Modifier.createZoomModifier(
+            state = state,
+            painter = painter,
+            contentScale = contentScale,
+            animateDoubleTapScale = animateDoubleTapScale
+        )),
         alignment = alignment,
         contentScale = contentScale,
         alpha = alpha,
@@ -62,8 +69,13 @@ fun rememberMyZoomState(
 private fun Modifier.createZoomModifier(
     state: MyZoomState,
     painter: Painter,
-    contentScale: ContentScale
+    contentScale: ContentScale,
+    animateDoubleTapScale: Boolean = true
 ): Modifier = composed {
+    Log.i(
+        "MyZoomState",
+        "createZoomModifier. animateDoubleTapScale=$animateDoubleTapScale"
+    )
     // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
     val centroid = remember { mutableStateOf(Offset.Zero) }
@@ -74,12 +86,21 @@ private fun Modifier.createZoomModifier(
             state.coreSize = painter.intrinsicSize
             state.coreScale = contentScale
         }
-        .pointerInput(Unit) {
+        .pointerInput(animateDoubleTapScale) {
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
-                    state.animateDoubleTapScale(
-                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(offset)
-                    )
+                    if (animateDoubleTapScale) {
+                        state.animateDoubleTapScale(
+                            percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
+                                offset
+                            ),
+                            offset
+                        )
+                    } else {
+                        state.snapDoubleTapScale(percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
+                            offset
+                        ))
+                    }
                 }
             })
         }
@@ -89,7 +110,7 @@ private fun Modifier.createZoomModifier(
                     state.dragStart()
                 },
                 onDrag = { change, dragAmount ->
-//                    change.consume()
+//                    change.consume() todo
                     coroutineScope.launch {
                         state.drag(change, dragAmount)
                     }
@@ -124,7 +145,9 @@ private fun Modifier.createZoomModifier(
                         zoomChange = zoomChange,
                         panChange = panChange,
                         rotationChange = rotationChange,
-                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(centroid.value)
+                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
+                            centroid.value
+                        )
                     )
                 }
             },
