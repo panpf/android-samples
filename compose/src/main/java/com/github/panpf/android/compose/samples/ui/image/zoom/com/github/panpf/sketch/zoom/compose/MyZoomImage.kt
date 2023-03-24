@@ -43,12 +43,14 @@ fun MyZoomImage(
     Image(
         painter = painter,
         contentDescription = contentDescription,
-        modifier = modifier.then(Modifier.createZoomModifier(
-            state = state,
-            painter = painter,
-            contentScale = contentScale,
-            animateDoubleTapScale = animateDoubleTapScale
-        )),
+        modifier = modifier.then(
+            Modifier.createZoomModifier(
+                state = state,
+                painter = painter,
+                contentScale = contentScale,
+                animateDoubleTapScale = animateDoubleTapScale
+            )
+        ),
         alignment = alignment,
         contentScale = contentScale,
         alpha = alpha,
@@ -60,9 +62,10 @@ fun MyZoomImage(
 fun rememberMyZoomState(
     @FloatRange(from = 0.0) minScale: Float = 1f,
     @FloatRange(from = 0.0) maxScale: Float = 4f,
+    debugMode: Boolean = false
 ): MyZoomState {
     return rememberSaveable(saver = MyZoomState.Saver) {
-        MyZoomState(minScale = minScale, maxScale = maxScale)
+        MyZoomState(minScale = minScale, maxScale = maxScale, debugMode = debugMode)
     }
 }
 
@@ -90,16 +93,9 @@ private fun Modifier.createZoomModifier(
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
                     if (animateDoubleTapScale) {
-                        state.animateDoubleTapScale(
-                            percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
-                                offset
-                            ),
-                            offset
-                        )
+                        state.animateDoubleTapScaleByTouchPosition(offset)
                     } else {
-                        state.snapDoubleTapScale(percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
-                            offset
-                        ))
+                        state.snapDoubleTapScaleByTouchPosition(offset)
                     }
                 }
             })
@@ -145,9 +141,7 @@ private fun Modifier.createZoomModifier(
                         zoomChange = zoomChange,
                         panChange = panChange,
                         rotationChange = rotationChange,
-                        percentageCentroidOfContent = state.touchPointToPercentageCentroidOfContent(
-                            centroid.value
-                        )
+                        touchCentroid = centroid.value
                     )
                 }
             },

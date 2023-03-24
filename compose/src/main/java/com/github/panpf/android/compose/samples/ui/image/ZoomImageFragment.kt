@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
@@ -152,7 +153,7 @@ private fun MyZoomImageSample() {
     val animateDoubleTapScaleState = remember { mutableStateOf(true) }
     val settingsDialogState = remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()) {
-        val myZoomState = rememberMyZoomState()
+        val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
         val zoomIn = remember {
             derivedStateOf {
                 val nextScale = myZoomState.nextDoubleTapScale()
@@ -202,9 +203,9 @@ private fun MyZoomImageSample() {
                 onClick = {
                     coroutineScope.launch {
                         if (animateDoubleTapScaleState.value) {
-                            myZoomState.animateDoubleTapScale(position = Offset.Zero)
+                            myZoomState.animateDoubleTapScaleByRelativelyCentroid()
                         } else {
-                            myZoomState.snapDoubleTapScale()
+                            myZoomState.snapDoubleTapScaleByRelativelyCentroid()
                         }
                     }
                 }

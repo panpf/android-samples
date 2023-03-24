@@ -3,12 +3,12 @@ package com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.isSpecified
 import androidx.compose.ui.geometry.isUnspecified
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.ScaleFactor
 import androidx.compose.ui.layout.times
 import kotlin.math.absoluteValue
-import kotlin.math.pow
 
 /**
  * 计算以左上角为缩放中心时位移的边界
@@ -67,27 +67,21 @@ internal fun computeContentScaleTranslation(
     spaceSize: Size,
     contentSize: Size,
     translation: Offset,
-    scale: Float,
+    currentScale: Float,
     newScale: Float,
-    contentScaleCenterPercentage: Offset
+    relativelyCentroid: RelativelyCentroid
 ): Offset {
     if (spaceSize.isUnspecified || contentSize.isUnspecified) {
         return Offset.Zero
     }
     val newScaledContentSize = contentSize.times(newScale)
     val newScaledContentScaleCenter = Offset(
-        x = newScaledContentSize.width * contentScaleCenterPercentage.x,
-        y = newScaledContentSize.height * contentScaleCenterPercentage.y
+        x = newScaledContentSize.width * relativelyCentroid.x,
+        y = newScaledContentSize.height * relativelyCentroid.y
     )
     val scaledContentVisibleCenter =
-        computeScaledContentVisibleCenter(spaceSize, contentSize, scale, translation)
+        computeScaledContentVisibleCenter(spaceSize, contentSize, currentScale, translation)
     return scaledContentVisibleCenter - newScaledContentScaleCenter
-}
-
-fun computeContentScaleTranslation2(position: Offset, translation: Offset, scale: Float, targetScale: Float): Offset{
-    val targetOffsetX = (position.x - (position.x - translation.x) * targetScale / scale)
-    val targetOffsetY = (position.y - (position.y - translation.y) * targetScale / scale)
-    return Offset(targetOffsetX, targetOffsetY)
 }
 
 internal fun computeScaledContentVisibleRectWithTopLeftScale(
@@ -155,38 +149,10 @@ fun Rect.restoreScale(scaleFactor: ScaleFactor): Rect {
     )
 }
 
-fun Offset.toShortString(): String = "(${x.toStringAsFixed(1)}, ${y.toStringAsFixed(1)})"
+fun Offset.toShortString(): String =
+    toString().replace(if (isSpecified) "Offset" else "Offset.", "")
 
-fun Rect.toShortString() = "(" +
-        "${left.toStringAsFixed(1)}, " +
-        "${top.toStringAsFixed(1)}, " +
-        "${right.toStringAsFixed(1)}, " +
-        "${bottom.toStringAsFixed(1)})"
-
-// File of internal utility methods used for the geometry library
-internal fun Float.toStringAsFixed(digits: Int): String {
-    val clampedDigits: Int = kotlin.math.max(digits, 0) // Accept positive numbers and 0 only
-    val pow = 10f.pow(clampedDigits)
-    val shifted = this * pow // shift the given value by the corresponding power of 10
-    val decimal = shifted - shifted.toInt() // obtain the decimal of the shifted value
-    // Manually round up if the decimal value is greater than or equal to 0.5f.
-    // because kotlin.math.round(0.5f) rounds down
-    val roundedShifted = if (decimal >= 0.5f) {
-        shifted.toInt() + 1
-    } else {
-        shifted.toInt()
-    }
-
-    val rounded = roundedShifted / pow // divide off the corresponding power of 10 to shift back
-    return if (clampedDigits > 0) {
-        // If we have any decimal points, convert the float to a string
-        rounded.toString()
-    } else {
-        // If we do not have any decimal points, return the int
-        // based string representation
-        rounded.toInt().toString()
-    }
-}
+fun Rect.toShortString() = toString().replace("Rect.fromLTRB", "")
 
 fun computeScaleFactor(
     contentSize: Size,
@@ -269,22 +235,22 @@ fun computeScaledCoreVisibleRect(
 /**
  * 将用户的触摸点转换为 content 上的百分比重心
  */
-fun computePercentageCentroidOfContentByTouchPoint(
+fun computeRelativelyCentroidOfContentByTouchPosition(
     spaceSize: Size,
     contentSize: Size,
     scale: Float,
     translation: Offset,
-    touchPoint: Offset
-): Offset {
+    touchPosition: Offset
+): RelativelyCentroid {
     if (spaceSize.isUnspecified || contentSize.isUnspecified) {
-        return Offset.Zero
+        return RelativelyCentroid.Zero
     }
-    val pointOfContent = Offset(
-        x = touchPoint.x - translation.x,
-        y = touchPoint.y - translation.y,
+    val touchPositionOfContent = Offset(
+        x = touchPosition.x - translation.x,
+        y = touchPosition.y - translation.y,
     )
-    return Offset(
-        x = ((pointOfContent.x / scale) / contentSize.width).coerceIn(0f, 1f),
-        y = ((pointOfContent.y / scale) / contentSize.height).coerceIn(0f, 1f),
+    return RelativelyCentroid(
+        x = ((touchPositionOfContent.x / scale) / contentSize.width).coerceIn(0f, 1f),
+        y = ((touchPositionOfContent.y / scale) / contentSize.height).coerceIn(0f, 1f),
     )
 }

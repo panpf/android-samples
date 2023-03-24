@@ -8,7 +8,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -19,8 +19,9 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.RelativelyCentroid
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computePercentageCentroidOfContentByTouchPoint
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeRelativelyCentroidOfContentByTouchPosition
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleRectWithTopLeftScale
@@ -37,6 +38,7 @@ class MyZoomState(
     @FloatRange(from = 0.0) initialTranslateX: Float = 0f,
     @FloatRange(from = 0.0) initialTranslateY: Float = 0f,
     @FloatRange(from = 0.0) initialScale: Float = minScale,
+    val debugMode: Boolean = false
 ) {
 
     private val velocityTracker = VelocityTracker()
@@ -138,49 +140,68 @@ class MyZoomState(
         require(minScale < maxScale) { "minScale must be < maxScale" }
     }
 
-    /**
-     * Instantly sets scale of [MyZoomImage] to given [scale]
-     */
-    // todo 默认都用触摸位置为中心点
-    suspend fun snapScaleTo(
+    suspend fun snapScaleToByRelativelyCentroid(
         newScale: Float,
-        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)
+        relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
     ) {
-        val finalPercentageCentroidOfContent = if (newScale < scale) {
-            Offset(0.5f, 0.5f)
-        } else {
-            percentageCentroidOfContent
-        }
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
-        val translation = computeContentScaleTranslation(
-            scale = scale,
+        val currentScale = scale
+        val finalRelativelyCentroid = if (newScale < currentScale)
+            RelativelyCentroid(0.5f, 0.5f) else relativelyCentroid
+        val scaleTranslation = computeContentScaleTranslation(
+            currentScale = currentScale,
             spaceSize = spaceSize,
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
-            contentScaleCenterPercentage = finalPercentageCentroidOfContent
+            relativelyCentroid = finalRelativelyCentroid
         )
-        Log.d(
-            "MyZoomState",
-            "snapScaleTo. $scale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
-        )
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "snapScaleToByRelativelyCentroid. $currentScale -> $newScale, finalRelativelyCentroid=$finalRelativelyCentroid, scaleTranslation=$scaleTranslation"
+            )
+        }
         coroutineScope {
             _scale.snapTo(newScale.coerceIn(minimumValue = minScale, maximumValue = maxScale))
             updateTranslationBounds("snapScaleTo")
-            _translationX.snapTo(targetValue = _translationX.value + translation.x)
-            _translationY.snapTo(targetValue = _translationY.value + translation.y)
+            _translationX.snapTo(targetValue = _translationX.value + scaleTranslation.x)
+            _translationY.snapTo(targetValue = _translationY.value + scaleTranslation.y)
             resetTransformInfos()
         }
     }
 
     /**
+     * Instantly sets scale of [MyZoomImage] to given [scale]
+     */
+    suspend fun snapScaleToByTouchPosition(newScale: Float, touchPosition: Offset) {
+        val currentScale = scale
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "snapScaleToByTouchPosition. $currentScale -> $newScale, touchPosition=$touchPosition"
+            )
+        }
+        val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
+            spaceSize = spaceSize,
+            contentSize = contentSize,
+            scale = scale,
+            translation = translation,
+            touchPosition = touchPosition
+        )
+        snapScaleToByRelativelyCentroid(
+            newScale = newScale,
+            relativelyCentroid = relativelyCentroid
+        )
+    }
+
+    /**
      * Animates scale of [MyZoomImage] to given [newScale]
      */
-    suspend fun animateScaleTo(
+    suspend fun animateScaleToByRelativelyCentroid(
         newScale: Float,
-        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),
-        position: Offset,
+        relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f),
         animationDurationMillis: Int = 500,
         animationEasing: Easing = FastOutSlowInEasing,
         initialVelocity: Float = 0f,
@@ -188,31 +209,29 @@ class MyZoomState(
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val currentScale = scale
-        val finalPercentageCentroidOfContent = if (newScale < currentScale) {
-            Offset(0.5f, 0.5f)
-        } else {
-            percentageCentroidOfContent
-        }
+        val finalRelativelyCentroid = if (newScale < currentScale)
+            RelativelyCentroid(0.5f, 0.5f) else relativelyCentroid
         if (newScale > currentScale) {
             updateTranslationBounds("animateScaleToScaling", newScale)
-            val translation = computeContentScaleTranslation(
-                scale = currentScale,
+            val scaleTranslation = computeContentScaleTranslation(
+                currentScale = currentScale,
                 spaceSize = spaceSize,
                 contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
-                contentScaleCenterPercentage = finalPercentageCentroidOfContent
+                relativelyCentroid = finalRelativelyCentroid
             ).let {
                 it.copy(
                     x = it.x.coerceIn(_translationX.lowerBound, _translationX.upperBound),
                     y = it.y.coerceIn(_translationY.lowerBound, _translationY.upperBound),
                 )
             }
-            //        val translation = computeContentScaleTranslation2(position, translation, currentScale, newScale)
-            Log.i(
-                "MyZoomState",
-                "animateScaleTo. $currentScale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
-            )
+            if (debugMode) {
+                Log.i(
+                    "MyZoomState",
+                    "animateScaleTo. $currentScale -> $newScale, finalRelativelyCentroid=$finalRelativelyCentroid, scaleTranslation=$scaleTranslation"
+                )
+            }
             coroutineScope {
                 launch {
                     _scale.animateTo(
@@ -223,48 +242,62 @@ class MyZoomState(
                         ),
                         initialVelocity = initialVelocity,
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        if (debugMode) {
+                            Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        }
                         resetTransformInfos()
                     }
                 }
                 launch {
                     _translationX.animateTo(
-                        targetValue = _translationX.value + translation.x,
+                        targetValue = _translationX.value + scaleTranslation.x,
                         animationSpec = tween(
                             durationMillis = animationDurationMillis,
                             easing = animationEasing
                         )
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
+                        if (debugMode) {
+                            Log.d(
+                                "MyZoomState",
+                                "animateScaleTo. running. translationX=${this.value}"
+                            )
+                        }
                         resetTransformInfos()
                     }
                 }
                 launch {
                     _translationY.animateTo(
-                        targetValue = _translationY.value + translation.y,
+                        targetValue = _translationY.value + scaleTranslation.y,
                         animationSpec = tween(
                             durationMillis = animationDurationMillis,
                             easing = animationEasing
                         )
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
+                        if (debugMode) {
+                            Log.d(
+                                "MyZoomState",
+                                "animateScaleTo. running. translationY=${this.value}"
+                            )
+                        }
                         resetTransformInfos()
                     }
                 }
             }
         } else {
             val translation = computeContentScaleTranslation(
-                scale = currentScale,
+                currentScale = currentScale,
                 spaceSize = spaceSize,
                 contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
-                contentScaleCenterPercentage = finalPercentageCentroidOfContent
+                relativelyCentroid = finalRelativelyCentroid
             )
-            Log.i(
-                "MyZoomState",
-                "animateScaleTo. $currentScale -> $newScale, percentageCentroidOfContent=$finalPercentageCentroidOfContent, translation=$translation"
-            )
+            if (debugMode) {
+                Log.i(
+                    "MyZoomState",
+                    "animateScaleTo. $currentScale -> $newScale, percentageCentroidOfContent=$finalRelativelyCentroid, translation=$translation"
+                )
+            }
             coroutineScope {
                 launch {
                     _scale.animateTo(
@@ -275,7 +308,9 @@ class MyZoomState(
                         ),
                         initialVelocity = initialVelocity,
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        if (debugMode) {
+                            Log.d("MyZoomState", "animateScaleTo. running. scale=${this.value}")
+                        }
                         updateTranslationBounds("animateScaleToScaling")
                         resetTransformInfos()
                     }
@@ -288,7 +323,12 @@ class MyZoomState(
                             easing = animationEasing
                         )
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. translationX=${this.value}")
+                        if (debugMode) {
+                            Log.d(
+                                "MyZoomState",
+                                "animateScaleTo. running. translationX=${this.value}"
+                            )
+                        }
                         resetTransformInfos()
                     }
                 }
@@ -300,7 +340,12 @@ class MyZoomState(
                             easing = animationEasing
                         )
                     ) {
-                        Log.d("MyZoomState", "animateScaleTo. running. translationY=${this.value}")
+                        if (debugMode) {
+                            Log.d(
+                                "MyZoomState",
+                                "animateScaleTo. running. translationY=${this.value}"
+                            )
+                        }
                         resetTransformInfos()
                     }
                 }
@@ -308,33 +353,107 @@ class MyZoomState(
         }
     }
 
-    suspend fun snapDoubleTapScale(percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f)) {
-        val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i(
-            "MyZoomState",
-            "snapDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent"
-        )
-        snapScaleTo(nextDoubleTapScale, percentageCentroidOfContent)
-    }
-
-    suspend fun animateDoubleTapScale(
-        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f), position: Offset
+    /**
+     * Animates scale of [MyZoomImage] to given [newScale]
+     */
+    suspend fun animateScaleToByTouchPosition(
+        newScale: Float,
+        touchPosition: Offset,
+        animationDurationMillis: Int = 500,
+        animationEasing: Easing = FastOutSlowInEasing,
+        initialVelocity: Float = 0f,
     ) {
-        val nextDoubleTapScale = nextDoubleTapScale()
-        Log.i(
-            "MyZoomState",
-            "animateDoubleTapScale. nextDoubleTapScale=$nextDoubleTapScale, percentageCentroidOfContent=$percentageCentroidOfContent"
-        )
-        animateScaleTo(nextDoubleTapScale(), percentageCentroidOfContent, position)
-    }
-
-    fun touchPointToPercentageCentroidOfContent(touchPoint: Offset): Offset {
-        return computePercentageCentroidOfContentByTouchPoint(
+        val currentScale = scale
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "animateScaleToByTouchPosition. $currentScale -> $newScale, touchPosition=$touchPosition"
+            )
+        }
+        val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
             spaceSize = spaceSize,
             contentSize = contentSize,
             scale = scale,
             translation = translation,
-            touchPoint = touchPoint
+            touchPosition = touchPosition
+        )
+        animateScaleToByRelativelyCentroid(
+            newScale = newScale,
+            relativelyCentroid = relativelyCentroid,
+            animationDurationMillis = animationDurationMillis,
+            animationEasing = animationEasing,
+            initialVelocity = initialVelocity,
+        )
+    }
+
+    suspend fun snapDoubleTapScaleByRelativelyCentroid(
+        relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
+    ) {
+        val nextDoubleTapScale = nextDoubleTapScale()
+        if (debugMode) {
+            Log.i(
+                "MyZoomState",
+                "snapDoubleTapScaleByRelativelyCentroid. nextDoubleTapScale=$nextDoubleTapScale, relativelyCentroid=$relativelyCentroid"
+            )
+        }
+        snapScaleToByRelativelyCentroid(
+            newScale = nextDoubleTapScale,
+            relativelyCentroid = relativelyCentroid
+        )
+    }
+
+    suspend fun snapDoubleTapScaleByTouchPosition(touchPosition: Offset) {
+        val nextDoubleTapScale = nextDoubleTapScale()
+        if (debugMode) {
+            Log.i(
+                "MyZoomState",
+                "snapDoubleTapScaleByTouchPosition. nextDoubleTapScale=$nextDoubleTapScale, touchPosition=$touchPosition"
+            )
+        }
+        snapScaleToByTouchPosition(newScale = nextDoubleTapScale, touchPosition = touchPosition)
+    }
+
+    suspend fun animateDoubleTapScaleByRelativelyCentroid(
+        relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f),
+        animationDurationMillis: Int = 500,
+        animationEasing: Easing = FastOutSlowInEasing,
+        initialVelocity: Float = 0f,
+    ) {
+        val nextDoubleTapScale = nextDoubleTapScale()
+        if (debugMode) {
+            Log.i(
+                "MyZoomState",
+                "animateDoubleTapScaleByRelativelyCentroid. nextDoubleTapScale=$nextDoubleTapScale, relativelyCentroid=$relativelyCentroid"
+            )
+        }
+        animateScaleToByRelativelyCentroid(
+            newScale = nextDoubleTapScale,
+            relativelyCentroid = relativelyCentroid,
+            animationDurationMillis = animationDurationMillis,
+            animationEasing = animationEasing,
+            initialVelocity = initialVelocity,
+        )
+    }
+
+    suspend fun animateDoubleTapScaleByTouchPosition(
+        touchPosition: Offset,
+        animationDurationMillis: Int = 500,
+        animationEasing: Easing = FastOutSlowInEasing,
+        initialVelocity: Float = 0f,
+    ) {
+        val nextDoubleTapScale = nextDoubleTapScale()
+        if (debugMode) {
+            Log.i(
+                "MyZoomState",
+                "animateDoubleTapScaleByTouchPosition. nextDoubleTapScale=$nextDoubleTapScale, touchPosition=$touchPosition"
+            )
+        }
+        animateScaleToByTouchPosition(
+            newScale = nextDoubleTapScale,
+            touchPosition = touchPosition,
+            animationDurationMillis = animationDurationMillis,
+            animationEasing = animationEasing,
+            initialVelocity = initialVelocity,
         )
     }
 
@@ -352,7 +471,9 @@ class MyZoomState(
     }
 
     internal fun dragStart() {
-        Log.i("MyZoomState", "drag. start. resetTracking")
+        if (debugMode) {
+            Log.i("MyZoomState", "drag. start. resetTracking")
+        }
         velocityTracker.resetTracking()
     }
 
@@ -361,10 +482,12 @@ class MyZoomState(
             x = _translationX.value + dragAmount.x,
             y = _translationY.value + dragAmount.y
         )
-        Log.d(
-            "MyZoomState",
-            "drag. running. dragAmount=$dragAmount, newTranslation=$newTranslation"
-        )
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "drag. running. dragAmount=$dragAmount, newTranslation=$newTranslation"
+            )
+        }
         velocityTracker.addPointerInputChange(change)
         coroutineScope {
             launch {
@@ -376,7 +499,9 @@ class MyZoomState(
     }
 
     internal suspend fun dragEnd() {
-        Log.i("MyZoomState", "drag. end")
+        if (debugMode) {
+            Log.i("MyZoomState", "drag. end")
+        }
         fling(velocityTracker.calculateVelocity())
     }
 
@@ -388,8 +513,11 @@ class MyZoomState(
         zoomChange: Float,
         @Suppress("UNUSED_PARAMETER") panChange: Offset,
         @Suppress("UNUSED_PARAMETER") rotationChange: Float,
-        percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),   // todo 尚未利用
-    ) = snapScaleTo(scale * zoomChange, percentageCentroidOfContent = Offset(0.5f, 0.5f))
+        touchCentroid: Offset,   // todo 尚未利用
+    ) = snapScaleToByRelativelyCentroid(
+        scale * zoomChange,
+        relativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
+    )
 
 //    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
 //        val lowerBounds = _translationX.lowerBound ?: return false
@@ -424,29 +552,35 @@ class MyZoomState(
 //    }
 
     private suspend fun fling(velocity: Velocity) = coroutineScope {
-        Log.i("MyZoomState", "fling. velocity=$velocity, translation=$translation")
+        if (debugMode) {
+            Log.i("MyZoomState", "fling. velocity=$velocity, translation=$translation")
+        }
         launch {
             _translationX.animateDecay(velocity.x, exponentialDecay()) {
-                Log.d(
-                    "MyZoomState",
-                    "fling. running. velocity=$velocity, translationX=${this.value}"
-                )
+                if (debugMode) {
+                    Log.d(
+                        "MyZoomState",
+                        "fling. running. velocity=$velocity, translationX=${this.value}"
+                    )
+                }
                 resetTransformInfos()
             }
         }
         launch {
             _translationY.animateDecay(velocity.y, exponentialDecay()) {
-                Log.d(
-                    "MyZoomState",
-                    "fling. running. velocity=$velocity, translationY=${this.value}"
-                )
+                if (debugMode) {
+                    Log.d(
+                        "MyZoomState",
+                        "fling. running. velocity=$velocity, translationY=${this.value}"
+                    )
+                }
                 resetTransformInfos()
             }
         }
     }
 
     override fun toString(): String =
-        "ZoomableState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translation=$translation"
+        "MyZoomState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translation=$translation"
 
     private fun updateTranslationBounds(caller: String, newScale: Float? = null) {
         // todo 使用 coreSize
@@ -454,10 +588,12 @@ class MyZoomState(
         val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, newScale)
         _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
         _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
-        Log.d(
-            "MyZoomState",
-            "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$newScale"
-        )
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$newScale"
+            )
+        }
     }
 
     private fun resetFixedInfos() {
@@ -509,23 +645,25 @@ class MyZoomState(
         /**
          * The default [Saver] implementation for [MyZoomState].
          */
-        val Saver: Saver<MyZoomState, *> = listSaver(
+        val Saver: Saver<MyZoomState, *> = mapSaver(
             save = {
-                listOf(
-                    it.translationX,
-                    it.translationY,
-                    it.scale,
-                    it.minScale,
-                    it.maxScale,
+                mapOf(
+                    "translationX" to it.translationX,
+                    "translationY" to it.translationY,
+                    "scale" to it.scale,
+                    "minScale" to it.minScale,
+                    "maxScale" to it.maxScale,
+                    "debugMode" to it.debugMode,
                 )
             },
             restore = {
                 MyZoomState(
-                    initialTranslateX = it[0],
-                    initialTranslateY = it[1],
-                    initialScale = it[2],
-                    minScale = it[3],
-                    maxScale = it[4],
+                    initialTranslateX = it["translationX"] as Float,
+                    initialTranslateY = it["translationY"] as Float,
+                    initialScale = it["scale"] as Float,
+                    minScale = it["minScale"] as Float,
+                    maxScale = it["maxScale"] as Float,
+                    debugMode = it["debugMode"] as Boolean,
                 )
             }
         )

@@ -4,7 +4,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computePercentageCentroidOfContentByTouchPoint
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeRelativelyCentroidOfContentByTouchPosition
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeTranslationBoundsWithTopLeftScale
 import org.junit.Assert
@@ -263,7 +263,7 @@ class ZoomUtilsTest {
     }
 
     @Test
-    fun testComputePercentageCentroidOfContentByTouchPoint() {
+    fun testComputeRelativelyCentroidOfContentByTouchPosition() {
         var spaceSize = Size(1080f, 1920f)
         var contentSize = Size(1080f, 1920f)
 
@@ -274,16 +274,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0.5f, 0.2f),
             Offset(864f, 960f) to Offset(0.8f, 0.5f),
             Offset(540f, 1536f) to Offset(0.5f, 0.8f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -295,16 +295,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0f, 0f),
             Offset(864f, 960f) to Offset(0.3f, 0f),
             Offset(540f, 1536f) to Offset(0f, 0.3f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -316,16 +316,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(1f, 0.7f),
             Offset(864f, 960f) to Offset(1f, 1f),
             Offset(540f, 1536f) to Offset(1f, 1f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -337,16 +337,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0.25f, 0.1f),
             Offset(864f, 960f) to Offset(0.4f, 0.25f),
             Offset(540f, 1536f) to Offset(0.25f, 0.4f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -358,16 +358,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0f, 0f),
             Offset(864f, 960f) to Offset(0.15f, 0f),
             Offset(540f, 1536f) to Offset(0f, 0.15f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -379,16 +379,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0.5f, 0.35f),
             Offset(864f, 960f) to Offset(0.65f, 0.5f),
             Offset(540f, 1536f) to Offset(0.5f, 0.65f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -402,16 +402,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0f, 0f),
             Offset(864f, 960f) to Offset(0f, 0f),
             Offset(540f, 1536f) to Offset(0f, 0f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
@@ -425,16 +425,16 @@ class ZoomUtilsTest {
             Offset(540f, 384f) to Offset(0f, 0f),
             Offset(864f, 960f) to Offset(0f, 0f),
             Offset(540f, 1536f) to Offset(0f, 0f)
-        ).forEach { (touchPoint, targetPercentageCentroidOfContent) ->
+        ).forEach { (touchPosition, targetPercentageCentroidOfContent) ->
             Assert.assertEquals(
-                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPoint=$touchPoint",
+                "spaceSize=$spaceSize, contentSize=$contentSize, scale=$scale, translation=$translation, touchPosition=$touchPosition",
                 targetPercentageCentroidOfContent,
-                computePercentageCentroidOfContentByTouchPoint(
+                computeRelativelyCentroidOfContentByTouchPosition(
                     spaceSize,
                     contentSize,
                     scale,
                     translation,
-                    touchPoint
+                    touchPosition
                 )
             )
         }
