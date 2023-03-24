@@ -265,7 +265,7 @@ private fun SettingsDialog(
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "双击缩放动画", modifier = Modifier.weight(1f))
+                Text(text = "缩放动画", modifier = Modifier.weight(1f))
                 Checkbox(
                     checked = animateDoubleTapScaleState.value,
                     onCheckedChange = {

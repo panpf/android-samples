@@ -3,7 +3,6 @@ package com.github.panpf.sketch.zoom.compose
 import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationConstants
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.exponentialDecay
@@ -20,7 +19,6 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
-import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computePercentageCentroidOfContentByTouchPoint
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
@@ -183,7 +181,7 @@ class MyZoomState(
         newScale: Float,
         percentageCentroidOfContent: Offset = Offset(0.5f, 0.5f),
         position: Offset,
-        animationDurationMillis: Int = if (BuildConfig.DEBUG) 3000 else AnimationConstants.DefaultDurationMillis,
+        animationDurationMillis: Int = 500,
         animationEasing: Easing = FastOutSlowInEasing,
         initialVelocity: Float = 0f,
     ) {
