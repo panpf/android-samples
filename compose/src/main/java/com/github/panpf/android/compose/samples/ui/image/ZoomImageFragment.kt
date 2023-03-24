@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
@@ -41,6 +43,7 @@ import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFr
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.MyZoomVisibleRectImage
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.ScaleAnimationConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.toShortString
 import com.github.panpf.sketch.zoom.compose.MyZoomImage
 import com.github.panpf.sketch.zoom.compose.rememberMyZoomState
@@ -151,6 +154,7 @@ private fun MyZoomImageSample() {
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
     val animateDoubleTapScaleState = remember { mutableStateOf(true) }
+    val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()) {
         val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
@@ -165,7 +169,10 @@ private fun MyZoomImageSample() {
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             state = myZoomState,
-            animateDoubleTapScale = animateDoubleTapScaleState.value
+            scaleAnimationConfig = ScaleAnimationConfig(
+                animateDoubleTapScale = animateDoubleTapScaleState.value,
+                animationDurationMillis = if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis
+            ),
         )
 
         MyZoomVisibleRectImage(
@@ -232,7 +239,7 @@ private fun MyZoomImageSample() {
         }
 
         if (settingsDialogState.value) {
-            SettingsDialog(animateDoubleTapScaleState) {
+            SettingsDialog(animateDoubleTapScaleState, slowerScaleAnimationState) {
                 settingsDialogState.value = false
             }
         }
@@ -248,6 +255,7 @@ private fun MyZoomImageSamplePreview() {
 @Composable
 private fun SettingsDialog(
     animateDoubleTapScaleState: MutableState<Boolean>,
+    slowerScaleAnimationState: MutableState<Boolean>,
     onDismissRequest: () -> Unit
 ) {
     Dialog(onDismissRequest) {
@@ -266,11 +274,29 @@ private fun SettingsDialog(
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "缩放动画", modifier = Modifier.weight(1f))
+                Text(text = "开启缩放动画", modifier = Modifier.weight(1f))
                 Checkbox(
                     checked = animateDoubleTapScaleState.value,
                     onCheckedChange = {
                         animateDoubleTapScaleState.value = !animateDoubleTapScaleState.value
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        slowerScaleAnimationState.value = !slowerScaleAnimationState.value
+                    }
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "更慢的缩放动画", modifier = Modifier.weight(1f))
+                Checkbox(
+                    checked = slowerScaleAnimationState.value,
+                    onCheckedChange = {
+                        slowerScaleAnimationState.value = !slowerScaleAnimationState.value
                     }
                 )
             }

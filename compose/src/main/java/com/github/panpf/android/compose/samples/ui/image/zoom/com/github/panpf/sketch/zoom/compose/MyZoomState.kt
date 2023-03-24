@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.saveable.Saver
@@ -20,6 +19,7 @@ import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Velocity
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.RelativelyCentroid
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.ScaleAnimationConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeContentScaleTranslation
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeRelativelyCentroidOfContentByTouchPosition
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaleFactor
@@ -202,9 +202,9 @@ class MyZoomState(
     suspend fun animateScaleToByRelativelyCentroid(
         newScale: Float,
         relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f),
-        animationDurationMillis: Int = 500,
-        animationEasing: Easing = FastOutSlowInEasing,
-        initialVelocity: Float = 0f,
+        animationDurationMillis: Int = ScaleAnimationConfig.DefaultDurationMillis,
+        animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
+        initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
@@ -359,9 +359,9 @@ class MyZoomState(
     suspend fun animateScaleToByTouchPosition(
         newScale: Float,
         touchPosition: Offset,
-        animationDurationMillis: Int = 500,
-        animationEasing: Easing = FastOutSlowInEasing,
-        initialVelocity: Float = 0f,
+        animationDurationMillis: Int = ScaleAnimationConfig.DefaultDurationMillis,
+        animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
+        initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val currentScale = scale
         if (debugMode) {
@@ -415,9 +415,9 @@ class MyZoomState(
 
     suspend fun animateDoubleTapScaleByRelativelyCentroid(
         relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f),
-        animationDurationMillis: Int = 500,
-        animationEasing: Easing = FastOutSlowInEasing,
-        initialVelocity: Float = 0f,
+        animationDurationMillis: Int = ScaleAnimationConfig.DefaultDurationMillis,
+        animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
+        initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val nextDoubleTapScale = nextDoubleTapScale()
         if (debugMode) {
@@ -437,9 +437,9 @@ class MyZoomState(
 
     suspend fun animateDoubleTapScaleByTouchPosition(
         touchPosition: Offset,
-        animationDurationMillis: Int = 500,
-        animationEasing: Easing = FastOutSlowInEasing,
-        initialVelocity: Float = 0f,
+        animationDurationMillis: Int = ScaleAnimationConfig.DefaultDurationMillis,
+        animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
+        initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val nextDoubleTapScale = nextDoubleTapScale()
         if (debugMode) {
@@ -642,6 +642,7 @@ class MyZoomState(
     }
 
     companion object {
+
         /**
          * The default [Saver] implementation for [MyZoomState].
          */

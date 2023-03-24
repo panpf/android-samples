@@ -1,6 +1,5 @@
 package com.github.panpf.sketch.zoom.compose
 
-import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -25,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.toSize
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.ScaleAnimationConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.centroid
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,7 @@ fun MyZoomImage(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     state: MyZoomState = rememberMyZoomState(),
-    animateDoubleTapScale: Boolean = true,
+    scaleAnimationConfig: ScaleAnimationConfig = ScaleAnimationConfig(),
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
@@ -48,7 +48,7 @@ fun MyZoomImage(
                 state = state,
                 painter = painter,
                 contentScale = contentScale,
-                animateDoubleTapScale = animateDoubleTapScale
+                scaleAnimationConfig = scaleAnimationConfig
             )
         ),
         alignment = alignment,
@@ -73,12 +73,8 @@ private fun Modifier.createZoomModifier(
     state: MyZoomState,
     painter: Painter,
     contentScale: ContentScale,
-    animateDoubleTapScale: Boolean = true
+    scaleAnimationConfig: ScaleAnimationConfig = ScaleAnimationConfig()
 ): Modifier = composed {
-    Log.i(
-        "MyZoomState",
-        "createZoomModifier. animateDoubleTapScale=$animateDoubleTapScale"
-    )
     // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
     val centroid = remember { mutableStateOf(Offset.Zero) }
@@ -89,11 +85,16 @@ private fun Modifier.createZoomModifier(
             state.coreSize = painter.intrinsicSize
             state.coreScale = contentScale
         }
-        .pointerInput(animateDoubleTapScale) {
+        .pointerInput(scaleAnimationConfig) {
             detectTapGestures(onDoubleTap = { offset ->
                 coroutineScope.launch {
-                    if (animateDoubleTapScale) {
-                        state.animateDoubleTapScaleByTouchPosition(offset)
+                    if (scaleAnimationConfig.animateDoubleTapScale) {
+                        state.animateDoubleTapScaleByTouchPosition(
+                            touchPosition = offset,
+                            animationDurationMillis = scaleAnimationConfig.animationDurationMillis,
+                            animationEasing = scaleAnimationConfig.animationEasing,
+                            initialVelocity = scaleAnimationConfig.initialVelocity
+                        )
                     } else {
                         state.snapDoubleTapScaleByTouchPosition(offset)
                     }
