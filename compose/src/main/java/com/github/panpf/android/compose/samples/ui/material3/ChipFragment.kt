@@ -56,7 +56,6 @@ class ChipFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -93,7 +92,6 @@ private fun AssistChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -131,7 +129,6 @@ private fun AssistChipShapeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -174,7 +171,6 @@ private fun AssistChipColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -212,7 +208,6 @@ private fun AssistChipBorderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -411,7 +406,6 @@ private fun InputChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -442,7 +436,6 @@ private fun SuggestionChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current

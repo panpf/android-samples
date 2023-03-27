@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedAssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +44,6 @@ class ColumnFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column", allExpandFlow, padding = 20.dp) {
@@ -73,7 +71,6 @@ private fun ColumnSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（Full）", allExpandFlow, padding = 20.dp) {
@@ -101,7 +98,6 @@ private fun ColumnFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（ItemSpaced）", allExpandFlow, padding = 20.dp) {
@@ -130,7 +126,6 @@ private fun ColumnItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（verticalArrangement）", allExpandFlow, padding = 20.dp) {
@@ -179,7 +174,6 @@ private fun ColumnVerticalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -225,7 +219,6 @@ private fun ColumnHorizontalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（weight）", allExpandFlow, padding = 20.dp) {
@@ -266,7 +259,6 @@ private fun ColumnWeightSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColumnAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Column（align）", allExpandFlow, padding = 20.dp) {

@@ -97,7 +97,7 @@ fun MyTopAppBarScaffold3(title: String? = null, content: @Composable () -> Unit)
                             Text(text = title)
                         },
                         windowInsets = WindowInsets(0.dp),
-                        colors = TopAppBarDefaults.smallTopAppBarColors(
+                        colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = colorScheme.primary,
                             scrolledContainerColor = colorScheme.primary,
                             navigationIconContentColor = colorScheme.onPrimary,

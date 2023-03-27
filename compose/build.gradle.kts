@@ -55,10 +55,13 @@ android {
 }
 
 dependencies {
+    api(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.compose)
+    implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.bundles.androidx.lifecycle.compose)
     implementation(libs.bundles.androidx.navigation.compose)
     implementation(libs.google.material)

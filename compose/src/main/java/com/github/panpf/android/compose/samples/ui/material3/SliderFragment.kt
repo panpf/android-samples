@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -241,7 +240,6 @@ private fun SliderColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
     val value = remember { mutableStateOf(0.4f..0.8f) }

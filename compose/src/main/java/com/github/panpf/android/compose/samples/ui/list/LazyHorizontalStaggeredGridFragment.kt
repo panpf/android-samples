@@ -65,7 +65,7 @@ class LazyHorizontalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
             LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow)
             LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow)
-            LazyHorizontalStaggeredGridHorizontalArrangementSample(allExpandFlow)
+            LazyHorizontalStaggeredGridHorizontalItemSpacingSample(allExpandFlow)
             LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow)
             LazyHorizontalStaggeredGridUserScrollEnabledSample(allExpandFlow)
             LazyHorizontalStaggeredGridUserVisibleItemIndexSample(allExpandFlow)
@@ -250,7 +250,7 @@ private fun LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Bool
                 .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalItemSpacing = 10.dp,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             items(count = 50) { index ->
@@ -281,53 +281,35 @@ private fun LazyHorizontalStaggeredGridItemSpacedSamplePreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalStaggeredGridHorizontalItemSpacingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（horizontalArrangement）",
+        title = "LazyHorizontalStaggeredGrid（horizontalItemSpacing）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            listOf(
-                Arrangement.Start to "Start",
-                Arrangement.Center to "Center",
-                Arrangement.End to "End",
-                null to "Space",
-                Arrangement.SpaceBetween to "SpaceBetween",
-                Arrangement.SpaceAround to "SpaceAround",
-                Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
-                    Text(text = name)
-                    LazyHorizontalStaggeredGrid(
-                        rows = StaggeredGridCells.Fixed(2),
+        LazyHorizontalStaggeredGrid(
+            rows = StaggeredGridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            horizontalItemSpacing = 20.dp,
+        ) {
+            items(count = 50) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(getAspectRation(index))
+                        .background(colors[index % colors.size].copy(alpha = 0.5f))
+                        .border(1.dp, colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(110.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
-                    ) {
-                        items(count = 9) { index ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(getAspectRation(index))
-                                    .background(colors[index % colors.size].copy(alpha = 0.5f))
-                                    .border(1.dp, colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = index.plus(1).toString(),
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
-                        }
-                    }
+                            .align(Alignment.Center)
+                    )
                 }
             }
         }
@@ -336,8 +318,8 @@ private fun LazyHorizontalStaggeredGridHorizontalArrangementSample(allExpandFlow
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridHorizontalArrangementSamplePreview() {
-    LazyHorizontalStaggeredGridHorizontalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyHorizontalStaggeredGridHorizontalItemSpacingSamplePreview() {
+    LazyHorizontalStaggeredGridHorizontalItemSpacingSample(remember { MutableStateFlow(true) })
 }
 
 

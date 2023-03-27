@@ -123,7 +123,7 @@ private fun TopAppBarColorsSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
+            colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Blue.copy(alpha = 0.6f),
                 navigationIconContentColor = Color.White,
                 titleContentColor = Color.White,

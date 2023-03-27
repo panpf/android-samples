@@ -3,7 +3,6 @@ package com.github.panpf.android.compose.samples.ui.material3
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -37,12 +36,11 @@ class ListItemFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
+            headlineContent = {
                 Text(text = "One line list item with trailing")
             },
             leadingContent = {
@@ -68,15 +66,14 @@ private fun ListItemOneLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
+            headlineContent = {
                 Text(text = "Two line list item with trailing")
             },
-            supportingText = {
+            supportingContent = {
                 Text(text = "Secondary text")
             },
             leadingContent = {
@@ -102,18 +99,17 @@ private fun ListItemTwoLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
+            headlineContent = {
                 Text(text = "Three line list item with trailing")
             },
-            overlineText = {
+            overlineContent = {
                 Text(text = "Over line")
             },
-            supportingText = {
+            supportingContent = {
                 Text(text = "Secondary text")
             },
             leadingContent = {
@@ -139,18 +135,17 @@ private fun ListItemThreeLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ListItem（colors）", allExpandFlow, padding = 20.dp) {
         ListItem(
-            headlineText = {
+            headlineContent = {
                 Text(text = "Three line list item with trailing")
             },
-            overlineText = {
+            overlineContent = {
                 Text(text = "Over line")
             },
-            supportingText = {
+            supportingContent = {
                 Text(text = "Secondary text")
             },
             leadingContent = {

@@ -74,7 +74,6 @@ private const val novel =
     "躲过了暴风雪之后，我们再次起程赶路，在一处斜坡下发现了阿宁他们的马队，同时也发现了海底墓穴影画之中的那一座神秘雪山，赫然出现在了我们的视野尽头。就在我们询问向导如何才能到达那里的时候，顺子却摇头，说我们绝对无法过去。"
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -94,7 +93,6 @@ private fun TextFieldSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldDefaultValueSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -114,7 +112,6 @@ private fun TextFieldDefaultValueSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -135,7 +132,6 @@ private fun TextFieldEnabledFalseSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldReadOnlySample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -156,7 +152,6 @@ private fun TextFieldReadOnlySamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldTextStyleColorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -177,7 +172,6 @@ private fun TextFieldTextStyleColorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -198,7 +192,6 @@ private fun TextFieldLabelSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldPlaceholderSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -219,7 +212,6 @@ private fun TextFieldPlaceholderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldLeadingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -242,7 +234,6 @@ private fun TextFieldLeadingIconSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldTrailingIconSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -271,7 +262,6 @@ private fun TextFieldTrailingIconSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldIsErrorSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -297,7 +287,6 @@ private fun TextFieldIsErrorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldVisualTransformationSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -323,7 +312,6 @@ private fun TextFieldVisualTransformationSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldKeyboardOptionsKeyboardTypeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -348,7 +336,6 @@ private fun TextFieldKeyboardOptionsKeyboardTypeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldKeyboardOptionsImeActionSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -369,7 +356,6 @@ private fun TextFieldKeyboardOptionsImeActionSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldKeyboardActionsSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -392,7 +378,6 @@ private fun TextFieldKeyboardActionsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldSingleLineSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -413,7 +398,6 @@ private fun TextFieldSingleLineSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldMaxLinesSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -434,7 +418,6 @@ private fun TextFieldMaxLinesSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -466,7 +449,7 @@ private fun TextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = MyColor.TranslucenceBlue,
-                textColor = Color.White,
+                unfocusedTextColor = Color.White,
                 cursorColor = Color.Cyan
             ),
         )
@@ -480,7 +463,6 @@ private fun TextFieldColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OutlinedTextFieldSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -500,7 +482,6 @@ private fun OutlinedTextFieldSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OutlinedTextFieldLabelSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf("") }
@@ -548,7 +529,6 @@ private fun OutlinedTextFieldIsErrorSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OutlinedTextFieldShapeSample(allExpandFlow: Flow<Boolean>) {
     val inputText = remember { mutableStateOf(novel) }
@@ -583,7 +563,7 @@ private fun OutlinedTextFieldColorsSample(allExpandFlow: Flow<Boolean>) {
             onValueChange = { inputText.value = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 containerColor = MyColor.TranslucenceBlue,
-                textColor = Color.White,
+                unfocusedTextColor = Color.White,
                 cursorColor = Color.Cyan,
                 unfocusedBorderColor = Color.Green,
                 focusedBorderColor = Color.Yellow

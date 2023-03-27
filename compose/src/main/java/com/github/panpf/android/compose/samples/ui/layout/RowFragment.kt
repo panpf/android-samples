@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedAssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +46,6 @@ class RowFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row", allExpandFlow, padding = 20.dp) {
@@ -75,7 +73,6 @@ private fun RowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
@@ -103,7 +100,6 @@ private fun RowFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
@@ -132,7 +128,6 @@ private fun RowItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
@@ -177,7 +172,6 @@ private fun RowHorizontalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（verticalAlignment）", allExpandFlow, padding = 20.dp) {
@@ -219,7 +213,6 @@ private fun RowVerticalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（weight）", allExpandFlow, padding = 20.dp) {
@@ -262,7 +255,6 @@ private fun RowWeightSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（align）", allExpandFlow, padding = 20.dp) {

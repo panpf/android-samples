@@ -66,7 +66,7 @@ class LazyVerticalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyVerticalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
             LazyVerticalStaggeredGridContentPaddingSample(allExpandFlow)
             LazyVerticalStaggeredGridItemSpacedSample(allExpandFlow)
-            LazyVerticalStaggeredGridVerticalArrangementSample(allExpandFlow)
+            LazyVerticalStaggeredGridVerticalItemSpacingSample(allExpandFlow)
             LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow)
             LazyVerticalStaggeredGridUserScrollEnabledSample(allExpandFlow)
             LazyVerticalStaggeredGridUserVisibleItemIndexSample(allExpandFlow)
@@ -279,7 +279,7 @@ private fun LazyVerticalStaggeredGridItemSpacedSample(allExpandFlow: Flow<Boolea
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalItemSpacing = 10.dp,
         ) {
             itemsIndexed(items) { index, item ->
                 Box(
@@ -309,55 +309,42 @@ private fun LazyVerticalStaggeredGridItemSpacedSamplePreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyVerticalStaggeredGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridVerticalItemSpacingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
-    val items = buildList {
-        repeat(5) {
-            add((it + 1).toString())
+    val items = remember {
+        buildList {
+            repeat(49) {
+                add((it + 1).toString())
+            }
         }
     }
     ExpandableItem3(
-        title = "LazyVerticalStaggeredGrid（verticalArrangement）",
+        title = "LazyVerticalStaggeredGrid（verticalItemSpacing）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-            listOf(
-                Arrangement.Top to "Top",
-                Arrangement.Center to "Center",
-                Arrangement.Bottom to "Bottom",
-                null to "Space",
-                Arrangement.SpaceBetween to "SpaceBetween",
-                Arrangement.SpaceAround to "SpaceAround",
-                Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEach { (arrangement, name) ->
-                Column {
-                    Text(text = name)
-                    LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(2),
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            verticalItemSpacing = 20.dp,
+        ) {
+            itemsIndexed(items) { index, item ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(getAspectRation(index))
+                        .background(colors[index % colors.size].copy(alpha = 0.5f))
+                        .border(1.dp, colors[index % colors.size])
+                ) {
+                    Text(
+                        text = item,
                         modifier = Modifier
-                            .width(110.dp)
-                            .height(200.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
-                    ) {
-                        itemsIndexed(items) { index, item ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(getAspectRation(index))
-                                    .background(colors[index % colors.size].copy(alpha = 0.5f))
-                                    .border(1.dp, colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = item,
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
-                        }
-                    }
+                            .align(Alignment.Center)
+                    )
                 }
             }
         }
@@ -366,8 +353,8 @@ private fun LazyVerticalStaggeredGridVerticalArrangementSample(allExpandFlow: Fl
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyVerticalStaggeredGridVerticalArrangementSamplePreview() {
-    LazyVerticalStaggeredGridVerticalArrangementSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridVerticalItemSpacingSamplePreview() {
+    LazyVerticalStaggeredGridVerticalItemSpacingSample(remember { MutableStateFlow(true) })
 }
 
 

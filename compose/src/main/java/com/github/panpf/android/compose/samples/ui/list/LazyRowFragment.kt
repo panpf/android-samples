@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ElevatedAssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -79,7 +78,6 @@ class LazyRowFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -113,7 +111,6 @@ private fun LazyRowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -148,7 +145,6 @@ private fun LazyRowContentPaddingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -183,7 +179,6 @@ private fun LazyRowItemSpacedSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -218,7 +213,6 @@ private fun LazyRowReverseLayoutSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -268,7 +262,6 @@ private fun LazyRowHorizontalArrangementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -318,7 +311,6 @@ private fun LazyRowVerticalAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -353,7 +345,6 @@ private fun LazyRowUserScrollEnabledSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -394,7 +385,6 @@ private fun LazyRowUserVisibleItemIndexSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -434,7 +424,6 @@ private fun LazyRowScrollInProgressSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -512,7 +501,7 @@ private fun LazyRowAnimateScrollToItemSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyRowAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -562,7 +551,6 @@ private fun LazyRowAnimateItemPlacementSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -632,7 +620,7 @@ private fun LazyRowLayoutInfoSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyRowStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
     val groupList = remember {
@@ -689,7 +677,6 @@ private fun LazyRowStickerHeaderSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LazyRowMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {

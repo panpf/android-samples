@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
@@ -40,7 +39,6 @@ class ScrollNestedScrollInteropWithComposeFragment : Material3ComposeAppBarFragm
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
 private fun ScrollNestedScrollInteropWithComposeSample() {
     val desc = """
         在 View 系统中嵌套 ComposeView 时，通过在 Compose 组件的 nestedScroll 修饰符上使用 rememberNestedScrollInteropConnection() 就可以实现事件在 compose 和 View 系统的互操作。

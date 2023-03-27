@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedAssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +48,6 @@ class FlowRowFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow", allExpandFlow, padding = 20.dp) {
@@ -77,7 +75,6 @@ private fun FlowRowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（Full）", allExpandFlow, padding = 20.dp) {
@@ -105,7 +102,6 @@ private fun FlowRowFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（mainAxisSize）", allExpandFlow, padding = 20.dp) {
@@ -144,7 +140,6 @@ private fun FlowRowMainAxisSizeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（mainAxisAlignment）", allExpandFlow, padding = 20.dp) {
@@ -188,7 +183,6 @@ private fun FlowRowMainAxisAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
@@ -217,7 +211,6 @@ private fun FlowRowMainAxisSpacingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（crossAxisAlignment）（无效）", allExpandFlow, padding = 20.dp) {
@@ -259,7 +252,6 @@ private fun FlowRowCrossAxisAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
@@ -288,7 +280,6 @@ private fun FlowRowCrossAxisSpacingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowRow（lastLineMainAxisAlignment）", allExpandFlow, padding = 20.dp) {

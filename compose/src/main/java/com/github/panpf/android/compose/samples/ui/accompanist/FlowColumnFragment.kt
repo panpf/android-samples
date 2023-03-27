@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedAssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +51,6 @@ class FlowColumnFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn", allExpandFlow, padding = 20.dp) {
@@ -80,7 +78,6 @@ private fun FlowColumnSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（Full）", allExpandFlow, padding = 20.dp) {
@@ -108,7 +105,6 @@ private fun FlowColumnFullSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（mainAxisSize）", allExpandFlow, padding = 20.dp) {
@@ -154,7 +150,6 @@ private fun FlowColumnMainAxisSizeSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（mainAxisAlignment）", allExpandFlow, padding = 20.dp) {
@@ -206,7 +201,6 @@ private fun FlowColumnMainAxisAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
@@ -235,7 +229,6 @@ private fun FlowColumnMainAxisSpacingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（crossAxisAlignment）（无效）", allExpandFlow, padding = 20.dp) {
@@ -281,7 +274,6 @@ private fun FlowColumnCrossAxisAlignmentSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
@@ -310,7 +302,6 @@ private fun FlowColumnCrossAxisSpacingSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(

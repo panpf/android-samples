@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
@@ -56,7 +55,6 @@ class NavigationDrawerFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ModalNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -122,7 +120,6 @@ private fun ModalNavigationDrawerSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DismissibleNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -188,7 +185,6 @@ private fun DismissibleNavigationDrawerSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PermanentNavigationDrawerSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
