@@ -506,7 +506,9 @@ class MyZoomState(
     }
 
     internal fun dragCancel() {
-//        Log.d("MyZoomState", "dragCancel")
+        if (debugMode) {
+            Log.i("MyZoomState", "drag. cancel")
+        }
     }
 
     internal suspend fun transform(
