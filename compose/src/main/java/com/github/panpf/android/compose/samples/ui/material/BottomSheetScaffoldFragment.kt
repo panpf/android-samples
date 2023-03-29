@@ -1,5 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.material
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -50,9 +53,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 class BottomSheetScaffoldFragment : MaterialComposeAppBarFragment() {
@@ -68,7 +68,7 @@ class BottomSheetScaffoldFragment : MaterialComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun BottomSheetScaffoldSample() {
     val colors = MyColor.halfRainbows
@@ -184,7 +184,7 @@ private fun BottomSheetScaffoldSample() {
         content = { innerPadding ->
             HorizontalPager(
                 state = pagerState,
-                count = pagerItems.size,
+                pageCount = pagerItems.size,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = innerPadding
             ) { index ->

@@ -1,10 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -34,9 +37,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 class ScaffoldFragment : Material3ComposeAppBarFragment() {
@@ -52,7 +52,7 @@ class ScaffoldFragment : Material3ComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun ScaffoldSample() {
     val colors = MyColor.halfRainbows
@@ -84,7 +84,7 @@ private fun ScaffoldSample() {
         content = { innerPadding ->
             HorizontalPager(
                 state = pagerState,
-                count = pagerItems.size,
+                pageCount = pagerItems.size,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = innerPadding
             ) { index ->

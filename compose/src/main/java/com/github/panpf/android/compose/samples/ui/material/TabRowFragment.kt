@@ -1,10 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Divider
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -26,9 +29,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -124,7 +125,7 @@ private fun TabRowColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
@@ -155,7 +156,7 @@ private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                count = items.size,
+                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->
@@ -253,7 +254,7 @@ private fun ScrollableTabRowColorsSamplePreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
@@ -284,7 +285,7 @@ private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                count = items.size,
+                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->

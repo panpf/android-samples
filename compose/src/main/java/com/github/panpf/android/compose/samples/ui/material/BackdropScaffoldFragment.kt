@@ -1,10 +1,12 @@
 package com.github.panpf.android.compose.samples.ui.material
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -27,8 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import kotlinx.coroutines.launch
 
 class BackdropScaffoldFragment : MaterialComposeAppBarFragment() {
@@ -44,7 +44,7 @@ class BackdropScaffoldFragment : MaterialComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun BackdropScaffoldSample() {
     val colors = MyColor.halfRainbows
@@ -86,7 +86,7 @@ private fun BackdropScaffoldSample() {
         },
         backLayerContent = {
             HorizontalPager(
-                count = colors.size,
+                pageCount = colors.size,
                 modifier = Modifier.fillMaxSize(),
             ) { index ->
                 Box(

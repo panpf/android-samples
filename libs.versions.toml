@@ -108,7 +108,6 @@ androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "a
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "google-accompanist" }
 google-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "google-accompanist" }
-google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "google-accompanist" }
 google-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "google-accompanist" }
 google-accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "google-accompanist" }
 
@@ -144,7 +143,6 @@ androidx-compose = [
     "androidx-compose-ui-util",
     "google-accompanist-flowlayout",
     "google-accompanist-swiperefresh",
-    "google-accompanist-pager",
     "google-accompanist-pager-indicators",
     "google-accompanist-webview",
     "panpf-sketch3-compose",

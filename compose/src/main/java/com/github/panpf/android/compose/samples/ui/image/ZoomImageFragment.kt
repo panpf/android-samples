@@ -1,5 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.image
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
@@ -47,9 +50,6 @@ import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.s
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.toShortString
 import com.github.panpf.sketch.zoom.compose.MyZoomImage
 import com.github.panpf.sketch.zoom.compose.rememberMyZoomState
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import moe.tlaster.zoomable.TlasterZoomable
 import moe.tlaster.zoomable.rememberTlasterZoomableState
@@ -63,7 +63,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
         return "ZoomImage"
     }
 
-    @OptIn(ExperimentalPagerApi::class, ExperimentalPhotoApi::class)
+    @OptIn(ExperimentalPhotoApi::class, ExperimentalFoundationApi::class)
     @Composable
     override fun DrawContent() {
         val pagerState = rememberPagerState()
@@ -75,7 +75,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                 .background(Color.Black)
         ) {
             HorizontalPager(
-                count = items.size,
+                pageCount = items.size,
                 state = pagerState,
                 userScrollEnabled = false,
                 modifier = Modifier
