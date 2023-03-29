@@ -12,10 +12,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
@@ -65,6 +66,7 @@ class LazyVerticalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyVerticalStaggeredGridSample(allExpandFlow)
             LazyVerticalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
             LazyVerticalStaggeredGridContentPaddingSample(allExpandFlow)
+            LazyVerticalStaggeredGridReverseLayoutSample(allExpandFlow)
             LazyVerticalStaggeredGridItemSpacedSample(allExpandFlow)
             LazyVerticalStaggeredGridVerticalItemSpacingSample(allExpandFlow)
             LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow)
@@ -73,7 +75,8 @@ class LazyVerticalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyVerticalStaggeredGridScrollInProgressSample(allExpandFlow)
             LazyVerticalStaggeredGridAnimateScrollToItemSample(allExpandFlow)
             LazyVerticalStaggeredGridLayoutInfoSample(allExpandFlow)
-            LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow)
+            LazyVerticalStaggeredGridContentTypeSample(allExpandFlow)
+            LazyVerticalStaggeredGridSpanSample(allExpandFlow)
         }
     }
 }
@@ -190,7 +193,7 @@ private fun LazyVerticalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: Fl
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = "add")
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
                 }
             }
         }
@@ -252,6 +255,46 @@ private fun LazyVerticalStaggeredGridContentPaddingSample(allExpandFlow: Flow<Bo
 @Composable
 private fun LazyVerticalStaggeredGridContentPaddingSamplePreview() {
     LazyVerticalStaggeredGridContentPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyVerticalStaggeredGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.rainbows
+    ExpandableItem3(title = "LazyVerticalStaggeredGrid（reverseLayout）", allExpandFlow, padding = 20.dp) {
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            reverseLayout = true
+        ) {
+            items(count = 50) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(getAspectRation(index))
+                        .background(colors[index % colors.size].copy(alpha = 0.5f))
+                        .border(1.dp, colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyVerticalStaggeredGridReverseLayoutSamplePreview() {
+    LazyVerticalStaggeredGridReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -377,7 +420,7 @@ private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: 
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
-                null to "Space",
+                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -385,10 +428,10 @@ private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: 
                 Column {
                     Text(text = name)
                     LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(1),
+                        columns = StaggeredGridCells.Fixed(3),
                         modifier = Modifier
                             .width(110.dp)
-                            .height(200.dp)
+                            .height(130.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
@@ -396,7 +439,7 @@ private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: 
                         itemsIndexed(items) { index, item ->
                             Box(
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .requiredSize(25.dp)
                                     .background(colors[index % colors.size].copy(alpha = 0.5f))
                                     .border(1.dp, colors[index % colors.size])
                             ) {
@@ -758,7 +801,7 @@ private fun LazyVerticalStaggeredGridLayoutInfoSamplePreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyVerticalStaggeredGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
     val items = buildList<Any> {
         repeat(49) {
@@ -773,7 +816,7 @@ private fun LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean
         set(40, Icons.Filled.Info)
     }.toList()
     ExpandableItem3(
-        title = "LazyVerticalStaggeredGrid（MultiType）",
+        title = "LazyVerticalStaggeredGrid（contentType）",
         allExpandFlow,
         padding = 20.dp
     ) {
@@ -790,8 +833,7 @@ private fun LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean
                 contentType = { _, item ->
                     when (item) {
                         is String -> 0
-                        is Int -> 1
-                        else -> 2
+                        else -> 1
                     }
                 }
             ) { index, item ->
@@ -834,6 +876,89 @@ private fun LazyVerticalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyVerticalStaggeredGridMultiTypeSamplePreview() {
-    LazyVerticalStaggeredGridMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyVerticalStaggeredGridContentTypeSamplePreview() {
+    LazyVerticalStaggeredGridContentTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyVerticalStaggeredGridSpanSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.rainbows
+    val items = buildList<Any> {
+        repeat(49) {
+            add((it + 1).toString())
+        }
+    }.toMutableList().apply {
+        set(0, Icons.Filled.KeyboardArrowLeft)
+        set(10, Icons.Filled.Add)
+        set(17, Icons.Filled.Menu)
+        set(25, Icons.Filled.KeyboardArrowDown)
+        set(34, Icons.Filled.Check)
+    }.toList()
+    ExpandableItem3(
+        title = "LazyVerticalStaggeredGrid（span）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(4),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items = items,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        else -> 1
+                    }
+                },
+                span = { _, item ->
+                    when (item) {
+                        is String -> StaggeredGridItemSpan.SingleLane
+                        else -> StaggeredGridItemSpan.FullLine
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(getAspectRation(index))
+                                .background(colors[index % colors.size].copy(alpha = 0.5f))
+                                .border(1.dp, colors[index % colors.size])
+                        ) {
+                            Text(
+                                text = item,
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                    is ImageVector -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            FilledTonalIconButton(onClick = { }) {
+                                Icon(imageVector = item, contentDescription = "icon")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyVerticalStaggeredGridSpanSamplePreview() {
+    LazyVerticalStaggeredGridSpanSample(remember { MutableStateFlow(true) })
 }

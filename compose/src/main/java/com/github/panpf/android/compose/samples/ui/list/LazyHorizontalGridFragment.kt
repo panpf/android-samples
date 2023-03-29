@@ -76,10 +76,10 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
             LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
             LazyHorizontalGridScrollInProgressSample(allExpandFlow)
             LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow)
-            LazyHorizontalGridSpanSample(allExpandFlow)
             LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow)
             LazyHorizontalGridLayoutInfoSample(allExpandFlow)
-            LazyHorizontalGridMultiTypeSample(allExpandFlow)
+            LazyHorizontalGridContentTypeSample(allExpandFlow)
+            LazyHorizontalGridSpanSample(allExpandFlow)
         }
     }
 }
@@ -648,58 +648,6 @@ private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
 }
 
 
-@Composable
-private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
-    ExpandableItem3(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-        ) {
-            items(
-                count = 50,
-                span = { index ->
-                    when (index) {
-                        3 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
-                        7 -> GridItemSpan(maxLineSpan)
-                        15 -> GridItemSpan(maxLineSpan)
-                        24 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
-                        35 -> GridItemSpan(maxLineSpan)
-                        36 -> GridItemSpan(maxLineSpan)
-                        43 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
-                        44 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
-                        else -> GridItemSpan(1)
-                    }
-                }
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(80.dp)
-                        .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun LazyHorizontalGridSpanSamplePreview() {
-    LazyHorizontalGridSpanSample(remember { MutableStateFlow(true) })
-}
-
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
@@ -840,7 +788,7 @@ private fun LazyHorizontalGridLayoutInfoSamplePreview() {
 
 
 @Composable
-private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = buildList<Any> {
         repeat(49) {
@@ -854,7 +802,7 @@ private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
         set(18, Icons.Filled.Check)
         set(40, Icons.Filled.Info)
     }.toList()
-    ExpandableItem3(title = "LazyHorizontalGrid（MultiType）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "LazyHorizontalGrid（contentType）", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
@@ -911,6 +859,58 @@ private fun LazyHorizontalGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridMultiTypeSamplePreview() {
-    LazyHorizontalGridMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyHorizontalGridContentTypeSamplePreview() {
+    LazyHorizontalGridContentTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    ExpandableItem3(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            items(
+                count = 50,
+                span = { index ->
+                    when (index) {
+                        3 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        7 -> GridItemSpan(maxLineSpan)
+                        15 -> GridItemSpan(maxLineSpan)
+                        24 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        35 -> GridItemSpan(maxLineSpan)
+                        36 -> GridItemSpan(maxLineSpan)
+                        43 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        44 -> GridItemSpan(ceil(maxLineSpan.div(2f)).toInt())
+                        else -> GridItemSpan(1)
+                    }
+                }
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(80.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalGridSpanSamplePreview() {
+    LazyHorizontalGridSpanSample(remember { MutableStateFlow(true) })
 }

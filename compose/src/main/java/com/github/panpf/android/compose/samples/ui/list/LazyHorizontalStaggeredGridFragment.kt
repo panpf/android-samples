@@ -13,15 +13,17 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -48,6 +50,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -64,6 +67,7 @@ class LazyHorizontalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyHorizontalStaggeredGridSample(allExpandFlow)
             LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow)
             LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow)
+            LazyHorizontalStaggeredGridReverseLayoutSample(allExpandFlow)
             LazyHorizontalStaggeredGridItemSpacedSample(allExpandFlow)
             LazyHorizontalStaggeredGridHorizontalItemSpacingSample(allExpandFlow)
             LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow)
@@ -72,7 +76,8 @@ class LazyHorizontalStaggeredGridFragment : Material3ComposeAppBarFragment() {
             LazyHorizontalStaggeredGridScrollInProgressSample(allExpandFlow)
             LazyHorizontalStaggeredGridAnimateScrollToItemSample(allExpandFlow)
             LazyHorizontalStaggeredGridLayoutInfoSample(allExpandFlow)
-            LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow)
+            LazyHorizontalStaggeredGridContentTypeSample(allExpandFlow)
+            LazyHorizontalStaggeredGridSpanSample(allExpandFlow)
         }
     }
 }
@@ -177,7 +182,7 @@ private fun LazyHorizontalStaggeredGridColumnsDynamicCellsSample(allExpandFlow: 
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
-                Icon(imageVector = Icons.Filled.Close, contentDescription = "add")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }
@@ -231,6 +236,46 @@ private fun LazyHorizontalStaggeredGridContentPaddingSample(allExpandFlow: Flow<
 @Composable
 private fun LazyHorizontalStaggeredGridContentPaddingSamplePreview() {
     LazyHorizontalStaggeredGridContentPaddingSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyHorizontalStaggeredGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.rainbows
+    ExpandableItem3(title = "LazyHorizontalStaggeredGrid（reverseLayout）", allExpandFlow, padding = 20.dp) {
+        LazyHorizontalStaggeredGrid(
+            rows = StaggeredGridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            reverseLayout = true
+        ) {
+            items(count = 50) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(getAspectRation(index))
+                        .background(colors[index % colors.size].copy(alpha = 0.5f))
+                        .border(1.dp, colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalStaggeredGridReverseLayoutSamplePreview() {
+    LazyHorizontalStaggeredGridReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -332,12 +377,12 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                null to "Space",
+                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -348,9 +393,9 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
                 Column {
                     Text(text = name)
                     LazyHorizontalStaggeredGrid(
-                        rows = StaggeredGridCells.Fixed(1),
+                        rows = StaggeredGridCells.Fixed(3),
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .width(130.dp)
                             .height(110.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
@@ -359,7 +404,7 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
                         items(count = 9) { index ->
                             Box(
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .requiredSize(25.dp)
                                     .background(colors[index % colors.size].copy(alpha = 0.5f))
                                     .border(1.dp, colors[index % colors.size])
                             ) {
@@ -686,7 +731,7 @@ private fun LazyHorizontalStaggeredGridLayoutInfoSamplePreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalStaggeredGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
     val items = buildList<Any> {
         repeat(49) {
@@ -701,7 +746,7 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
         set(40, Icons.Filled.Info)
     }.toList()
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（MultiType）",
+        title = "LazyHorizontalStaggeredGrid（contentType）",
         allExpandFlow,
         padding = 20.dp
     ) {
@@ -718,8 +763,7 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
                 contentType = { _, item ->
                     when (item) {
                         is String -> 0
-                        is Int -> 1
-                        else -> 2
+                        else -> 1
                     }
                 }
             ) { index, item ->
@@ -762,6 +806,91 @@ private fun LazyHorizontalStaggeredGridMultiTypeSample(allExpandFlow: Flow<Boole
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalStaggeredGridMultiTypeSamplePreview() {
-    LazyHorizontalStaggeredGridMultiTypeSample(remember { MutableStateFlow(true) })
+private fun LazyHorizontalStaggeredGridContentTypeSamplePreview() {
+    LazyHorizontalStaggeredGridContentTypeSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun LazyHorizontalStaggeredGridSpanSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.rainbows
+    val items = buildList<Any> {
+        repeat(49) {
+            add((it + 1).toString())
+        }
+    }.toMutableList().apply {
+        set(0, Icons.Filled.KeyboardArrowLeft)
+        set(10, Icons.Filled.Add)
+        set(17, Icons.Filled.Menu)
+        set(25, Icons.Filled.KeyboardArrowDown)
+        set(34, Icons.Filled.Check)
+    }.toList()
+    ExpandableItem3(
+        title = "LazyHorizontalStaggeredGrid（span）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        LazyHorizontalStaggeredGrid(
+            rows = StaggeredGridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items = items,
+                contentType = { _, item ->
+                    when (item) {
+                        is String -> 0
+                        else -> 1
+                    }
+                },
+                span = { _, item ->
+                    when (item) {
+                        is String -> StaggeredGridItemSpan.SingleLane
+                        else -> StaggeredGridItemSpan.FullLine
+                    }
+                }
+            ) { index, item ->
+                when (item) {
+                    is String -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(getAspectRation(index))
+                                .background(colors[index % colors.size].copy(alpha = 0.5f))
+                                .border(1.dp, colors[index % colors.size])
+                        ) {
+                            Text(
+                                text = index.plus(1).toString(),
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                    is ImageVector -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            FilledTonalIconButton(
+                                onClick = { },
+                            ) {
+                                Icon(imageVector = item, contentDescription = "icon")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalStaggeredGridSpanSamplePreview() {
+    LazyHorizontalStaggeredGridSpanSample(remember { MutableStateFlow(true) })
 }
