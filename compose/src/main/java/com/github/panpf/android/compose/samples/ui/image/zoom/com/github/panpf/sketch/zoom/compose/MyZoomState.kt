@@ -513,13 +513,21 @@ class MyZoomState(
 
     internal suspend fun transform(
         zoomChange: Float,
-        @Suppress("UNUSED_PARAMETER") panChange: Offset,
-        @Suppress("UNUSED_PARAMETER") rotationChange: Float,
+        panChange: Offset,
+        rotationChange: Float,
         touchCentroid: Offset,   // todo 尚未利用
-    ) = snapScaleToByRelativelyCentroid(
-        scale * zoomChange,
-        relativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
-    )
+    ) {
+        if (debugMode) {
+            Log.d(
+                "MyZoomState",
+                "transform. zoomChange=$zoomChange, panChange=$panChange, rotationChange=$rotationChange, touchCentroid=$touchCentroid"
+            )
+        }
+        snapScaleToByRelativelyCentroid(
+            scale * zoomChange,
+            relativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
+        )
+    }
 
 //    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
 //        val lowerBounds = _translationX.lowerBound ?: return false

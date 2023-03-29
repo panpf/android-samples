@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
-import androidx.compose.foundation.gestures.transformable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +25,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.toSize
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.ScaleAnimationConfig
 import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.centroid
+import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.transformableTwoDowns
 import kotlinx.coroutines.launch
 
 @Composable
@@ -77,7 +77,8 @@ private fun Modifier.createZoomModifier(
 ): Modifier = composed {
     // todo compat viewpager
     val coroutineScope = rememberCoroutineScope()
-    val centroid = remember { mutableStateOf(Offset.Zero) }
+    val centroidState = remember { mutableStateOf(Offset.Zero) }
+//    val transformableEnabledState = remember { mutableStateOf(false) }
     Modifier
         .onSizeChanged {
             state.spaceSize = it.toSize()
@@ -107,7 +108,6 @@ private fun Modifier.createZoomModifier(
                     state.dragStart()
                 },
                 onDrag = { change, dragAmount ->
-//                    change.consume() todo
                     coroutineScope.launch {
                         state.drag(change, dragAmount)
                     }
@@ -124,6 +124,43 @@ private fun Modifier.createZoomModifier(
                 }
             )
         }
+        .centroid {
+            centroidState.value = it
+        }
+//        .pointerInput(Unit) {
+//            detectTwoDowns {
+//                transformableEnabledState.value = it
+//            }
+//        }
+//        .transformable(
+//            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
+//                coroutineScope.launch {
+//                    state.transform(
+//                        zoomChange = zoomChange,
+//                        panChange = panChange,
+//                        rotationChange = rotationChange,
+//                        touchCentroid = centroidState.value
+//                    )
+//                }
+//            },
+//            lockRotationOnZoomPan = true,
+//            enabled = transformableEnabledState.value
+////            enabled = true
+//        )
+        .transformableTwoDowns(
+            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
+                coroutineScope.launch {
+                    state.transform(
+                        zoomChange = zoomChange,
+                        panChange = panChange,
+                        rotationChange = rotationChange,
+                        touchCentroid = centroidState.value
+                    )
+                }
+            },
+            lockRotationOnZoomPan = true,
+//            enabled = true
+        )
         .clipToBounds()
         .graphicsLayer {
             scaleX = state.scale
@@ -132,21 +169,5 @@ private fun Modifier.createZoomModifier(
             translationY = state.translationY
             transformOrigin = state.transformOrigin
         }
-        .centroid {
-            centroid.value = it
-        }
-        .transformable(
-            state = rememberTransformableState { zoomChange: Float, panChange: Offset, rotationChange: Float ->
-                coroutineScope.launch {
-                    state.transform(
-                        zoomChange = zoomChange,
-                        panChange = panChange,
-                        rotationChange = rotationChange,
-                        touchCentroid = centroid.value
-                    )
-                }
-            },
-            lockRotationOnZoomPan = true
-        )
 //        .rotate(0f)// todo rotation
 }

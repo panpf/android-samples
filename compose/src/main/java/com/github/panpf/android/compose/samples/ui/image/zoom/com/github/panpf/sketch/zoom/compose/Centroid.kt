@@ -1,8 +1,8 @@
 package com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose
 
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateCentroid
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -18,16 +18,14 @@ fun Modifier.centroid(
     factory = {
         val block: suspend PointerInputScope.() -> Unit = remember {
             {
-                forEachGesture {
-                    awaitPointerEventScope {
-                        awaitFirstDown(requireUnconsumed = false)
-                        do {
-                            val event: PointerEvent = awaitPointerEvent()
-                            val canceled = event.changes.any { it.isConsumed }
-                            val centroid = event.calculateCentroid(useCurrent = false)
-                            onGesture(centroid)
-                        } while (!canceled)
-                    }
+                awaitEachGesture {
+                    awaitFirstDown(requireUnconsumed = false)
+                    do {
+                        val event: PointerEvent = awaitPointerEvent()
+                        val canceled = event.changes.any { it.isConsumed }
+                        val centroid = event.calculateCentroid(useCurrent = false)
+                        onGesture(centroid)
+                    } while (!canceled)
                 }
             }
         }

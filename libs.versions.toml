@@ -81,6 +81,7 @@ androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version.ref = "androidx-compose-bom" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidx-constraintlayout-compose" }
@@ -140,6 +141,7 @@ androidx-compose = [
     "androidx-compose-foundation",
     "androidx-compose-material",
     "androidx-compose-material3",
+    "androidx-compose-ui-util",
     "google-accompanist-flowlayout",
     "google-accompanist-swiperefresh",
     "google-accompanist-pager",
