@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -59,6 +60,7 @@ class TextFieldFragment : Material3ComposeAppBarFragment() {
             TextFieldKeyboardActionsSample(allExpandFlow)
             TextFieldSingleLineSample(allExpandFlow)
             TextFieldMaxLinesSample(allExpandFlow)
+            TextFieldMinLinesSample(allExpandFlow)
             TextFieldShapeSample(allExpandFlow)
             TextFieldColorsSample(allExpandFlow)
             OutlinedTextFieldSample(allExpandFlow)
@@ -415,6 +417,26 @@ private fun TextFieldMaxLinesSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun TextFieldMaxLinesSamplePreview() {
     TextFieldMaxLinesSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun TextFieldMinLinesSample(allExpandFlow: Flow<Boolean>) {
+    val inputText = remember { mutableStateOf("这是一段很短的内容") }
+    ExpandableItem(title = "TextField（minLines - 2）", allExpandFlow, padding = 20.dp) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
+            minLines = 2
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun TextFieldMinLinesSamplePreview() {
+    TextFieldMinLinesSample(remember { MutableStateFlow(true) })
 }
 
 

@@ -66,6 +66,7 @@ class TextFragment : MaterialComposeAppBarFragment() {
             TextOverflowSample(allExpandFlow)
             TextSoftWrapSample(allExpandFlow)
             TextMaxLinesSample(allExpandFlow)
+            TextMinLinesSample(allExpandFlow)
             TextBaselineShiftSample(allExpandFlow)
             TextTextGeometricTransformSample(allExpandFlow)
             TextBackgroundSample(allExpandFlow)
@@ -393,6 +394,35 @@ private fun TextMaxLinesSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun TextMaxLinesSamplePreview() {
     TextMaxLinesSample(MutableStateFlow(true))
+}
+
+
+@Composable
+private fun TextMinLinesSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem("Text（minLines）", allExpandFlow, padding = 20.dp) {
+        Text(text = "minLines=2，但内容很短")
+        MyTextContainer {
+            Text(
+                text = "这是一段很短的内容",
+                minLines = 2,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "minLines=2，但内容很长")
+        MyTextContainer {
+            Text(
+                text = "这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长超过 2 行的内容",
+                minLines = 2,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun TextMinLinesSamplePreview() {
+    TextMinLinesSample(MutableStateFlow(true))
 }
 
 

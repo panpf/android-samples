@@ -84,7 +84,7 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
         Row(modifier = Modifier.fillMaxWidth()) {
             val subtitleTextLine = 4
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "None", subtitleTextLine)
+                SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         color = colors.tertiary
@@ -96,7 +96,7 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
             Column(modifier = Modifier.weight(1f)) {
                 SubtitleText(
                     text = "clipRect(10.dp, 20.dp, width-10.dp, height-10.dp)".trimIndent(),
-                    subtitleTextLine
+                    line = subtitleTextLine
                 )
                 Canvas(modifier = smallCanvasModifier) {
                     clipRect(
@@ -114,7 +114,7 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "clipOp: Difference", subtitleTextLine)
+                SubtitleText(text = "clipOp: Difference", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipRect(
                         left = 10.dp.toPx(),
@@ -156,7 +156,7 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
         Row(modifier = Modifier.fillMaxWidth()) {
             val subtitleTextLine = 2
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "None", subtitleTextLine)
+                SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         color = colors.tertiary
@@ -166,7 +166,7 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "clipPath".trimIndent(), subtitleTextLine)
+                SubtitleText(text = "clipPath".trimIndent(), line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipPath(
                         path = computePentagramPath(size)
@@ -180,7 +180,7 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "clipOp: Difference", subtitleTextLine)
+                SubtitleText(text = "clipOp: Difference", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipPath(
                         path = computePentagramPath(size),
@@ -219,7 +219,7 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
         Row(modifier = Modifier.fillMaxWidth()) {
             val subtitleTextLine = 3
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "None", subtitleTextLine)
+                SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(
                         color = colors.tertiary
@@ -229,7 +229,7 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "inset(20.dp)", subtitleTextLine)
+                SubtitleText(text = "inset(20.dp)", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(20.dp.toPx()) {
                         drawRect(
@@ -241,7 +241,7 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(modifier = Modifier.weight(1f)) {
-                SubtitleText(text = "inset(10.dp, 20.dp, 30.dp, 40.dp)", subtitleTextLine)
+                SubtitleText(text = "inset(10.dp, 20.dp, 30.dp, 40.dp)", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(10.dp.toPx(), 20.dp.toPx(), 30.dp.toPx(), 40.dp.toPx()) {
                         drawRect(
