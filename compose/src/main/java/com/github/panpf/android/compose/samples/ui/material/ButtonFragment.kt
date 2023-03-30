@@ -1,17 +1,18 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
@@ -33,6 +34,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.tools4a.toast.ktx.showShortToast
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -45,125 +47,138 @@ class ButtonFragment : MaterialComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            ButtonContentTextSample(allExpandFlow)
-            ButtonContentImageSample(allExpandFlow)
-            ButtonShapeSample(allExpandFlow)
-            ButtonColorSample(allExpandFlow)
-            ButtonElevationSample(allExpandFlow)
-            ButtonBorderSample(allExpandFlow)
-            ButtonContentPaddingSample(allExpandFlow)
+            ButtonSample(allExpandFlow)
             OutlinedButtonSample(allExpandFlow)
             TextButtonSample(allExpandFlow)
             IconButtonSample(allExpandFlow)
             IconToggleButtonSample(allExpandFlow)
             FloatingActionButtonSample(allExpandFlow)
-            FloatingActionButtonShapeSample(allExpandFlow)
-            FloatingActionButtonColorSample(allExpandFlow)
             ExtendedFloatingActionButtonSample(allExpandFlow)
         }
     }
 }
 
+
 @Composable
-private fun ButtonContentTextSample(allExpandFlow: Flow<Boolean>) {
+private fun ButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem("Button（Text）", allExpandFlow, padding = 20.dp) {
-        Button(onClick = {
-            context.showShortToast("You click me!")
-        }) {
-            Text(text = "Send")
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonContentTextSamplePreview() {
-    ButtonContentTextSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonContentImageSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（Icon）", allExpandFlow, padding = 20.dp) {
-        Button(onClick = { context.showShortToast("You click me!") }) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonContentImageSamplePreview() {
-    ButtonContentImageSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonShapeSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（shape)", allExpandFlow, padding = 20.dp) {
-        Button(
-            shape = RoundedCornerShape(50),
-            onClick = { context.showShortToast("You click me!") }
+    ExpandableItem("Button", allExpandFlow, padding = 20.dp) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
         ) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonShapeSamplePreview() {
-    ButtonShapeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（colors)", allExpandFlow, padding = 20.dp) {
-        Row {
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Cyan,
-                    contentColor = Color.Black,
-                    disabledBackgroundColor = Color.Gray,
-                    disabledContentColor = Color.White,
-                ),
-                onClick = { context.showShortToast("You click me!") }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.KeyboardArrowDown,
-                    contentDescription = "",
-                )
+            Column {
+                Text(text = "Text")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(onClick = {
+                    context.showShortToast("You click me!")
+                }) {
+                    Text(text = "Send")
+                }
             }
-            Spacer(
-                modifier = Modifier
-                    .width(16.dp)
-                    .height(10.dp)
-            )
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Cyan,
-                    contentColor = Color.Black,
-                    disabledBackgroundColor = Color.Gray,
-                    disabledContentColor = Color.White,
-                ),
-                enabled = false,
-                onClick = { context.showShortToast("You click me!") }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.KeyboardArrowDown,
-                    contentDescription = "",
-                )
+
+            Column {
+                Text(text = "Icon")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(onClick = { context.showShortToast("You click me!") }) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    shape = RoundedCornerShape(50),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Cyan,
+                        contentColor = Color.Black,
+                        disabledBackgroundColor = Color.Gray,
+                        disabledContentColor = Color.White,
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    border = BorderStroke(1.dp, Color.Cyan),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "contentPadding")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(
+                    enabled = false,
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
             }
         }
     }
@@ -171,80 +186,8 @@ private fun ButtonColorSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ButtonColorSamplePreview() {
-    ButtonColorSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonElevationSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（elevation）", allExpandFlow, padding = 20.dp) {
-        Button(
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 10.dp,
-                pressedElevation = 0.dp
-            ),
-            onClick = { context.showShortToast("You click me!") }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonElevationSamplePreview() {
-    ButtonElevationSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonBorderSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（border）", allExpandFlow, padding = 20.dp) {
-        Button(
-            border = BorderStroke(1.dp, Color.Cyan),
-            onClick = { context.showShortToast("You click me!") }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonBorderSamplePreview() {
-    ButtonBorderSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ButtonContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("Button（contentPadding）", allExpandFlow, padding = 20.dp) {
-        Button(
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
-            onClick = { context.showShortToast("You click me!") }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ButtonContentPaddingSamplePreview() {
-    ButtonContentPaddingSample(remember { MutableStateFlow(true) })
+private fun ButtonSamplePreview() {
+    ButtonSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -252,12 +195,123 @@ private fun ButtonContentPaddingSamplePreview() {
 private fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
-        OutlinedButton(onClick = { context.showShortToast("You click me!") }) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-                tint = Color.Red
-            )
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column {
+                Text(text = "Text")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(onClick = {
+                    context.showShortToast("You click me!")
+                }) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "Icon")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(onClick = { context.showShortToast("You click me!") }) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    shape = RoundedCornerShape(50),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Cyan,
+                        contentColor = Color.Black,
+                        disabledBackgroundColor = Color.Gray,
+                        disabledContentColor = Color.White,
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    border = BorderStroke(1.dp, Color.Cyan),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "contentPadding")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedButton(
+                    enabled = false,
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
         }
     }
 }
@@ -273,8 +327,94 @@ private fun OutlinedButtonSamplePreview() {
 private fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("TextButton", allExpandFlow, padding = 20.dp) {
-        TextButton(onClick = { context.showShortToast("You click me!") }) {
-            Text(text = "Send")
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(onClick = {
+                    context.showShortToast("You click me!")
+                }) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    shape = RoundedCornerShape(50),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Cyan,
+                        contentColor = Color.Black,
+                        disabledBackgroundColor = Color.Gray,
+                        disabledContentColor = Color.White,
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    ),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    border = BorderStroke(1.dp, Color.Cyan),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "contentPadding")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                TextButton(
+                    enabled = false,
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Text(text = "Send")
+                }
+            }
         }
     }
 }
@@ -290,11 +430,35 @@ private fun TextButtonSamplePreview() {
 private fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
-        IconButton(onClick = { context.showShortToast("You click me!") }) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                IconButton(onClick = { context.showShortToast("You click me!") }) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                IconButton(
+                    enabled = false,
+                    onClick = { context.showShortToast("You click me!") }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
         }
     }
 }
@@ -309,16 +473,43 @@ private fun IconButtonSamplePreview() {
 @Composable
 private fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("IconToggleButton", allExpandFlow, padding = 20.dp) {
-        val checked = remember { mutableStateOf(false) }
-        IconToggleButton(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
         ) {
-            Icon(
-                imageVector = if (checked.value)
-                    Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                contentDescription = "",
-            )
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checked = remember { mutableStateOf(false) }
+                IconToggleButton(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it }
+                ) {
+                    Icon(
+                        imageVector = if (checked.value)
+                            Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checked = remember { mutableStateOf(false) }
+                IconToggleButton(
+                    checked = checked.value,
+                    enabled = false,
+                    onCheckedChange = { checked.value = it }
+                ) {
+                    Icon(
+                        imageVector = if (checked.value)
+                            Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
+            }
         }
     }
 }
@@ -334,8 +525,65 @@ private fun IconToggleButtonSamplePreview() {
 private fun FloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FloatingActionButton", allExpandFlow, padding = 20.dp) {
-        FloatingActionButton(onClick = { context.showShortToast("You click me!") }) {
-            Text(text = "Send")
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                FloatingActionButton(onClick = { context.showShortToast("You click me!") }) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                FloatingActionButton(
+                    shape = RoundedCornerShape(10.dp),
+                    onClick = { context.showShortToast("You click me!") },
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "backgroundColor")
+                Spacer(modifier = Modifier.size(10.dp))
+                FloatingActionButton(
+                    backgroundColor = Color.Cyan,
+                    onClick = { context.showShortToast("You click me!") },
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "contentColor")
+                Spacer(modifier = Modifier.size(10.dp))
+                FloatingActionButton(
+                    contentColor = Color.Magenta,
+                    onClick = { context.showShortToast("You click me!") },
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                FloatingActionButton(
+                    elevation = FloatingActionButtonDefaults.elevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    ),
+                    onClick = { context.showShortToast("You click me!") },
+                ) {
+                    Text(text = "Send")
+                }
+            }
         }
     }
 }
@@ -348,60 +596,100 @@ private fun FloatingActionButtonSamplePreview() {
 
 
 @Composable
-private fun FloatingActionButtonShapeSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("FloatingActionButton（Shape）", allExpandFlow, padding = 20.dp) {
-        FloatingActionButton(
-            shape = CircleShape,
-            onClick = { context.showShortToast("You click me!") },
-        ) {
-            Text(text = "Send")
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun FloatingActionButtonShapeSamplePreview() {
-    FloatingActionButtonShapeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun FloatingActionButtonColorSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem("FloatingActionButton（Color）", allExpandFlow, padding = 20.dp) {
-        FloatingActionButton(
-            backgroundColor = Color.Cyan,
-            contentColor = Color.Magenta,
-            onClick = { context.showShortToast("You click me!") },
-        ) {
-            Text(text = "Send")
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun FloatingActionButtonColorSamplePreview() {
-    FloatingActionButtonColorSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 private fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("ExtendedFloatingActionButton", allExpandFlow, padding = 20.dp) {
-        val expanded = remember { mutableStateOf(false) }
-        ExtendedFloatingActionButton(
-            onClick = { expanded.value = !expanded.value },
-            text = { Text(text = "Expand") },
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.KeyboardArrowDown,
-                    contentDescription = ""
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val expanded = remember { mutableStateOf(false) }
+                ExtendedFloatingActionButton(
+                    onClick = { expanded.value = !expanded.value },
+                    text = { Text(text = "Expand") },
+                    icon = {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = ""
+                        )
+                    }
                 )
             }
-        )
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                val expanded = remember { mutableStateOf(false) }
+                ExtendedFloatingActionButton(
+                    onClick = { expanded.value = !expanded.value },
+                    shape = RoundedCornerShape(10.dp),
+                    text = { Text(text = "Expand") },
+                    icon = {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = ""
+                        )
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "backgroundColor")
+                Spacer(modifier = Modifier.size(10.dp))
+                val expanded = remember { mutableStateOf(false) }
+                ExtendedFloatingActionButton(
+                    onClick = { expanded.value = !expanded.value },
+                    backgroundColor = Color.Cyan,
+                    text = { Text(text = "Expand") },
+                    icon = {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = ""
+                        )
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "contentColor")
+                Spacer(modifier = Modifier.size(10.dp))
+                val expanded = remember { mutableStateOf(false) }
+                ExtendedFloatingActionButton(
+                    onClick = { expanded.value = !expanded.value },
+                    contentColor = Color.Magenta,
+                    text = { Text(text = "Expand") },
+                    icon = {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = ""
+                        )
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                val expanded = remember { mutableStateOf(false) }
+                ExtendedFloatingActionButton(
+                    onClick = { expanded.value = !expanded.value },
+                    elevation = FloatingActionButtonDefaults.elevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    ),
+                    text = { Text(text = "Expand") },
+                    icon = {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = ""
+                        )
+                    }
+                )
+            }
+        }
     }
 }
 
