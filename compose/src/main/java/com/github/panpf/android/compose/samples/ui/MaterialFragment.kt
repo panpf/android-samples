@@ -37,6 +37,7 @@ class MaterialFragment : MaterialComposeAppBarFragment() {
                 Link("ListItem", R.id.action_global_materialListItemFragment),
                 Link("NavigationRail", R.id.action_global_materialNavigationRailFragment),
                 Link("ProgressIndicator", R.id.action_global_materialProgressIndicatorFragment),
+                Link("PullRefresh", R.id.action_global_materialPullRefreshFragment),
                 Link("RadioButton", R.id.action_global_materialRadioButtonFragment),
                 Link("Scaffold", R.id.action_global_materialScaffoldFragment),
                 Link("Slider", R.id.action_global_materialSliderFragment),

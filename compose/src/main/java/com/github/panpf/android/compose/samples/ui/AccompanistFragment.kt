@@ -21,7 +21,6 @@ class AccompanistFragment : Material3ComposeAppBarFragment() {
             listOf(
                 Link("FlowColumn", R.id.action_global_accompanistFlowColumnFragment),
                 Link("FlowRow", R.id.action_global_accompanistFlowRowFragment),
-                Link("SwipeRefreshPaging", R.id.action_global_swipeRefreshPagingFragment),
                 Link("WebView", R.id.action_global_webViewFragment),
             )
         }

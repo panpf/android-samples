@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.accompanist
+package com.github.panpf.android.compose.samples.ui.material
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,31 +24,29 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.HorizontalAppendStateUI
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class SwipeRefreshPagingFragment : Material3ComposeAppBarFragment() {
+class PullRefreshFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "SwipeRefreshPaging"
+        return "PullRefresh - Material"
     }
 
     @Composable
     override fun DrawContent() {
-        SwipeRefreshPagingSample()
-        // todo Implementation Modifier.pullRefresh
+        PullRefreshSample()
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun SwipeRefreshPagingSample() {
+private fun PullRefreshSample() {
     val pagingFlow = remember {
         Pager(
             config = PagingConfig(
@@ -59,14 +61,15 @@ private fun SwipeRefreshPagingSample() {
         ).flow
     }
     val lazyPagingItems = pagingFlow.collectAsLazyPagingItems()
-    val swipeRefreshState =
-        rememberSwipeRefreshState(lazyPagingItems.loadState.refresh is LoadState.Loading).apply {
-            isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
-        }
-    SwipeRefresh(
-        state = swipeRefreshState,
-        onRefresh = { lazyPagingItems.refresh() },
-        modifier = Modifier.fillMaxSize()
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = lazyPagingItems.loadState.refresh is LoadState.Loading,
+        onRefresh = {
+            lazyPagingItems.refresh()
+        })
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullRefresh(pullRefreshState)
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(
@@ -78,7 +81,7 @@ private fun SwipeRefreshPagingSample() {
                     if (index > 0) {
                         Divider()
                     }
-                    SwipeRefreshPagingItem(lazyPagingItems[index] ?: "")
+                    PullRefreshItem(lazyPagingItems[index] ?: "")
                 }
             }
 
@@ -96,18 +99,23 @@ private fun SwipeRefreshPagingSample() {
                 }
             }
         }
+        PullRefreshIndicator(
+            refreshing = lazyPagingItems.loadState.refresh is LoadState.Loading,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SwipeRefreshPagingSamplePreview() {
-    SwipeRefreshPagingSample()
+private fun PullRefreshSamplePreview() {
+    PullRefreshSample()
 }
 
 
 @Composable
-private fun SwipeRefreshPagingItem(item: String) {
+private fun PullRefreshItem(item: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -123,8 +131,8 @@ private fun SwipeRefreshPagingItem(item: String) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SwipeRefreshPagingItemPreview() {
-    SwipeRefreshPagingItem("15. 18:23:45")
+private fun PullRefreshPreview() {
+    PullRefreshItem("15. 18:23:45")
 }
 
 private class MyPagingSource : PagingSource<Int, String>() {
