@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.accompanist
+package com.github.panpf.android.compose.samples.ui.pager
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -16,18 +16,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,35 +52,37 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.VerticalPagerIndicator
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class VerticalPagerFragment : Material3ComposeAppBarFragment() {
+class HorizontalPagerFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "VerticalPager"
+        return "HorizontalPager"
     }
 
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            VerticalPagerSample(allExpandFlow)
-            VerticalPagerReverseLayoutSample(allExpandFlow)
-            VerticalPagerPageSpacingSample(allExpandFlow)
-            VerticalPagerContentPaddingSample(allExpandFlow)
-            VerticalPagerPageSizeSample(allExpandFlow)
-            VerticalPagerBeyondBoundsPageCountSample(allExpandFlow)
-            VerticalPagerHorizontalAlignmentHorSample(allExpandFlow)
-            VerticalPagerScrollToPageSample(allExpandFlow)
-            VerticalPagerAnimateScrollToPageSample(allExpandFlow)
-            VerticalPagerScrollInProgressSample(allExpandFlow)
-            VerticalPagerCurrentPageSample(allExpandFlow)
-            VerticalPagerIndicatorSample(allExpandFlow)
+            HorizontalPagerSample(allExpandFlow)
+            HorizontalPagerReverseLayoutSample(allExpandFlow)
+            HorizontalPagerPageSpacingSample(allExpandFlow)
+            HorizontalPagerContentPaddingSample(allExpandFlow)
+            HorizontalPagerPageSizeSample(allExpandFlow)
+            HorizontalPagerBeyondBoundsPageCountSample(allExpandFlow)
+            HorizontalPagerVerticalAlignmentSample(allExpandFlow)
+            HorizontalPagerScrollToPageSample(allExpandFlow)
+            HorizontalPagerAnimateScrollToPageSample(allExpandFlow)
+            HorizontalPagerScrollInProgressSample(allExpandFlow)
+            HorizontalPagerCurrentPageSample(allExpandFlow)
+            HorizontalPagerIndicatorSample(allExpandFlow)
+            HorizontalPagerTabRowSample(allExpandFlow)
+            HorizontalPagerScrollableTabRowSample(allExpandFlow)
         }
     }
 }
@@ -84,16 +90,15 @@ class VerticalPagerFragment : Material3ComposeAppBarFragment() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem3(title = "VerticalPager", allExpandFlow, padding = 20.dp) {
-        VerticalPager(
+    ExpandableItem3(title = "HorizontalPager", allExpandFlow, padding = 20.dp) {
+        HorizontalPager(
             pageCount = items.size,
             modifier = Modifier
-                .width(200.dp)
-                .height(300.dp)
+                .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
         ) { index ->
@@ -114,23 +119,22 @@ private fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerSamplePreview() {
-    VerticalPagerSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerSamplePreview() {
+    HorizontalPagerSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem3(title = "VerticalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
-        VerticalPager(
+    ExpandableItem3(title = "HorizontalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
+        HorizontalPager(
             pageCount = items.size,
             modifier = Modifier
-                .width(200.dp)
-                .height(300.dp)
+                .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             reverseLayout = true
@@ -152,26 +156,25 @@ private fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerReverseLayoutSamplePreview() {
-    VerticalPagerReverseLayoutSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerReverseLayoutSamplePreview() {
+    HorizontalPagerReverseLayoutSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerPageSpacingSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerPageSpacingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pageSpacingState = remember { mutableStateOf(20.dp) }
     val pageSpacingRange = 5.dp..35.dp
     val pageSpacingStep = 5.dp
-    ExpandableItem3(title = "VerticalPager（pageSpacing）", allExpandFlow, padding = 20.dp) {
-        VerticalPager(
+    ExpandableItem3(title = "HorizontalPager（pageSpacing）", allExpandFlow, padding = 20.dp) {
+        HorizontalPager(
             pageCount = items.size,
             modifier = Modifier
-                .width(200.dp)
-                .height(300.dp)
+                .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             pageSpacing = pageSpacingState.value
@@ -228,26 +231,25 @@ private fun VerticalPagerPageSpacingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerPageSpacingSamplePreview() {
-    VerticalPagerPageSpacingSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerPageSpacingSamplePreview() {
+    HorizontalPagerPageSpacingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val contentPaddingState = remember { mutableStateOf(20.dp) }
     val contentPaddingRange = 5.dp..35.dp
     val contentPaddingStep = 5.dp
-    ExpandableItem3(title = "VerticalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
-        VerticalPager(
+    ExpandableItem3(title = "HorizontalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
+        HorizontalPager(
             pageCount = items.size,
             modifier = Modifier
-                .width(200.dp)
-                .height(300.dp)
+                .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(contentPaddingState.value),
@@ -308,46 +310,41 @@ private fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerContentPaddingSamplePreview() {
-    VerticalPagerContentPaddingSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerContentPaddingSamplePreview() {
+    HorizontalPagerContentPaddingSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerPageSizeSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerPageSizeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem3(title = "VerticalPager（pageSize）", allExpandFlow, padding = 20.dp) {
-        Row(Modifier.fillMaxWidth()) {
-            listOf(50.dp, 100.dp, 200.dp).forEachIndexed { pageSizeIndex, pageSize ->
-                if (pageSizeIndex > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
-                    Text(text = "$pageSize")
-                    VerticalPager(
-                        pageCount = items.size,
+    ExpandableItem3(title = "HorizontalPager（pageSize）", allExpandFlow, padding = 20.dp) {
+        listOf(100.dp, 200.dp, 300.dp).forEachIndexed { pageSizeIndex, pageSize ->
+            if (pageSizeIndex > 0) {
+                Spacer(modifier = Modifier.size(10.dp))
+            }
+            Text(text = "$pageSize")
+            HorizontalPager(
+                pageCount = items.size,
+                modifier = Modifier
+                    .height(100.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp),
+                pageSize = PageSize.Fixed(pageSize),
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(300.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        pageSize = PageSize.Fixed(pageSize),
-                    ) { index ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(colors[index % colors.size])
-                        ) {
-                            Text(
-                                text = items[index],
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            )
-                        }
-                    }
+                            .align(Alignment.Center)
+                    )
                 }
             }
         }
@@ -356,14 +353,14 @@ private fun VerticalPagerPageSizeSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerPageSizeSamplePreview() {
-    VerticalPagerPageSizeSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerPageSizeSamplePreview() {
+    HorizontalPagerPageSizeSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
@@ -373,53 +370,48 @@ private fun VerticalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean
         每个页面都会延迟 3 秒钟显示内容，因此你可以在等待 3 秒钟后滑动页面时是否立即展示了下个页面来理解 beyondBoundsPageCount 属性的效果。
     """.trimIndent()
     ExpandableItem3(
-        title = "VerticalPager（beyondBoundsPageCount）",
+        title = "HorizontalPager（beyondBoundsPageCount）",
         desc = desc,
         allExpand = allExpandFlow,
         padding = 20.dp
     ) {
-        Row(Modifier.fillMaxWidth()) {
-            listOf(0, 1, 2).forEachIndexed { beyondBoundsPageCountIndex, beyondBoundsPageCount ->
-                if (beyondBoundsPageCountIndex > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
-                    Text(text = "$beyondBoundsPageCount")
-                    VerticalPager(
-                        pageCount = items.size,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(300.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        beyondBoundsPageCount = beyondBoundsPageCount,
-                    ) { index ->
-                        val loadingState = remember { mutableStateOf(true) }
-                        if (loadingState.value) {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .align(Alignment.Center)
-                                )
-                                LaunchedEffect(key1 = Unit) {
-                                    delay(3000)
-                                    loadingState.value = false
-                                }
-                            }
-                        } else {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = items[index],
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
+        listOf(0, 1, 2).forEachIndexed { beyondBoundsPageCountIndex, beyondBoundsPageCount ->
+            if (beyondBoundsPageCountIndex > 0) {
+                Spacer(modifier = Modifier.size(10.dp))
+            }
+            Text(text = "$beyondBoundsPageCount")
+            HorizontalPager(
+                pageCount = items.size,
+                modifier = Modifier
+                    .height(100.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp),
+                beyondBoundsPageCount = beyondBoundsPageCount,
+            ) { index ->
+                val loadingState = remember { mutableStateOf(true) }
+                if (loadingState.value) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(30.dp)
+                                .align(Alignment.Center)
+                        )
+                        LaunchedEffect(key1 = Unit) {
+                            delay(3000)
+                            loadingState.value = false
                         }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(colors[index % colors.size])
+                    ) {
+                        Text(
+                            text = items[index],
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
                     }
                 }
             }
@@ -429,44 +421,42 @@ private fun VerticalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerBeyondBoundsPageCountSamplePreview() {
-    VerticalPagerBeyondBoundsPageCountSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerBeyondBoundsPageCountSamplePreview() {
+    HorizontalPagerBeyondBoundsPageCountSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    ExpandableItem3(title = "VerticalPager（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
-        FlowRow(
+    ExpandableItem3(title = "HorizontalPager（verticalAlignment）", allExpandFlow, padding = 20.dp) {
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 10.dp,
-            crossAxisSpacing = 10.dp
         ) {
             listOf(
-                Alignment.Start to "Start",
-                Alignment.CenterHorizontally to "Center\nHorizontally",
-                Alignment.End to "End",
+                Alignment.Top to "Top",
+                Alignment.CenterVertically to "CenterVertically",
+                Alignment.Bottom to "Bottom",
             ).forEach {
                 Column {
                     Spacer(modifier = Modifier.size(10.dp))
-                    Text(text = it.second, modifier = Modifier.height(46.dp))
-                    VerticalPager(
+                    Text(text = it.second)
+                    HorizontalPager(
                         pageCount = items.size,
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(200.dp)
+                            .fillMaxWidth()
+                            .height(100.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalAlignment = it.first
+                        verticalAlignment = it.first
                     ) { index ->
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight()
-                                .width(60.dp)
+                                .fillMaxWidth()
+                                .height(60.dp)
                                 .background(colors[index % colors.size])
                         ) {
                             Text(
@@ -484,26 +474,22 @@ private fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolea
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerVerticalAlignmentSamplePreview() {
-    VerticalPagerHorizontalAlignmentHorSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerVerticalAlignmentSamplePreview() {
+    HorizontalPagerVerticalAlignmentSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem3(title = "VerticalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
-        Row {
-            Column(
-                modifier = Modifier
-                    .height(400.dp)
-                    .width(200.dp)
-            ) {
+    ExpandableItem3(title = "HorizontalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
+        Column {
+            Row(modifier = Modifier.height(200.dp)) {
                 IconButton(
                     onClick = {
                         val currentPage = pagerState.currentPage
@@ -514,19 +500,19 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         }
                     },
                     modifier = Modifier
-                        .height(46.dp)
-                        .fillMaxWidth()
+                        .width(46.dp)
+                        .fillMaxHeight()
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
                         contentDescription = "before"
                     )
                 }
-                VerticalPager(
+                HorizontalPager(
                     pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxHeight()
                         .weight(1f)
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
@@ -553,23 +539,19 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                         }
                     },
                     modifier = Modifier
-                        .height(46.dp)
-                        .fillMaxWidth()
+                        .width(46.dp)
+                        .fillMaxHeight()
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        imageVector = Icons.Filled.KeyboardArrowRight,
                         contentDescription = "next",
                     )
                 }
             }
-            Column(
-                modifier = Modifier
-                    .height(400.dp)
-                    .padding(top = 46.dp, bottom = 46.dp)
-            ) {
+            Row(modifier = Modifier.padding(start = 46.dp, end = 46.dp)) {
                 repeat(items.size) { index ->
                     Box(modifier = Modifier
-                        .width(40.dp)
+                        .height(40.dp)
                         .weight(1f)
                         .clickable {
                             coroutineScope.launch {
@@ -592,26 +574,26 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerScrollToPageSamplePreview() {
-    VerticalPagerScrollToPageSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerScrollToPageSamplePreview() {
+    HorizontalPagerScrollToPageSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    ExpandableItem3(title = "VerticalPager（animateScrollToPage）", allExpandFlow, padding = 20.dp) {
-        Row {
-            Column(
-                modifier = Modifier
-                    .height(400.dp)
-                    .width(200.dp)
-            ) {
+    ExpandableItem3(
+        title = "HorizontalPager（animateScrollToPage）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        Column {
+            Row(modifier = Modifier.height(200.dp)) {
                 IconButton(
                     onClick = {
                         val currentPage = pagerState.currentPage
@@ -622,19 +604,19 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
                         }
                     },
                     modifier = Modifier
-                        .height(46.dp)
-                        .fillMaxWidth()
+                        .width(46.dp)
+                        .fillMaxHeight()
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
                         contentDescription = "before"
                     )
                 }
-                VerticalPager(
+                HorizontalPager(
                     pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxHeight()
                         .weight(1f)
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
@@ -661,23 +643,19 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
                         }
                     },
                     modifier = Modifier
-                        .height(46.dp)
-                        .fillMaxWidth()
+                        .width(46.dp)
+                        .fillMaxHeight()
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        imageVector = Icons.Filled.KeyboardArrowRight,
                         contentDescription = "next",
                     )
                 }
             }
-            Column(
-                modifier = Modifier
-                    .height(400.dp)
-                    .padding(top = 46.dp, bottom = 46.dp)
-            ) {
+            Row(modifier = Modifier.padding(start = 46.dp, end = 46.dp)) {
                 repeat(items.size) { index ->
                     Box(modifier = Modifier
-                        .width(40.dp)
+                        .height(40.dp)
                         .weight(1f)
                         .clickable {
                             coroutineScope.launch {
@@ -700,27 +678,26 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerAnimateScrollToPageSamplePreview() {
-    VerticalPagerAnimateScrollToPageSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerAnimateScrollToPageSamplePreview() {
+    HorizontalPagerAnimateScrollToPageSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
     val scrollInProgressState = remember { derivedStateOf { pagerState.isScrollInProgress } }
-    ExpandableItem3(title = "VerticalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "HorizontalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
-            VerticalPager(
+            HorizontalPager(
                 pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
-                    .width(160.dp)
-                    .height(260.dp)
+                    .height(200.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
@@ -743,14 +720,14 @@ private fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerScrollInProgressSamplePreview() {
-    VerticalPagerScrollInProgressSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerScrollInProgressSamplePreview() {
+    HorizontalPagerScrollInProgressSample(remember { MutableStateFlow(true) })
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
@@ -758,14 +735,13 @@ private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val currentPageState = remember { derivedStateOf { pagerState.currentPage } }
     val currentPageOffsetFractionState =
         remember { derivedStateOf { pagerState.currentPageOffsetFraction } }
-    ExpandableItem3(title = "VerticalPager（currentPage）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "HorizontalPager（currentPage）", allExpandFlow, padding = 20.dp) {
         Column {
-            VerticalPager(
+            HorizontalPager(
                 pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
-                    .width(160.dp)
-                    .height(260.dp)
+                    .height(200.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
@@ -789,26 +765,25 @@ private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerCurrentPageSamplePreview() {
-    VerticalPagerCurrentPageSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerCurrentPageSamplePreview() {
+    HorizontalPagerCurrentPageSample(remember { MutableStateFlow(true) })
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
-private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
+private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
     val pagerState = rememberPagerState()
-    ExpandableItem3(title = "VerticalPager（Indicator）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "HorizontalPager（Indicator）", allExpandFlow, padding = 20.dp) {
         Box {
-            VerticalPager(
+            HorizontalPager(
                 pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
-                    .width(160.dp)
-                    .height(260.dp)
+                    .height(200.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
             ) { index ->
@@ -824,36 +799,36 @@ private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-            Row(
+            Column(
                 modifier = Modifier
-                    .align(Alignment.CenterEnd)
+                    .align(Alignment.BottomCenter)
                     .padding(16.dp)
             ) {
-                VerticalPagerIndicator(
+                HorizontalPagerIndicator(
                     pagerState = pagerState,
                     pageCount = items.size,
                     modifier = Modifier
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterHorizontally)
                 )
 
                 Spacer(modifier = Modifier.size(10.dp))
-                VerticalPagerIndicator(
+                HorizontalPagerIndicator(
                     pagerState = pagerState,
                     pageCount = items.size,
                     modifier = Modifier
-                        .align(Alignment.CenterVertically),
+                        .align(Alignment.CenterHorizontally),
                     activeColor = Color.Red,
                     inactiveColor = MyColor.TranslucenceRed,
                 )
 
                 Spacer(modifier = Modifier.size(10.dp))
-                VerticalPagerIndicator(
+                HorizontalPagerIndicator(
                     pagerState = pagerState,
                     pageCount = items.size,
                     modifier = Modifier
-                        .align(Alignment.CenterVertically),
-                    indicatorWidth = 4.dp,
-                    indicatorHeight = 10.dp,
+                        .align(Alignment.CenterHorizontally),
+                    indicatorWidth = 10.dp,
+                    indicatorHeight = 4.dp,
                     indicatorShape = RoundedCornerShape(50)
                 )
             }
@@ -863,6 +838,126 @@ private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalPagerIndicatorSamplePreview() {
-    VerticalPagerIndicatorSample(remember { MutableStateFlow(true) })
+private fun HorizontalPagerIndicatorSamplePreview() {
+    HorizontalPagerIndicatorSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+    ExpandableItem3(title = "HorizontalPager（TabRow）", allExpandFlow, padding = 20.dp) {
+        Column {
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
+                    )
+                }
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.size(2.dp))
+            HorizontalPager(
+                pageCount = items.size,
+                state = pagerState,
+                modifier = Modifier.height(200.dp)
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun HorizontalPagerTabRowSamplePreview() {
+    HorizontalPagerTabRowSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+        .mapIndexed { index, string -> "${index + 1}. $string" }
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+    ExpandableItem3(title = "HorizontalPager（ScrollableTabRow）", allExpandFlow, padding = 20.dp) {
+        Column {
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
+                    )
+                },
+            ) {
+                items.forEachIndexed { index, item ->
+                    Tab(
+                        selected = index == pagerState.currentPage,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    ) {
+                        Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.size(2.dp))
+            HorizontalPager(
+                pageCount = items.size,
+                state = pagerState,
+                modifier = Modifier.height(200.dp)
+            ) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = items[index],
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun HorizontalPagerScrollableTabRowSamplePreview() {
+    HorizontalPagerScrollableTabRowSample(remember { MutableStateFlow(true) })
 }

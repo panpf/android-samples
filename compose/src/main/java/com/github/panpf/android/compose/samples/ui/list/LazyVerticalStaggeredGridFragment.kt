@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -411,7 +410,7 @@ private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: 
         }
     }
     ExpandableItem3(
-        title = "LazyVerticalStaggeredGrid（horizontalArrangement）",
+        title = "LazyVerticalStaggeredGrid（horizontalArrangement）（无效）",
         allExpandFlow,
         padding = 20.dp
     ) {
@@ -434,7 +433,7 @@ private fun LazyVerticalStaggeredGridHorizontalArrangementSample(allExpandFlow: 
                             .height(130.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)  // todo Invalid
                     ) {
                         itemsIndexed(items) { index, item ->
                             Box(

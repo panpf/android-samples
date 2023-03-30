@@ -26,6 +26,7 @@ class HomeFragment : Material3ComposeAppBarFragment() {
                 Link("Material", R.id.action_global_materialFragment),
                 Link("Material3", R.id.action_global_material3Fragment),
                 Link("Modifiers", R.id.action_global_modifierFragment),
+                Link("Pager", R.id.action_global_pagerFragment),
                 Link("Navigation（Implementation）"),   // todo Implementation
                 Link("Theme（Implementation）"),   // todo Implementation
 //                Link("Custom（Implementation）"),   // todo Implementation

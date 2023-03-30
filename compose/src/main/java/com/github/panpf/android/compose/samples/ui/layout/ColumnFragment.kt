@@ -134,7 +134,7 @@ private fun ColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                null to "Space",
+                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "Space\nBetween",
                 Arrangement.SpaceAround to "Space\nAround",
                 Arrangement.SpaceEvenly to "Space\nEvenly",

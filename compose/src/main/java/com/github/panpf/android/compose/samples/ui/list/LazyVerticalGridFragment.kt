@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -332,7 +332,7 @@ private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolea
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                null to "Space",
+                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -380,7 +380,7 @@ private fun LazyVerticalGridVerticalArrangementSamplePreview() {
 private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyVerticalGrid（horizontalArrangement）",
+        title = "LazyVerticalGrid（horizontalArrangement）（无效）",
         allExpandFlow,
         padding = 20.dp
     ) {
@@ -389,7 +389,7 @@ private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Bool
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
-                null to "Space",
+                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -397,18 +397,18 @@ private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Bool
                 Column {
                     Text(text = name)
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(1),
+                        columns = GridCells.Fixed(2),
                         modifier = Modifier
                             .width(110.dp)
                             .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)  // todo Invalid
                     ) {
                         items(count = 9) { index ->
                             Box(
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .requiredSize(40.dp)
                                     .background(colors[index % colors.size])
                             ) {
                                 Text(

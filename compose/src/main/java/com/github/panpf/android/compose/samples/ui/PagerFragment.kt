@@ -9,20 +9,18 @@ import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 
-class AccompanistFragment : Material3ComposeAppBarFragment() {
+class PagerFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Accompanist"
+        return "Pager"
     }
 
     @Composable
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("FlowColumn", R.id.action_global_flowColumnFragment),
-                Link("FlowRow", R.id.action_global_flowRowFragment),
-                Link("SwipeRefreshPaging", R.id.action_global_swipeRefreshPagingFragment),
-                Link("WebView", R.id.action_global_webViewFragment),
+                Link("HorizontalPager", R.id.action_global_horizontalPagerFragment),
+                Link("VerticalPager", R.id.action_global_verticalPagerFragment),
             )
         }
         LinkList(links) { _, link ->

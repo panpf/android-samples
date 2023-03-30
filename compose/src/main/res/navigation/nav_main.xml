@@ -1100,33 +1100,11 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/horizontalPagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.accompanist.HorizontalPagerFragment" />
-    <action
-        android:id="@+id/action_global_horizontalPagerFragment"
-        app:destination="@id/horizontalPagerFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
         android:id="@+id/swipeRefreshPagingFragment"
         android:name="com.github.panpf.android.compose.samples.ui.accompanist.SwipeRefreshPagingFragment" />
     <action
         android:id="@+id/action_global_swipeRefreshPagingFragment"
         app:destination="@id/swipeRefreshPagingFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
-        android:id="@+id/verticalPagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.accompanist.VerticalPagerFragment" />
-    <action
-        android:id="@+id/action_global_verticalPagerFragment"
-        app:destination="@id/verticalPagerFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
@@ -1408,6 +1386,42 @@
     <action
         android:id="@+id/action_global_animationFragment"
         app:destination="@id/animationFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <!-- pager -->
+
+    <fragment
+        android:id="@+id/pagerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.PagerFragment" />
+    <action
+        android:id="@+id/action_global_pagerFragment"
+        app:destination="@id/pagerFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/horizontalPagerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.pager.HorizontalPagerFragment" />
+    <action
+        android:id="@+id/action_global_horizontalPagerFragment"
+        app:destination="@id/horizontalPagerFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/verticalPagerFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.pager.VerticalPagerFragment" />
+    <action
+        android:id="@+id/action_global_verticalPagerFragment"
+        app:destination="@id/verticalPagerFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

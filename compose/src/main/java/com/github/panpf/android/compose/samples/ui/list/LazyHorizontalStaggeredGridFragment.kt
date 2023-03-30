@@ -373,7 +373,7 @@ private fun LazyHorizontalStaggeredGridHorizontalItemSpacingSamplePreview() {
 private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.rainbows
     ExpandableItem3(
-        title = "LazyHorizontalStaggeredGrid（verticalArrangement）",
+        title = "LazyHorizontalStaggeredGrid（verticalArrangement）（无效）",
         allExpandFlow,
         padding = 20.dp
     ) {
@@ -399,7 +399,7 @@ private fun LazyHorizontalStaggeredGridVerticalArrangementSample(allExpandFlow: 
                             .height(110.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)  // todo Invalid
                     ) {
                         items(count = 9) { index ->
                             Box(
