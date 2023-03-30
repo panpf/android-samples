@@ -19,8 +19,8 @@ class AccompanistFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("FlowColumn", R.id.action_global_flowColumnFragment),
-                Link("FlowRow", R.id.action_global_flowRowFragment),
+                Link("FlowColumn", R.id.action_global_accompanistFlowColumnFragment),
+                Link("FlowRow", R.id.action_global_accompanistFlowRowFragment),
                 Link("SwipeRefreshPaging", R.id.action_global_swipeRefreshPagingFragment),
                 Link("WebView", R.id.action_global_webViewFragment),
             )

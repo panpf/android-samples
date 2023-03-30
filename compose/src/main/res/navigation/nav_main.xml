@@ -256,6 +256,28 @@
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
+    <fragment
+        android:id="@+id/flowRowFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.layout.FlowRowFragment" />
+    <action
+        android:id="@+id/action_global_flowRowFragment"
+        app:destination="@id/flowRowFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/flowColumnFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.layout.FlowColumnFragment" />
+    <action
+        android:id="@+id/action_global_flowColumnFragment"
+        app:destination="@id/flowColumnFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
 
     <!-- window -->
 
@@ -1078,22 +1100,22 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/flowRowFragment"
+        android:id="@+id/accompanistFlowRowFragment"
         android:name="com.github.panpf.android.compose.samples.ui.accompanist.FlowRowFragment" />
     <action
-        android:id="@+id/action_global_flowRowFragment"
-        app:destination="@id/flowRowFragment"
+        android:id="@+id/action_global_accompanistFlowRowFragment"
+        app:destination="@id/accompanistFlowRowFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/flowColumnFragment"
+        android:id="@+id/accompanistFlowColumnFragment"
         android:name="com.github.panpf.android.compose.samples.ui.accompanist.FlowColumnFragment" />
     <action
-        android:id="@+id/action_global_flowColumnFragment"
-        app:destination="@id/flowColumnFragment"
+        android:id="@+id/action_global_accompanistFlowColumnFragment"
+        app:destination="@id/accompanistFlowColumnFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

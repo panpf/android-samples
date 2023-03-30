@@ -36,7 +36,6 @@ class FlowRowFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             FlowRowSample(allExpandFlow)
-            FlowRowFullSample(allExpandFlow)
             FlowRowMainAxisSizeSample(allExpandFlow)
             FlowRowMainAxisAlignmentSample(allExpandFlow)
             FlowRowMainAxisSpacingSample(allExpandFlow)
@@ -50,6 +49,9 @@ class FlowRowFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
     ExpandableItem3(title = "FlowRow", allExpandFlow, padding = 20.dp) {
         FlowRow(
             modifier = Modifier
@@ -57,7 +59,23 @@ private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp)
         ) {
-            listOf("数码", "汽车", "摄影", "舞蹈").forEach {
+            items.take(4).forEach {
+                ElevatedAssistChip(
+                    onClick = { },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = it) }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            items.forEach {
                 ElevatedAssistChip(
                     onClick = { },
                     shape = RoundedCornerShape(50),
@@ -72,33 +90,6 @@ private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun FlowRowSamplePreview() {
     FlowRowSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun FlowRowFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowRow（Full）", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-        ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun FlowRowFullSamplePreview() {
-    FlowRowFullSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -163,7 +154,18 @@ private fun FlowRowMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp),
                     mainAxisAlignment = alignment
                 ) {
-                    listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
+                    listOf(
+                        "数码",
+                        "汽车",
+                        "摄影",
+                        "舞蹈",
+                        "二次元",
+                        "音乐",
+                        "科技",
+                        "健身",
+                        "游戏",
+                        "文学"
+                    ).forEach {
                         ElevatedAssistChip(
                             onClick = { },
                             shape = RoundedCornerShape(50),
@@ -185,6 +187,9 @@ private fun FlowRowMainAxisAlignmentSamplePreview() {
 
 @Composable
 private fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
     ExpandableItem3(title = "FlowRow（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
         FlowRow(
             modifier = Modifier
@@ -193,7 +198,7 @@ private fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp),
             mainAxisSpacing = 10.dp
         ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
+            items.forEach {
                 ElevatedAssistChip(
                     onClick = { },
                     shape = RoundedCornerShape(50),
@@ -254,6 +259,9 @@ private fun FlowRowCrossAxisAlignmentSamplePreview() {
 
 @Composable
 private fun FlowRowCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
     ExpandableItem3(title = "FlowRow（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
         FlowRow(
             modifier = Modifier
@@ -262,7 +270,7 @@ private fun FlowRowCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp),
             crossAxisSpacing = 16.dp
         ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
+            items.forEach {
                 ElevatedAssistChip(
                     onClick = { },
                     shape = RoundedCornerShape(50),
@@ -282,6 +290,9 @@ private fun FlowRowCrossAxisSpacingSamplePreview() {
 
 @Composable
 private fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
     ExpandableItem3(title = "FlowRow（lastLineMainAxisAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -303,7 +314,7 @@ private fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>)
                         .padding(2.dp),
                     lastLineMainAxisAlignment = alignment
                 ) {
-                    listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
+                    items.forEach {
                         ElevatedAssistChip(
                             onClick = { },
                             shape = RoundedCornerShape(50),

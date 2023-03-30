@@ -39,7 +39,6 @@ class FlowColumnFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             FlowColumnSample(allExpandFlow)
-            FlowColumnFullSample(allExpandFlow)
             FlowColumnMainAxisSizeSample(allExpandFlow)
             FlowColumnMainAxisAlignmentSample(allExpandFlow)
             FlowColumnMainAxisSpacingSample(allExpandFlow)
@@ -54,18 +53,36 @@ class FlowColumnFragment : Material3ComposeAppBarFragment() {
 @Composable
 private fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FlowColumn", allExpandFlow, padding = 20.dp) {
-        FlowColumn(
-            modifier = Modifier
-                .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-        ) {
-            listOf("数码", "汽车", "摄影").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+        Row {
+            FlowColumn(
+                modifier = Modifier
+                    .height(200.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp)
+            ) {
+                listOf("数码", "汽车", "摄影").forEach {
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = it) }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+            FlowColumn(
+                modifier = Modifier
+                    .height(200.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp)
+            ) {
+                listOf("数码", "汽车", "摄影", "舞蹈", "音乐", "科技").forEach {
+                    ElevatedAssistChip(
+                        onClick = { },
+                        shape = RoundedCornerShape(50),
+                        label = { Text(text = it) }
+                    )
+                }
             }
         }
     }
@@ -75,33 +92,6 @@ private fun FlowColumnSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun FlowColumnSamplePreview() {
     FlowColumnSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun FlowColumnFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowColumn（Full）", allExpandFlow, padding = 20.dp) {
-        FlowColumn(
-            modifier = Modifier
-                .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-        ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "音乐", "科技").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun FlowColumnFullSamplePreview() {
-    FlowColumnFullSample(remember { MutableStateFlow(true) })
 }
 
 
