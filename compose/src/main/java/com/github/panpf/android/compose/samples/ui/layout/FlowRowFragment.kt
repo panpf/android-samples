@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class FlowRowFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "FlowRow"
+        return "FlowRow - Foundation"
     }
 
     @Composable

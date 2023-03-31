@@ -1143,6 +1143,17 @@
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
+    <fragment
+        android:id="@+id/placeholderFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.accompanist.PlaceholderFragment" />
+    <action
+        android:id="@+id/action_global_placeholderFragment"
+        app:destination="@id/placeholderFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
 
     <!-- animation -->
 

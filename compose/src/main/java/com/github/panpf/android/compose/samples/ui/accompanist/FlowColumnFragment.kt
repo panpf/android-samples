@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class FlowColumnFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "FlowColumn"
+        return "FlowColumn - Accompanist"
     }
 
     @Composable

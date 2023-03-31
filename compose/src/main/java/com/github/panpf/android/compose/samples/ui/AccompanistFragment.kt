@@ -21,6 +21,7 @@ class AccompanistFragment : Material3ComposeAppBarFragment() {
             listOf(
                 Link("FlowColumn", R.id.action_global_accompanistFlowColumnFragment),
                 Link("FlowRow", R.id.action_global_accompanistFlowRowFragment),
+                Link("Placeholder", R.id.action_global_placeholderFragment),
                 Link("WebView", R.id.action_global_webViewFragment),
             )
         }
