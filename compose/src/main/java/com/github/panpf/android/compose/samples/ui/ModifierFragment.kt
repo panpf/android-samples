@@ -237,6 +237,7 @@ class ModifierFragment : Material3ComposeAppBarFragment() {
             ),
             LinkGroup(
                 "Other", listOf(
+                    Link("Scope: Any - Modifier.basicMarquee"),// todo Implementation
                     Link("Scope: Any - Modifier.blur", R.id.action_global_modifierBlurFragment),
                     Link("Scope: Any - Modifier.bringIntoViewRequester"),// todo Implementation
                     Link("Scope: Any - Modifier.bringIntoViewResponder"),// todo Implementation
