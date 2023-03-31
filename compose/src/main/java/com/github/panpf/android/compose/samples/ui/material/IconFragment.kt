@@ -1,11 +1,20 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import android.graphics.drawable.BitmapDrawable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -14,11 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
-import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.google.accompanist.flowlayout.FlowRow
 
 class IconFragment : MaterialComposeAppBarFragment() {
 
@@ -28,79 +34,61 @@ class IconFragment : MaterialComposeAppBarFragment() {
 
     @Composable
     override fun DrawContent() {
-        ExpandableLayout { allExpandFlow ->
-            IconResourceSample(allExpandFlow)
-            IconVectorSample(allExpandFlow)
-            IconBitmapSample(allExpandFlow)
-            IconTintSample(allExpandFlow)
+        IconSample()
+    }
+}
+
+
+@Composable
+private fun IconSample() {
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
+        mainAxisSpacing = 20.dp,
+        crossAxisSpacing = 20.dp,
+    ) {
+        Column {
+            Text(text = "painter")
+            Spacer(modifier = Modifier.size(10.dp))
+            Icon(painter = painterResource(id = R.drawable.ic_arrow_down), contentDescription = "")
+        }
+
+        Column {
+            Text(text = "imageVector")
+            Spacer(modifier = Modifier.size(10.dp))
+            Icon(imageVector = Icons.Filled.List, contentDescription = "")
+        }
+
+        Column {
+            Text(text = "bitmap")
+            Spacer(modifier = Modifier.size(10.dp))
+            val context = LocalContext.current
+            val imageBitmap = remember {
+                (ResourcesCompat.getDrawable(
+                    context.resources,
+                    android.R.drawable.ic_delete,
+                    null
+                ) as BitmapDrawable).bitmap.asImageBitmap()
+            }
+            Icon(bitmap = imageBitmap, contentDescription = "")
+        }
+
+        Column {
+            Text(text = "tint")
+            Spacer(modifier = Modifier.size(10.dp))
+            Icon(
+                imageVector = Icons.Filled.List,
+                contentDescription = "",
+                tint = Color.Red
+            )
         }
     }
 }
 
-
-@Composable
-private fun IconResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（Resource）", allExpandFlow, padding = 20.dp) {
-        Icon(painter = painterResource(id = R.drawable.ic_arrow_down), contentDescription = "")
-    }
-}
-
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun IconResourceSamplePreview() {
-    IconResourceSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun IconVectorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（Vector）", allExpandFlow, padding = 20.dp) {
-        Icon(imageVector = Icons.Filled.List, contentDescription = "")
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun IconVectorSamplePreview() {
-    IconVectorSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun IconBitmapSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    val imageBitmap = remember {
-        (ResourcesCompat.getDrawable(
-            context.resources,
-            android.R.drawable.ic_delete,
-            null
-        ) as BitmapDrawable).bitmap.asImageBitmap()
-    }
-    ExpandableItem(title = "Icon（Bitmap）", allExpandFlow, padding = 20.dp) {
-        Icon(bitmap = imageBitmap, contentDescription = "")
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun IconBitmapSamplePreview() {
-    IconBitmapSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun IconTintSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem(title = "Icon（tint）", allExpandFlow, padding = 20.dp) {
-        Icon(
-            imageVector = Icons.Filled.List,
-            contentDescription = "",
-            tint = Color.Red
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun IconTintSamplePreview() {
-    IconTintSample(remember { MutableStateFlow(true) })
+private fun IconSamplePreview() {
+    IconSample()
 }
