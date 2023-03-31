@@ -1,9 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -12,13 +16,17 @@ import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ElevatedSuggestionChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,14 +49,10 @@ class ChipFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             AssistChipSample(allExpandFlow)
-            AssistChipShapeSample(allExpandFlow)
-            AssistChipColorsSample(allExpandFlow)
-            AssistChipBorderSample(allExpandFlow)
             ElevatedAssistChipSample(allExpandFlow)
             FilterChipSample(allExpandFlow)
             ElevatedFilterChipSample(allExpandFlow)
             InputChipSample(allExpandFlow)
-            //        InputChipTextFieldSample(allExpandFlow)
             SuggestionChipSample(allExpandFlow)
             ElevatedSuggestionChipSample(allExpandFlow)
         }
@@ -60,22 +64,90 @@ class ChipFragment : Material3ComposeAppBarFragment() {
 private fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
                 AssistChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) }
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    shape = RoundedCornerShape(50)
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    border = AssistChipDefaults.assistChipBorder(borderColor = Color.Red)
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    colors = AssistChipDefaults.assistChipColors(
+                        labelColor = Color.Red,
+                        containerColor = Color.Cyan,
+                        leadingIconContentColor = Color.Blue,
+                        trailingIconContentColor = Color.Yellow,
+                    )
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    elevation = AssistChipDefaults.assistChipElevation(10.dp)
+                )
+            }
+
+            Column {
+                Text(text = "leadingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Filled.Close,
+                            imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
-                    },
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "trailingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                AssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     trailingIcon = {
                         Icon(
-                            imageVector = Icons.Filled.Info,
+                            imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     }
@@ -93,65 +165,50 @@ private fun AssistChipSamplePreview() {
 
 
 @Composable
-private fun AssistChipShapeSample(allExpandFlow: Flow<Boolean>) {
+private fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    ExpandableItem3(title = "AssistChip（shape）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
-                AssistChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Info,
-                            contentDescription = null
-                        )
-                    },
+    ExpandableItem3(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) }
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     shape = RoundedCornerShape(50)
                 )
             }
-        }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun AssistChipShapeSamplePreview() {
-    AssistChipShapeSample(remember { MutableStateFlow(true) })
-}
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    border = AssistChipDefaults.assistChipBorder(borderColor = Color.Red)
+                )
+            }
 
-
-@Composable
-private fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "AssistChip（colors）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
-                AssistChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null,
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Info,
-                            contentDescription = null,
-                        )
-                    },
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     colors = AssistChipDefaults.assistChipColors(
                         labelColor = Color.Red,
                         containerColor = Color.Cyan,
@@ -160,74 +217,62 @@ private fun AssistChipColorsSample(allExpandFlow: Flow<Boolean>) {
                     )
                 )
             }
-        }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun AssistChipColorsSamplePreview() {
-    AssistChipColorsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun AssistChipBorderSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "AssistChip（border）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
-                AssistChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Info,
-                            contentDescription = null
-                        )
-                    },
-                    border = AssistChipDefaults.assistChipBorder(borderColor = Color.Red)
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    elevation = AssistChipDefaults.elevatedAssistChipElevation(10.dp)
                 )
             }
-        }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun AssistChipBorderSamplePreview() {
-    AssistChipBorderSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+            Column {
+                Text(text = "leadingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
                 ElevatedAssistChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     leadingIcon = {
                         Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "trailingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    trailingIcon = {
+                        Icon(
                             imageVector = Icons.Filled.Close,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+
+            Column {
+                Text(text = "icons")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedAssistChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
                     },
                     trailingIcon = {
                         Icon(
-                            imageVector = Icons.Filled.Info,
+                            imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     }
@@ -247,44 +292,136 @@ private fun ElevatedAssistChipSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    val items = remember {
-        listOf(
-            "射击" to mutableStateOf(false),
-            "跑酷" to mutableStateOf(false),
-            "解谜" to mutableStateOf(false),
-            "推塔" to mutableStateOf(false),
-            "塔防" to mutableStateOf(false),
-            "赛车" to mutableStateOf(false),
-            "横版" to mutableStateOf(false),
-            "舞蹈" to mutableStateOf(false)
-        )
-    }
     ExpandableItem3(title = "FilterChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            items.forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
                 FilterChip(
-                    selected = it.second.value,
-                    onClick = {
-                        val newSelected = !it.second.value
-                        it.second.value = newSelected
-                        context.showShortToast("${it.first}：${newSelected}")
-                    },
-                    label = {
-                        Text(text = it.first)
-                    },
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
                     leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = Color.Red,
+                        labelColor = Color.Cyan,
+                        iconColor = Color.Cyan,
+                    ),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    elevation = FilterChipDefaults.filterChipElevation(10.dp),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "leadingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "trailingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    trailingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     },
-                    trailingIcon = {
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "icons")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                FilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
-                    }
+                    },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
                 )
             }
         }
@@ -301,44 +438,142 @@ private fun FilterChipSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    val items = remember {
-        listOf(
-            "射击" to mutableStateOf(false),
-            "跑酷" to mutableStateOf(false),
-            "解谜" to mutableStateOf(false),
-            "推塔" to mutableStateOf(false),
-            "塔防" to mutableStateOf(false),
-            "赛车" to mutableStateOf(false),
-            "横版" to mutableStateOf(false),
-            "舞蹈" to mutableStateOf(false)
-        )
-    }
     ExpandableItem3(title = "ElevatedFilterChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            items.forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
                 ElevatedFilterChip(
-                    selected = it.second.value,
-                    onClick = {
-                        val newSelected = !it.second.value
-                        it.second.value = newSelected
-                        context.showShortToast("${it.first}：${newSelected}")
-                    },
-                    label = {
-                        Text(text = it.first)
-                    },
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
                     leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = Color.Red,
+                        labelColor = Color.Cyan,
+                        iconColor = Color.Cyan,
+                    ),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    elevation = FilterChipDefaults.elevatedFilterChipElevation(10.dp),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "leadingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "trailingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    trailingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     },
-                    trailingIcon = {
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "icons")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                ElevatedFilterChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
-                    }
+                    },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
                 )
             }
         }
@@ -355,44 +590,165 @@ private fun ElevatedFilterChipSamplePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InputChipSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    val items = remember {
-        listOf(
-            "射击" to mutableStateOf(false),
-            "跑酷" to mutableStateOf(false),
-            "解谜" to mutableStateOf(false),
-            "推塔" to mutableStateOf(false),
-            "塔防" to mutableStateOf(false),
-            "赛车" to mutableStateOf(false),
-            "横版" to mutableStateOf(false),
-            "舞蹈" to mutableStateOf(false)
-        )
-    }
     ExpandableItem3(title = "InputChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            items.forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
                 InputChip(
-                    selected = it.second.value,
-                    onClick = {
-                        val newSelected = !it.second.value
-                        it.second.value = newSelected
-                        context.showShortToast("${it.first}：${newSelected}")
-                    },
-                    label = {
-                        Text(text = it.first)
-                    },
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    shape = RoundedCornerShape(50),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
                     leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = Color.Red,
+                        labelColor = Color.Cyan,
+                        iconColor = Color.Cyan,
+                    ),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    elevation = InputChipDefaults.inputChipElevation(10.dp),
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "leadingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "avatar")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    avatar = {
+                        Icon(
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "trailingIcon")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    trailingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null
                         )
                     },
-                    trailingIcon = {
+                    label = { Text(text = tag) },
+                )
+            }
+
+            Column {
+                Text(text = "icons")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedState = remember { mutableStateOf(false) }
+                InputChip(
+                    selected = selectedState.value,
+                    onClick = { selectedState.value = !selectedState.value },
+                    leadingIcon = {
                         Icon(
-                            imageVector = Icons.Filled.Clear,
+                            imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
-                    }
+                    },
+                    avatar = {
+                        Icon(
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = null
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = null
+                        )
+                    },
+                    label = { Text(text = tag) },
                 )
             }
         }
@@ -410,19 +766,78 @@ private fun InputChipSamplePreview() {
 private fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "SuggestionChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
                 SuggestionChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) }
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                SuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    shape = RoundedCornerShape(50)
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                SuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    border = AssistChipDefaults.assistChipBorder(borderColor = Color.Red)
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                SuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    colors = AssistChipDefaults.assistChipColors(
+                        labelColor = Color.Red,
+                        containerColor = Color.Cyan,
+                        leadingIconContentColor = Color.Blue,
+                        trailingIconContentColor = Color.Yellow,
+                    )
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                SuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    elevation = SuggestionChipDefaults.suggestionChipElevation(10.dp)
+                )
+            }
+
+            Column {
+                Text(text = "icon")
+                Spacer(modifier = Modifier.size(10.dp))
+                SuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     icon = {
                         Icon(
-                            imageVector = Icons.Filled.Close,
+                            imageVector = Icons.Filled.Info,
                             contentDescription = null
                         )
-                    },
+                    }
                 )
             }
         }
@@ -440,19 +855,78 @@ private fun SuggestionChipSamplePreview() {
 private fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "ElevatedSuggestionChip", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp) {
-            listOf("射击", "跑酷", "解谜", "推塔", "塔防", "赛车", "横版", "舞蹈").forEach {
+        val tag = "射击"
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
                 ElevatedSuggestionChip(
-                    onClick = { context.showShortToast(it) },
-                    label = {
-                        Text(text = it)
-                    },
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) }
+                )
+            }
+
+            Column {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedSuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    shape = RoundedCornerShape(50)
+                )
+            }
+
+            Column {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedSuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    border = AssistChipDefaults.assistChipBorder(borderColor = Color.Red)
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedSuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    colors = AssistChipDefaults.assistChipColors(
+                        labelColor = Color.Red,
+                        containerColor = Color.Cyan,
+                        leadingIconContentColor = Color.Blue,
+                        trailingIconContentColor = Color.Yellow,
+                    )
+                )
+            }
+
+            Column {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedSuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
+                    elevation = SuggestionChipDefaults.elevatedSuggestionChipElevation(10.dp)
+                )
+            }
+
+            Column {
+                Text(text = "icon")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedSuggestionChip(
+                    onClick = { context.showShortToast(tag) },
+                    label = { Text(text = tag) },
                     icon = {
                         Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null,
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null
                         )
-                    },
+                    }
                 )
             }
         }
