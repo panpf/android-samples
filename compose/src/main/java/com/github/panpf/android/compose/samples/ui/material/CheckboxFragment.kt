@@ -3,7 +3,9 @@ package com.github.panpf.android.compose.samples.ui.material
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Divider
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -34,11 +37,8 @@ class CheckboxFragment : MaterialComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             CheckboxSample(allExpandFlow)
-            CheckboxEnabledFalseSample(allExpandFlow)
-            CheckboxColorsSample(allExpandFlow)
             CheckboxGroupSample(allExpandFlow)
             TriStateCheckboxSample(allExpandFlow)
-            TriStateCheckboxColorsSample(allExpandFlow)
             TriStateCheckboxGroupSample(allExpandFlow)
         }
     }
@@ -49,10 +49,43 @@ class CheckboxFragment : MaterialComposeAppBarFragment() {
 private fun CheckboxSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
     ExpandableItem(title = "Checkbox", allExpandFlow, padding = 20.dp) {
-        Checkbox(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
-        )
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                Checkbox(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it }
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                Checkbox(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.Blue,
+                        uncheckedColor = Color.Red
+                    ),
+                )
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                Checkbox(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it },
+                    enabled = false,
+                )
+            }
+        }
     }
 }
 
@@ -60,47 +93,6 @@ private fun CheckboxSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun CheckboxSamplePreview() {
     CheckboxSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun CheckboxEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
-    val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Checkbox（enabled - false）", allExpandFlow, padding = 20.dp) {
-        Checkbox(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it },
-            enabled = false,
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CheckboxEnabledFalseSamplePreview() {
-    CheckboxEnabledFalseSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun CheckboxColorsSample(allExpandFlow: Flow<Boolean>) {
-    val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Checkbox（colors）", allExpandFlow, padding = 20.dp) {
-        Checkbox(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it },
-            colors = CheckboxDefaults.colors(
-                checkedColor = Color.Blue,
-                uncheckedColor = Color.Red
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CheckboxColorsSamplePreview() {
-    CheckboxColorsSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -154,20 +146,65 @@ private fun CheckboxGroupSamplePreview() {
 
 @Composable
 private fun TriStateCheckboxSample(allExpandFlow: Flow<Boolean>) {
-    val toggleableState = remember {
-        mutableStateOf(ToggleableState(false))
-    }
     ExpandableItem(title = "TriStateCheckbox", allExpandFlow, padding = 20.dp) {
-        TriStateCheckbox(
-            state = toggleableState.value,
-            onClick = {
-                toggleableState.value = when (toggleableState.value) {
-                    ToggleableState.Off -> ToggleableState.Indeterminate
-                    ToggleableState.Indeterminate -> ToggleableState.On
-                    ToggleableState.On -> ToggleableState.Off
-                }
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val toggleableState = remember { mutableStateOf(ToggleableState(false)) }
+                TriStateCheckbox(
+                    state = toggleableState.value,
+                    onClick = {
+                        toggleableState.value = when (toggleableState.value) {
+                            ToggleableState.Off -> ToggleableState.Indeterminate
+                            ToggleableState.Indeterminate -> ToggleableState.On
+                            ToggleableState.On -> ToggleableState.Off
+                        }
+                    }
+                )
             }
-        )
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val toggleableState = remember { mutableStateOf(ToggleableState(false)) }
+                TriStateCheckbox(
+                    state = toggleableState.value,
+                    onClick = {
+                        toggleableState.value = when (toggleableState.value) {
+                            ToggleableState.Off -> ToggleableState.Indeterminate
+                            ToggleableState.Indeterminate -> ToggleableState.On
+                            ToggleableState.On -> ToggleableState.Off
+                        }
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.Blue,
+                        uncheckedColor = Color.Red
+                    ),
+                )
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                val toggleableState = remember { mutableStateOf(ToggleableState(false)) }
+                TriStateCheckbox(
+                    state = toggleableState.value,
+                    enabled = false,
+                    onClick = {
+                        toggleableState.value = when (toggleableState.value) {
+                            ToggleableState.Off -> ToggleableState.Indeterminate
+                            ToggleableState.Indeterminate -> ToggleableState.On
+                            ToggleableState.On -> ToggleableState.Off
+                        }
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -175,36 +212,6 @@ private fun TriStateCheckboxSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun TriStateCheckboxSamplePreview() {
     TriStateCheckboxSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun TriStateCheckboxColorsSample(allExpandFlow: Flow<Boolean>) {
-    val toggleableState = remember {
-        mutableStateOf(ToggleableState(false))
-    }
-    ExpandableItem(title = "TriStateCheckbox（colors）", allExpandFlow, padding = 20.dp) {
-        TriStateCheckbox(
-            state = toggleableState.value,
-            onClick = {
-                toggleableState.value = when (toggleableState.value) {
-                    ToggleableState.Off -> ToggleableState.Indeterminate
-                    ToggleableState.Indeterminate -> ToggleableState.On
-                    ToggleableState.On -> ToggleableState.Off
-                }
-            },
-            colors = CheckboxDefaults.colors(
-                checkedColor = Color.Blue,
-                uncheckedColor = Color.Red
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun TriStateCheckboxColorsSamplePreview() {
-    TriStateCheckboxColorsSample(remember { MutableStateFlow(true) })
 }
 
 
