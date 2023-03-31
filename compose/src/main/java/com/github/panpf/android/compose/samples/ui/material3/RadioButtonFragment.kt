@@ -3,7 +3,9 @@ package com.github.panpf.android.compose.samples.ui.material3
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -31,8 +34,6 @@ class RadioButtonFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             RadioButtonSample(allExpandFlow)
-            RadioButtonEnabledFalseSample(allExpandFlow)
-            RadioButtonColorsSample(allExpandFlow)
             RadioButtonGroupSample(allExpandFlow)
         }
     }
@@ -41,12 +42,47 @@ class RadioButtonFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun RadioButtonSample(allExpandFlow: Flow<Boolean>) {
-    val selected = remember { mutableStateOf(false) }
     ExpandableItem3(title = "RadioButton", allExpandFlow, padding = 20.dp) {
-        RadioButton(
-            selected = selected.value,
-            onClick = { selected.value = !selected.value }
-        )
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selected = remember { mutableStateOf(false) }
+                RadioButton(
+                    selected = selected.value,
+                    onClick = { selected.value = !selected.value }
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selected = remember { mutableStateOf(false) }
+                RadioButton(
+                    selected = selected.value,
+                    onClick = { selected.value = !selected.value },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue,
+                        unselectedColor = Color.Red
+                    ),
+                )
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selected = remember { mutableStateOf(false) }
+                RadioButton(
+                    selected = selected.value,
+                    onClick = { selected.value = !selected.value },
+                    enabled = false,
+                )
+            }
+        }
     }
 }
 
@@ -54,47 +90,6 @@ private fun RadioButtonSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun RadioButtonSamplePreview() {
     RadioButtonSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun RadioButtonEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
-    val selected = remember { mutableStateOf(false) }
-    ExpandableItem3(title = "RadioButton（enabled - false）", allExpandFlow, padding = 20.dp) {
-        RadioButton(
-            selected = selected.value,
-            onClick = { selected.value = !selected.value },
-            enabled = false,
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun RadioButtonEnabledFalseSamplePreview() {
-    RadioButtonEnabledFalseSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun RadioButtonColorsSample(allExpandFlow: Flow<Boolean>) {
-    val selected = remember { mutableStateOf(false) }
-    ExpandableItem3(title = "RadioButton（colors）", allExpandFlow, padding = 20.dp) {
-        RadioButton(
-            selected = selected.value,
-            onClick = { selected.value = !selected.value },
-            colors = RadioButtonDefaults.colors(
-                selectedColor = Color.Blue,
-                unselectedColor = Color.Red
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun RadioButtonColorsSamplePreview() {
-    RadioButtonColorsSample(remember { MutableStateFlow(true) })
 }
 
 
