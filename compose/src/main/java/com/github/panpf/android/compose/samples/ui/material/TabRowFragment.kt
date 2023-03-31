@@ -4,8 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Divider
@@ -44,10 +46,8 @@ class TabRowFragment : MaterialComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             TabRowSample(allExpandFlow)
-            TabRowColorsSample(allExpandFlow)
             TabRowPagerSample(allExpandFlow)
             ScrollableTabRowSample(allExpandFlow)
-            ScrollableTabRowColorsSample(allExpandFlow)
             ScrollableTabRowPagerSample(allExpandFlow)
         }
     }
@@ -57,8 +57,10 @@ class TabRowFragment : MaterialComposeAppBarFragment() {
 @Composable
 private fun TabRowSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+    val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
     ExpandableItem(title = "TabRow", allExpandFlow, padding = 20.dp) {
+        Text(text = "Default")
+        Spacer(modifier = Modifier.size(10.dp))
         TabRow(
             selectedTabIndex = selectedTabIndex.value,
         ) {
@@ -73,21 +75,10 @@ private fun TabRowSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
         }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun TabRowSamplePreview() {
-    TabRowSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun TabRowColorsSample(allExpandFlow: Flow<Boolean>) {
-    val selectedTabIndex = remember { mutableStateOf(0) }
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "TabRow（colors）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Spacer(modifier = Modifier.size(10.dp))
         TabRow(
             selectedTabIndex = selectedTabIndex.value,
             backgroundColor = Color.Transparent,
@@ -120,8 +111,8 @@ private fun TabRowColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun TabRowColorsSamplePreview() {
-    TabRowColorsSample(remember { MutableStateFlow(true) })
+private fun TabRowSamplePreview() {
+    TabRowSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -129,7 +120,7 @@ private fun TabRowColorsSamplePreview() {
 @Composable
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+    val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "TabRow（Pager）", allExpandFlow, padding = 20.dp) {
@@ -186,8 +177,10 @@ private fun TabRowPagerSamplePreview() {
 @Composable
 private fun ScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
     val selectedTabIndex = remember { mutableStateOf(0) }
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+    val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
     ExpandableItem(title = "ScrollableTabRow", allExpandFlow, padding = 20.dp) {
+        Text(text = "Default")
+        Spacer(modifier = Modifier.size(10.dp))
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex.value,
         ) {
@@ -202,21 +195,10 @@ private fun ScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
         }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ScrollableTabRowSamplePreview() {
-    ScrollableTabRowSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ScrollableTabRowColorsSample(allExpandFlow: Flow<Boolean>) {
-    val selectedTabIndex = remember { mutableStateOf(0) }
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
-    ExpandableItem(title = "ScrollableTabRow（colors）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Spacer(modifier = Modifier.size(10.dp))
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex.value,
             backgroundColor = Color.Transparent,
@@ -249,8 +231,8 @@ private fun ScrollableTabRowColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ScrollableTabRowColorsSamplePreview() {
-    ScrollableTabRowColorsSample(remember { MutableStateFlow(true) })
+private fun ScrollableTabRowSamplePreview() {
+    ScrollableTabRowSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -258,7 +240,7 @@ private fun ScrollableTabRowColorsSamplePreview() {
 @Composable
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
+    val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "ScrollableTabRow（Pager）", allExpandFlow, padding = 20.dp) {
