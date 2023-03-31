@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
@@ -22,6 +23,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -35,10 +37,7 @@ class SwitchFragment : MaterialComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             SwitchSample(allExpandFlow)
-            SwitchEnabledFalseSample(allExpandFlow)
-            SwitchColorsSample(allExpandFlow)
-            SwitchGroupSingleSample(allExpandFlow)
-            SwitchGroupMultiSample(allExpandFlow)
+            SwitchGroupSample(allExpandFlow)
         }
     }
 }
@@ -46,12 +45,49 @@ class SwitchFragment : MaterialComposeAppBarFragment() {
 
 @Composable
 private fun SwitchSample(allExpandFlow: Flow<Boolean>) {
-    val checked = remember { mutableStateOf(false) }
     ExpandableItem(title = "Switch", allExpandFlow, padding = 20.dp) {
-        Switch(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it }
-        )
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
+        ) {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checked = remember { mutableStateOf(false) }
+                Switch(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it }
+                )
+            }
+
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checked = remember { mutableStateOf(false) }
+                Switch(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.Blue,
+                        checkedTrackColor = MyColor.TranslucenceBlue,
+                        uncheckedThumbColor = Color.Red,
+                        uncheckedTrackColor = MyColor.TranslucenceRed,
+                    ),
+                )
+            }
+
+            Column {
+                Text(text = "enabled=false")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checked = remember { mutableStateOf(false) }
+                Switch(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it },
+                    enabled = false,
+                )
+            }
+        }
     }
 }
 
@@ -63,126 +99,78 @@ private fun SwitchSamplePreview() {
 
 
 @Composable
-private fun SwitchEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
-    val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Switch（enabled - false）", allExpandFlow, padding = 20.dp) {
-        Switch(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it },
-            enabled = false,
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SwitchEnabledFalseSamplePreview() {
-    SwitchEnabledFalseSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SwitchColorsSample(allExpandFlow: Flow<Boolean>) {
-    val checked = remember { mutableStateOf(false) }
-    ExpandableItem(title = "Switch（colors）", allExpandFlow, padding = 20.dp) {
-        Switch(
-            checked = checked.value,
-            onCheckedChange = { checked.value = it },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.Blue,
-                checkedTrackColor = MyColor.TranslucenceBlue,
-                uncheckedThumbColor = Color.Red,
-                uncheckedTrackColor = MyColor.TranslucenceRed,
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SwitchColorsSamplePreview() {
-    SwitchColorsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SwitchGroupSingleSample(allExpandFlow: Flow<Boolean>) {
-    val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
-    val selectedIndex = remember { mutableStateOf(null as Int?) }
-    ExpandableItem(title = "Switch（Group - Single）", allExpandFlow, padding = 20.dp) {
-        Column {
-            platforms.forEachIndexed { index, platform ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        selectedIndex.value = if (selectedIndex.value == index) null else index
-                    }
-                ) {
-                    Switch(
-                        checked = index == selectedIndex.value,
-                        onCheckedChange = {
+private fun SwitchGroupSample(allExpandFlow: Flow<Boolean>) {
+    val platforms = remember { listOf("Android", "iOS", "macOS", "Windows", "Linux") }
+    ExpandableItem(title = "Switch（Group）", allExpandFlow, padding = 20.dp) {
+        Row(Modifier.fillMaxWidth()) {
+            Column(Modifier.weight(1f)) {
+                Text(text = "单选")
+                Spacer(modifier = Modifier.size(10.dp))
+                val selectedIndex = remember { mutableStateOf(null as Int?) }
+                platforms.forEachIndexed { index, platform ->
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
                             selectedIndex.value = if (selectedIndex.value == index) null else index
                         }
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .width(16.dp)
-                            .height(10.dp)
-                    )
-                    Text(text = platform, modifier = Modifier.align(Alignment.CenterVertically))
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SwitchGroupSingleSamplePreview() {
-    SwitchGroupSingleSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SwitchGroupMultiSample(allExpandFlow: Flow<Boolean>) {
-    val platforms = listOf("Android", "iOS", "macOS", "Windows", "Linux")
-    val checkedSet = remember { mutableStateOf(setOf<Int>()) }
-    ExpandableItem(title = "Switch（Group - Multi）", allExpandFlow, padding = 20.dp) {
-        Column {
-            platforms.forEachIndexed { index, platform ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        checkedSet.value = checkedSet.value
-                            .toMutableSet()
-                            .apply {
-                                if (!contains(index)) {
-                                    add(index)
-                                } else {
-                                    remove(index)
-                                }
+                    ) {
+                        Switch(
+                            checked = index == selectedIndex.value,
+                            onCheckedChange = {
+                                selectedIndex.value =
+                                    if (selectedIndex.value == index) null else index
                             }
-                            .toSet()
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(16.dp)
+                                .height(10.dp)
+                        )
+                        Text(text = platform, modifier = Modifier.align(Alignment.CenterVertically))
                     }
-                ) {
-                    Switch(
-                        checked = checkedSet.value.contains(index),
-                        onCheckedChange = {
-                            checkedSet.value = checkedSet.value.toMutableSet().apply {
-                                if (it) {
-                                    add(index)
-                                } else {
-                                    remove(index)
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column(Modifier.weight(1f)) {
+                Text(text = "多选")
+                Spacer(modifier = Modifier.size(10.dp))
+                val checkedSet = remember { mutableStateOf(setOf<Int>()) }
+                platforms.forEachIndexed { index, platform ->
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            checkedSet.value = checkedSet.value
+                                .toMutableSet()
+                                .apply {
+                                    if (!contains(index)) {
+                                        add(index)
+                                    } else {
+                                        remove(index)
+                                    }
                                 }
-                            }.toSet()
+                                .toSet()
                         }
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .width(16.dp)
-                            .height(10.dp)
-                    )
-                    Text(text = platform, modifier = Modifier.align(Alignment.CenterVertically))
+                    ) {
+                        Switch(
+                            checked = checkedSet.value.contains(index),
+                            onCheckedChange = {
+                                checkedSet.value = checkedSet.value.toMutableSet().apply {
+                                    if (it) {
+                                        add(index)
+                                    } else {
+                                        remove(index)
+                                    }
+                                }.toSet()
+                            }
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(16.dp)
+                                .height(10.dp)
+                        )
+                        Text(text = platform, modifier = Modifier.align(Alignment.CenterVertically))
+                    }
                 }
             }
         }
@@ -191,6 +179,6 @@ private fun SwitchGroupMultiSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun SwitchGroupMultiSamplePreview() {
-    SwitchGroupMultiSample(remember { MutableStateFlow(true) })
+private fun SwitchGroupSamplePreview() {
+    SwitchGroupSample(remember { MutableStateFlow(true) })
 }
