@@ -2,7 +2,12 @@ package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
@@ -21,6 +26,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -34,10 +40,6 @@ class CardFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             CardSample(allExpandFlow)
-            CardShapeSample(allExpandFlow)
-            CardColorsSample(allExpandFlow)
-            CardElevationSample(allExpandFlow)
-            CardBorderSample(allExpandFlow)
             ElevatedCardSample(allExpandFlow)
             OutlinedCardSample(allExpandFlow)
         }
@@ -48,9 +50,89 @@ class CardFragment : Material3ComposeAppBarFragment() {
 @Composable
 private fun CardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Card", allExpandFlow, padding = 20.dp) {
-        Card(modifier = Modifier.size(160.dp)) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    shape = CircleShape
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MyColor.TranslucenceRed,
+                        contentColor = Color.White,
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    border = BorderStroke(2.dp, Color.Red)
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
             }
         }
     }
@@ -64,101 +146,74 @@ private fun CardSamplePreview() {
 
 
 @Composable
-private fun CardShapeSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Card（shape）", allExpandFlow, padding = 20.dp) {
-        Card(
-            modifier = Modifier.size(160.dp),
-            shape = CircleShape
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CardShapeSamplePreview() {
-    CardShapeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun CardColorsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Card（colors）", allExpandFlow, padding = 20.dp) {
-        Card(
-            modifier = Modifier.size(160.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MyColor.TranslucenceRed,
-                contentColor = Color.White,
-            )
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CardColorsSamplePreview() {
-    CardColorsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun CardElevationSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Card（elevation）", allExpandFlow, padding = 20.dp) {
-        Card(
-            modifier = Modifier.size(160.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 10.dp,
-                pressedElevation = 0.dp
-            )
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CardElevationSamplePreview() {
-    CardElevationSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun CardBorderSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Card（border）", allExpandFlow, padding = 20.dp) {
-        Card(
-            modifier = Modifier.size(160.dp),
-            border = BorderStroke(2.dp, Color.Red)
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun CardBorderSamplePreview() {
-    CardBorderSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 private fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ElevatedCard", allExpandFlow, padding = 20.dp) {
-        ElevatedCard(modifier = Modifier.size(160.dp)) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedCard(modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    shape = CircleShape
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MyColor.TranslucenceRed,
+                        contentColor = Color.White,
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
             }
         }
     }
@@ -174,9 +229,87 @@ private fun ElevatedCardSamplePreview() {
 @Composable
 private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "OutlinedCard", allExpandFlow, padding = 20.dp) {
-        OutlinedCard(modifier = Modifier.size(160.dp)) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        ) {
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedCard(modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "shape")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    shape = CircleShape
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MyColor.TranslucenceRed,
+                        contentColor = Color.White,
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "elevation")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 0.dp
+                    )
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "border")
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    border = BorderStroke(2.dp, Color.Red)
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
+                    }
+                }
             }
         }
     }

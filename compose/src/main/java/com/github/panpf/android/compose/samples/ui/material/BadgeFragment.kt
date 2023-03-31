@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
 import androidx.compose.material.Icon
@@ -38,7 +40,10 @@ private fun BadgeSample() {
     FlowRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
+        mainAxisSpacing = 20.dp,
+        crossAxisSpacing = 20.dp,
     ) {
         Column {
             Text(text = "Default")
