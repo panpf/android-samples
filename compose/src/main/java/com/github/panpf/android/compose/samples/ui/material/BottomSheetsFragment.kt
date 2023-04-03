@@ -287,13 +287,13 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
             navigationSelectedIndex.value = it
         }
     }
-    ExpandableItem(title = "ModalBottomSheetLayout（sheetShape）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem(title = "BottomSheetScaffold", allExpandFlow, padding = 20.dp) {
         BottomSheetScaffold(
             modifier = Modifier.fillMaxWidth().height(500.dp),
             scaffoldState = bottomSheetScaffoldState,
             topBar = {
                 TopAppBar(
-                    title = { Text("BottomSheetScaffold - Material") },
+                    title = { Text("Title") },
                     navigationIcon = {
                         IconButton(
                             onClick = {
