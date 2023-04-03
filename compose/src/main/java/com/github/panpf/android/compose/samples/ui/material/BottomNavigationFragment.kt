@@ -4,10 +4,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.BottomNavigation
@@ -51,7 +53,6 @@ class BottomNavigationFragment : MaterialComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             BottomNavigationSample(allExpandFlow)
-            BottomNavigationColorsSample(allExpandFlow)
             BottomNavigationPagerSample(allExpandFlow)
         }
     }
@@ -71,23 +72,46 @@ private fun BottomNavigationSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
     val context = LocalContext.current
     ExpandableItem(title = "BottomNavigation", allExpandFlow, padding = 20.dp) {
-        Column {
-            BottomNavigation {
-                items.forEachIndexed { index, item ->
-                    BottomNavigationItem(
-                        selected = selectedIndex.value == index,
-                        onClick = {
-                            context.showShortToast(item.first)
-                            selectedIndex.value = index
-                        },
-                        icon = {
-                            Icon(imageVector = item.second, contentDescription = item.first)
-                        },
-                        label = {
-                            Text(text = item.first)
-                        }
-                    )
-                }
+        Text(text = "Default")
+        Spacer(modifier = Modifier.size(10.dp))
+        BottomNavigation {
+            items.forEachIndexed { index, item ->
+                BottomNavigationItem(
+                    selected = selectedIndex.value == index,
+                    onClick = {
+                        context.showShortToast(item.first)
+                        selectedIndex.value = index
+                    },
+                    icon = {
+                        Icon(imageVector = item.second, contentDescription = item.first)
+                    },
+                    label = {
+                        Text(text = item.first)
+                    }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Spacer(modifier = Modifier.size(10.dp))
+        BottomNavigation {
+            items.forEachIndexed { index, item ->
+                BottomNavigationItem(
+                    selected = selectedIndex.value == index,
+                    onClick = {
+                        context.showShortToast(item.first)
+                        selectedIndex.value = index
+                    },
+                    icon = {
+                        Icon(imageVector = item.second, contentDescription = item.first)
+                    },
+                    label = {
+                        Text(text = item.first)
+                    },
+                    selectedContentColor = Color.Yellow,
+                    unselectedContentColor = Color.Red,
+                )
             }
         }
     }
@@ -97,50 +121,6 @@ private fun BottomNavigationSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun BottomNavigationSamplePreview() {
     BottomNavigationSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun BottomNavigationColorsSample(allExpandFlow: Flow<Boolean>) {
-    val items = remember {
-        listOf(
-            "首页" to Icons.Filled.Home,
-            "通讯录" to Icons.Filled.Phone,
-            "游戏" to Icons.Filled.PlayArrow,
-            "设置" to Icons.Filled.Settings,
-        )
-    }
-    val selectedIndex = remember { mutableStateOf(1) }
-    val context = LocalContext.current
-    ExpandableItem(title = "BottomNavigation（Colors）", allExpandFlow, padding = 20.dp) {
-        Column {
-            BottomNavigation {
-                items.forEachIndexed { index, item ->
-                    BottomNavigationItem(
-                        selected = selectedIndex.value == index,
-                        onClick = {
-                            context.showShortToast(item.first)
-                            selectedIndex.value = index
-                        },
-                        icon = {
-                            Icon(imageVector = item.second, contentDescription = item.first)
-                        },
-                        label = {
-                            Text(text = item.first)
-                        },
-                        selectedContentColor = Color.Yellow,
-                        unselectedContentColor = Color.Red,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun BottomNavigationColorsSamplePreview() {
-    BottomNavigationColorsSample(remember { MutableStateFlow(true) })
 }
 
 
