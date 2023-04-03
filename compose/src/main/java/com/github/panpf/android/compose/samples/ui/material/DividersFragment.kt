@@ -16,10 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 
-class DividerFragment : MaterialComposeAppBarFragment() {
+class DividersFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Divider - Material"
+        return "Dividers - Material"
     }
 
     @Composable

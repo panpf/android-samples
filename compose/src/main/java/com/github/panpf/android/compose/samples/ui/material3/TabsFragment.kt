@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.material
+package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -10,13 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Divider
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,18 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
-import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class TabRowFragment : MaterialComposeAppBarFragment() {
+class TabsFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "TabRow - Material"
+        return "Tabs - Material3"
     }
 
     @Composable
@@ -81,7 +80,7 @@ private fun TabRowSample(allExpandFlow: Flow<Boolean>) {
         Spacer(modifier = Modifier.size(10.dp))
         TabRow(
             selectedTabIndex = selectedTabIndex.value,
-            backgroundColor = Color.Transparent,
+            containerColor = Color.Transparent,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.value]),
@@ -116,7 +115,7 @@ private fun TabRowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
@@ -129,7 +128,7 @@ private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
                     )
                 },
             ) {
@@ -201,7 +200,7 @@ private fun ScrollableTabRowSample(allExpandFlow: Flow<Boolean>) {
         Spacer(modifier = Modifier.size(10.dp))
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex.value,
-            backgroundColor = Color.Transparent,
+            containerColor = Color.Transparent,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.value]),
@@ -236,7 +235,7 @@ private fun ScrollableTabRowSamplePreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
@@ -249,7 +248,7 @@ private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
                     )
                 },
             ) {

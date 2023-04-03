@@ -17,10 +17,10 @@ import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFra
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ListItemFragment : MaterialComposeAppBarFragment() {
+class ListsFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "ListItem - Material"
+        return "Lists - Material"
     }
 
     @Composable

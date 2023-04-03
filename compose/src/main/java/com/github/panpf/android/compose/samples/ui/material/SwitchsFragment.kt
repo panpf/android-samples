@@ -27,10 +27,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class SwitchFragment : MaterialComposeAppBarFragment() {
+class SwitchsFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Switch - Material"
+        return "Switchs - Material"
     }
 
     @Composable

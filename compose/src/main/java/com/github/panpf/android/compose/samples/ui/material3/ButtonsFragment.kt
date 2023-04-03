@@ -50,10 +50,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ButtonFragment : Material3ComposeAppBarFragment() {
+class ButtonsFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Button - Material3"
+        return "Buttons - Material3"
     }
 
     @Composable

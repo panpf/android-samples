@@ -24,10 +24,10 @@ import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFra
 import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.flowlayout.FlowRow
 
-class CardFragment : MaterialComposeAppBarFragment() {
+class CardsFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Card - Material"
+        return "Cards - Material"
     }
 
     @Composable

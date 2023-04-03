@@ -26,10 +26,10 @@ import com.github.panpf.tools4a.toast.ktx.showShortToast
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DropdownMenuFragment : Material3ComposeAppBarFragment() {
+class MenusFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "DropdownMenu - Material3"
+        return "Menus - Material3"
     }
 
     @Composable

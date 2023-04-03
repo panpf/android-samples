@@ -25,10 +25,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.roundToInt
 
-class SliderFragment : Material3ComposeAppBarFragment() {
+class SlidersFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Slider - Material3"
+        return "Sliders - Material3"
     }
 
     @Composable

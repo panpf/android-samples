@@ -38,10 +38,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ButtonFragment : MaterialComposeAppBarFragment() {
+class ButtonsFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Button - Material"
+        return "Buttons - Material"
     }
 
     @Composable

@@ -38,10 +38,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class DrawerFragment : MaterialComposeAppBarFragment() {
+class NavigationDrawerFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Drawer - Material"
+        return "NavigationDrawer - Material"
     }
 
     @Composable

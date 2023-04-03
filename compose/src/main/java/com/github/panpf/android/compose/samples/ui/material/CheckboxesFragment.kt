@@ -27,10 +27,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class CheckboxFragment : MaterialComposeAppBarFragment() {
+class CheckboxesFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Checkbox - Material"
+        return "Checkboxes - Material"
     }
 
     @Composable

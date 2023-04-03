@@ -19,33 +19,35 @@ class Material3Fragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("AlertDialog", R.id.action_global_material3AlertDialogFragment),
-                Link("Badge", R.id.action_global_material3BadgeFragment),
+                Link("Badges", R.id.action_global_material3BadgesFragment),
                 Link("BottomAppBar", R.id.action_global_material3BottomAppBarFragment),
                 Link("BottomSheets（Planned）"),  // todo Planned https://m3.material.io/components/bottom-sheets/overview
-                Link("Button", R.id.action_global_material3ButtonFragment),
-                Link("Card", R.id.action_global_material3CardFragment),
+                Link("Buttons", R.id.action_global_material3ButtonsFragment),
+                Link("Cards", R.id.action_global_material3CardsFragment),
                 Link("Checkbox", R.id.action_global_material3CheckboxFragment),
-                Link("Chip", R.id.action_global_material3ChipFragment),
-                Link("DatePicker（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
+                Link("Chips", R.id.action_global_material3ChipsFragment),
+                Link("DatePickers（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
+                Link("Dialogs", R.id.action_global_material3DialogsFragment),
                 Link("Divider", R.id.action_global_material3DividerFragment),
-                Link("DropdownMenu", R.id.action_global_material3DropdownMenuFragment),
+                Link("Lists", R.id.action_global_material3ListsFragment),
+                Link("Menus", R.id.action_global_material3MenusFragment),
                 Link("Icon", R.id.action_global_material3IconFragment),
-                Link("ListItem", R.id.action_global_material3ListItemFragment),
                 Link("NavigationBar", R.id.action_global_material3NavigationBarFragment),
                 Link("NavigationDrawer", R.id.action_global_material3NavigationDrawerFragment),
                 Link("NavigationRail", R.id.action_global_material3NavigationRailFragment),
-                Link("ProgressIndicator", R.id.action_global_material3ProgressIndicatorFragment),
+                Link("ProgressIndicators", R.id.action_global_material3ProgressIndicatorsFragment),
                 Link("RadioButton", R.id.action_global_material3RadioButtonFragment),
+                Link("Search"),  // todo Planned https://m3.material.io/components/date-pickers/overview
+                Link("SideSheets"),  // todo Planned https://m3.material.io/components/date-pickers/overview
                 Link("Scaffold", R.id.action_global_material3ScaffoldFragment),
-                Link("Slider", R.id.action_global_material3SliderFragment),
+                Link("Sliders", R.id.action_global_material3SlidersFragment),
                 Link("Snackbar", R.id.action_global_material3SnackbarFragment),
                 Link("Surface", R.id.action_global_material3SurfaceFragment),
                 Link("Switch", R.id.action_global_material3SwitchFragment),
-                Link("TabRow", R.id.action_global_material3TabRowFragment),
+                Link("Tabs", R.id.action_global_material3TabsFragment),
                 Link("Text", R.id.action_global_material3TextFragment),
-                Link("TextField", R.id.action_global_material3TextFieldFragment),
-                Link("TimePicker（Planned）"),  // todo Planned https://m3.material.io/components/time-pickers/overview
+                Link("TextFields", R.id.action_global_material3TextFieldsFragment),
+                Link("TimePickers（Planned）"),  // todo Planned https://m3.material.io/components/time-pickers/overview
                 Link("TopAppBar", R.id.action_global_material3TopAppBarFragment),
             )
         }

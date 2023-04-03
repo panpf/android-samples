@@ -24,10 +24,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class RadioButtonFragment : MaterialComposeAppBarFragment() {
+class RadioButtonsFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "RadioButton - Material"
+        return "RadioButtons - Material"
     }
 
     @Composable

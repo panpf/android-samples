@@ -24,10 +24,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AlertDialogFragment : Material3ComposeAppBarFragment() {
+class DialogsFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "AlertDialog - Material3"
+        return "Dialogs - Material3"
     }
 
     @Composable

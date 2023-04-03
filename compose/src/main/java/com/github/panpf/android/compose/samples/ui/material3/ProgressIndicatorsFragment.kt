@@ -30,10 +30,10 @@ import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ProgressIndicatorFragment : Material3ComposeAppBarFragment() {
+class ProgressIndicatorsFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "ProgressIndicator - Material3"
+        return "ProgressIndicators - Material3"
     }
 
     @Composable
