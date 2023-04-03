@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,11 +35,6 @@ class SliderFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             SliderSample(allExpandFlow)
-            SliderValueSample(allExpandFlow)
-            SliderEnabledFalseSample(allExpandFlow)
-            SliderValueRangeSample(allExpandFlow)
-            SliderStepsSample(allExpandFlow)
-            SliderColorsSample(allExpandFlow)
             RangeSliderSample(allExpandFlow)
         }
     }
@@ -49,15 +43,103 @@ class SliderFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun SliderSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0f) }
     ExpandableItem3(title = "Slider", allExpandFlow, padding = 20.dp) {
+        Text(text = "Default")
         Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                )
-            }
+            val value = remember { mutableStateOf(0f) }
+            Slider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(45.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "InitialValue")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0.4f) }
+            Slider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(45.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "valueRange")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0f) }
+            val valueRange = 0.2f..0.8f
+            Slider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                valueRange = valueRange,
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            val finalValue = if (value.value == 0f) valueRange.start else value.value
+            Text(
+                text = "${(finalValue * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(45.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "steps")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0f) }
+            Slider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                steps = 9,
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(45.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0f) }
+            Slider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                steps = 9,
+                colors = SliderDefaults.colors(
+                    thumbColor = Color.Red,
+                    activeTrackColor = Color.Yellow,
+                    activeTickColor = Color.Cyan,
+                    inactiveTrackColor = Color.Blue,
+                    inactiveTickColor = Color.White,
+                ),
+            )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
                 text = "${(value.value * 100).roundToInt()}%",
@@ -78,179 +160,102 @@ private fun SliderSamplePreview() {
 
 
 @Composable
-private fun SliderValueSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0.4f) }
-    ExpandableItem3(title = "Slider（value）", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                )
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "${(value.value * 100).roundToInt()}%",
-                modifier = Modifier
-                    .width(45.dp)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SliderValueSamplePreview() {
-    SliderValueSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SliderEnabledFalseSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0f) }
-    ExpandableItem3(title = "Slider（enabled - false）", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                    enabled = false,
-                )
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "${(value.value * 100).roundToInt()}%",
-                modifier = Modifier
-                    .width(45.dp)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SliderEnabledFalseSamplePreview() {
-    SliderEnabledFalseSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SliderValueRangeSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0f) }
-    val valueRange = 0.2f..0.8f
-    ExpandableItem3(title = "Slider（valueRange）", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                    valueRange = valueRange,
-                )
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            val finalValue = if (value.value == 0f) valueRange.start else value.value
-            Text(
-                text = "${(finalValue * 100).roundToInt()}%",
-                modifier = Modifier
-                    .width(45.dp)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SliderValueRangeSamplePreview() {
-    SliderValueRangeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SliderStepsSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0f) }
-    ExpandableItem3(title = "Slider（steps）", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                    steps = 9,
-                )
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "${(value.value * 100).roundToInt()}%",
-                modifier = Modifier
-                    .width(45.dp)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SliderStepsSamplePreview() {
-    SliderStepsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SliderColorsSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0.4f) }
-    ExpandableItem3(title = "Slider（colors）", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                Slider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                    steps = 9,
-                    colors = SliderDefaults.colors(
-                        thumbColor = Color.Red,
-                        activeTrackColor = Color.Yellow,
-                        activeTickColor = Color.Cyan,
-                        inactiveTrackColor = Color.Blue,
-                        inactiveTickColor = Color.White,
-                    ),
-                )
-            }
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "${(value.value * 100).roundToInt()}%",
-                modifier = Modifier
-                    .width(45.dp)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SliderColorsSamplePreview() {
-    SliderColorsSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 private fun RangeSliderSample(allExpandFlow: Flow<Boolean>) {
-    val value = remember { mutableStateOf(0.4f..0.8f) }
     ExpandableItem3(title = "RangeSlider", allExpandFlow, padding = 20.dp) {
+        Text(text = "Default")
         Row(modifier = Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier.weight(1f)) {
-                RangeSlider(
-                    value = value.value,
-                    onValueChange = { value.value = it },
-                )
-            }
+            val value = remember { mutableStateOf(0f..1f) }
+            RangeSlider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(100.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "InitialValue")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0.2f..0.8f) }
+            RangeSlider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(100.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "valueRange")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0.2f..0.8f) }
+            RangeSlider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                valueRange = 0.2f..0.8f,
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(100.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "steps")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0f..1f) }
+            RangeSlider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                steps = 9,
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
+                modifier = Modifier
+                    .width(100.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.End,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            val value = remember { mutableStateOf(0f..1f) }
+            RangeSlider(
+                value = value.value,
+                onValueChange = { value.value = it },
+                modifier = Modifier.weight(1f),
+                steps = 9,
+                colors = SliderDefaults.colors(
+                    thumbColor = Color.Red,
+                    activeTrackColor = Color.Yellow,
+                    activeTickColor = Color.Cyan,
+                    inactiveTrackColor = Color.Blue,
+                    inactiveTickColor = Color.White,
+                ),
+            )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
                 text = "${(value.value.start * 100).roundToInt()}% - ${(value.value.endInclusive * 100).roundToInt()}%",
