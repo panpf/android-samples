@@ -79,7 +79,7 @@ class BottomSheetsFragment : MaterialComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            ModalBottomSheetLayoutSample(allExpandFlow)
+            ModalBottomSheetLayoutSample(allExpandFlow) // todo merge
             ModalBottomSheetLayoutSheetShapeSample(allExpandFlow)
             BottomSheetScaffoldSample(allExpandFlow)
         }

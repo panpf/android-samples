@@ -35,7 +35,7 @@ class DialogFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            DialogSample(allExpandFlow)
+            DialogSample(allExpandFlow) // todo merge
             DialogLimitDismissSample(allExpandFlow)
         }
     }

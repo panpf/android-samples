@@ -37,8 +37,8 @@ class Material3Fragment : Material3ComposeAppBarFragment() {
                 Link("NavigationRail", R.id.action_global_material3NavigationRailFragment),
                 Link("ProgressIndicators", R.id.action_global_material3ProgressIndicatorsFragment),
                 Link("RadioButton", R.id.action_global_material3RadioButtonFragment),
-                Link("Search"),  // todo Planned https://m3.material.io/components/date-pickers/overview
-                Link("SideSheets"),  // todo Planned https://m3.material.io/components/date-pickers/overview
+                Link("Search（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
+                Link("SideSheets（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
                 Link("Scaffold", R.id.action_global_material3ScaffoldFragment),
                 Link("Sliders", R.id.action_global_material3SlidersFragment),
                 Link("Snackbar", R.id.action_global_material3SnackbarFragment),

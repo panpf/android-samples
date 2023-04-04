@@ -57,7 +57,7 @@ private fun BackdropScaffoldSample() {
         )
     }
     val snackbarHostState = remember { SnackbarHostState() }
-    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
+    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     val coroutineScope = rememberCoroutineScope()
 
     BackdropScaffold(
@@ -89,7 +89,7 @@ private fun BackdropScaffoldSample() {
                 pageCount = colors.size,
                 modifier = Modifier.fillMaxSize(),
             ) { index ->
-                Box(
+                Box(    // todo 优化不使用大色块，观感不好
                     modifier = Modifier
                         .fillMaxSize()
                         .background(colors[index % colors.size])

@@ -37,10 +37,11 @@ class TopAppBarFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            TopAppBarSample(allExpandFlow)
-            CenterAlignedTopAppBarSample(allExpandFlow)
-            MediumTopAppBarSample(allExpandFlow)
-            LargeTopAppBarSample(allExpandFlow)
+            TopAppBarSample(allExpandFlow)  // todo merge
+            TopAppBarColorsSample(allExpandFlow)
+            CenterAlignedTopAppBarSample(allExpandFlow) // todo add colors sample
+            MediumTopAppBarSample(allExpandFlow) // todo add colors sample
+            LargeTopAppBarSample(allExpandFlow) // todo add colors sample
         }
     }
 }

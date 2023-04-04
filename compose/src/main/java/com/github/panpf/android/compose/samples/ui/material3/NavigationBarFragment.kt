@@ -49,7 +49,7 @@ class NavigationBarFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            NavigationBarSample(allExpandFlow)
+            NavigationBarSample(allExpandFlow)  // todo merge
             NavigationBarColorsSample(allExpandFlow)
             NavigationBarPagerSample(allExpandFlow)
         }
