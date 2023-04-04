@@ -1,5 +1,7 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Phone
@@ -9,6 +11,7 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,18 +30,17 @@ class ListsFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            ListItemOneLineSample(allExpandFlow)
-            ListItemTwoLineSample(allExpandFlow)
-            ListItemThreeLineSample(allExpandFlow)
-            ListItemColorsSample(allExpandFlow)
+            ListItemSample(allExpandFlow)
         }
     }
 }
 
 
 @Composable
-private fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "ListItem（one-line）", allExpandFlow, padding = 20.dp) {
+private fun ListItemSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "ListItem", allExpandFlow, padding = 20.dp) {
+        Text(text = "One-line")
+        Spacer(modifier = Modifier.size(10.dp))
         ListItem(
             headlineContent = {
                 Text(text = "One line list item with trailing")
@@ -56,19 +58,10 @@ private fun ListItemOneLineSample(allExpandFlow: Flow<Boolean>) {
                 )
             },
         )
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ListItemOneLineSamplePreview() {
-    ListItemOneLineSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "ListItem（Two-line）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "Two-line")
+        Spacer(modifier = Modifier.size(10.dp))
         ListItem(
             headlineContent = {
                 Text(text = "Two line list item with trailing")
@@ -89,19 +82,10 @@ private fun ListItemTwoLineSample(allExpandFlow: Flow<Boolean>) {
                 )
             },
         )
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ListItemTwoLineSamplePreview() {
-    ListItemTwoLineSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "ListItem（Three-line）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "Three-line")
+        Spacer(modifier = Modifier.size(10.dp))
         ListItem(
             headlineContent = {
                 Text(text = "Three line list item with trailing")
@@ -125,19 +109,10 @@ private fun ListItemThreeLineSample(allExpandFlow: Flow<Boolean>) {
                 )
             },
         )
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ListItemThreeLineSamplePreview() {
-    ListItemThreeLineSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "ListItem（colors）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Spacer(modifier = Modifier.size(10.dp))
         ListItem(
             headlineContent = {
                 Text(text = "Three line list item with trailing")
@@ -174,6 +149,6 @@ private fun ListItemColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ListItemColorsSamplePreview() {
-    ListItemColorsSample(remember { MutableStateFlow(true) })
+private fun ListItemSamplePreview() {
+    ListItemSample(remember { MutableStateFlow(true) })
 }
