@@ -1,8 +1,10 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,9 +33,11 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -52,7 +56,6 @@ class NavigationRailFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             NavigationRailSample(allExpandFlow)
-            NavigationRailColorsSample(allExpandFlow)
             NavigationRailPagerSample(allExpandFlow)
         }
     }
@@ -71,24 +74,101 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     ExpandableItem3(title = "NavigationRail", allExpandFlow, padding = 20.dp) {
-        NavigationRail(
-            modifier = Modifier
-                .height(300.dp),
-        ) {
-            items.forEachIndexed { index, itemPair ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                NavigationRailItem(
-                    selected = selectedIndex.value == index,
-                    onClick = {
-                        selectedIndex.value = index
-                    },
-                    label = { Text(text = itemPair.first) },
-                    icon = {
-                        Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
+        Row {
+            Column {
+                Text(text = "Default")
+                Spacer(modifier = Modifier.size(10.dp))
+                NavigationRail(modifier = Modifier.height(400.dp)) {
+                    items.forEachIndexed { index, itemPair ->
+                        if (index > 0) {
+                            Spacer(modifier = Modifier.size(10.dp))
+                        }
+                        NavigationRailItem(
+                            selected = selectedIndex.value == index,
+                            onClick = {
+                                selectedIndex.value = index
+                            },
+                            label = { Text(text = itemPair.first) },
+                            icon = {
+                                Icon(
+                                    imageVector = itemPair.second,
+                                    contentDescription = itemPair.first
+                                )
+                            }
+                        )
                     }
-                )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column {
+                Text(text = "colors")
+                Spacer(modifier = Modifier.size(10.dp))
+                NavigationRail(
+                    modifier = Modifier.height(400.dp),
+                    containerColor = MyColor.TranslucenceYellow
+                ) {
+                    items.forEachIndexed { index, itemPair ->
+                        if (index > 0) {
+                            Spacer(modifier = Modifier.size(10.dp))
+                        }
+                        NavigationRailItem(
+                            selected = selectedIndex.value == index,
+                            onClick = {
+                                selectedIndex.value = index
+                            },
+                            label = { Text(text = itemPair.first) },
+                            icon = {
+                                Icon(
+                                    imageVector = itemPair.second,
+                                    contentDescription = itemPair.first
+                                )
+                            },
+                            colors = NavigationRailItemDefaults.colors(
+                                selectedIconColor = Color.Blue,
+                                selectedTextColor = Color.Magenta,
+                                indicatorColor = MyColor.TranslucenceGreen,
+                                unselectedIconColor = MyColor.TranslucenceBlue,
+                                unselectedTextColor = MyColor.TranslucenceMagenta,
+                            )
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Column {
+                Text(text = "header")
+                Spacer(modifier = Modifier.size(10.dp))
+                NavigationRail(
+                    modifier = Modifier
+                        .height(400.dp),
+                    header = {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_avatar),
+                            contentDescription = "avatar"
+                        )
+                    },
+                ) {
+                    items.forEachIndexed { index, itemPair ->
+                        if (index > 0) {
+                            Spacer(modifier = Modifier.size(10.dp))
+                        }
+                        NavigationRailItem(
+                            selected = selectedIndex.value == index,
+                            onClick = {
+                                selectedIndex.value = index
+                            },
+                            label = { Text(text = itemPair.first) },
+                            icon = {
+                                Icon(
+                                    imageVector = itemPair.second,
+                                    contentDescription = itemPair.first
+                                )
+                            }
+                        )
+                    }
+                }
             }
         }
     }
@@ -98,55 +178,6 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun NavigationRailSamplePreview() {
     NavigationRailSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun NavigationRailColorsSample(allExpandFlow: Flow<Boolean>) {
-    val selectedIndex = remember { mutableStateOf(0) }
-    val items = remember {
-        listOf(
-            "首页" to Icons.Filled.Home,
-            "通讯录" to Icons.Filled.Phone,
-            "游戏" to Icons.Filled.PlayArrow,
-            "设置" to Icons.Filled.Settings,
-        )
-    }
-    ExpandableItem3(title = "NavigationRail（colors）", allExpandFlow, padding = 20.dp) {
-        NavigationRail(
-            modifier = Modifier.height(300.dp),
-            containerColor = MyColor.TranslucenceYellow
-        ) {
-            items.forEachIndexed { index, itemPair ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                NavigationRailItem(
-                    selected = selectedIndex.value == index,
-                    onClick = {
-                        selectedIndex.value = index
-                    },
-                    label = { Text(text = itemPair.first) },
-                    icon = {
-                        Icon(imageVector = itemPair.second, contentDescription = itemPair.first)
-                    },
-                    colors = NavigationRailItemDefaults.colors(
-                        selectedIconColor = Color.Blue,
-                        selectedTextColor = Color.Magenta,
-                        indicatorColor = MyColor.TranslucenceGreen,
-                        unselectedIconColor = MyColor.TranslucenceBlue,
-                        unselectedTextColor = MyColor.TranslucenceMagenta,
-                    )
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun NavigationRailColorsSamplePreview() {
-    NavigationRailColorsSample(remember { MutableStateFlow(true) })
 }
 
 
