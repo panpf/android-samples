@@ -4,10 +4,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
@@ -49,8 +51,7 @@ class NavigationBarFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            NavigationBarSample(allExpandFlow)  // todo merge
-            NavigationBarColorsSample(allExpandFlow)
+            NavigationBarSample(allExpandFlow)
             NavigationBarPagerSample(allExpandFlow)
         }
     }
@@ -69,6 +70,8 @@ private fun NavigationBarSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     ExpandableItem3(title = "NavigationBar", allExpandFlow, padding = 20.dp) {
+        Text(text = "Default")
+        Spacer(modifier = Modifier.size(10.dp))
         NavigationBar {
             items.forEachIndexed { index, itemPair ->
                 NavigationBarItem(
@@ -83,28 +86,10 @@ private fun NavigationBarSample(allExpandFlow: Flow<Boolean>) {
                 )
             }
         }
-    }
-}
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun NavigationBarSamplePreview() {
-    NavigationBarSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
-    val selectedIndex = remember { mutableStateOf(0) }
-    val items = remember {
-        listOf(
-            "首页" to Icons.Filled.Home,
-            "通讯录" to Icons.Filled.Phone,
-            "游戏" to Icons.Filled.PlayArrow,
-            "设置" to Icons.Filled.Settings,
-        )
-    }
-    ExpandableItem3(title = "NavigationBar（colors）", allExpandFlow, padding = 20.dp) {
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "colors")
+        Spacer(modifier = Modifier.size(10.dp))
         NavigationBar(
             containerColor = MyColor.TranslucenceYellow
         ) {
@@ -133,8 +118,8 @@ private fun NavigationBarColorsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun NavigationBarColorsSamplePreview() {
-    NavigationBarColorsSample(remember { MutableStateFlow(true) })
+private fun NavigationBarSamplePreview() {
+    NavigationBarSample(remember { MutableStateFlow(true) })
 }
 
 
