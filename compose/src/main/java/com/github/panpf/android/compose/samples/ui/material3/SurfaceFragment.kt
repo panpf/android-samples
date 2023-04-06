@@ -42,10 +42,7 @@ class SurfaceFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            SurfaceSample(allExpandFlow)    // todo merge
-            SurfaceColorSample(allExpandFlow)
-            SurfaceShapeSample(allExpandFlow)
-            SurfaceBorderSample(allExpandFlow)
+            SurfaceSample(allExpandFlow)
             SurfaceWithBoxSample(allExpandFlow)
         }
     }
@@ -56,17 +53,86 @@ class SurfaceFragment : Material3ComposeAppBarFragment() {
 private fun SurfaceSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "Surface", allExpandFlow, padding = 20.dp) {
-        Surface(
-            modifier = Modifier.size(150.dp),
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            mainAxisSpacing = 20.dp,
+            crossAxisSpacing = 20.dp,
         ) {
-            Box {
-                Button(
-                    onClick = {
-                        context.showLongToast("我是按钮 1")
-                    },
-                    modifier = Modifier.align(Alignment.Center)
+            Column {
+                Text(text = "Default")
+                Surface(
+                    modifier = Modifier.size(130.dp),
                 ) {
-                    Text(text = "按钮 1")
+                    Box {
+                        Button(
+                            onClick = {
+                                context.showLongToast("我是按钮 1")
+                            },
+                            modifier = Modifier.align(Alignment.Center)
+                        ) {
+                            Text(text = "按钮 1")
+                        }
+                    }
+                }
+            }
+
+            Column {
+                Text(text = "color")
+                Surface(
+                    modifier = Modifier.size(130.dp),
+                    color = MyColor.TranslucenceRed
+                ) {
+                    Box {
+                        Button(
+                            onClick = {
+                                context.showLongToast("我是按钮 1")
+                            },
+                            modifier = Modifier.align(Alignment.Center)
+                        ) {
+                            Text(text = "按钮 1")
+                        }
+                    }
+                }
+            }
+
+            Column {
+                Text(text = "shape")
+                Surface(
+                    modifier = Modifier.size(130.dp),
+                    color = MyColor.TranslucenceRed,
+                    shape = RoundedCornerShape(20.dp),
+                ) {
+                    Box {
+                        Button(
+                            onClick = {
+                                context.showLongToast("我是按钮 1")
+                            },
+                            modifier = Modifier.align(Alignment.Center)
+                        ) {
+                            Text(text = "按钮 1")
+                        }
+                    }
+                }
+            }
+
+            Column {
+                Text(text = "border")
+                Surface(
+                    modifier = Modifier.size(130.dp),
+                    border = BorderStroke(2.dp, Color.Red)
+                ) {
+                    Box {
+                        Button(
+                            onClick = {
+                                context.showLongToast("我是按钮 1")
+                            },
+                            modifier = Modifier.align(Alignment.Center)
+                        ) {
+                            Text(text = "按钮 1")
+                        }
+                    }
                 }
             }
         }
@@ -81,94 +147,6 @@ private fun SurfaceSamplePreview() {
 
 
 @Composable
-private fun SurfaceColorSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "Surface（color）", allExpandFlow, padding = 20.dp) {
-        Surface(
-            modifier = Modifier.size(150.dp),
-            color = MyColor.TranslucenceRed
-        ) {
-            Box {
-                Button(
-                    onClick = {
-                        context.showLongToast("我是按钮 1")
-                    },
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    Text(text = "按钮 1")
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SurfaceColorSamplePreview() {
-    SurfaceColorSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SurfaceShapeSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "Surface（shape）", allExpandFlow, padding = 20.dp) {
-        Surface(
-            modifier = Modifier.size(150.dp),
-            color = MyColor.TranslucenceRed,
-            shape = RoundedCornerShape(20.dp),
-        ) {
-            Box {
-                Button(
-                    onClick = {
-                        context.showLongToast("我是按钮 1")
-                    },
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    Text(text = "按钮 1")
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SurfaceShapeSamplePreview() {
-    SurfaceShapeSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun SurfaceBorderSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    ExpandableItem3(title = "Surface（border）", allExpandFlow, padding = 20.dp) {
-        Surface(
-            modifier = Modifier.size(150.dp),
-            border = BorderStroke(2.dp, Color.Red)
-        ) {
-            Box {
-                Button(
-                    onClick = {
-                        context.showLongToast("我是按钮 1")
-                    },
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    Text(text = "按钮 1")
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun SurfaceBorderSamplePreview() {
-    SurfaceBorderSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "Surface（WithBox）", allExpandFlow, padding = 20.dp) {
@@ -176,9 +154,10 @@ private fun SurfaceWithBoxSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "与 Box 相比 Surface常用来作为一个屏幕的的根节点，原因如下：\n" +
-                        "1. Surface 默认有背景" +
-                        "2. Surface 会拦截触摸事件导致它下面的所有节点都无法点击\n"
+                text = """与 Box 相比 Surface常用来作为一个屏幕的根节点，原因如下：
+                1. Surface 默认有背景
+                2. Surface 会拦截触摸事件导致它下面的所有节点都无法点击
+                """.trimIndent()
             )
             Spacer(modifier = Modifier.size(10.dp))
             FlowRow(
