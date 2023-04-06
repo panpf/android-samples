@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -22,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.FlowColumn
 
 class DialogsFragment : Material3ComposeAppBarFragment() {
 
@@ -44,7 +43,7 @@ private fun AlertDialogSample() {
     val shapeShowState = remember { mutableStateOf(false) }
     val colorsShowState = remember { mutableStateOf(false) }
     val tonalElevationShowState = remember { mutableStateOf(false) }
-    FlowRow(
+    FlowColumn(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
@@ -52,40 +51,36 @@ private fun AlertDialogSample() {
         mainAxisSpacing = 20.dp,
         crossAxisSpacing = 20.dp,
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                Button(onClick = { defaultShowState.value = true }) {
-                    Text(text = "Show AlertDialog")
-                }
-                Button(onClick = { limitDismissShowState.value = true }) {
-                    Text(text = "Show Limit Dismiss AlertDialog")
-                }
-                Button(onClick = { shapeShowState.value = true }) {
-                    Text(text = "Show Rectangle AlertDialog")
-                }
-                Button(onClick = { colorsShowState.value = true }) {
-                    Text(text = "Show Blue AlertDialog")
-                }
-                Button(onClick = { colorsShowState.value = true }) {
-                    Text(text = "Show tonalElevation AlertDialog")
-                }
-            }
-            if (defaultShowState.value) {
-                AlertDialogDefaultSample(openDialog = defaultShowState)
-            }
-            if (limitDismissShowState.value) {
-                AlertDialogLimitDismissSample(openDialog = limitDismissShowState)
-            }
-            if (shapeShowState.value) {
-                AlertDialogShapeSample(openDialog = shapeShowState)
-            }
-            if (colorsShowState.value) {
-                AlertDialogColorsSample(openDialog = colorsShowState)
-            }
-            if (tonalElevationShowState.value) {
-                AlertDialogTonalElevationSample(openDialog = tonalElevationShowState)
-            }
+        Button(onClick = { defaultShowState.value = true }) {
+            Text(text = "Show AlertDialog")
         }
+        Button(onClick = { limitDismissShowState.value = true }) {
+            Text(text = "Show Limit Dismiss AlertDialog")
+        }
+        Button(onClick = { shapeShowState.value = true }) {
+            Text(text = "Show Rectangle AlertDialog")
+        }
+        Button(onClick = { colorsShowState.value = true }) {
+            Text(text = "Show Blue AlertDialog")
+        }
+        Button(onClick = { colorsShowState.value = true }) {
+            Text(text = "Show tonalElevation AlertDialog")
+        }
+    }
+    if (defaultShowState.value) {
+        AlertDialogDefaultSample(showDialogState = defaultShowState)
+    }
+    if (limitDismissShowState.value) {
+        AlertDialogLimitDismissSample(showDialogState = limitDismissShowState)
+    }
+    if (shapeShowState.value) {
+        AlertDialogShapeSample(showDialogState = shapeShowState)
+    }
+    if (colorsShowState.value) {
+        AlertDialogColorsSample(showDialogState = colorsShowState)
+    }
+    if (tonalElevationShowState.value) {
+        AlertDialogTonalElevationSample(showDialogState = tonalElevationShowState)
     }
 }
 
@@ -97,7 +92,7 @@ private fun AlertDialogSamplePreview() {
 
 
 @Composable
-private fun AlertDialogDefaultSample(openDialog: MutableState<Boolean>) {
+private fun AlertDialogDefaultSample(showDialogState: MutableState<Boolean>) {
     AlertDialog(
         icon = {
             Icon(
@@ -114,7 +109,7 @@ private fun AlertDialogDefaultSample(openDialog: MutableState<Boolean>) {
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "确定")
@@ -123,14 +118,14 @@ private fun AlertDialogDefaultSample(openDialog: MutableState<Boolean>) {
         dismissButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "取消")
             }
         },
         onDismissRequest = {
-            openDialog.value = false
+            showDialogState.value = false
         }
     )
 }
@@ -143,7 +138,7 @@ private fun AlertDialogDefaultSamplePreview() {
 
 
 @Composable
-private fun AlertDialogLimitDismissSample(openDialog: MutableState<Boolean>) {
+private fun AlertDialogLimitDismissSample(showDialogState: MutableState<Boolean>) {
     AlertDialog(
         icon = {
             Icon(
@@ -160,7 +155,7 @@ private fun AlertDialogLimitDismissSample(openDialog: MutableState<Boolean>) {
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "确定")
@@ -169,14 +164,14 @@ private fun AlertDialogLimitDismissSample(openDialog: MutableState<Boolean>) {
         dismissButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "取消")
             }
         },
         onDismissRequest = {
-            openDialog.value = false
+            showDialogState.value = false
         },
         properties = DialogProperties(
             dismissOnBackPress = false,
@@ -193,7 +188,7 @@ private fun AlertDialogLimitDismissSamplePreview() {
 
 
 @Composable
-private fun AlertDialogShapeSample(openDialog: MutableState<Boolean>) {
+private fun AlertDialogShapeSample(showDialogState: MutableState<Boolean>) {
     AlertDialog(
         icon = {
             Icon(
@@ -210,7 +205,7 @@ private fun AlertDialogShapeSample(openDialog: MutableState<Boolean>) {
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "确定")
@@ -219,14 +214,14 @@ private fun AlertDialogShapeSample(openDialog: MutableState<Boolean>) {
         dismissButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "取消")
             }
         },
         onDismissRequest = {
-            openDialog.value = false
+            showDialogState.value = false
         },
         shape = androidx.compose.ui.graphics.RectangleShape
     )
@@ -240,7 +235,7 @@ private fun AlertDialogShapeSamplePreview() {
 
 
 @Composable
-private fun AlertDialogColorsSample(openDialog: MutableState<Boolean>) {
+private fun AlertDialogColorsSample(showDialogState: MutableState<Boolean>) {
     AlertDialog(
         icon = {
             Icon(
@@ -257,7 +252,7 @@ private fun AlertDialogColorsSample(openDialog: MutableState<Boolean>) {
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "确定", color = Color.White)
@@ -266,14 +261,14 @@ private fun AlertDialogColorsSample(openDialog: MutableState<Boolean>) {
         dismissButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "取消", color = Color.White)
             }
         },
         onDismissRequest = {
-            openDialog.value = false
+            showDialogState.value = false
         },
         containerColor = Color(0xFF7F7FFF),
         iconContentColor = Color.White,
@@ -290,7 +285,7 @@ private fun AlertDialogColorsSamplePreview() {
 
 
 @Composable
-private fun AlertDialogTonalElevationSample(openDialog: MutableState<Boolean>) {
+private fun AlertDialogTonalElevationSample(showDialogState: MutableState<Boolean>) {
     AlertDialog(
         icon = {
             Icon(
@@ -307,7 +302,7 @@ private fun AlertDialogTonalElevationSample(openDialog: MutableState<Boolean>) {
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "确定")
@@ -316,14 +311,14 @@ private fun AlertDialogTonalElevationSample(openDialog: MutableState<Boolean>) {
         dismissButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
+                    showDialogState.value = false
                 }
             ) {
                 Text(text = "取消")
             }
         },
         onDismissRequest = {
-            openDialog.value = false
+            showDialogState.value = false
         },
         tonalElevation = 100.dp,
     )
