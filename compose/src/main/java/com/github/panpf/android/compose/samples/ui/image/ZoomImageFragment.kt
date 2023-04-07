@@ -3,16 +3,20 @@ package com.github.panpf.android.compose.samples.ui.image
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.ui.base.HorizontalGrid
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
@@ -68,7 +73,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
-        val items = listOf("AI", "My", "Tlaster", "Birdly", "Photo")
+        val items = listOf("Grid", "AI", "My", "Tlaster", "Birdly", "Photo")
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,10 +89,33 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
             ) { index ->
                 when (index) {
                     0 -> {
+                        HorizontalGrid(
+//        rows = GridCells.Fixed(2),
+                            rows = GridCells.Adaptive(100.dp),
+                            modifier = Modifier.background(Color.Blue.copy(alpha = 0.2f)),
+//        crossAxisSize = 100.dp
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            repeat(7) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .width(80.dp)
+                                        .aspectRatio(1f)
+//                    .height(((it + 1) * 10).dp)
+                                        .border(width = 1.dp, color = Color.Red)
+                                ) {
+                                    Text("Item ${it + 1}")
+                                }
+                            }
+                        }
+                    }
+                    1 -> {
                         MyZoomImageSample()
                     }
 
-                    1 -> {
+                    2 -> {
                         TlasterZoomable(
                             state = rememberTlasterZoomableState(),
                             modifier = Modifier.fillMaxSize(),
@@ -100,7 +128,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                         }
                     }
 
-                    2 -> {
+                    3 -> {
                         Image(
                             painter = painterResource(id = R.drawable.dog_hor),
                             contentDescription = "",
@@ -110,7 +138,7 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
                         )
                     }
 
-                    3 -> {
+                    4 -> {
                         PhotoBox(
                             modifier = Modifier.fillMaxSize(),
                         ) {
