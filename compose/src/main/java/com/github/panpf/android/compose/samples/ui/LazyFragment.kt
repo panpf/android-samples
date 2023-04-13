@@ -9,25 +9,28 @@ import com.github.panpf.android.compose.samples.model.Link
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.list.LinkList
 
-class LayoutFragment : Material3ComposeAppBarFragment() {
+class LazyFragment : Material3ComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Layout"
+        return "Lazy"
     }
 
     @Composable
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("Box", R.id.action_global_boxFragment),
-                Link("Column", R.id.action_global_columnFragment),
-                Link("ConstraintLayout", R.id.action_global_constraintLayoutFragment),
-                Link("FlowColumn", R.id.action_global_flowColumnFragment),
-                Link("FlowRow", R.id.action_global_flowRowFragment),
-                Link("HorizontalGrid（Customization）", R.id.action_global_horizontalGridFragment),
-                Link("Row", R.id.action_global_rowFragment),
-                Link("Spacer", R.id.action_global_spacerFragment),
-                Link("VerticalGrid（Customization）", R.id.action_global_verticalGridFragment),
+                Link("LazyColumn", R.id.action_global_lazyColumnFragment),
+                Link("LazyHorizontalGrid", R.id.action_global_lazyHorizontalGridFragment),
+                Link(
+                    "LazyHorizontalStaggeredGrid",
+                    R.id.action_global_lazyHorizontalStaggeredGridFragment
+                ),
+                Link("LazyRow", R.id.action_global_lazyRowFragment),
+                Link("LazyVerticalGrid", R.id.action_global_lazyVerticalGridFragment),
+                Link(
+                    "LazyVerticalStaggeredGrid",
+                    R.id.action_global_lazyVerticalStaggeredGridFragment
+                ),
             )
         }
         LinkList(links) { _, link ->
