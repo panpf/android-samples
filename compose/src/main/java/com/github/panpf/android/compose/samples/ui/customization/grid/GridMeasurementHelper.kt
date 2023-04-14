@@ -20,7 +20,7 @@ internal class GridMeasureHelperResult(
 
 internal class GridMeasurementHelper(
     private val rows: GridCells,
-    private val contentPadding: PaddingValues,  // todo support padding
+    private val contentPadding: PaddingValues,
     private val reverseLayout: Boolean, // todo support reverse layout
     private val layoutDirection: LayoutDirection,   // left to right or right to left todo support rtl
     private val layoutOrientation: LayoutOrientation,   // horizontal or vertical todo support vertical
@@ -36,16 +36,26 @@ internal class GridMeasurementHelper(
         require(constraints.maxWidth != Constraints.Infinity) {
             "Grid can not be infinite width"
         }
-        val mainAxisSpacing =
-            with(measureScope) { horizontalArrangement.spacing.toPx().roundToInt() }
-        val crossAxisSpacing =
-            with(measureScope) { verticalArrangement.spacing.toPx().roundToInt() }
+        val mainAxisSpacing = with(measureScope) {
+            horizontalArrangement.spacing.toPx().roundToInt()
+        }
+        val crossAxisSpacing = with(measureScope) {
+            verticalArrangement.spacing.toPx().roundToInt()
+        }
+        val leftPadding = with(measureScope) {
+            contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
+        }
+        val rightPadding = with(measureScope) {
+            contentPadding.calculateRightPadding(layoutDirection).toPx().roundToInt()
+        }
+        val topPadding = with(measureScope) {
+            contentPadding.calculateTopPadding().toPx().roundToInt()
+        }
+        val bottomPadding = with(measureScope) {
+            contentPadding.calculateBottomPadding().toPx().roundToInt()
+        }
         val resolvedSlotSizesSums = with(measureScope) {
             with(rows) {
-                val leftPadding =
-                    contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
-                val rightPadding =
-                    contentPadding.calculateRightPadding(layoutDirection).toPx().roundToInt()
                 val availableSize = constraints.maxWidth - leftPadding - rightPadding
                 calculateCrossAxisCellSizes(
                     availableSize = availableSize,
@@ -55,7 +65,7 @@ internal class GridMeasurementHelper(
         }
         val spanCount = resolvedSlotSizesSums.size
         val mainAxisSize = constraints.maxWidth
-        var crossAxisSize = 0
+        var crossAxisSize = topPadding + bottomPadding
         var lineHeight = 0
         val childSize = measurables.size
         var line: Int
@@ -92,46 +102,43 @@ internal class GridMeasurementHelper(
         placeableScope: Placeable.PlacementScope,
         result: GridMeasureHelperResult
     ) {
-        with(measureScope) {
-            with(placeableScope) {
-                var yPosition = 0
-                var xPosition = 0
-                val spanCount = result.spanCount
-//                val leftPadding =
-//                    contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
-//                val rightPadding =
-//                    contentPadding.calculateRightPadding(layoutDirection).toPx().roundToInt()
-                var line: Int
-                var lineHeight = 0
-                val mainAxisSpacing = horizontalArrangement.spacing.toPx().roundToInt()
-                val crossAxisSpacing = verticalArrangement.spacing.toPx().roundToInt()
-                val lastSpanIndex = spanCount - 1
-                val firstSpanIndex = 0
-                result.placeables.forEachIndexed { index, placeable ->
-                    line = index / spanCount
-                    when (index % spanCount) {
-                        firstSpanIndex -> {
-                            xPosition = 0
-                            yPosition += if (line > 0) crossAxisSpacing else 0
-                            placeable.placeRelative(x = xPosition, y = yPosition)
-                            xPosition += placeable.width
-                            lineHeight = placeable.height
-                        }
-
-                        lastSpanIndex -> {
-                            xPosition += mainAxisSpacing
-                            placeable.placeRelative(x = xPosition, y = yPosition)
-                            lineHeight = max(lineHeight, placeable.height)
-                            yPosition += lineHeight
-                        }
-
-                        else -> {
-                            xPosition += mainAxisSpacing
-                            placeable.placeRelative(x = xPosition, y = yPosition)
-                            xPosition += placeable.width
-                            lineHeight = max(lineHeight, placeable.height)
-                        }
-                    }
+        val mainAxisSpacing = with(measureScope) {
+            horizontalArrangement.spacing.toPx().roundToInt()
+        }
+        val crossAxisSpacing = with(measureScope) {
+            verticalArrangement.spacing.toPx().roundToInt()
+        }
+        val leftPadding = with(measureScope) {
+            contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
+        }
+        val topPadding = with(measureScope) {
+            contentPadding.calculateTopPadding().toPx().roundToInt()
+        }
+        with(placeableScope) {
+            var yPosition = topPadding
+            var xPosition = leftPadding
+            val spanCount = result.spanCount
+            var line: Int
+            var lineHeight = 0
+            val lastSpanIndex = spanCount - 1
+            val firstSpanIndex = 0
+            result.placeables.forEachIndexed { index, placeable ->
+                line = index / spanCount
+                val spanIndex = index % spanCount
+                if (spanIndex == firstSpanIndex) {
+                    xPosition = leftPadding
+                    yPosition += if (line > 0) crossAxisSpacing else 0
+                    placeable.placeRelative(x = xPosition, y = yPosition)
+                    xPosition += placeable.width
+                    lineHeight = placeable.height
+                } else {
+                    xPosition += mainAxisSpacing
+                    placeable.placeRelative(x = xPosition, y = yPosition)
+                    xPosition += placeable.width
+                    lineHeight = max(lineHeight, placeable.height)
+                }
+                if (spanIndex == lastSpanIndex) {
+                    yPosition += lineHeight
                 }
             }
         }
