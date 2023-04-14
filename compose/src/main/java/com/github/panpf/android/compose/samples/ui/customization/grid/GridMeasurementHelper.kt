@@ -31,14 +31,28 @@ internal class GridMeasurementHelper(
         measurables: List<Measurable>,
         constraints: Constraints
     ): GridMeasureHelperResult {
-        require(constraints.maxWidth != Constraints.Infinity) {
-            "Grid can not be infinite width"
+        if (layoutOrientation == LayoutOrientation.Vertical) {
+            require(constraints.maxWidth != Constraints.Infinity) {
+                "VerticalGrid's width should be bound by parent."
+            }
+        } else {
+            require(constraints.maxHeight != Constraints.Infinity) {
+                "HorizontalGrid's height should be bound by parent."
+            }
         }
         val mainAxisSpacing = with(measureScope) {
-            horizontalArrangement.spacing.toPx().roundToInt()
+            if (layoutOrientation == LayoutOrientation.Vertical) {
+                verticalArrangement.spacing.toPx().roundToInt()
+            } else {
+                horizontalArrangement.spacing.toPx().roundToInt()
+            }
         }
         val crossAxisSpacing = with(measureScope) {
-            verticalArrangement.spacing.toPx().roundToInt()
+            if (layoutOrientation == LayoutOrientation.Vertical) {
+                horizontalArrangement.spacing.toPx().roundToInt()
+            } else {
+                verticalArrangement.spacing.toPx().roundToInt()
+            }
         }
         val leftPadding = with(measureScope) {
             contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
@@ -54,7 +68,11 @@ internal class GridMeasurementHelper(
         }
         val resolvedSlotSizesSums = with(measureScope) {
             with(rows) {
-                val availableSize = constraints.maxWidth - leftPadding - rightPadding
+                val availableSize = if (layoutOrientation == LayoutOrientation.Vertical) {
+                    constraints.maxWidth - leftPadding - rightPadding
+                } else {
+                    constraints.maxHeight - topPadding - bottomPadding
+                }
                 calculateCrossAxisCellSizes(
                     availableSize = availableSize,
                     spacing = mainAxisSpacing
@@ -62,7 +80,7 @@ internal class GridMeasurementHelper(
             }
         }
         val spanCount = resolvedSlotSizesSums.size
-        val mainAxisSize = constraints.maxWidth
+        val mainAxisSize = constraints.maxWidth // todo 改到这里了
         var crossAxisSize = topPadding + bottomPadding
         var lineHeight = 0
         val childSize = measurables.size
