@@ -480,20 +480,31 @@ private fun VerticalGridArrangementWithRowsSamplePreview() {
 fun VerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（reverseLayout）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
-        VerticalGrid(
-            rows = GridCells.Fixed(3),
-            modifier = Modifier.background(colorScheme.primaryContainer),
-            reverseLayout = true,   // todo Invalid
-        ) {
-            repeat(7) {
-                Text(
-                    text = "Item ${it + 1}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                        .border(width = 1.dp, color = colorScheme.tertiary)
-                        .padding(10.dp)
-                )
+        Column(Modifier.fillMaxWidth()) {
+            listOf(3, 2, 1).forEachIndexed { index, rows ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.size(20.dp))
+                }
+                Text(text = "Arrangement + Fixed($rows)")
+                Spacer(modifier = Modifier.size(10.dp))
+                VerticalGrid(
+                    rows = GridCells.Fixed(rows),
+                    modifier = Modifier.background(colorScheme.primaryContainer),
+                    reverseLayout = true,
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    repeat(7) {
+                        Text(
+                            text = "Item ${it + 1}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                                .padding(10.dp)
+                        )
+                    }
+                }
             }
         }
     }

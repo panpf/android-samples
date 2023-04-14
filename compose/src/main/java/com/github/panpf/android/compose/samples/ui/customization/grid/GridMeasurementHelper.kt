@@ -7,7 +7,6 @@ import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.LayoutDirection
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -21,8 +20,7 @@ internal class GridMeasureHelperResult(
 internal class GridMeasurementHelper(
     private val rows: GridCells,
     private val contentPadding: PaddingValues,
-    private val reverseLayout: Boolean, // todo support reverse layout
-    private val layoutDirection: LayoutDirection,   // left to right or right to left todo support rtl
+    private val reverseLayout: Boolean,
     private val layoutOrientation: LayoutOrientation,   // horizontal or vertical todo support vertical
     private val horizontalArrangement: Arrangement.Horizontal,
     private val verticalArrangement: Arrangement.Vertical,
@@ -114,33 +112,62 @@ internal class GridMeasurementHelper(
         val topPadding = with(measureScope) {
             contentPadding.calculateTopPadding().toPx().roundToInt()
         }
-        with(placeableScope) {
-            var yPosition = topPadding
-            var xPosition = leftPadding
-            val spanCount = result.spanCount
-            var line: Int
-            var lineHeight = 0
-            val lastSpanIndex = spanCount - 1
-            val firstSpanIndex = 0
-            result.placeables.forEachIndexed { index, placeable ->
-                line = index / spanCount
-                val spanIndex = index % spanCount
-                if (spanIndex == firstSpanIndex) {
-                    xPosition = leftPadding
-                    yPosition += if (line > 0) crossAxisSpacing else 0
-                    placeable.placeRelative(x = xPosition, y = yPosition)
-                    xPosition += placeable.width
-                    lineHeight = placeable.height
-                } else {
-                    xPosition += mainAxisSpacing
-                    placeable.placeRelative(x = xPosition, y = yPosition)
-                    xPosition += placeable.width
-                    lineHeight = max(lineHeight, placeable.height)
-                }
-                if (spanIndex == lastSpanIndex) {
-                    yPosition += lineHeight
-                }
+
+        var yPosition = topPadding
+        var xPosition = leftPadding
+        val spanCount = result.spanCount
+        var line: Int
+        var lineHeight = 0
+        val lastSpanIndex = spanCount - 1
+        val firstSpanIndex = 0
+        result.placeables.forEachIndexed { index, placeable ->
+            line = index / spanCount
+            val spanIndex = index % spanCount
+            if (spanIndex == firstSpanIndex) {
+                xPosition = leftPadding
+                yPosition += if (line > 0) crossAxisSpacing else 0
+                placeableWithReverseLayout(
+                    result = result,
+                    placeableScope = placeableScope,
+                    placeable = placeable,
+                    x = xPosition,
+                    y = yPosition
+                )
+                xPosition += placeable.width
+                lineHeight = placeable.height
+            } else {
+                xPosition += mainAxisSpacing
+                placeableWithReverseLayout(
+                    result = result,
+                    placeableScope = placeableScope,
+                    placeable = placeable,
+                    x = xPosition,
+                    y = yPosition
+                )
+                xPosition += placeable.width
+                lineHeight = max(lineHeight, placeable.height)
             }
+            if (spanIndex == lastSpanIndex) {
+                yPosition += lineHeight
+            }
+        }
+    }
+
+    private fun placeableWithReverseLayout(
+        result: GridMeasureHelperResult,
+        placeableScope: Placeable.PlacementScope,
+        placeable: Placeable,
+        x: Int,
+        y: Int,
+    ) {
+        val height = result.crossAxisSize
+        val yPosition: Int = if (reverseLayout) {
+            height - y - placeable.height
+        } else {
+            y
+        }
+        with(placeableScope) {
+            placeable.placeRelative(x = x, y = yPosition)
         }
     }
 }

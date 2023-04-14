@@ -72,12 +72,12 @@ internal fun Grid(
         modifier = modifier,
         content = content
     ) { measurables, constraints ->
+        // todo improve performance
         val measurementHelper = GridMeasurementHelper(
             rows = rows,
             contentPadding = contentPadding,
             reverseLayout = reverseLayout,
-            layoutDirection = layoutDirection,
-            layoutOrientation = Vertical,
+            layoutOrientation = layoutOrientation,
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = verticalArrangement,
         )
