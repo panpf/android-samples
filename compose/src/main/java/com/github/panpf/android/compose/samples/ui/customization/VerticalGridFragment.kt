@@ -3,6 +3,7 @@ package com.github.panpf.android.compose.samples.ui.customization
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FilledIconButton
@@ -26,9 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
@@ -54,10 +60,9 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridArrangementSample(allExpandFlow)
             VerticalGridArrangementWithRowsSample(allExpandFlow)
             VerticalGridReverseLayoutSample(allExpandFlow)
-            // todo 不同高度的 item
+            VerticalGridNotNeatItemSample(allExpandFlow)
+            VerticalGridSizeSample(allExpandFlow)
             // todo 宽度不充满网格的 item
-            // todo scrollable
-            // todo 固定宽高
         }
     }
 }
@@ -537,4 +542,235 @@ fun VerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun VerticalGridReverseLayoutSamplePreview() {
     VerticalGridReverseLayoutSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun VerticalGridNotNeatItemSample(allExpandFlow: Flow<Boolean>) {
+    val itemHeights = remember { listOf(40.dp, 50.dp, 60.dp) }
+    ExpandableItem3(title = "VerticalGrid（NotNeatItem）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        Column(Modifier.fillMaxWidth()) {
+            listOf(3, 2, 1).forEachIndexed { index, rows ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.size(20.dp))
+                }
+                Text(text = "Arrangement + Fixed($rows)")
+                Spacer(modifier = Modifier.size(10.dp))
+                VerticalGrid(
+                    rows = GridCells.Fixed(rows),
+                    modifier = Modifier.background(colorScheme.primaryContainer),
+                ) {
+                    repeat(7) {
+                        Text(
+                            text = "Item ${it + 1}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(itemHeights[it % itemHeights.size])
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                                .padding(10.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun VerticalGridNotNeatItemSamplePreview() {
+    VerticalGridNotNeatItemSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
+    val colorScheme = MaterialTheme.colorScheme
+    ExpandableItem3(title = "VerticalGrid（Size）", allExpandFlow, padding = 20.dp) {
+        Text(
+            text = "width=Wrap, height=Wrap",
+            fontWeight = FontWeight.Bold, fontSize = 20.sp
+        )
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "Low number of items")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier.background(colorScheme.primaryContainer),
+            ) {
+                repeat(7) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "Large number of items")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier.background(colorScheme.primaryContainer),
+            ) {
+                repeat(13) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(60.dp))
+        Text(text = "Large number of items and scrollable vertical")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .background(colorScheme.primaryContainer)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                repeat(13) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(
+            text = "width=200.dp, height=120.dp",
+            fontWeight = FontWeight.Bold, fontSize = 20.sp
+        )
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "Low number of items")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(120.dp)
+                    .background(colorScheme.primaryContainer),
+            ) {
+                repeat(7) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "Large number of items")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(120.dp)
+                    .background(colorScheme.primaryContainer),
+            ) {
+                repeat(13) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(60.dp))
+        Text(text = "Large number of items and scrollable vertical")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(width = 1.dp, color = colorScheme.inversePrimary)
+                .padding(1.dp)
+        ) {
+            VerticalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(120.dp)
+                    .background(colorScheme.primaryContainer)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                repeat(13) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun VerticalGridSizeSamplePreview() {
+    VerticalGridSizeSample(remember { MutableStateFlow(true) })
 }
