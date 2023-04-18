@@ -62,7 +62,7 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridReverseLayoutSample(allExpandFlow)
             VerticalGridNotNeatItemSample(allExpandFlow)
             VerticalGridSizeSample(allExpandFlow)
-            // todo 宽度不充满网格的 item
+            VerticalGridSmallItemSample(allExpandFlow)
         }
     }
 }
@@ -773,4 +773,35 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun VerticalGridSizeSamplePreview() {
     VerticalGridSizeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun VerticalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "VerticalGrid（SmallItem）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        VerticalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(300.dp)
+                .background(colorScheme.primaryContainer)
+        ) {
+            repeat(7) {
+                Text(
+                    text = "Item ${it + 1}",
+                    modifier = Modifier
+                        .size(80.dp, 60.dp)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                        .padding(10.dp)
+                )
+            }
+            // todo 效果异常，这时候需要 Arrangement 派上用场了
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun VerticalGridSmallItemSamplePreview() {
+    VerticalGridSmallItemSample(remember { MutableStateFlow(true) })
 }

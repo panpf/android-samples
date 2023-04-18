@@ -63,9 +63,7 @@ class HorizontalGridFragment : Material3ComposeAppBarFragment() {
             HorizontalGridReverseLayoutSample(allExpandFlow)
             HorizontalGridNotNeatItemSample(allExpandFlow)
             HorizontalGridSizeSample(allExpandFlow)
-            // todo scrollable
-            // todo 固定宽高
-            // todo 宽度不充满网格的 item
+            HorizontalGridSmallItemSample(allExpandFlow)
         }
     }
 }
@@ -815,4 +813,35 @@ fun HorizontalGridSizeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun HorizontalGridSizeSamplePreview() {
     HorizontalGridSizeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+fun HorizontalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "HorizontalGrid（SmallItem）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        HorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(300.dp)
+                .background(colorScheme.primaryContainer),
+        ) {
+            repeat(7) {
+                Text(
+                    text = "Item ${it + 1}",
+                    modifier = Modifier
+                        .size(80.dp, 60.dp)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                        .padding(10.dp)
+                )
+            }
+            // todo 效果异常，这时候需要 Arrangement 派上用场了
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun HorizontalGridSmallItemSamplePreview() {
+    HorizontalGridSmallItemSample(remember { MutableStateFlow(true) })
 }
