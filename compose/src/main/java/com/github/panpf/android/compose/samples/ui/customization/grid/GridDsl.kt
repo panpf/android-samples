@@ -82,7 +82,11 @@ internal fun Grid(
             verticalArrangement = verticalArrangement,
         )
         val measureResult = measurementHelper.measure(this, measurables, constraints)
-        layout(measureResult.mainAxisSize, measureResult.crossAxisSize) {
+        val width =
+            if (layoutOrientation == Vertical) measureResult.mainAxisSize else measureResult.crossAxisSize
+        val height =
+            if (layoutOrientation == Vertical) measureResult.crossAxisSize else measureResult.mainAxisSize
+        layout(width = width, height = height) {
             measurementHelper.placing(
                 measureScope = this@Layout,
                 placeableScope = this@layout,

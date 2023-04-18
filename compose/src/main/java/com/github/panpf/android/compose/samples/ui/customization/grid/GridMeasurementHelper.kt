@@ -14,24 +14,25 @@ internal class GridMeasureHelperResult(
     val mainAxisSize: Int,
     val crossAxisSize: Int,
     val spanCount: Int,
-    val placeables: List<Placeable>,
+    val placeableList: List<Placeable>,
 )
 
 internal class GridMeasurementHelper(
     private val rows: GridCells,
     private val contentPadding: PaddingValues,
     private val reverseLayout: Boolean,
-    private val layoutOrientation: LayoutOrientation,   // horizontal or vertical todo support vertical
+    private val layoutOrientation: LayoutOrientation,
     private val horizontalArrangement: Arrangement.Horizontal,
     private val verticalArrangement: Arrangement.Vertical,
 ) {
 
     fun measure(
         measureScope: MeasureScope,
-        measurables: List<Measurable>,
+        measurableList: List<Measurable>,
         constraints: Constraints
     ): GridMeasureHelperResult {
-        if (layoutOrientation == LayoutOrientation.Vertical) {
+        val isVertical = layoutOrientation == LayoutOrientation.Vertical
+        if (isVertical) {
             require(constraints.maxWidth != Constraints.Infinity) {
                 "VerticalGrid's width should be bound by parent."
             }
@@ -41,14 +42,14 @@ internal class GridMeasurementHelper(
             }
         }
         val mainAxisSpacing = with(measureScope) {
-            if (layoutOrientation == LayoutOrientation.Vertical) {
+            if (isVertical) {
                 verticalArrangement.spacing.toPx().roundToInt()
             } else {
                 horizontalArrangement.spacing.toPx().roundToInt()
             }
         }
         val crossAxisSpacing = with(measureScope) {
-            if (layoutOrientation == LayoutOrientation.Vertical) {
+            if (isVertical) {
                 horizontalArrangement.spacing.toPx().roundToInt()
             } else {
                 verticalArrangement.spacing.toPx().roundToInt()
@@ -68,7 +69,7 @@ internal class GridMeasurementHelper(
         }
         val resolvedSlotSizesSums = with(measureScope) {
             with(rows) {
-                val availableSize = if (layoutOrientation == LayoutOrientation.Vertical) {
+                val availableSize = if (isVertical) {
                     constraints.maxWidth - leftPadding - rightPadding
                 } else {
                     constraints.maxHeight - topPadding - bottomPadding
@@ -79,37 +80,42 @@ internal class GridMeasurementHelper(
                 )
             }
         }
+        val mainAxisSize =
+            if (isVertical) constraints.maxWidth else constraints.maxHeight
+        var crossAxisSize =
+            if (isVertical) topPadding + bottomPadding else leftPadding + rightPadding
+        var crossAxisItemSize = 0    // row height or column width
+        var crossAxisIndex: Int
         val spanCount = resolvedSlotSizesSums.size
-        val mainAxisSize = constraints.maxWidth // todo 改到这里了
-        var crossAxisSize = topPadding + bottomPadding
-        var lineHeight = 0
-        val childSize = measurables.size
-        var line: Int
         val firstSpanIndex = 0
         val lastSpanIndex = spanCount - 1
-        val placeables = measurables.mapIndexed { index, measurable ->
-            val childMaxWidth = resolvedSlotSizesSums[index % spanCount]
-            val childConstraints = Constraints(maxWidth = childMaxWidth)
+        val childSize = measurableList.size
+        val placeableList = measurableList.mapIndexed { index, measurable ->
+            val childMaxSize = resolvedSlotSizesSums[index % spanCount] // child max width or height
+            val childConstraints = if (isVertical)
+                Constraints(maxWidth = childMaxSize) else Constraints(maxHeight = childMaxSize)
             val placeable = measurable.measure(childConstraints)
             val spanIndex = index % spanCount
-            line = index / spanCount
-            val itemHeight = placeable.height
+            crossAxisIndex = index / spanCount
+            val itemSize = if (isVertical) placeable.height else placeable.width
             if (spanIndex == firstSpanIndex) {
-                lineHeight = itemHeight
-                crossAxisSize += if (line > 0) crossAxisSpacing else 0
+                crossAxisItemSize = itemSize
+                crossAxisSize += if (crossAxisIndex > 0) crossAxisSpacing else 0
             } else {
-                lineHeight = max(lineHeight, itemHeight)
+                crossAxisItemSize = max(crossAxisItemSize, itemSize)
             }
             if (spanIndex == lastSpanIndex || index == childSize - 1) {
-                crossAxisSize += lineHeight
+                crossAxisSize += crossAxisItemSize
             }
             placeable
         }
+        val crossAxisMaxSize = (if (isVertical) constraints.maxHeight else constraints.maxWidth)
+        val crossAxisMinSize = (if (isVertical) constraints.minHeight else constraints.minWidth)
         return GridMeasureHelperResult(
             mainAxisSize = mainAxisSize,
-            crossAxisSize = crossAxisSize,
+            crossAxisSize = crossAxisSize.coerceIn(crossAxisMinSize, crossAxisMaxSize),
             spanCount = spanCount,
-            placeables = placeables
+            placeableList = placeableList
         )
     }
 
@@ -118,11 +124,20 @@ internal class GridMeasurementHelper(
         placeableScope: Placeable.PlacementScope,
         result: GridMeasureHelperResult
     ) {
+        val isVertical = layoutOrientation == LayoutOrientation.Vertical
         val mainAxisSpacing = with(measureScope) {
-            horizontalArrangement.spacing.toPx().roundToInt()
+            if (isVertical) {
+                verticalArrangement.spacing.toPx().roundToInt()
+            } else {
+                horizontalArrangement.spacing.toPx().roundToInt()
+            }
         }
         val crossAxisSpacing = with(measureScope) {
-            verticalArrangement.spacing.toPx().roundToInt()
+            if (isVertical) {
+                horizontalArrangement.spacing.toPx().roundToInt()
+            } else {
+                verticalArrangement.spacing.toPx().roundToInt()
+            }
         }
         val leftPadding = with(measureScope) {
             contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
@@ -130,62 +145,97 @@ internal class GridMeasurementHelper(
         val topPadding = with(measureScope) {
             contentPadding.calculateTopPadding().toPx().roundToInt()
         }
-
-        var yPosition = topPadding
         var xPosition = leftPadding
+        var yPosition = topPadding
+        var crossAxisIndex: Int
+        var crossAxisItemSize = 0
         val spanCount = result.spanCount
-        var line: Int
-        var lineHeight = 0
-        val lastSpanIndex = spanCount - 1
         val firstSpanIndex = 0
-        result.placeables.forEachIndexed { index, placeable ->
-            line = index / spanCount
+        val lastSpanIndex = spanCount - 1
+        result.placeableList.forEachIndexed { index, placeable ->
+            crossAxisIndex = index / spanCount
             val spanIndex = index % spanCount
             if (spanIndex == firstSpanIndex) {
-                xPosition = leftPadding
-                yPosition += if (line > 0) crossAxisSpacing else 0
+                if (isVertical) {
+                    xPosition = leftPadding
+                    yPosition += if (crossAxisIndex > 0) crossAxisSpacing else 0
+                } else {
+                    xPosition += if (crossAxisIndex > 0) crossAxisSpacing else 0
+                    yPosition = topPadding
+                }
                 placeableWithReverseLayout(
+                    isVertical = isVertical,
                     result = result,
                     placeableScope = placeableScope,
                     placeable = placeable,
                     x = xPosition,
                     y = yPosition
                 )
-                xPosition += placeable.width
-                lineHeight = placeable.height
+                if (isVertical) {
+                    xPosition += placeable.width
+                    crossAxisItemSize = placeable.height
+                } else {
+                    yPosition += placeable.height
+                    crossAxisItemSize = placeable.width
+                }
             } else {
-                xPosition += mainAxisSpacing
+                if (isVertical) {
+                    xPosition += mainAxisSpacing
+                } else {
+                    yPosition += mainAxisSpacing
+                }
                 placeableWithReverseLayout(
+                    isVertical = isVertical,
                     result = result,
                     placeableScope = placeableScope,
                     placeable = placeable,
                     x = xPosition,
                     y = yPosition
                 )
-                xPosition += placeable.width
-                lineHeight = max(lineHeight, placeable.height)
+                if (isVertical) {
+                    xPosition += placeable.width
+                    crossAxisItemSize = max(crossAxisItemSize, placeable.height)
+                } else {
+                    yPosition += placeable.height
+                    crossAxisItemSize = max(crossAxisItemSize, placeable.width)
+                }
             }
             if (spanIndex == lastSpanIndex) {
-                yPosition += lineHeight
+                if (isVertical) {
+                    yPosition += crossAxisItemSize
+                } else {
+                    xPosition += crossAxisItemSize
+                }
             }
         }
     }
 
     private fun placeableWithReverseLayout(
+        isVertical: Boolean,
         result: GridMeasureHelperResult,
         placeableScope: Placeable.PlacementScope,
         placeable: Placeable,
         x: Int,
         y: Int,
     ) {
-        val height = result.crossAxisSize
-        val yPosition: Int = if (reverseLayout) {
-            height - y - placeable.height
+        if (isVertical) {
+            val yPosition: Int = if (reverseLayout) {
+                result.crossAxisSize - y - placeable.height
+            } else {
+                y
+            }
+            with(placeableScope) {
+                placeable.placeRelative(x = x, y = yPosition)
+            }
         } else {
-            y
-        }
-        with(placeableScope) {
-            placeable.placeRelative(x = x, y = yPosition)
+            val xPosition: Int = if (reverseLayout) {
+                result.crossAxisSize - x - placeable.width
+            } else {
+                x
+            }
+            with(placeableScope) {
+                placeable.placeRelative(x = xPosition, y = y)
+            }
         }
     }
 }

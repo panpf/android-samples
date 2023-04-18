@@ -3,14 +3,17 @@ package com.github.panpf.android.compose.samples.ui.customization
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -26,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
@@ -53,6 +57,10 @@ class HorizontalGridFragment : Material3ComposeAppBarFragment() {
             HorizontalGridArrangementSample(allExpandFlow)
             HorizontalGridArrangementWithRowsSample(allExpandFlow)
             HorizontalGridReverseLayoutSample(allExpandFlow)
+            // todo 不同宽度的 item
+            // todo 宽度不充满网格的 item
+            // todo scrollable
+            // todo 固定宽高
         }
     }
 }
@@ -64,14 +72,35 @@ fun HorizontalGridSample(allExpandFlow: Flow<Boolean>) {
         val colorScheme = MaterialTheme.colorScheme
         HorizontalGrid(
             rows = GridCells.Fixed(3),
-            modifier = Modifier.height(300.dp).background(colorScheme.primaryContainer)
+            modifier = Modifier
+                .height(120.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             repeat(7) {
                 Text(
                     text = "Item ${it + 1}",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
+                        .fillMaxHeight()
+                        .width(100.dp)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                        .padding(10.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        HorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .height(120.dp)
+                .background(colorScheme.primaryContainer)
+        ) {
+            repeat(17) {
+                Text(
+                    text = "Item ${it + 1}",
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(100.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
                         .padding(10.dp)
                 )
@@ -100,14 +129,16 @@ fun HorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
                 Spacer(modifier = Modifier.size(10.dp))
                 HorizontalGrid(
                     rows = GridCells.Fixed(rows),
-                    modifier = Modifier.background(colorScheme.primaryContainer)
+                    modifier = Modifier
+                        .height(120.dp)
+                        .background(colorScheme.primaryContainer)
                 ) {
                     repeat(7) {
                         Text(
                             text = "Item ${it + 1}",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
+                                .fillMaxHeight()
+                                .width(100.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
                                 .padding(10.dp)
                         )
@@ -132,22 +163,29 @@ fun HorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
         Column(Modifier.fillMaxWidth()) {
             Text(text = "Rows=Adaptive(100.dp)")
             Spacer(modifier = Modifier.size(10.dp))
-            var fillMaxWidthFraction by remember { mutableStateOf(0.6f) }
-            HorizontalGrid(
-                rows = GridCells.Adaptive(100.dp),
-                modifier = Modifier
-                    .fillMaxWidth(fraction = fillMaxWidthFraction)
-                    .background(colorScheme.primaryContainer)
+            var fillMaxHeightFraction by remember { mutableStateOf(0.6f) }
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .border(width = 1.dp, color = colorScheme.tertiary)
             ) {
-                repeat(7) {
-                    Text(
-                        text = "Item ${it + 1}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                            .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
-                    )
+                HorizontalGrid(
+                    rows = GridCells.Adaptive(40.dp),
+                    modifier = Modifier
+                        .fillMaxHeight(fraction = fillMaxHeightFraction)
+                        .background(colorScheme.primaryContainer)
+                ) {
+                    repeat(17) {
+                        Text(
+                            text = "Item ${it + 1}",
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(100.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                                .padding(10.dp)
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -155,7 +193,7 @@ fun HorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
                 FilledIconButton(
                     modifier = Modifier.weight(1f),
                     onClick = {
-                        fillMaxWidthFraction = (fillMaxWidthFraction - 0.1f).coerceAtLeast(0.2f)
+                        fillMaxHeightFraction = (fillMaxHeightFraction - 0.1f).coerceAtLeast(0.2f)
                     }
                 ) {
                     Icon(
@@ -165,14 +203,17 @@ fun HorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
                 }
                 Spacer(modifier = Modifier.size(20.dp))
                 Text(
-                    text = "fillMaxWidthFraction=$fillMaxWidthFraction",
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    text = "fraction=$fillMaxHeightFraction",
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically),
+                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 FilledIconButton(
                     modifier = Modifier.weight(1f),
                     onClick = {
-                        fillMaxWidthFraction = (fillMaxWidthFraction + 0.1f).coerceAtMost(1f)
+                        fillMaxHeightFraction = (fillMaxHeightFraction + 0.1f).coerceAtMost(1f)
                     }
                 ) {
                     Icon(
@@ -201,15 +242,17 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(160.dp)
+                    .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(20.dp)
             ) {
                 repeat(7) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -217,19 +260,21 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "PaddingValues(horizontal = 10.dp, vertical = 20.dp)")
+            Text(text = "PaddingValues(horizontal=20.dp, vertical=10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
-                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 20.dp)
+                modifier = Modifier
+                    .height(160.dp)
+                    .background(colorScheme.primaryContainer),
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
             ) {
                 repeat(7) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -241,7 +286,9 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(200.dp)
+                    .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(
                     start = 10.dp,
                     top = 20.dp,
@@ -253,8 +300,8 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -284,7 +331,9 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(140.dp)
+                    .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
@@ -292,8 +341,8 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -305,7 +354,9 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(160.dp)
+                    .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
@@ -313,8 +364,8 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -326,7 +377,9 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(160.dp)
+                    .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -335,8 +388,8 @@ fun HorizontalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolea
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -362,19 +415,21 @@ fun HorizontalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
     ) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            Text(text = "verticalArrangement")
+            Text(text = "verticalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(120.dp)
+                    .background(colorScheme.primaryContainer),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 repeat(7) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -382,19 +437,21 @@ fun HorizontalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "horizontalArrangement")
+            Text(text = "horizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(140.dp)
+                    .background(colorScheme.primaryContainer),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 repeat(7) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -402,11 +459,13 @@ fun HorizontalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "verticalArrangement + horizontalArrangement")
+            Text(text = "verticalArrangement=spacedBy(10.dp)\nhorizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalGrid(
                 rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
+                modifier = Modifier
+                    .height(140.dp)
+                    .background(colorScheme.primaryContainer),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
@@ -414,8 +473,8 @@ fun HorizontalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
+                            .fillMaxHeight()
+                            .width(100.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
                             .padding(10.dp)
                     )
@@ -449,7 +508,9 @@ fun HorizontalGridArrangementWithRowsSample(allExpandFlow: Flow<Boolean>) {
                 Spacer(modifier = Modifier.size(10.dp))
                 HorizontalGrid(
                     rows = GridCells.Fixed(rows),
-                    modifier = Modifier.background(colorScheme.primaryContainer),
+                    modifier = Modifier
+                        .height(140.dp)
+                        .background(colorScheme.primaryContainer),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
@@ -457,8 +518,8 @@ fun HorizontalGridArrangementWithRowsSample(allExpandFlow: Flow<Boolean>) {
                         Text(
                             text = "Item ${it + 1}",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
+                                .fillMaxHeight()
+                                .width(100.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
                                 .padding(10.dp)
                         )
@@ -489,17 +550,17 @@ fun HorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
                 Spacer(modifier = Modifier.size(10.dp))
                 HorizontalGrid(
                     rows = GridCells.Fixed(rows),
-                    modifier = Modifier.background(colorScheme.primaryContainer),
+                    modifier = Modifier
+                        .height(120.dp)
+                        .background(colorScheme.primaryContainer),
                     reverseLayout = true,
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     repeat(7) {
                         Text(
                             text = "Item ${it + 1}",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
+                                .fillMaxHeight()
+                                .width(100.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
                                 .padding(10.dp)
                         )

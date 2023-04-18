@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
@@ -53,6 +54,10 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridArrangementSample(allExpandFlow)
             VerticalGridArrangementWithRowsSample(allExpandFlow)
             VerticalGridReverseLayoutSample(allExpandFlow)
+            // todo 不同高度的 item
+            // todo 宽度不充满网格的 item
+            // todo scrollable
+            // todo 固定宽高
         }
     }
 }
@@ -67,6 +72,23 @@ fun VerticalGridSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier.background(colorScheme.primaryContainer)
         ) {
             repeat(7) {
+                Text(
+                    text = "Item ${it + 1}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                        .padding(10.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        VerticalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier.background(colorScheme.primaryContainer)
+        ) {
+            repeat(17) {
                 Text(
                     text = "Item ${it + 1}",
                     modifier = Modifier
@@ -165,8 +187,11 @@ fun VerticalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
                 }
                 Spacer(modifier = Modifier.size(20.dp))
                 Text(
-                    text = "fillMaxWidthFraction=$fillMaxWidthFraction",
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    text = "fraction=$fillMaxWidthFraction",
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically),
+                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 FilledIconButton(
@@ -217,12 +242,12 @@ fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "PaddingValues(horizontal = 10.dp, vertical = 20.dp)")
+            Text(text = "PaddingValues(horizontal=20.dp, vertical=10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
                 rows = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
-                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 20.dp)
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
             ) {
                 repeat(7) {
                     Text(
@@ -362,7 +387,7 @@ fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
     ) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            Text(text = "verticalArrangement")
+            Text(text = "verticalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
                 rows = GridCells.Fixed(3),
@@ -382,7 +407,7 @@ fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "horizontalArrangement")
+            Text(text = "horizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
                 rows = GridCells.Fixed(3),
@@ -402,7 +427,7 @@ fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "verticalArrangement + horizontalArrangement")
+            Text(text = "verticalArrangement=spacedBy(10.dp)\nhorizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
                 rows = GridCells.Fixed(3),
@@ -491,8 +516,6 @@ fun VerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
                     rows = GridCells.Fixed(rows),
                     modifier = Modifier.background(colorScheme.primaryContainer),
                     reverseLayout = true,
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     repeat(7) {
                         Text(
