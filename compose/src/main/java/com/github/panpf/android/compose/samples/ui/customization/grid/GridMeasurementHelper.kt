@@ -91,9 +91,9 @@ internal class GridMeasurementHelper(
         val lastSpanIndex = spanCount - 1
         val childSize = measurableList.size
         val placeableList = measurableList.mapIndexed { index, measurable ->
-            val childMaxSize = resolvedSlotSizesSums[index % spanCount] // child max width or height
+            val childMaxMainAxisSize = resolvedSlotSizesSums[index % spanCount] // child max width or height
             val childConstraints = if (isVertical)
-                Constraints(maxWidth = childMaxSize) else Constraints(maxHeight = childMaxSize)
+                Constraints(maxWidth = childMaxMainAxisSize, minWidth = childMaxMainAxisSize) else Constraints(maxHeight = childMaxMainAxisSize, minHeight = childMaxMainAxisSize)
             val placeable = measurable.measure(childConstraints)
             val spanIndex = index % spanCount
             crossAxisIndex = index / spanCount

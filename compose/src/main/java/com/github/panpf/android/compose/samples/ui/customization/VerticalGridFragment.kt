@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -780,17 +781,40 @@ private fun VerticalGridSizeSamplePreview() {
 fun VerticalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（SmallItem）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
+
+        Text(text = "size(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
         VerticalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
-                .size(300.dp)
+                .size(240.dp)
                 .background(colorScheme.primaryContainer)
         ) {
             repeat(7) {
                 Text(
                     text = "Item ${it + 1}",
                     modifier = Modifier
-                        .size(80.dp, 60.dp)
+                        .size(60.dp)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                        .padding(10.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "requiredSize(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        VerticalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(240.dp)
+                .background(colorScheme.primaryContainer)
+        ) {
+            repeat(7) {
+                Text(
+                    text = "Item ${it + 1}",
+                    modifier = Modifier
+                        .requiredSize(60.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
                         .padding(10.dp)
                 )
