@@ -63,7 +63,7 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridReverseLayoutSample(allExpandFlow)
             VerticalGridNotNeatItemSample(allExpandFlow)
             VerticalGridSizeSample(allExpandFlow)
-            VerticalGridSmallItemSample(allExpandFlow)
+            VerticalGridItemSizeSample(allExpandFlow)
         }
     }
 }
@@ -778,8 +778,8 @@ private fun VerticalGridSizeSamplePreview() {
 
 
 @Composable
-fun VerticalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "VerticalGrid（SmallItem）", allExpandFlow, padding = 20.dp) {
+fun VerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "VerticalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
 
         Text(text = "size(60.dp)")
@@ -819,13 +819,12 @@ fun VerticalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
                         .padding(10.dp)
                 )
             }
-            // todo 效果异常，这时候需要 Arrangement 派上用场了
         }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalGridSmallItemSamplePreview() {
-    VerticalGridSmallItemSample(remember { MutableStateFlow(true) })
+private fun VerticalGridItemSizeSamplePreview() {
+    VerticalGridItemSizeSample(remember { MutableStateFlow(true) })
 }

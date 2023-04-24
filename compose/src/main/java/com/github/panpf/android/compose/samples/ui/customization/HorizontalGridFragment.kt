@@ -64,7 +64,7 @@ class HorizontalGridFragment : Material3ComposeAppBarFragment() {
             HorizontalGridReverseLayoutSample(allExpandFlow)
             HorizontalGridNotNeatItemSample(allExpandFlow)
             HorizontalGridSizeSample(allExpandFlow)
-            HorizontalGridSmallItemSample(allExpandFlow)
+            HorizontalGridItemSizeSample(allExpandFlow)
         }
     }
 }
@@ -818,8 +818,8 @@ private fun HorizontalGridSizeSamplePreview() {
 
 
 @Composable
-fun HorizontalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "HorizontalGrid（SmallItem）", allExpandFlow, padding = 20.dp) {
+fun HorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "HorizontalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
 
         Text(text = "size(60.dp)")
@@ -859,13 +859,12 @@ fun HorizontalGridSmallItemSample(allExpandFlow: Flow<Boolean>) {
                         .padding(10.dp)
                 )
             }
-            // todo 效果异常，这时候需要 Arrangement 派上用场了
         }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun HorizontalGridSmallItemSamplePreview() {
-    HorizontalGridSmallItemSample(remember { MutableStateFlow(true) })
+private fun HorizontalGridItemSizeSamplePreview() {
+    HorizontalGridItemSizeSample(remember { MutableStateFlow(true) })
 }

@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -80,6 +82,7 @@ class LazyVerticalGridFragment : Material3ComposeAppBarFragment() {
             LazyVerticalGridLayoutInfoSample(allExpandFlow)
             LazyVerticalGridContentTypeSample(allExpandFlow)
             LazyVerticalGridSpanSample(allExpandFlow)
+            LazyVerticalGridItemSizeSample(allExpandFlow)
         }
     }
 }
@@ -351,8 +354,7 @@ private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolea
                         items(count = 5) { index ->
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
+                                    .requiredSize(40.dp)
                                     .background(colors[index % colors.size])
                             ) {
                                 Text(
@@ -914,4 +916,66 @@ private fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun LazyVerticalGridSpanSamplePreview() {
     LazyVerticalGridSpanSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun LazyVerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    ExpandableItem3(title = "LazyVerticalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
+        Text(text = "size(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(240.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+        ) {
+            items(count = 7) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "requiredSize(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(240.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+        ) {
+            items(count = 7) { index ->
+                Box(
+                    modifier = Modifier
+                        .requiredSize(60.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyVerticalGridItemSizeSamplePreview() {
+    LazyVerticalGridItemSizeSample(remember { MutableStateFlow(true) })
 }

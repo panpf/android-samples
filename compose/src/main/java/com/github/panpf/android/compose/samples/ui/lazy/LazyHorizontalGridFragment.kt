@@ -67,7 +67,7 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             LazyHorizontalGridSample(allExpandFlow)
-            LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow)
+            LazyHorizontalGridRowsDynamicCellsSample(allExpandFlow)
             LazyHorizontalGridContentPaddingSample(allExpandFlow)
             LazyHorizontalGridItemSpacedSample(allExpandFlow)
             LazyHorizontalGridReverseLayoutSample(allExpandFlow)
@@ -81,6 +81,7 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
             LazyHorizontalGridLayoutInfoSample(allExpandFlow)
             LazyHorizontalGridContentTypeSample(allExpandFlow)
             LazyHorizontalGridSpanSample(allExpandFlow)
+            LazyHorizontalGridItemSizeSample(allExpandFlow)
         }
     }
 }
@@ -124,7 +125,7 @@ private fun LazyHorizontalGridSamplePreview() {
 
 
 @Composable
-private fun LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridRowsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
@@ -182,8 +183,8 @@ private fun LazyHorizontalGridColumnsDynamicCellsSample(allExpandFlow: Flow<Bool
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridColumnsDynamicCellsSamplePreview() {
-    LazyHorizontalGridColumnsDynamicCellsSample(remember { MutableStateFlow(true) })
+private fun LazyHorizontalGridRowsDynamicCellsSamplePreview() {
+    LazyHorizontalGridRowsDynamicCellsSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -349,8 +350,7 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
                         items(count = 9) { index ->
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
+                                    .requiredSize(40.dp)
                                     .background(colors[index % colors.size])
                             ) {
                                 Text(
@@ -914,4 +914,66 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun LazyHorizontalGridSpanSamplePreview() {
     LazyHorizontalGridSpanSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    ExpandableItem3(title = "LazyHorizontalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
+        Text(text = "size(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(240.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+        ) {
+            items(count = 7) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "requiredSize(60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .size(240.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+        ) {
+            items(count = 7) { index ->
+                Box(
+                    modifier = Modifier
+                        .requiredSize(60.dp)
+                        .background(colors[index % colors.size])
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalGridItemSizeSamplePreview() {
+    LazyHorizontalGridItemSizeSample(remember { MutableStateFlow(true) })
 }
