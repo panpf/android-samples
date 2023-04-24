@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -54,12 +55,11 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             VerticalGridSample(allExpandFlow)
-            VerticalGridRowsFixedSample(allExpandFlow)
-            VerticalGridRowsAdaptiveSample(allExpandFlow)
+            VerticalGridColumnsFixedSample(allExpandFlow)
+            VerticalGridColumnsAdaptiveSample(allExpandFlow)
             VerticalGridContentPaddingSample(allExpandFlow)
-            VerticalGridContentPaddingWithArrangementSample(allExpandFlow)
             VerticalGridArrangementSample(allExpandFlow)
-            VerticalGridArrangementWithRowsSample(allExpandFlow)
+            VerticalGridArrangementWithColumnsSample(allExpandFlow)
             VerticalGridReverseLayoutSample(allExpandFlow)
             VerticalGridNotNeatItemSample(allExpandFlow)
             VerticalGridSizeSample(allExpandFlow)
@@ -70,11 +70,12 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         VerticalGrid(
-            rows = GridCells.Fixed(3),
+            columns = GridCells.Fixed(3),
             modifier = Modifier.background(colorScheme.primaryContainer)
         ) {
             repeat(7) {
@@ -91,7 +92,7 @@ fun VerticalGridSample(allExpandFlow: Flow<Boolean>) {
 
         Spacer(modifier = Modifier.size(20.dp))
         VerticalGrid(
-            rows = GridCells.Fixed(3),
+            columns = GridCells.Fixed(3),
             modifier = Modifier.background(colorScheme.primaryContainer)
         ) {
             repeat(17) {
@@ -116,18 +117,19 @@ private fun VerticalGridSamplePreview() {
 
 
 @Composable
-fun VerticalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "VerticalGrid（rows - Fixed）", allExpandFlow, padding = 20.dp) {
+@OptIn(ExperimentalLayoutApi::class)
+fun VerticalGridColumnsFixedSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "VerticalGrid（columns - Fixed）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            listOf(3, 2, 1).forEachIndexed { index, rows ->
+            listOf(3, 2, 1).forEachIndexed { index, columns ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Rows=Fixed($rows)")
+                Text(text = "Columns=Fixed($columns)")
                 Spacer(modifier = Modifier.size(10.dp))
                 VerticalGrid(
-                    rows = GridCells.Fixed(rows),
+                    columns = GridCells.Fixed(columns),
                     modifier = Modifier.background(colorScheme.primaryContainer)
                 ) {
                     repeat(7) {
@@ -148,21 +150,22 @@ fun VerticalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalGridRowsFixedSamplePreview() {
-    VerticalGridRowsFixedSample(remember { MutableStateFlow(true) })
+private fun VerticalGridColumnsFixedSamplePreview() {
+    VerticalGridColumnsFixedSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
-fun VerticalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "VerticalGrid（rows - Adaptive）", allExpandFlow, padding = 20.dp) {
+@OptIn(ExperimentalLayoutApi::class)
+fun VerticalGridColumnsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "VerticalGrid（columns - Adaptive）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            Text(text = "Rows=Adaptive(100.dp)")
+            Text(text = "Columns=Adaptive(100.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             var fillMaxWidthFraction by remember { mutableStateOf(0.6f) }
             VerticalGrid(
-                rows = GridCells.Adaptive(100.dp),
+                columns = GridCells.Adaptive(100.dp),
                 modifier = Modifier
                     .fillMaxWidth(fraction = fillMaxWidthFraction)
                     .background(colorScheme.primaryContainer)
@@ -218,12 +221,13 @@ fun VerticalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalGridRowsAdaptiveSamplePreview() {
-    VerticalGridRowsAdaptiveSample(remember { MutableStateFlow(true) })
+private fun VerticalGridColumnsAdaptiveSamplePreview() {
+    VerticalGridColumnsAdaptiveSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（PaddingValues）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
@@ -231,11 +235,11 @@ fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             Text(text = "PaddingValues(20.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(20.dp)
             ) {
-                repeat(7) {
+                repeat(6) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
@@ -251,11 +255,11 @@ fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             Text(text = "PaddingValues(horizontal=20.dp, vertical=10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
             ) {
-                repeat(7) {
+                repeat(6) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
@@ -271,7 +275,7 @@ fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             Text(text = "PaddingValues(start=10.dp, top=20.dp, end=40.dp, bottom=60.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(
                     start = 10.dp,
@@ -280,7 +284,29 @@ fun VerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     bottom = 60.dp
                 )
             ) {
-                repeat(7) {
+                repeat(6) {
+                    Text(
+                        text = "Item ${it + 1}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp)
+                            .border(width = 1.dp, color = colorScheme.tertiary)
+                            .padding(10.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Text(text = "PaddingValues + ItemSpaced")
+            Spacer(modifier = Modifier.size(10.dp))
+            VerticalGrid(
+                columns = GridCells.Fixed(3),
+                modifier = Modifier.background(colorScheme.primaryContainer),
+                contentPadding = PaddingValues(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                repeat(6) {
                     Text(
                         text = "Item ${it + 1}",
                         modifier = Modifier
@@ -303,100 +329,33 @@ private fun VerticalGridContentPaddingSamplePreview() {
 
 
 @Composable
-fun VerticalGridContentPaddingWithArrangementSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(
-        title = "VerticalGrid（PaddingValues + Arrangement）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        val colorScheme = MaterialTheme.colorScheme
-        Column(Modifier.fillMaxWidth()) {
-            Text(text = "PaddingValues + verticalArrangement")
-            Spacer(modifier = Modifier.size(10.dp))
-            VerticalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
-                contentPadding = PaddingValues(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                repeat(7) {
-                    Text(
-                        text = "Item ${it + 1}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                            .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "PaddingValues + verticalArrangement")
-            Spacer(modifier = Modifier.size(10.dp))
-            VerticalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
-                contentPadding = PaddingValues(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                repeat(7) {
-                    Text(
-                        text = "Item ${it + 1}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                            .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "PaddingValues + verticalArrangement + horizontalArrangement")
-            Spacer(modifier = Modifier.size(10.dp))
-            VerticalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier.background(colorScheme.primaryContainer),
-                contentPadding = PaddingValues(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                repeat(7) {
-                    Text(
-                        text = "Item ${it + 1}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                            .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun VerticalGridContentPaddingWithArrangementSamplePreview() {
-    VerticalGridContentPaddingWithArrangementSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
         title = "VerticalGrid（Arrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
+        // todo 未完成
+//        listOf(
+//            Arrangement.Top to "Top",
+//            Arrangement.Center to "Center",
+//            Arrangement.Bottom to "Bottom",
+//            null to "Space=10.dp",
+//            Arrangement.SpaceBetween to "SpaceBetween",
+//            Arrangement.SpaceAround to "SpaceAround",
+//            Arrangement.SpaceEvenly to "SpaceEvenly",
+//        ).forEach { (arrangement, name) ->
+//            Column {
+//                Text(text = name)
+//            }
+//        }
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
             Text(text = "verticalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
@@ -416,7 +375,7 @@ fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             Text(text = "horizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
@@ -436,7 +395,7 @@ fun VerticalGridArrangementSample(allExpandFlow: Flow<Boolean>) {
             Text(text = "verticalArrangement=spacedBy(10.dp)\nhorizontalArrangement=spacedBy(10.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -464,22 +423,23 @@ private fun VerticalGridArrangementSamplePreview() {
 
 
 @Composable
-fun VerticalGridArrangementWithRowsSample(allExpandFlow: Flow<Boolean>) {
+@OptIn(ExperimentalLayoutApi::class)
+fun VerticalGridArrangementWithColumnsSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(
-        title = "VerticalGrid（Arrangement + Rows）",
+        title = "VerticalGrid（Arrangement + Columns）",
         allExpandFlow,
         padding = 20.dp
     ) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            listOf(3, 2, 1).forEachIndexed { index, rows ->
+            listOf(3, 2, 1).forEachIndexed { index, columns ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Arrangement + Fixed($rows)")
+                Text(text = "Arrangement + Fixed($columns)")
                 Spacer(modifier = Modifier.size(10.dp))
                 VerticalGrid(
-                    rows = GridCells.Fixed(rows),
+                    columns = GridCells.Fixed(columns),
                     modifier = Modifier.background(colorScheme.primaryContainer),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -502,24 +462,25 @@ fun VerticalGridArrangementWithRowsSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun VerticalGridArrangementWithRowsSamplePreview() {
-    VerticalGridArrangementWithRowsSample(remember { MutableStateFlow(true) })
+private fun VerticalGridArrangementWithColumnsSamplePreview() {
+    VerticalGridArrangementWithColumnsSample(remember { MutableStateFlow(true) })
 }
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（reverseLayout）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            listOf(3, 2, 1).forEachIndexed { index, rows ->
+            listOf(3, 2, 1).forEachIndexed { index, columns ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Arrangement + Fixed($rows)")
+                Text(text = "Arrangement + Fixed($columns)")
                 Spacer(modifier = Modifier.size(10.dp))
                 VerticalGrid(
-                    rows = GridCells.Fixed(rows),
+                    columns = GridCells.Fixed(columns),
                     modifier = Modifier.background(colorScheme.primaryContainer),
                     reverseLayout = true,
                 ) {
@@ -547,19 +508,20 @@ private fun VerticalGridReverseLayoutSamplePreview() {
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridNotNeatItemSample(allExpandFlow: Flow<Boolean>) {
     val itemHeights = remember { listOf(40.dp, 50.dp, 60.dp) }
     ExpandableItem3(title = "VerticalGrid（NotNeatItem）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            listOf(3, 2, 1).forEachIndexed { index, rows ->
+            listOf(3, 2, 1).forEachIndexed { index, columns ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Arrangement + Fixed($rows)")
+                Text(text = "Arrangement + Fixed($columns)")
                 Spacer(modifier = Modifier.size(10.dp))
                 VerticalGrid(
-                    rows = GridCells.Fixed(rows),
+                    columns = GridCells.Fixed(columns),
                     modifier = Modifier.background(colorScheme.primaryContainer),
                 ) {
                     repeat(7) {
@@ -586,6 +548,7 @@ private fun VerticalGridNotNeatItemSamplePreview() {
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
     val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "VerticalGrid（Size）", allExpandFlow, padding = 20.dp) {
@@ -604,7 +567,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
             ) {
                 repeat(7) {
@@ -630,7 +593,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier.background(colorScheme.primaryContainer),
             ) {
                 repeat(13) {
@@ -656,7 +619,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
                     .background(colorScheme.primaryContainer)
                     .verticalScroll(rememberScrollState()),
@@ -690,7 +653,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
                     .width(300.dp)
                     .height(120.dp)
@@ -719,7 +682,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
                     .width(300.dp)
                     .height(120.dp)
@@ -748,7 +711,7 @@ fun VerticalGridSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(1.dp)
         ) {
             VerticalGrid(
-                rows = GridCells.Fixed(3),
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
                     .width(300.dp)
                     .height(120.dp)
@@ -778,6 +741,7 @@ private fun VerticalGridSizeSamplePreview() {
 
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun VerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
@@ -785,7 +749,7 @@ fun VerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
         Text(text = "size(60.dp)")
         Spacer(modifier = Modifier.size(10.dp))
         VerticalGrid(
-            rows = GridCells.Fixed(3),
+            columns = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
                 .background(colorScheme.primaryContainer)
@@ -805,7 +769,7 @@ fun VerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
         Text(text = "requiredSize(60.dp)")
         Spacer(modifier = Modifier.size(10.dp))
         VerticalGrid(
-            rows = GridCells.Fixed(3),
+            columns = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
                 .background(colorScheme.primaryContainer)

@@ -2,19 +2,21 @@ package com.github.panpf.android.compose.samples.ui.customization.grid
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.customization.grid.LayoutOrientation.Horizontal
 import com.github.panpf.android.compose.samples.ui.customization.grid.LayoutOrientation.Vertical
 
+
 @Composable
+@ExperimentalLayoutApi
 fun VerticalGrid(
-    rows: GridCells,
+    columns: GridCells,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     reverseLayout: Boolean = false,
@@ -23,7 +25,7 @@ fun VerticalGrid(
     content: @Composable () -> Unit
 ) {
     Grid(
-        rows = rows,
+        cells = columns,
         layoutOrientation = Vertical,
         modifier = modifier,
         contentPadding = contentPadding,
@@ -35,6 +37,7 @@ fun VerticalGrid(
 }
 
 @Composable
+@ExperimentalLayoutApi
 fun HorizontalGrid(
     rows: GridCells,
     modifier: Modifier = Modifier,
@@ -46,7 +49,7 @@ fun HorizontalGrid(
     content: @Composable () -> Unit
 ) {
     Grid(
-        rows = rows,
+        cells = rows,
         layoutOrientation = Horizontal,
         modifier = modifier,
         contentPadding = contentPadding,
@@ -55,45 +58,6 @@ fun HorizontalGrid(
         verticalArrangement = verticalArrangement,
         content = content
     )
-}
-
-@Composable
-internal fun Grid(
-    rows: GridCells,
-    layoutOrientation: LayoutOrientation,
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues,
-    reverseLayout: Boolean,
-    horizontalArrangement: Arrangement.Horizontal,
-    verticalArrangement: Arrangement.Vertical,
-    content: @Composable () -> Unit
-) {
-    Layout(
-        modifier = modifier,
-        content = content
-    ) { measurables, constraints ->
-        // todo improve performance
-        val measurementHelper = GridMeasurementHelper(
-            rows = rows,
-            contentPadding = contentPadding,
-            reverseLayout = reverseLayout,
-            layoutOrientation = layoutOrientation,
-            horizontalArrangement = horizontalArrangement,
-            verticalArrangement = verticalArrangement,
-        )
-        val measureResult = measurementHelper.measure(this, measurables, constraints)
-        val width =
-            if (layoutOrientation == Vertical) measureResult.mainAxisSize else measureResult.crossAxisSize
-        val height =
-            if (layoutOrientation == Vertical) measureResult.crossAxisSize else measureResult.mainAxisSize
-        layout(width = width, height = height) {
-            measurementHelper.placing(
-                measureScope = this@Layout,
-                placeableScope = this@layout,
-                result = measureResult
-            )
-        }
-    }
 }
 
 /**

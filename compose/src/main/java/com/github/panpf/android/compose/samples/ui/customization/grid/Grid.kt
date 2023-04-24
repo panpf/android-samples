@@ -1,14 +1,89 @@
 package com.github.panpf.android.compose.samples.ui.customization.grid
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import kotlin.math.max
 import kotlin.math.roundToInt
+
+@Composable
+@ExperimentalLayoutApi
+internal fun Grid(
+    cells: GridCells,
+    layoutOrientation: LayoutOrientation,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues,
+    reverseLayout: Boolean,
+    horizontalArrangement: Arrangement.Horizontal,
+    verticalArrangement: Arrangement.Vertical,
+    content: @Composable () -> Unit
+) {
+    val measurePolicy = rememberGridMeasurePolicy(
+        cells = cells,
+        layoutOrientation = layoutOrientation,
+        contentPadding = contentPadding,
+        reverseLayout = reverseLayout,
+        horizontalArrangement = horizontalArrangement,
+        verticalArrangement = verticalArrangement
+    )
+    Layout(
+        modifier = modifier,
+        content = content,
+        measurePolicy = measurePolicy
+    )
+}
+
+
+@Composable
+private fun rememberGridMeasurePolicy(
+    cells: GridCells,
+    layoutOrientation: LayoutOrientation,
+    contentPadding: PaddingValues,
+    reverseLayout: Boolean,
+    horizontalArrangement: Arrangement.Horizontal,
+    verticalArrangement: Arrangement.Vertical,
+) = remember<MeasureScope.(List<Measurable>, Constraints) -> MeasureResult>(
+    cells,
+    layoutOrientation,
+    contentPadding,
+    reverseLayout,
+    horizontalArrangement,
+    verticalArrangement
+) {
+    { measurables, constraints ->
+        val measurementHelper = GridMeasurementHelper(
+            cells = cells,
+            contentPadding = contentPadding,
+            reverseLayout = reverseLayout,
+            layoutOrientation = layoutOrientation,
+            horizontalArrangement = horizontalArrangement,
+            verticalArrangement = verticalArrangement,
+        )
+        val measureResult = measurementHelper.measure(this, measurables, constraints)
+        val width = if (layoutOrientation == LayoutOrientation.Vertical)
+            measureResult.mainAxisSize else measureResult.crossAxisSize
+        val height = if (layoutOrientation == LayoutOrientation.Vertical)
+            measureResult.crossAxisSize else measureResult.mainAxisSize
+        val measureScope = this
+        layout(width = width, height = height) {
+            measurementHelper.placing(
+                measureScope = measureScope,
+                placeableScope = this@layout,
+                result = measureResult
+            )
+        }
+    }
+}
 
 internal class GridMeasureHelperResult(
     val mainAxisSize: Int,
@@ -18,7 +93,7 @@ internal class GridMeasureHelperResult(
 )
 
 internal class GridMeasurementHelper(
-    private val rows: GridCells,
+    private val cells: GridCells,
     private val contentPadding: PaddingValues,
     private val reverseLayout: Boolean,
     private val layoutOrientation: LayoutOrientation,
@@ -68,7 +143,7 @@ internal class GridMeasurementHelper(
             contentPadding.calculateBottomPadding().toPx().roundToInt()
         }
         val resolvedSlotSizesSums = with(measureScope) {
-            with(rows) {
+            with(cells) {
                 val availableSize = if (isVertical) {
                     constraints.maxWidth - leftPadding - rightPadding
                 } else {
@@ -91,9 +166,16 @@ internal class GridMeasurementHelper(
         val lastSpanIndex = spanCount - 1
         val childSize = measurableList.size
         val placeableList = measurableList.mapIndexed { index, measurable ->
-            val childMaxMainAxisSize = resolvedSlotSizesSums[index % spanCount] // child max width or height
+            val childMaxMainAxisSize =
+                resolvedSlotSizesSums[index % spanCount] // child max width or height
             val childConstraints = if (isVertical)
-                Constraints(maxWidth = childMaxMainAxisSize, minWidth = childMaxMainAxisSize) else Constraints(maxHeight = childMaxMainAxisSize, minHeight = childMaxMainAxisSize)
+                Constraints(
+                    maxWidth = childMaxMainAxisSize,
+                    minWidth = childMaxMainAxisSize
+                ) else Constraints(
+                maxHeight = childMaxMainAxisSize,
+                minHeight = childMaxMainAxisSize
+            )
             val placeable = measurable.measure(childConstraints)
             val spanIndex = index % spanCount
             crossAxisIndex = index / spanCount
