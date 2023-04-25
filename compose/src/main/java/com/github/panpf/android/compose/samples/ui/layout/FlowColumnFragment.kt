@@ -152,7 +152,7 @@ private fun FlowColumnVerticalArrangementSamplePreview() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun FlowColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowColumn（Alignment）（无效）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "FlowColumn（Alignment）", allExpandFlow, padding = 20.dp) {
         FlowRow {
             listOf(
                 Alignment.Start to "Start",
@@ -175,7 +175,7 @@ private fun FlowColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             .width(100.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalAlignment = alignment  // todo Invalid
+                        horizontalAlignment = alignment
                     ) {
                         listOf("数码", "汽车", "摄影").forEach {
                             ElevatedAssistChip(

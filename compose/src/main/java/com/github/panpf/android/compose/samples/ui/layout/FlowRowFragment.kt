@@ -142,7 +142,7 @@ private fun FlowRowHorizontalArrangementSamplePreview() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun FlowRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowRow（verticalAlignment）（无效）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "FlowRow（verticalAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 Alignment.Top to "Start",
@@ -159,7 +159,7 @@ private fun FlowRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .height(80.dp)
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
-                    verticalAlignment = alignment  // todo Invalid
+                    verticalAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                         ElevatedAssistChip(

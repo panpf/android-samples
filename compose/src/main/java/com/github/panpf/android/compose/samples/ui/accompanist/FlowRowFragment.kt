@@ -218,7 +218,7 @@ private fun FlowRowMainAxisSpacingSamplePreview() {
 
 @Composable
 private fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowRow（crossAxisAlignment）（无效）", allExpandFlow, padding = 20.dp) {
+    ExpandableItem3(title = "FlowRow（crossAxisAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
                 FlowCrossAxisAlignment.Start to "Start",
@@ -235,7 +235,7 @@ private fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .height(80.dp)
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
-                    crossAxisAlignment = alignment  // todo Invalid
+                    crossAxisAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                         ElevatedAssistChip(

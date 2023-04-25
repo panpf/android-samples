@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -48,10 +47,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.ui.base.CenteredText
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -67,12 +68,13 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             LazyHorizontalGridSample(allExpandFlow)
-            LazyHorizontalGridRowsDynamicCellsSample(allExpandFlow)
+            LazyHorizontalGridRowsFixedSample(allExpandFlow)
+            LazyHorizontalGridRowsAdaptiveSample(allExpandFlow)
             LazyHorizontalGridContentPaddingSample(allExpandFlow)
-            LazyHorizontalGridItemSpacedSample(allExpandFlow)
             LazyHorizontalGridReverseLayoutSample(allExpandFlow)
             LazyHorizontalGridHorizontalArrangementSample(allExpandFlow)
             LazyHorizontalGridVerticalArrangementSample(allExpandFlow)
+            LazyHorizontalGridItemSpacedSample(allExpandFlow)
             LazyHorizontalGridUserScrollEnabledSample(allExpandFlow)
             LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow)
             LazyHorizontalGridScrollInProgressSample(allExpandFlow)
@@ -100,18 +102,12 @@ private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp)
         ) {
             items(count = 50) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
+                        .width(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
     }
@@ -125,57 +121,34 @@ private fun LazyHorizontalGridSamplePreview() {
 
 
 @Composable
-private fun LazyHorizontalGridRowsDynamicCellsSample(allExpandFlow: Flow<Boolean>) {
+private fun LazyHorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
-        title = "LazyHorizontalGrid（rows - AdaptiveCells）",
+        title = "LazyHorizontalGrid（rows - Fixed）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            IconButton(
-                onClick = {
-                    if (gridHeight.value > 80.dp) {
-                        gridHeight.value -= 60.dp
-                    }
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Icon(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
+        listOf(3, 2, 1).forEachIndexed { index, rows ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.size(20.dp))
             }
+            Text(text = "rows=Fixed($rows)")
+            Spacer(modifier = Modifier.size(10.dp))
             LazyHorizontalGrid(
-                rows = GridCells.Adaptive(80.dp),
+                rows = GridCells.Fixed(rows),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(gridHeight.value)
+                    .height(120.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp)
             ) {
                 items(count = 50) { index ->
-                    Box(
+                    CenteredText(
+                        text = index.plus(1).toString(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
+                            .width(40.dp)
                             .background(colors[index % colors.size])
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
+                    )
                 }
-            }
-            IconButton(
-                onClick = {
-                    gridHeight.value += 60.dp
-                }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
             }
         }
     }
@@ -183,8 +156,64 @@ private fun LazyHorizontalGridRowsDynamicCellsSample(allExpandFlow: Flow<Boolean
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun LazyHorizontalGridRowsDynamicCellsSamplePreview() {
-    LazyHorizontalGridRowsDynamicCellsSample(remember { MutableStateFlow(true) })
+private fun LazyHorizontalGridRowsFixedSamplePreview() {
+    LazyHorizontalGridRowsFixedSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun LazyHorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    val gridHeight = remember { mutableStateOf(200.dp) }
+    ExpandableItem3(
+        title = "LazyHorizontalGrid（rows - Adaptive）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        IconButton(
+            onClick = {
+                if (gridHeight.value > 80.dp) {
+                    gridHeight.value -= 60.dp
+                }
+            }, modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+        ) {
+            Icon(painterResource(id = R.drawable.ic_subtract), contentDescription = "subtract")
+        }
+        LazyHorizontalGrid(
+            rows = GridCells.Adaptive(80.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(gridHeight.value)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
+            }
+        }
+        IconButton(
+            onClick = {
+                gridHeight.value += 60.dp
+            }, modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+        ) {
+            Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalGridRowsAdaptiveSamplePreview() {
+    LazyHorizontalGridRowsAdaptiveSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -196,28 +225,97 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
         allExpandFlow,
         padding = 20.dp
     ) {
+        Text(text = "PaddingValues(20.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
         LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
+            rows = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(120.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
             items(count = 50) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
+                        .width(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "PaddingValues(horizontal=20.dp, vertical=10.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "PaddingValues(start=10.dp, top=20.dp, end=40.dp, bottom=60.dp)")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            contentPadding = PaddingValues(
+                start = 10.dp,
+                top = 20.dp,
+                end = 40.dp,
+                bottom = 60.dp
+            )
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(text = "PaddingValues + ItemSpaced")
+        Spacer(modifier = Modifier.size(10.dp))
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(110.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            contentPadding = PaddingValues(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
             }
         }
     }
@@ -227,49 +325,6 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
 @Composable
 private fun LazyHorizontalGridContentPaddingSamplePreview() {
     LazyHorizontalGridContentPaddingSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
-    ExpandableItem3(
-        title = "LazyHorizontalGrid（ItemSpaced）",
-        allExpandFlow,
-        padding = 20.dp
-    ) {
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(3),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            items(count = 50) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun LazyHorizontalGridItemSpacedSamplePreview() {
-    LazyHorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -291,18 +346,12 @@ private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) 
             reverseLayout = true
         ) {
             items(count = 50) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
+                        .width(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
     }
@@ -323,42 +372,33 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
-                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
+            ).forEach { (arrangement, name) ->
+                Column(Modifier.fillMaxWidth(0.48f)) {
                     Text(text = name)
                     LazyHorizontalGrid(
-                        rows = GridCells.Fixed(2),
+                        rows = GridCells.Fixed(3),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(110.dp)
+                            .height(160.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = arrangement,
                     ) {
                         items(count = 9) { index ->
-                            Box(
+                            CenteredText(
+                                text = index.plus(1).toString(),
                                 modifier = Modifier
-                                    .requiredSize(40.dp)
+                                    .requiredSize(30.dp)
                                     .background(colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = index.plus(1).toString(),
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
+                            )
                         }
                     }
                 }
@@ -378,46 +418,37 @@ private fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
 private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(
-        title = "LazyHorizontalGrid（verticalArrangement）（无效）",
+        title = "LazyHorizontalGrid（verticalArrangement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
             listOf(
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
-            ).forEachIndexed { index, (arrangement, name) ->
-                if (index > 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Column {
+            ).forEach { (arrangement, name) ->
+                Column(Modifier.fillMaxWidth(0.48f)) {
                     Text(text = name)
                     LazyHorizontalGrid(
-                        rows = GridCells.Fixed(2),
+                        rows = GridCells.Fixed(3),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(130.dp)
+                            .height(180.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)  // todo Invalid
+                        verticalArrangement = arrangement,
                     ) {
                         items(count = 9) { index ->
-                            Box(
+                            CenteredText(
+                                text = index.plus(1).toString(),
                                 modifier = Modifier
-                                    .requiredSize(40.dp)
+                                    .requiredSize(30.dp)
                                     .background(colors[index % colors.size])
-                            ) {
-                                Text(
-                                    text = index.plus(1).toString(),
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                )
-                            }
+                            )
                         }
                     }
                 }
@@ -430,6 +461,58 @@ private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Bool
 @Composable
 private fun LazyHorizontalGridVerticalArrangementSamplePreview() {
     LazyHorizontalGridVerticalArrangementSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyColor.halfRainbows
+    ExpandableItem3(
+        title = "LazyHorizontalGrid（ItemSpaced）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        listOf(
+            "Fixed(3), horizontal=10.dp, vertical=20.dp" to ((10.dp to 20.dp) to 3),
+            "Fixed(3), horizontal=20.dp, vertical=10.dp" to ((20.dp to 10.dp) to 3),
+            "Fixed(2), horizontal=10.dp, vertical=10.dp" to ((10.dp to 10.dp) to 2),
+            "Fixed(1), horizontal=10.dp, vertical=10.dp" to ((10.dp to 10.dp) to 1),
+        ).forEachIndexed { index, pair ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+            val title = pair.first
+            val horizontalSpacing = pair.second.first.first
+            val verticalSpacing = pair.second.first.second
+            val rows = pair.second.second
+            Text(text = title)
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(rows),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp),
+                horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
+                verticalArrangement = Arrangement.spacedBy(verticalSpacing),
+            ) {
+                items(count = 50) { index ->
+                    CenteredText(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .width(40.dp)
+                            .background(colors[index % colors.size])
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyHorizontalGridItemSpacedSamplePreview() {
+    LazyHorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -451,18 +534,12 @@ private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolea
             userScrollEnabled = false
         ) {
             items(count = 50) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
+                        .width(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
     }
@@ -487,33 +564,25 @@ private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boo
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp),
-                state = lazyListState
-            ) {
-                items(count = 50) { index ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
-                            .background(colors[index % colors.size])
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
-                }
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            state = lazyListState
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
             }
-            Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
         }
+        Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
     }
 }
 
@@ -527,40 +596,32 @@ private fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
 @Composable
 private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val lazyListState = rememberLazyGridState(3)
+    val lazyListState = rememberLazyGridState(1)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
     ExpandableItem3(
         title = "LazyHorizontalGrid（isScrollInProgress）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column {
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp),
-                state = lazyListState
-            ) {
-                items(count = 50) { index ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
-                            .background(colors[index % colors.size])
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
-                }
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            state = lazyListState
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
             }
-            Text(text = "isScrollInProgress: ${scrollInProgressState.value}")
         }
+        Text(text = "isScrollInProgress: ${scrollInProgressState.value}")
     }
 }
 
@@ -574,7 +635,7 @@ private fun LazyHorizontalGridScrollInProgressSamplePreview() {
 @Composable
 private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val lazyListState = rememberLazyGridState(3)
+    val lazyListState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
         title = "LazyHorizontalGrid（animateScrollToItem）",
@@ -608,18 +669,12 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
                 state = lazyListState
             ) {
                 items(count = 50) { index ->
-                    Box(
+                    CenteredText(
+                        text = index.plus(1).toString(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
+                            .width(40.dp)
                             .background(colors[index % colors.size])
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
+                    )
                 }
             }
             IconButton(
@@ -653,56 +708,40 @@ private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
 @Composable
 private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val items = remember {
-        mutableStateOf(
-            buildList {
-                repeat(49) {
-                    add((it + 1).toString())
-                }
-            }
-        )
-    }
+    val items = remember { mutableStateOf((1..50).map { it.toString() }) }
     ExpandableItem3(
         title = "LazyHorizontalGrid（animateItemPlacement）",
         allExpandFlow,
         padding = 20.dp
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "点击 item 删除它，然后触发动画")
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp)
-            ) {
-                itemsIndexed(
-                    items = items.value,
-                    key = { _, item -> item }
-                ) { index, item ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
-                            .background(colors[index % colors.size])
-                            .animateItemPlacement()
-                            .clickable {
-                                items.value = items.value
-                                    .toMutableList()
-                                    .apply {
-                                        remove(item)
-                                    }
-                                    .toList()
-                            },
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
-                }
+        Text(text = "点击 item 删除它，然后触发动画")
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            itemsIndexed(
+                items = items.value,
+                key = { _, item -> item }
+            ) { index, item ->
+                CenteredText(
+                    text = item,
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                        .animateItemPlacement()
+                        .clickable {
+                            items.value = items.value
+                                .toMutableList()
+                                .apply {
+                                    remove(item)
+                                }
+                                .toList()
+                        },
+                )
             }
         }
     }
@@ -721,63 +760,55 @@ private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
     ExpandableItem3(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
-        Column {
-            LazyHorizontalGrid(
-                state = lazyGridState,
-                rows = GridCells.Fixed(3),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp)
-            ) {
-                items(count = 50) { index ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
-                            .background(colors[index % colors.size])
-                    ) {
-                        Text(
-                            text = index.plus(1).toString(),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
-                    }
-                }
+        LazyHorizontalGrid(
+            state = lazyGridState,
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            items(count = 50) { index ->
+                CenteredText(
+                    text = index.plus(1).toString(),
+                    modifier = Modifier
+                        .width(40.dp)
+                        .background(colors[index % colors.size])
+                )
             }
-            Text(text = layoutInfoState.let { listLayoutInfoState ->
-                buildString {
-                    append("visibleItemsInfo: ")
-                    listLayoutInfoState.value.visibleItemsInfo.forEach { itemInfo ->
-                        appendLine()
-                        append("        ")
-                        append("index=${itemInfo.index}, offset=${itemInfo.offset}, size=${itemInfo.size}")
-                    }
-
-                    appendLine()
-                    append("viewportStartOffset: ${listLayoutInfoState.value.viewportStartOffset}")
-
-                    appendLine()
-                    append("viewportEndOffset: ${listLayoutInfoState.value.viewportEndOffset}")
-
-                    appendLine()
-                    append("totalItemsCount: ${listLayoutInfoState.value.totalItemsCount}")
-
-                    appendLine()
-                    append("viewportSize: ${listLayoutInfoState.value.viewportSize}")
-
-                    appendLine()
-                    append("reverseLayout: ${listLayoutInfoState.value.reverseLayout}")
-
-                    appendLine()
-                    append("beforeContentPadding: ${listLayoutInfoState.value.beforeContentPadding}")
-
-                    appendLine()
-                    append("afterContentPadding: ${listLayoutInfoState.value.afterContentPadding}")
-                }
-            })
         }
+        Text(text = layoutInfoState.let { listLayoutInfoState ->
+            buildString {
+                append("visibleItemsInfo: ")
+                listLayoutInfoState.value.visibleItemsInfo.forEach { itemInfo ->
+                    appendLine()
+                    append("        ")
+                    append("index=${itemInfo.index}, offset=${itemInfo.offset}, size=${itemInfo.size}")
+                }
+
+                appendLine()
+                append("viewportStartOffset: ${listLayoutInfoState.value.viewportStartOffset}")
+
+                appendLine()
+                append("viewportEndOffset: ${listLayoutInfoState.value.viewportEndOffset}")
+
+                appendLine()
+                append("totalItemsCount: ${listLayoutInfoState.value.totalItemsCount}")
+
+                appendLine()
+                append("viewportSize: ${listLayoutInfoState.value.viewportSize}")
+
+                appendLine()
+                append("reverseLayout: ${listLayoutInfoState.value.reverseLayout}")
+
+                appendLine()
+                append("beforeContentPadding: ${listLayoutInfoState.value.beforeContentPadding}")
+
+                appendLine()
+                append("afterContentPadding: ${listLayoutInfoState.value.afterContentPadding}")
+            }
+        })
     }
 }
 
@@ -824,23 +855,17 @@ private fun LazyHorizontalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
             ) { index, item ->
                 when (item) {
                     is String -> {
-                        Box(
+                        CenteredText(
+                            text = item,
                             modifier = Modifier
-                                .fillMaxWidth()
                                 .aspectRatio(1f)
                                 .background(colors[index % colors.size])
-                        ) {
-                            Text(
-                                text = index.plus(1).toString(),
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            )
-                        }
+                        )
                     }
+
                     is ImageVector -> {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth()
                                 .aspectRatio(1f)
                         ) {
                             FilledTonalIconButton(
@@ -893,18 +918,12 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             ) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .width(80.dp)
+                        .width(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
     }
@@ -921,7 +940,7 @@ private fun LazyHorizontalGridSpanSamplePreview() {
 private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     ExpandableItem3(title = "LazyHorizontalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
-        Text(text = "size(60.dp)")
+        Text(text = "size(40.dp)")
         Spacer(modifier = Modifier.size(10.dp))
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
@@ -931,22 +950,17 @@ private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp),
         ) {
             items(count = 7) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
 
         Spacer(modifier = Modifier.size(20.dp))
-        Text(text = "requiredSize(60.dp)")
+        Text(text = "requiredSize(40.dp)")
         Spacer(modifier = Modifier.size(10.dp))
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
@@ -956,17 +970,12 @@ private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp),
         ) {
             items(count = 7) { index ->
-                Box(
+                CenteredText(
+                    text = index.plus(1).toString(),
                     modifier = Modifier
-                        .requiredSize(60.dp)
+                        .requiredSize(40.dp)
                         .background(colors[index % colors.size])
-                ) {
-                    Text(
-                        text = index.plus(1).toString(),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                )
             }
         }
     }
