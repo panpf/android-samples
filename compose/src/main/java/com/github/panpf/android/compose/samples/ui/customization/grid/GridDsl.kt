@@ -20,7 +20,8 @@ fun VerticalGrid(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     reverseLayout: Boolean = false,
-    verticalArrangement: Arrangement.Vertical = if (!reverseLayout) Arrangement.Top else Arrangement.Bottom,
+    verticalArrangement: Arrangement.Vertical =
+        if (!reverseLayout) Arrangement.Top else Arrangement.Bottom,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     content: @Composable () -> Unit
 ) {

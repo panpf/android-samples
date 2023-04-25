@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -61,6 +62,7 @@ class HorizontalGridFragment : Material3ComposeAppBarFragment() {
             HorizontalGridContentPaddingSample(allExpandFlow)
             HorizontalGridArrangementSample(allExpandFlow)
             HorizontalGridArrangementWithRowsSample(allExpandFlow)
+            HorizontalGridItemSpacedSample(allExpandFlow)
             HorizontalGridReverseLayoutSample(allExpandFlow)
             HorizontalGridNotNeatItemSample(allExpandFlow)
             HorizontalGridSizeSample(allExpandFlow)
@@ -131,7 +133,7 @@ fun HorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Rows=Fixed($rows)")
+                Text(text = "rows=Fixed($rows)")
                 Spacer(modifier = Modifier.size(10.dp))
                 HorizontalGrid(
                     rows = GridCells.Fixed(rows),
@@ -168,7 +170,7 @@ fun HorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "HorizontalGrid（rows - Adaptive）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            Text(text = "Rows=Adaptive(100.dp)")
+            Text(text = "rows=Adaptive(100.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             var fillMaxHeightFraction by remember { mutableStateOf(0.6f) }
             Box(
@@ -325,8 +327,8 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     .height(160.dp)
                     .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+//                verticalArrangement = Arrangement.spacedBy(10.dp),    // todo crash
+//                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 repeat(7) {
                     Text(
@@ -494,6 +496,77 @@ fun HorizontalGridArrangementWithRowsSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun HorizontalGridArrangementWithRowsSamplePreview() {
     HorizontalGridArrangementWithRowsSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun HorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(
+        title = "HorizontalGrid（ItemSpaced）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        val colorScheme = MaterialTheme.colorScheme
+        Text(text = "horizontal=20.dp, vertical=10.dp")
+        HorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(colorScheme.primaryContainer),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            repeat(13) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "horizontal=10.dp, vertical=20.dp")
+        HorizontalGrid(
+            rows = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(colorScheme.primaryContainer),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            repeat(13) { index ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .border(width = 1.dp, color = colorScheme.tertiary)
+                ) {
+                    Text(
+                        text = index.plus(1).toString(),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun HorizontalGridItemSpacedSamplePreview() {
+    HorizontalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

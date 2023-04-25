@@ -116,19 +116,10 @@ internal class GridMeasurementHelper(
                 "HorizontalGrid's height should be bound by parent."
             }
         }
-        val mainAxisSpacing = with(measureScope) {
-            if (isVertical) {
-                verticalArrangement.spacing.toPx().roundToInt()
-            } else {
-                horizontalArrangement.spacing.toPx().roundToInt()
-            }
-        }
-        val crossAxisSpacing = with(measureScope) {
-            if (isVertical) {
-                horizontalArrangement.spacing.toPx().roundToInt()
-            } else {
-                verticalArrangement.spacing.toPx().roundToInt()
-            }
+        val (mainAxisSpacing, crossAxisSpacing) = with(measureScope) {
+            val verticalSpacing = verticalArrangement.spacing.toPx().roundToInt()
+            val horizontalSpacing = horizontalArrangement.spacing.toPx().roundToInt()
+            if (isVertical) horizontalSpacing to verticalSpacing else verticalSpacing to horizontalSpacing
         }
         val leftPadding = with(measureScope) {
             contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()
@@ -207,19 +198,10 @@ internal class GridMeasurementHelper(
         result: GridMeasureHelperResult
     ) {
         val isVertical = layoutOrientation == LayoutOrientation.Vertical
-        val mainAxisSpacing = with(measureScope) {
-            if (isVertical) {
-                verticalArrangement.spacing.toPx().roundToInt()
-            } else {
-                horizontalArrangement.spacing.toPx().roundToInt()
-            }
-        }
-        val crossAxisSpacing = with(measureScope) {
-            if (isVertical) {
-                horizontalArrangement.spacing.toPx().roundToInt()
-            } else {
-                verticalArrangement.spacing.toPx().roundToInt()
-            }
+        val (mainAxisSpacing, crossAxisSpacing) = with(measureScope) {
+            val verticalSpacing = verticalArrangement.spacing.toPx().roundToInt()
+            val horizontalSpacing = horizontalArrangement.spacing.toPx().roundToInt()
+            if (isVertical) horizontalSpacing to verticalSpacing else verticalSpacing to horizontalSpacing
         }
         val leftPadding = with(measureScope) {
             contentPadding.calculateLeftPadding(layoutDirection).toPx().roundToInt()

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,6 +43,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
+import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -60,6 +62,7 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridContentPaddingSample(allExpandFlow)
             VerticalGridArrangementSample(allExpandFlow)
             VerticalGridArrangementWithColumnsSample(allExpandFlow)
+            VerticalGridItemSpacedSample(allExpandFlow)
             VerticalGridReverseLayoutSample(allExpandFlow)
             VerticalGridNotNeatItemSample(allExpandFlow)
             VerticalGridSizeSample(allExpandFlow)
@@ -126,7 +129,7 @@ fun VerticalGridColumnsFixedSample(allExpandFlow: Flow<Boolean>) {
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(20.dp))
                 }
-                Text(text = "Columns=Fixed($columns)")
+                Text(text = "columns=Fixed($columns)")
                 Spacer(modifier = Modifier.size(10.dp))
                 VerticalGrid(
                     columns = GridCells.Fixed(columns),
@@ -161,7 +164,7 @@ fun VerticalGridColumnsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "VerticalGrid（columns - Adaptive）", allExpandFlow, padding = 20.dp) {
         val colorScheme = MaterialTheme.colorScheme
         Column(Modifier.fillMaxWidth()) {
-            Text(text = "Columns=Adaptive(100.dp)")
+            Text(text = "columns=Adaptive(100.dp)")
             Spacer(modifier = Modifier.size(10.dp))
             var fillMaxWidthFraction by remember { mutableStateOf(0.6f) }
             VerticalGrid(
@@ -464,6 +467,82 @@ fun VerticalGridArrangementWithColumnsSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun VerticalGridArrangementWithColumnsSamplePreview() {
     VerticalGridArrangementWithColumnsSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun VerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(
+        title = "VerticalGrid（ItemSpaced）",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        val colorScheme = MaterialTheme.colorScheme
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+            Column(Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "vertical=10.dp\nhorizontal=20.dp")
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                ) {
+                    repeat(7) { index ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        ) {
+                            Text(
+                                text = index.plus(1).toString(),
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.45f)) {
+                Text(text = "vertical=20.dp\nhorizontal=10.dp")
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    repeat(7) { index ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        ) {
+                            Text(
+                                text = index.plus(1).toString(),
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun VerticalGridItemSpacedSamplePreview() {
+    VerticalGridItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
