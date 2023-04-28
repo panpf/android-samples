@@ -42,6 +42,7 @@ import com.github.panpf.android.compose.samples.ui.base.CenteredText
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -68,6 +69,7 @@ class VerticalGridFragment : Material3ComposeAppBarFragment() {
             VerticalGridSizeWrapSample(allExpandFlow)
             VerticalGridSizeFixedSample(allExpandFlow)
             VerticalGridItemSizeSample(allExpandFlow)
+            VerticalGridMultiAttributeMixingSample(allExpandFlow)
         }
     }
 }
@@ -334,15 +336,15 @@ fun VerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         columns = GridCells.Fixed(3),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(180.dp)
+                            .height(200.dp)
                             .background(colorScheme.primaryContainer),
-                        verticalArrangement = arrangement,  // todo invalid
+                        verticalArrangement = arrangement,
                     ) {
-                        repeat(7) { index ->
+                        repeat(10) { index ->
                             CenteredText(
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
-                                    .requiredSize(40.dp)
+                                    .requiredSize(30.dp)
                                     .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
@@ -778,4 +780,224 @@ fun VerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun VerticalGridItemSizeSamplePreview() {
     VerticalGridItemSizeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+fun VerticalGridMultiAttributeMixingSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "VerticalGrid（MultiAttributeMixing）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "Default", line = 2)
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "reverseLayout=true", line = 2)
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    reverseLayout = true,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)", line = 2)
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "verticalArrangement=SpaceEvenly", line = 2)
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nreverseLayout=true",
+                    line = 4
+                )
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    reverseLayout = true,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nverticalArrangement=SpaceEvenly",
+                    line = 4
+                )
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "reverseLayout=true\nverticalArrangement=SpaceEvenly",
+                    line = 5
+                )
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    reverseLayout = true,
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nreverseLayout=true\nverticalArrangement=SpaceEvenly",
+                    line = 5
+                )
+                VerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    reverseLayout = true,
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .height(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun VerticalGridMultiAttributeMixingSamplePreview() {
+    VerticalGridMultiAttributeMixingSample(remember { MutableStateFlow(true) })
 }

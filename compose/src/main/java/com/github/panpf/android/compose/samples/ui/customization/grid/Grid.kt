@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
+import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -222,12 +223,11 @@ internal class GridMeasurementHelper(
     }
 
     fun placing(placeableScope: Placeable.PlacementScope, result: GridMeasureHelperResult) {
-        result.itemList.forEach { (placeable, position) ->
+        result.itemList.forEachIndexed { index, (placeable, position) ->
             val finalPosition = applyReverseLayout(
-                layoutWidth = result.width,
-                layoutHeight = result.height,
+                result = result,
                 placeable = placeable,
-                position = position,
+                position = applyArrangement(result, position, index),
             )
             with(placeableScope) {
                 placeable.placeRelative(x = finalPosition.x, y = finalPosition.y)
@@ -235,23 +235,109 @@ internal class GridMeasurementHelper(
         }
     }
 
-//    private fun applyArrangement() {
-//      // TODO apply arrangement
-//    }
+    private fun applyArrangement(
+        result: GridMeasureHelperResult,
+        position: Point,
+        index: Int,
+    ): Point {
+        val isVertical = layoutOrientation == LayoutOrientation.Vertical
+        val widthNeedSize = if (isVertical) result.mainAxisSize else result.crossAxisSize
+        val heightNeedSize = if (isVertical) result.crossAxisSize else result.mainAxisSize
+        return if (isVertical && heightNeedSize < result.height) {
+            when (verticalArrangement) {
+                Arrangement.Top -> position
+                Arrangement.Center -> Point(
+                    position.x,
+                    position.y + (result.height - heightNeedSize) / 2
+                )
+
+                Arrangement.Bottom -> Point(
+                    position.x,
+                    position.y + (result.height - heightNeedSize)
+                )
+
+                Arrangement.SpaceBetween -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.height - heightNeedSize) / (lineCount - 1)
+                    val offsetY = (unitSpace * line).roundToInt()
+                    Point(position.x, position.y + offsetY)
+                }
+
+                Arrangement.SpaceAround -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.height - heightNeedSize) / (lineCount * 2)
+                    val offsetY = (unitSpace * (((line + 1) * 2) - 1)).roundToInt()
+                    Point(position.x, position.y + offsetY)
+                }
+
+                Arrangement.SpaceEvenly -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.height - heightNeedSize) / (lineCount + 1)
+                    val offsetY = (unitSpace * (line + 1)).roundToInt()
+                    Point(position.x, position.y + offsetY)
+                }
+
+                else -> position
+            }
+        } else if (!isVertical && widthNeedSize < result.width) {
+            when (horizontalArrangement) {
+                Arrangement.Start -> position
+                Arrangement.Center -> Point(
+                    position.x + (result.width - widthNeedSize) / 2,
+                    position.y
+                )
+
+                Arrangement.End -> Point(
+                    position.x + (result.width - widthNeedSize),
+                    position.y
+                )
+
+                Arrangement.SpaceBetween -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.width - widthNeedSize) / (lineCount - 1)
+                    val offsetX = (unitSpace * line).roundToInt()
+                    Point(position.x + offsetX, position.y)
+                }
+
+                Arrangement.SpaceAround -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.width - widthNeedSize) / (lineCount * 2)
+                    val offsetX = (unitSpace * (((line + 1) * 2) - 1)).roundToInt()
+                    Point(position.x + offsetX, position.y)
+                }
+
+                Arrangement.SpaceEvenly -> {
+                    val line = index / result.spanCount
+                    val lineCount = ceil(result.itemList.size / result.spanCount.toDouble())
+                    val unitSpace = (result.width - widthNeedSize) / (lineCount + 1)
+                    val offsetX = (unitSpace * (line + 1)).roundToInt()
+                    Point(position.x + offsetX, position.y)
+                }
+
+                else -> position
+            }
+        } else {
+            position
+        }
+    }
 
     private fun applyReverseLayout(
-        layoutWidth: Int,
-        layoutHeight: Int,
+        result: GridMeasureHelperResult,
         placeable: Placeable,
         position: Point
     ): Point {
         if (!reverseLayout) return position
         val isVertical = layoutOrientation == LayoutOrientation.Vertical
         return if (isVertical) {
-            val yPosition: Int = layoutHeight - position.y - placeable.height
+            val yPosition: Int = result.height - position.y - placeable.height
             Point(position.x, yPosition)
         } else {
-            val xPosition: Int = layoutWidth - position.x - placeable.width
+            val xPosition: Int = result.width - position.x - placeable.width
             Point(xPosition, position.y)
         }
     }

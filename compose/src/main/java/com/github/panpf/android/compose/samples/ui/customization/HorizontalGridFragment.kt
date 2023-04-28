@@ -43,6 +43,7 @@ import com.github.panpf.android.compose.samples.ui.base.CenteredText
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.customization.grid.HorizontalGrid
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
@@ -69,6 +70,7 @@ class HorizontalGridFragment : Material3ComposeAppBarFragment() {
             HorizontalGridSizeWrapSample(allExpandFlow)
             HorizontalGridSizeFixedSample(allExpandFlow)
             HorizontalGridItemSizeSample(allExpandFlow)
+            HorizontalGridMultiAttributeMixingSample(allExpandFlow)
         }
     }
 }
@@ -372,9 +374,9 @@ fun HorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                             .fillMaxWidth()
                             .height(160.dp)
                             .background(colorScheme.primaryContainer),
-                        horizontalArrangement = arrangement,  // todo invalid
+                        horizontalArrangement = arrangement,
                     ) {
-                        repeat(7) { index ->
+                        repeat(10) { index ->
                             CenteredText(
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
@@ -833,4 +835,224 @@ fun HorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun HorizontalGridItemSizeSamplePreview() {
     HorizontalGridItemSizeSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+fun HorizontalGridMultiAttributeMixingSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "HorizontalGrid（MultiAttributeMixing）", allExpandFlow, padding = 20.dp) {
+        val colorScheme = MaterialTheme.colorScheme
+        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "Default", line = 2)
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "reverseLayout=true", line = 2)
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    reverseLayout = true,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)", line = 2)
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(text = "horizontalArrangement=SpaceEvenly", line = 2)
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nreverseLayout=true",
+                    line = 4
+                )
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    reverseLayout = true,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nhorizontalArrangement=SpaceEvenly",
+                    line = 4
+                )
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "reverseLayout=true\nhorizontalArrangement=SpaceEvenly",
+                    line = 5
+                )
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    reverseLayout = true,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+
+            Column(Modifier.fillMaxWidth(0.48f)) {
+                SubtitleText(
+                    text = "Padding(5.dp, 10.dp, 15.dp, 20.dp)\nreverseLayout=true\nhorizontalArrangement=SpaceEvenly",
+                    line = 5
+                )
+                HorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(colorScheme.primaryContainer),
+                    contentPadding = PaddingValues(
+                        start = 5.dp,
+                        top = 10.dp,
+                        end = 15.dp,
+                        bottom = 20.dp
+                    ),
+                    reverseLayout = true,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    repeat(11) { index ->
+                        CenteredText(
+                            text = index.plus(1).toString(),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .border(width = 1.dp, color = colorScheme.tertiary)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun HorizontalGridMultiAttributeMixingSamplePreview() {
+    HorizontalGridMultiAttributeMixingSample(remember { MutableStateFlow(true) })
 }
