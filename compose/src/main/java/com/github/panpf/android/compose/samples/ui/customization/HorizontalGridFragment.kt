@@ -323,7 +323,7 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     .background(colorScheme.primaryContainer),
                 contentPadding = PaddingValues(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-//                horizontalArrangement = Arrangement.spacedBy(10.dp),      // todo crash
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 repeat(13) { index ->
                     CenteredText(
