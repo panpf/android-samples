@@ -1,14 +1,16 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,7 +28,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -47,15 +49,17 @@ class CardsFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Card", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            modifier = Modifier.fillMaxWidth(),
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "Default")
                 Spacer(modifier = Modifier.size(10.dp))
                 Card(
@@ -69,7 +73,7 @@ private fun CardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "shape")
                 Spacer(modifier = Modifier.size(10.dp))
                 Card(
@@ -84,7 +88,7 @@ private fun CardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "colors")
                 Spacer(modifier = Modifier.size(10.dp))
                 Card(
@@ -102,7 +106,7 @@ private fun CardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "elevation")
                 Spacer(modifier = Modifier.size(10.dp))
                 Card(
@@ -120,7 +124,7 @@ private fun CardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "border")
                 Spacer(modifier = Modifier.size(10.dp))
                 Card(
@@ -145,27 +149,31 @@ private fun CardSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ElevatedCard", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            modifier = Modifier.fillMaxWidth(),
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "Default")
                 Spacer(modifier = Modifier.size(10.dp))
-                ElevatedCard(modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)) {
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
                     }
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "shape")
                 Spacer(modifier = Modifier.size(10.dp))
                 ElevatedCard(
@@ -180,7 +188,7 @@ private fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "colors")
                 Spacer(modifier = Modifier.size(10.dp))
                 ElevatedCard(
@@ -198,7 +206,7 @@ private fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "elevation")
                 Spacer(modifier = Modifier.size(10.dp))
                 ElevatedCard(
@@ -226,27 +234,31 @@ private fun ElevatedCardSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "OutlinedCard", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            modifier = Modifier.fillMaxWidth(),
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "Default")
                 Spacer(modifier = Modifier.size(10.dp))
-                OutlinedCard(modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)) {
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
                     }
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "shape")
                 Spacer(modifier = Modifier.size(10.dp))
                 OutlinedCard(
@@ -261,7 +273,7 @@ private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "colors")
                 Spacer(modifier = Modifier.size(10.dp))
                 OutlinedCard(
@@ -279,7 +291,7 @@ private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "elevation")
                 Spacer(modifier = Modifier.size(10.dp))
                 OutlinedCard(
@@ -297,7 +309,7 @@ private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+            Column {
                 Text(text = "border")
                 Spacer(modifier = Modifier.size(10.dp))
                 OutlinedCard(

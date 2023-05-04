@@ -1,14 +1,17 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 
 class CardsFragment : MaterialComposeAppBarFragment() {
 
@@ -37,17 +40,19 @@ class CardsFragment : MaterialComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CardSample() {
-    FlowRow(
+    VerticalGrid(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(20.dp),
-        mainAxisSpacing = 20.dp,
-        crossAxisSpacing = 20.dp,
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "Default")
             Spacer(modifier = Modifier.size(10.dp))
             Card(modifier = Modifier
@@ -59,7 +64,7 @@ private fun CardSample() {
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "shape")
             Spacer(modifier = Modifier.size(10.dp))
             Card(
@@ -74,7 +79,7 @@ private fun CardSample() {
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "backgroundColor")
             Spacer(modifier = Modifier.size(10.dp))
             Card(
@@ -89,7 +94,7 @@ private fun CardSample() {
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "contentColor")
             Spacer(modifier = Modifier.size(10.dp))
             Card(
@@ -104,7 +109,7 @@ private fun CardSample() {
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "elevation")
             Spacer(modifier = Modifier.size(10.dp))
             Card(
@@ -119,7 +124,7 @@ private fun CardSample() {
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth(0.45f)) {
+        Column {
             Text(text = "border")
             Spacer(modifier = Modifier.size(10.dp))
             Card(
