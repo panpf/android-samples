@@ -2,13 +2,15 @@ package com.github.panpf.android.compose.samples.ui.graphics
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -45,6 +47,7 @@ import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.base.computePentagramPath
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.roundToInt
@@ -84,19 +87,25 @@ class DrawScopeDrawFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawArc", allExpandFlow, padding = 20.dp) {
         Text(text = "半透明的圆底是单独绘制的，只是为了突出弧形在圆中的位置，便于理解")
 
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
         Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+
+            Column {
                 SubtitleText(text = "默认配置，大小会充满画布", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -111,8 +120,7 @@ private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "style 改为描边样式就是弧线", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -129,8 +137,7 @@ private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "useCenter 改为 true，就是扇形", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -144,11 +151,8 @@ private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 size 参数，让扇形变小", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -166,8 +170,7 @@ private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数让扇形居中", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -189,8 +192,7 @@ private fun DrawScopeDrawArcSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -215,25 +217,29 @@ private fun DrawScopeDrawArcSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawCircleSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawCircle", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置，大小会充满画布，并且居中", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 radius 参数，让圆形变小", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -243,8 +249,7 @@ private fun DrawScopeDrawCircleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 center 参数让圆形位于左上角", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -254,11 +259,8 @@ private fun DrawScopeDrawCircleSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 参数，改为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -269,16 +271,14 @@ private fun DrawScopeDrawCircleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(brush = rainbowColorsBrush)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -299,11 +299,16 @@ private fun DrawScopeDrawCircleSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawImageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawImage", allExpandFlow, padding = 20.dp) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             val context = LocalContext.current
             val dividerPx = with(LocalDensity.current) { 20.dp.toPx() }
             val imageHor = remember {
@@ -329,7 +334,7 @@ private fun DrawScopeDrawImageSample(allExpandFlow: Flow<Boolean>) {
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .border(1.dp, colors.primaryTranslucency)
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawImage(imageHor)
@@ -340,8 +345,7 @@ private fun DrawScopeDrawImageSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数，让图片居中", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawImage(
@@ -364,8 +368,7 @@ private fun DrawScopeDrawImageSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 src 和 dst，让图片居中且充满画布", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawImage(
@@ -398,18 +401,23 @@ private fun DrawScopeDrawImageSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawLine", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        val strokeWidthBig = with(LocalDensity.current) { 6.dp.toPx() }
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            val strokeWidthBig = with(LocalDensity.current) { 6.dp.toPx() }
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置，宽度是 1 个像素", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -420,8 +428,7 @@ private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 strokeWidth 参数为 5 个像素", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -433,8 +440,7 @@ private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 cap 参数让线条变的圆润", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -446,11 +452,8 @@ private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -464,8 +467,7 @@ private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -479,8 +481,7 @@ private fun DrawScopeDrawLineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawLine(
@@ -502,18 +503,23 @@ private fun DrawScopeDrawLineSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawOutline", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        val commonSizePx = with(LocalDensity.current) { 5.dp.toPx() }
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            val commonSizePx = with(LocalDensity.current) { 5.dp.toPx() }
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "矩形", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOutline(
@@ -530,8 +536,7 @@ private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "圆角矩形", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOutline(
@@ -549,8 +554,7 @@ private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "Generic", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     val path = Path().apply {
@@ -570,11 +574,8 @@ private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -593,8 +594,7 @@ private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOutline(
@@ -612,8 +612,7 @@ private fun DrawScopeDrawOutlineSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -646,33 +645,36 @@ private fun DrawScopeDrawOutlineSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawOvalSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawOval", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1.5f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1.5f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置，大小会充满画布", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOval(color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 size 参数，让椭圆变小", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOval(color = colors.tertiary, size = size / 2f)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数让椭圆居中", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     val rectSize = size / 2f
@@ -686,11 +688,8 @@ private fun DrawScopeDrawOvalSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 参数，改为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -701,16 +700,14 @@ private fun DrawScopeDrawOvalSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawOval(brush = rainbowColorsBrush)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -731,25 +728,29 @@ private fun DrawScopeDrawOvalSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawPathSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawPath", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(path = computePentagramPath(size), color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 参数为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -761,8 +762,7 @@ private fun DrawScopeDrawPathSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(path = computePentagramPath(size), brush = rainbowColorsBrush)
@@ -779,27 +779,32 @@ private fun DrawScopeDrawPathSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawPointsSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawPoints", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        val getPoints: (size: Size) -> List<Offset> = { size ->
-            listOf(
-                Offset(size.width / 2, 0f),
-                Offset(size.width, size.height / 2),
-                Offset(size.width / 2, size.height),
-                Offset(0f, size.height / 2),
-            )
-        }
-        val pointSizePx = with(LocalDensity.current) { 5.dp.toPx() }
+            val getPoints: (size: Size) -> List<Offset> = { size ->
+                listOf(
+                    Offset(size.width / 2, 0f),
+                    Offset(size.width, size.height / 2),
+                    Offset(size.width / 2, size.height),
+                    Offset(0f, size.height / 2),
+                )
+            }
+            val pointSizePx = with(LocalDensity.current) { 5.dp.toPx() }
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPoints(
@@ -811,8 +816,7 @@ private fun DrawScopeDrawPointsSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 pointMode 参数为 Lines", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPoints(
@@ -824,8 +828,7 @@ private fun DrawScopeDrawPointsSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 pointMode 参数为 Polygon", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPoints(
@@ -847,33 +850,36 @@ private fun DrawScopeDrawPointsSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawRectSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawRect", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置，大小会充满画布", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 size 参数，让矩形变小", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary, size = size / 2f)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数让矩形居中", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     val rectSize = size / 2f
@@ -887,11 +893,8 @@ private fun DrawScopeDrawRectSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 参数，改为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -902,16 +905,14 @@ private fun DrawScopeDrawRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(brush = rainbowColorsBrush)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 Canvas(modifier = smallCanvasModifier) {
@@ -932,17 +933,22 @@ private fun DrawScopeDrawRectSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawRoundRect", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "默认配置，大小会充满画布", line = 3)
                 val cornerRadiusPx = with(LocalDensity.current) { 20.dp.toPx() }
                 Canvas(modifier = smallCanvasModifier) {
@@ -953,8 +959,7 @@ private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 size 参数，让矩形变小", line = 3)
                 val cornerRadiusPx = with(LocalDensity.current) { 10.dp.toPx() }
                 Canvas(modifier = smallCanvasModifier) {
@@ -965,8 +970,7 @@ private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数让矩形居中", line = 3)
                 val cornerRadiusPx = with(LocalDensity.current) { 10.dp.toPx() }
                 Canvas(modifier = smallCanvasModifier) {
@@ -982,11 +986,8 @@ private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 style 参数，改为描边样式", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 val cornerRadiusPx = with(LocalDensity.current) { 20.dp.toPx() }
@@ -999,8 +1000,7 @@ private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val cornerRadiusPx = with(LocalDensity.current) { 20.dp.toPx() }
                 Canvas(modifier = smallCanvasModifier) {
@@ -1011,8 +1011,7 @@ private fun DrawScopeDrawRoundRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "通过 brush 参数，可以使用渐变色", line = 3)
                 val stroke = Stroke(with(LocalDensity.current) { 3.dp.toPx() })
                 val cornerRadiusPx = with(LocalDensity.current) { 20.dp.toPx() }
@@ -1035,21 +1034,25 @@ private fun DrawScopeDrawRoundRectSamplePreview() {
 }
 
 
-@OptIn(ExperimentalTextApi::class)
+@OptIn(ExperimentalTextApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeDrawTextSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "DrawScope - drawText", allExpandFlow, padding = 20.dp) {
         Text(text = "更多文字相关属性 fontSize、fontStyle、letterSpacing、textDecoration、lineHeight 等请参考 Material 和 Material3 中 Text 页面的示例")
 
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-
         Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+
+            Column {
                 SubtitleText(text = "默认配置", line = 3)
                 val textMeasurer = rememberTextMeasurer()
                 Canvas(modifier = smallCanvasModifier) {
@@ -1060,8 +1063,7 @@ private fun DrawScopeDrawTextSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "修改 topLeft 参数，左边上边留出边距", line = 3)
                 val textMeasurer = rememberTextMeasurer()
                 val topLeftPx = with(LocalDensity.current) { 10.dp.toPx() }
@@ -1072,11 +1074,6 @@ private fun DrawScopeDrawTextSample(allExpandFlow: Flow<Boolean>) {
                         topLeft = Offset(topLeftPx, topLeftPx)
                     )
                 }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-
             }
         }
     }

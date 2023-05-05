@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -171,12 +170,6 @@ data class PhotoItem(val photo: Photo, val name: String, val big: Boolean) {
         }
     }
 }
-
-data class ContentScaleItem(
-    val contentScale: ContentScale,
-    val name: String,
-    val sampleResList: List<PhotoItem>
-)
 
 @Composable
 fun Dp.toPx(): Float {

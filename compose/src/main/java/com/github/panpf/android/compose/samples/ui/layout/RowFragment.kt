@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.HorizontalTag
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,9 +34,8 @@ class RowFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
             RowSample(allExpandFlow)
-            RowFullSample(allExpandFlow)
-            RowItemSpacedSample(allExpandFlow)
             RowHorizontalArrangementSample(allExpandFlow)
+            RowHorizontalSpacedSample(allExpandFlow)
             RowVerticalAlignmentSample(allExpandFlow)
             RowWeightSample(allExpandFlow)
             RowAlignSample(allExpandFlow)
@@ -56,11 +54,30 @@ private fun RowSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp)
         ) {
             listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+                HorizontalTag(text = it)
+            }
+        }
+
+        Spacer(modifier = Modifier.size(20.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp)
+        ) {
+            listOf(
+                "数码",
+                "汽车",
+                "摄影",
+                "舞蹈",
+                "二次元",
+                "音乐",
+                "科技",
+                "健身",
+                "游戏",
+                "文学"
+            ).forEach {
+                HorizontalTag(text = it)
             }
         }
     }
@@ -74,61 +91,6 @@ private fun RowSamplePreview() {
 
 
 @Composable
-private fun RowFullSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Row（Full）", allExpandFlow, padding = 20.dp) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-        ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun RowFullSamplePreview() {
-    RowFullSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun RowItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Row（ItemSpaced）", allExpandFlow, padding = 20.dp) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学").forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun RowItemSpacedSamplePreview() {
-    RowItemSpacedSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
 private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Row（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -136,7 +98,6 @@ private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
-                null to "Space=10.dp",
                 Arrangement.SpaceBetween to "SpaceBetween",
                 Arrangement.SpaceAround to "SpaceAround",
                 Arrangement.SpaceEvenly to "SpaceEvenly",
@@ -150,14 +111,10 @@ private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                         .fillMaxWidth()
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
-                    horizontalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                    horizontalArrangement = arrangement
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                        HorizontalTag(text = it)
                     }
                 }
             }
@@ -169,6 +126,43 @@ private fun RowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun RowHorizontalArrangementSamplePreview() {
     RowHorizontalArrangementSample(remember { MutableStateFlow(true) })
+}
+
+
+@Composable
+private fun RowHorizontalSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
+    ExpandableItem3(title = "Row（HorizontalSpaced）", allExpandFlow, padding = 20.dp) {
+        listOf(
+            0 to "0.dp",
+            10 to "10.dp",
+            20 to "20.dp",
+        ).forEachIndexed { index, (spacing, name) ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.size(10.dp))
+            }
+            Text(text = name)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .padding(2.dp),
+                horizontalArrangement = Arrangement.spacedBy(spacing.dp)
+            ) {
+                items.forEach {
+                    HorizontalTag(text = it)
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun RowHorizontalSpacedSamplePreview() {
+    RowHorizontalSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -194,11 +188,7 @@ private fun RowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     verticalAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                        HorizontalTag(text = it)
                     }
                 }
             }
@@ -233,13 +223,11 @@ private fun RowWeightSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp)
                 ) {
                     list.forEach { (tag, weight) ->
-                        ElevatedAssistChip(
-                            onClick = { },
+                        HorizontalTag(
+                            text = tag,
                             modifier = Modifier.let {
                                 if (weight != null) it.weight(weight) else it
                             },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = tag) }
                         )
                     }
                 }
@@ -275,16 +263,10 @@ private fun RowAlignSample(allExpandFlow: Flow<Boolean>) {
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp)
                 ) {
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
-                        label = { Text(text = "数码") }
-                    )
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
+                    HorizontalTag(text = "数码")
+                    HorizontalTag(
+                        text = "舞蹈",
                         modifier = Modifier.align(alignment),
-                        label = { Text(text = "舞蹈") }
                     )
                 }
             }

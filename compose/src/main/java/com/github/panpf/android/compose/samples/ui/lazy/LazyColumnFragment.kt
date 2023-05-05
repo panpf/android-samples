@@ -3,17 +3,19 @@ package com.github.panpf.android.compose.samples.ui.lazy
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
@@ -23,7 +25,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,8 +42,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
+import com.github.panpf.android.compose.samples.ui.base.HorizontalTag
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -58,9 +60,9 @@ class LazyColumnFragment : Material3ComposeAppBarFragment() {
         ExpandableLayout { allExpandFlow ->
             LazyColumnSample(allExpandFlow)
             LazyColumnContentPaddingSample(allExpandFlow)
-            LazyColumnItemSpacedSample(allExpandFlow)
             LazyColumnReverseLayoutSample(allExpandFlow)
             LazyColumnVerticalArrangementSample(allExpandFlow)
+            LazyColumnVerticalSpacedSample(allExpandFlow)
             LazyColumnHorizontalAlignmentSample(allExpandFlow)
             LazyColumnUserScrollEnabledSample(allExpandFlow)
             LazyColumnUserVisibleItemIndexSample(allExpandFlow)
@@ -75,6 +77,7 @@ class LazyColumnFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -84,19 +87,39 @@ private fun LazyColumnSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     ExpandableItem3(title = "LazyColumn", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
-            modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            itemsIndexed(list) { index, item ->
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Few items")
+                LazyColumn(
+                    modifier = Modifier
+                        .height(240.dp)
+                        .width(100.dp)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                        .padding(2.dp)
+                ) {
+                    itemsIndexed(list.take(4)) { index, item ->
+                        HorizontalTag(text = "$index:$item")
+                    }
+                }
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Lots items")
+                LazyColumn(
+                    modifier = Modifier
+                        .height(240.dp)
+                        .width(100.dp)
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                        .padding(2.dp)
+                ) {
+                    itemsIndexed(list) { index, item ->
+                        HorizontalTag(text = "$index:$item")
+                    }
+                }
             }
         }
     }
@@ -109,6 +132,7 @@ private fun LazyColumnSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
@@ -118,20 +142,30 @@ private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     ExpandableItem3(title = "LazyColumn（contentPadding）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
-            modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
-            contentPadding = PaddingValues(10.dp)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            itemsIndexed(list) { index, item ->
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
+            listOf(
+                0 to "0.dp",
+                10 to "10.dp",
+                20 to "20.dp",
+            ).forEach { (padding, name) ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = name)
+                    LazyColumn(
+                        modifier = Modifier
+                            .height(240.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                            .padding(2.dp),
+                        contentPadding = PaddingValues(padding.dp)
+                    ) {
+                        itemsIndexed(list) { index, item ->
+                            HorizontalTag(text = "$index:$item")
+                        }
+                    }
+                }
             }
         }
     }
@@ -141,41 +175,6 @@ private fun LazyColumnContentPaddingSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun LazyColumnContentPaddingSamplePreview() {
     LazyColumnContentPaddingSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun LazyColumnItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    val list = remember {
-        listOf(
-            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
-            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
-        )
-    }
-    ExpandableItem3(title = "LazyColumn（ItemSpaced）", allExpandFlow, padding = 20.dp) {
-        LazyColumn(
-            modifier = Modifier
-                .height(240.dp)
-                .width(100.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            itemsIndexed(list) { index, item ->
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun LazyColumnItemSpacedSamplePreview() {
-    LazyColumnItemSpacedSample(remember { MutableStateFlow(true) })
 }
 
 
@@ -197,11 +196,7 @@ private fun LazyColumnReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             reverseLayout = true
         ) {
             itemsIndexed(list) { index, item ->
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
+                HorizontalTag(text = "$index:$item")
             }
         }
     }
@@ -214,37 +209,37 @@ private fun LazyColumnReverseLayoutSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LazyColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
     ExpandableItem3(title = "LazyColumn（verticalArrangement）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
             listOf(
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                null to "Space=10.dp",
-                Arrangement.SpaceBetween to "Space\nBetween",
-                Arrangement.SpaceAround to "Space\nAround",
-                Arrangement.SpaceEvenly to "Space\nEvenly",
+                Arrangement.SpaceBetween to "SpaceBetween",
+                Arrangement.SpaceAround to "SpaceAround",
+                Arrangement.SpaceEvenly to "SpaceEvenly",
             ).forEach { (arrangement, name) ->
-                Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = name)
                     LazyColumn(
                         modifier = Modifier
                             .height(240.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        verticalArrangement = arrangement ?: Arrangement.spacedBy(10.dp)
+                        verticalArrangement = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
-                            ElevatedAssistChip(
-                                onClick = { },
-                                shape = RoundedCornerShape(50),
-                                label = { Text(text = "$index:$item") }
-                            )
+                            HorizontalTag(text = "$index:$item")
                         }
                     }
                 }
@@ -260,34 +255,84 @@ private fun LazyColumnVerticalArrangementSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun LazyColumnVerticalSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val list = remember {
+        listOf(
+            "数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身",
+            "游戏", "文学", "运动", "生活", "美食", "动物", "时尚"
+        )
+    }
+    ExpandableItem3(title = "LazyColumn（VerticalSpaced）", allExpandFlow, padding = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            listOf(
+                0 to "0.dp",
+                10 to "10.dp",
+                20 to "20.dp",
+            ).forEach { (spacing, name) ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = name)
+                    LazyColumn(
+                        modifier = Modifier
+                            .height(240.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                            .padding(2.dp),
+                        verticalArrangement = Arrangement.spacedBy(spacing.dp)
+                    ) {
+                        itemsIndexed(list) { index, item ->
+                            HorizontalTag(text = "$index:$item")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun LazyColumnVerticalSpacedSamplePreview() {
+    LazyColumnVerticalSpacedSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LazyColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf("数码", "汽车", "摄影", "舞蹈")
     }
     ExpandableItem3(title = "LazyColumn（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
             listOf(
                 Alignment.Start to "Start",
                 Alignment.CenterHorizontally to "Center\nHorizontally",
                 Alignment.End to "End",
             ).forEach { (arrangement, name) ->
-                Column {
-                    Text(text = name, modifier = Modifier.height(46.dp))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = name,
+                        modifier = Modifier.height(46.dp)
+                    )
                     LazyColumn(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .height(240.dp)
-                            .width(100.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
                         horizontalAlignment = arrangement
                     ) {
                         itemsIndexed(list) { index, item ->
-                            ElevatedAssistChip(
-                                onClick = { },
-                                shape = RoundedCornerShape(50),
-                                label = { Text(text = "$index:$item") }
-                            )
+                            HorizontalTag(text = "$index:$item")
                         }
                     }
                 }
@@ -326,11 +371,7 @@ private fun LazyColumnUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
             state = rememberLazyListState()
         ) {
             itemsIndexed(list) { index, item ->
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = "$index:$item") }
-                )
+                HorizontalTag(text = "$index:$item")
             }
         }
     }
@@ -366,11 +407,7 @@ private fun LazyColumnUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
-                        label = { Text(text = "$index:$item") }
-                    )
+                    HorizontalTag(text = "$index:$item")
                 }
             }
             Text(text = "firstVisibleItemIndex: ${itemIndexState.value}, firstVisibleItemScrollOffset: ${offsetState.value}")
@@ -406,11 +443,7 @@ private fun LazyColumnScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
-                        label = { Text(text = "$index:$item") }
-                    )
+                    HorizontalTag(text = "$index:$item")
                 }
             }
             Text(text = "isScrollInProgress: ${scrollInProgressState.value}")
@@ -462,16 +495,13 @@ private fun LazyColumnAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
                 state = lazyListState
             ) {
                 itemsIndexed(list) { index, item ->
-                    ElevatedAssistChip(
-                        onClick = {
+                    HorizontalTag(
+                        text = "$index:$item",
+                        modifier = Modifier.clickable {
                             coroutineScope.launch {
                                 lazyListState.animateScrollToItem(index)
                             }
                         },
-                        shape = RoundedCornerShape(50),
-                        label = {
-                            Text(text = "$index:$item")
-                        }
                     )
                 }
             }
@@ -527,17 +557,18 @@ private fun LazyColumnAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
                     items = list.value,
                     key = { _, item -> item }
                 ) { _, item ->
-                    ElevatedAssistChip(
-                        onClick = {
-                            list.value = list.value.toMutableList().apply {
-                                remove(item)
-                            }.toList()
-                        },
-                        shape = RoundedCornerShape(50),
-                        modifier = Modifier.animateItemPlacement(),
-                        label = {
-                            Text(text = item)
-                        }
+                    HorizontalTag(
+                        text = item,
+                        modifier = Modifier
+                            .animateItemPlacement()
+                            .clickable {
+                                list.value = list.value
+                                    .toMutableList()
+                                    .apply {
+                                        remove(item)
+                                    }
+                                    .toList()
+                            },
                     )
                 }
             }
@@ -573,11 +604,7 @@ private fun LazyColumnLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
                     .padding(2.dp)
             ) {
                 itemsIndexed(list) { index, item ->
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
-                        label = { Text(text = "$index:$item") }
-                    )
+                    HorizontalTag(text = "$index:$item")
                 }
             }
             Text(text = layoutInfoState.let { listLayoutInfoState ->
@@ -658,10 +685,8 @@ private fun LazyColumnStickerHeaderSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
                 itemsIndexed(group.second) { itemIndex, item ->
-                    ElevatedAssistChip(
-                        onClick = { },
-                        shape = RoundedCornerShape(50),
-                        label = { Text(text = "${(groupIndex * 5) + itemIndex + 1}:$item") }
+                    HorizontalTag(
+                        text = "${(groupIndex * 5) + itemIndex + 1}:$item",
                     )
                 }
             }
@@ -680,10 +705,28 @@ private fun LazyColumnStickerHeaderSamplePreview() {
 private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
     val list = remember {
         listOf(
-            "数码", Icons.Filled.KeyboardArrowLeft, "汽车", "摄影", Icons.Filled.KeyboardArrowRight,
-            Icons.Filled.KeyboardArrowDown, "舞蹈", Icons.Filled.Check, "二次元", "音乐", "科技", "健身",
-            "游戏", Icons.Filled.Clear, "文学", Icons.Filled.Close, "运动", "生活", "美食", "动物",
-            Icons.Filled.Menu, "时尚"
+            "数码",
+            Icons.Filled.KeyboardArrowLeft,
+            "汽车",
+            "摄影",
+            Icons.Filled.KeyboardArrowRight,
+            Icons.Filled.KeyboardArrowDown,
+            "舞蹈",
+            Icons.Filled.Check,
+            "二次元",
+            "音乐",
+            "科技",
+            "健身",
+            "游戏",
+            Icons.Filled.Clear,
+            "文学",
+            Icons.Filled.Close,
+            "运动",
+            "生活",
+            "美食",
+            "动物",
+            Icons.Filled.Menu,
+            "时尚"
         )
     }
     ExpandableItem3(title = "LazyColumn（MultiType）", allExpandFlow, padding = 20.dp) {
@@ -706,12 +749,9 @@ private fun LazyColumnMultiTypeSample(allExpandFlow: Flow<Boolean>) {
             ) { index, item ->
                 when (item) {
                     is String -> {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = "$index:$item") }
-                        )
+                        HorizontalTag(text = "$index:$item")
                     }
+
                     is ImageVector -> {
                         FilledTonalIconButton(onClick = { }) {
                             Icon(imageVector = item, contentDescription = "icon")

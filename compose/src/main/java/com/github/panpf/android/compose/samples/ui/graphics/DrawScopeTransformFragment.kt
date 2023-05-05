@@ -8,13 +8,13 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +39,7 @@ import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.base.computePentagramPath
 import com.github.panpf.android.compose.samples.ui.base.computeTrianglePath
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -68,6 +69,7 @@ class DrawScopeTransformFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -77,13 +79,17 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "clipRect 用矩形裁剪画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 4
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -92,10 +98,9 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(
-                    text = "clipRect(10.dp, 20.dp, width-10.dp, height-10.dp)".trimIndent(),
+                    text = "clipRect(10.dp, 10.dp, width-10.dp, height-10.dp)".trimIndent(),
                     line = subtitleTextLine
                 )
                 Canvas(modifier = smallCanvasModifier) {
@@ -112,8 +117,7 @@ private fun DrawScopeClipRectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "clipOp: Difference", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipRect(
@@ -140,6 +144,7 @@ private fun DrawScopeClipRectSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -149,13 +154,17 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "clipPath 用 Path 裁剪画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 2
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -164,8 +173,7 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "clipPath".trimIndent(), line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipPath(
@@ -178,8 +186,7 @@ private fun DrawScopeClipPathSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "clipOp: Difference", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     clipPath(
@@ -203,6 +210,7 @@ private fun DrawScopeClipPathSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -212,13 +220,17 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "inset 理解成 padding 即可"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 3
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(
@@ -227,8 +239,7 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "inset(20.dp)", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(20.dp.toPx()) {
@@ -239,8 +250,7 @@ private fun DrawScopeInsetSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "inset(10.dp, 20.dp, 30.dp, 40.dp)", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(10.dp.toPx(), 20.dp.toPx(), 30.dp.toPx(), 40.dp.toPx()) {
@@ -261,6 +271,7 @@ private fun DrawScopeInsetSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeRotateSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -268,15 +279,19 @@ private fun DrawScopeRotateSample(allExpandFlow: Flow<Boolean>) {
         title = "DrawScope - rotate",
         allExpandFlow,
         padding = 20.dp,
-        desc = "rotate 用角度旋转画布"
+        desc = "rotate 根据角度旋转画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 4
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(20.dp.toPx()) {
@@ -297,8 +312,7 @@ private fun DrawScopeRotateSample(allExpandFlow: Flow<Boolean>) {
                     repeatMode = RepeatMode.Restart
                 )
             )
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "degrees", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     rotate(degrees = degrees) {
@@ -312,8 +326,7 @@ private fun DrawScopeRotateSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(
                     text = "pivotX=width*0.25f, pivotY=height*0.5f",
                     line = subtitleTextLine
@@ -343,6 +356,7 @@ private fun DrawScopeRotateSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeRotateRadSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -350,15 +364,19 @@ private fun DrawScopeRotateRadSample(allExpandFlow: Flow<Boolean>) {
         title = "DrawScope - rotateRad",
         allExpandFlow,
         padding = 20.dp,
-        desc = "rotateRad 用定弧度旋转画布"
+        desc = "rotateRad 根据弧度旋转画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 4
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     inset(20.dp.toPx()) {
@@ -379,8 +397,7 @@ private fun DrawScopeRotateRadSample(allExpandFlow: Flow<Boolean>) {
                     repeatMode = RepeatMode.Restart
                 )
             )
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radians", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     rotateRad(radians = ((degrees * Math.PI / 180).toFloat())) {
@@ -394,8 +411,7 @@ private fun DrawScopeRotateRadSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(
                     text = "pivotX=width*0.25f, pivotY=height*0.5f",
                     line = subtitleTextLine
@@ -425,6 +441,7 @@ private fun DrawScopeRotateRadSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -434,13 +451,17 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "scale 缩放画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            val subtitleTextLine = 3
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            var subtitleTextLine = 3
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -450,8 +471,7 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "scale=0.5f", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     scale(scale = 0.5f) {
@@ -463,8 +483,7 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "scale=1.2f", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     scale(scale = 1.2f) {
@@ -475,12 +494,9 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            val subtitleTextLine = 4
-            Column(modifier = Modifier.weight(1f)) {
+            subtitleTextLine = 4
+            Column {
                 SubtitleText(text = "scaleX=0.5f, scaleY=0.8f", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     scale(scaleX = 0.5f, scaleY = 0.8f) {
@@ -492,8 +508,7 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "scaleX=0.8f, scaleY=0.5f", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     scale(scaleX = 0.8f, scaleY = 0.5f) {
@@ -505,8 +520,7 @@ private fun DrawScopeScaleSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(
                     text = "pivotX=width*0.25f, pivotY=height*0.5f",
                     line = subtitleTextLine
@@ -534,6 +548,7 @@ private fun DrawScopeScaleSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeTranslateSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -543,13 +558,17 @@ private fun DrawScopeTranslateSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "translate 偏移画布"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 2
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -559,8 +578,7 @@ private fun DrawScopeTranslateSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "left=5.dp, top=10.dp", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     translate(left = 5.dp.toPx(), top = 10.dp.toPx()) {
@@ -572,8 +590,7 @@ private fun DrawScopeTranslateSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "left=10.dp, top=5.dp", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     translate(left = 10.dp.toPx(), top = 5.dp.toPx()) {
@@ -595,6 +612,7 @@ private fun DrawScopeTranslateSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DrawScopeWithTransformSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -604,13 +622,17 @@ private fun DrawScopeWithTransformSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = "withTransform 可以一次执行多种变换操作"
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ){
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
             val subtitleTextLine = 2
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "None", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -620,8 +642,7 @@ private fun DrawScopeWithTransformSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "scale, rotate", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     withTransform({
@@ -636,8 +657,7 @@ private fun DrawScopeWithTransformSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "scale, translate", line = subtitleTextLine)
                 Canvas(modifier = smallCanvasModifier) {
                     withTransform({

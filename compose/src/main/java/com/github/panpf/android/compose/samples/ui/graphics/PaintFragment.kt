@@ -1,5 +1,6 @@
 package com.github.panpf.android.compose.samples.ui.graphics
 
+import android.graphics.Bitmap
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -7,12 +8,12 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.imageResource
@@ -64,6 +66,7 @@ import com.github.panpf.android.compose.samples.ui.base.computeTrianglePath
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
 import com.github.panpf.android.compose.samples.ui.base.toPx
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.min
@@ -96,32 +99,35 @@ class PaintFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintAlphaSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "Paint - alpha", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "Default", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "alpha = 0.7f", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary, alpha = 0.7f)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "alpha = 0.3f", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary, alpha = 0.3f)
@@ -171,50 +177,39 @@ val blendModes = listOf(
     BlendMode.Xor,
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintBlendModeShapeSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
-    val smallCanvasModifier = Modifier
-        .fillMaxWidth()
-        .aspectRatio(1f)
-        .border(1.dp, colors.primaryTranslucency)
     ExpandableItem3(title = "Paint - blendMode", allExpandFlow, padding = 20.dp) {
-        val chunked = 4
-        blendModes.chunked(chunked).forEachIndexed { index, blendModes: List<BlendMode?> ->
-            if (index > 0) {
-                Spacer(modifier = Modifier.size(10.dp))
-            }
-            Row(modifier = Modifier.fillMaxWidth()) {
-                blendModes.forEachIndexed { index, blendMode ->
-                    if (index > 0) {
-                        Spacer(modifier = Modifier.size(10.dp))
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        SubtitleText(text = blendMode?.toString() ?: "Default", line = 1)
-                        Canvas(modifier = smallCanvasModifier) {
-                            drawCircle(
-                                color = colors.primary,
-                                radius = size.minDimension / 4.0f,
-                                center = Offset(size.minDimension / 4.0f, size.minDimension / 4.0f)
-                            )
-                            val rectSize = size / 2f
-                            drawRect(
-                                color = colors.tertiary,
-                                topLeft = Offset(
-                                    x = (size.width - rectSize.width) / 2f,
-                                    y = (size.height - rectSize.height) / 2f
-                                ),
-                                size = rectSize,
-                                blendMode = blendMode ?: DrawScope.DefaultBlendMode
-                            )
-                        }
-                    }
-                }
-                if (blendModes.size < chunked) {
-                    repeat(chunked - blendModes.size) {
-                        Spacer(modifier = Modifier.size(10.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                        }
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            blendModes.forEach { blendMode ->
+                Column {
+                    SubtitleText(text = blendMode?.toString() ?: "Default", line = 1)
+                    Canvas(modifier = smallCanvasModifier) {
+                        drawCircle(
+                            color = colors.primary,
+                            radius = size.minDimension / 4.0f,
+                            center = Offset(size.minDimension / 4.0f, size.minDimension / 4.0f)
+                        )
+                        val rectSize = size / 2f
+                        drawRect(
+                            color = colors.tertiary,
+                            topLeft = Offset(
+                                x = (size.width - rectSize.width) / 2f,
+                                y = (size.height - rectSize.height) / 2f
+                            ),
+                            size = rectSize,
+                            blendMode = blendMode ?: DrawScope.DefaultBlendMode
+                        )
                     }
                 }
             }
@@ -229,114 +224,106 @@ private fun PaintBlendModeShapeSSamplePreview() {
 }
 
 
-//@Composable
-//private fun PaintBlendModeBitmapSample(allExpandFlow: Flow<Boolean>) {
-//    val colors = MyThemeColors3.current
-//    val smallCanvasModifier = Modifier
-//        .fillMaxWidth()
-//        .aspectRatio(1f)
-//        .border(1.dp, colors.primaryTranslucency)
-//    var dstBitmap: ImageBitmap? by remember {
-//        mutableStateOf(null)
-//    }
-//    var srcBitmap: ImageBitmap? by remember {
-//        mutableStateOf(null)
-//    }
-//    ExpandableItem3(title = "Paint - blendMode - Bitmap", allExpandFlow, padding = 20.dp) {
-//        val chunked = 4
-//        blendModes.chunked(chunked).forEachIndexed { index, blendModes: List<BlendMode?> ->
-//            if (index > 0) {
-//                Spacer(modifier = Modifier.size(10.dp))
-//            }
-//            Row(modifier = Modifier.fillMaxWidth()) {
-//                blendModes.forEachIndexed { index, blendMode ->
-//                    if (index > 0) {
-//                        Spacer(modifier = Modifier.size(10.dp))
-//                    }
-//                    Column(modifier = Modifier.weight(1f)) {
-//                        SubtitleText(text = blendMode?.toString() ?: "Default", line = 1)
-//                        Canvas(modifier = smallCanvasModifier) {
-//                            val dst = dstBitmap ?: Bitmap.createBitmap(
-//                                (size.minDimension / 2.0f).roundToInt(),
-//                                (size.minDimension / 2.0f).roundToInt(), Bitmap.Config.ARGB_8888
-//                            ).apply {
-//                                val canvas = android.graphics.Canvas(this)
-//                                val scrPaint =
-//                                    android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
-//                                scrPaint.color = colors.primary.toArgb()
-//                                canvas.drawCircle(width / 2f, height / 2f, width / 2f, scrPaint)
-//                            }.asImageBitmap().apply {
-//                                dstBitmap = this
-//                            }
-//                            val src = srcBitmap ?: Bitmap.createBitmap(
-//                                (size.minDimension / 2.0f).roundToInt(),
-//                                (size.minDimension / 2.0f).roundToInt(), Bitmap.Config.ARGB_8888
-//                            ).apply {
-//                                val canvas = android.graphics.Canvas(this)
-//                                val dstPaint =
-//                                    android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
-//                                dstPaint.color = colors.tertiary.toArgb()
-//                                canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), dstPaint)
-//                            }.asImageBitmap().apply {
-//                                srcBitmap = this
-//                            }
-//                            drawImage(image = dst)
-//                            drawImage(
-//                                image = src,
-//                                topLeft = Offset(
-//                                    x = (size.width - src.width) / 2f,
-//                                    y = (size.height - src.height) / 2f
-//                                ),
-//                                blendMode = blendMode ?: DrawScope.DefaultBlendMode
-//                            )
-//                        }
-//                    }
-//                }
-//                if (blendModes.size < chunked) {
-//                    repeat(chunked - blendModes.size) {
-//                        Spacer(modifier = Modifier.size(10.dp))
-//                        Column(modifier = Modifier.weight(1f)) {
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-//@Composable
-//private fun PaintBlendModeBitmapSamplePreview() {
-//    PaintBlendModeBitmapSample(remember { MutableStateFlow(true) })
-//}
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun PaintBlendModeBitmapSample(allExpandFlow: Flow<Boolean>) {
+    val colors = MyThemeColors3.current
+    val smallCanvasModifier = Modifier
+        .fillMaxWidth()
+        .aspectRatio(1f)
+        .border(1.dp, colors.primaryTranslucency)
+    var dstBitmap: ImageBitmap? by remember {
+        mutableStateOf(null)
+    }
+    var srcBitmap: ImageBitmap? by remember {
+        mutableStateOf(null)
+    }
+    ExpandableItem3(title = "Paint - blendMode - Bitmap", allExpandFlow, padding = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            blendModes.forEach { blendMode ->
+                Column {
+                    SubtitleText(text = blendMode?.toString() ?: "Default", line = 1)
+                    Canvas(modifier = smallCanvasModifier) {
+                        val dst = dstBitmap ?: Bitmap.createBitmap(
+                            (size.minDimension / 2.0f).roundToInt(),
+                            (size.minDimension / 2.0f).roundToInt(), Bitmap.Config.ARGB_8888
+                        ).apply {
+                            val canvas = android.graphics.Canvas(this)
+                            val scrPaint =
+                                android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
+                            scrPaint.color = colors.primary.toArgb()
+                            canvas.drawCircle(width / 2f, height / 2f, width / 2f, scrPaint)
+                        }.asImageBitmap().apply {
+                            dstBitmap = this
+                        }
+                        val src = srcBitmap ?: Bitmap.createBitmap(
+                            (size.minDimension / 2.0f).roundToInt(),
+                            (size.minDimension / 2.0f).roundToInt(), Bitmap.Config.ARGB_8888
+                        ).apply {
+                            val canvas = android.graphics.Canvas(this)
+                            val dstPaint =
+                                android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
+                            dstPaint.color = colors.tertiary.toArgb()
+                            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), dstPaint)
+                        }.asImageBitmap().apply {
+                            srcBitmap = this
+                        }
+                        drawImage(image = dst)
+                        drawImage(
+                            image = src,
+                            topLeft = Offset(
+                                x = (size.width - src.width) / 2f,
+                                y = (size.height - src.height) / 2f
+                            ),
+                            blendMode = blendMode ?: DrawScope.DefaultBlendMode
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun PaintBlendModeBitmapSamplePreview() {
+    PaintBlendModeBitmapSample(remember { MutableStateFlow(true) })
+}
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintColorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "Paint - color", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "primary", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.primary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "tertiary", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "inversePrimary", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.inversePrimary)
@@ -353,17 +340,27 @@ private fun PaintColorSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
-    ExpandableItem3(title = "Paint - colorFilter&filterQuality", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        val dogHorImage = ImageBitmap.imageResource(R.drawable.dog_hor)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+    ExpandableItem3(
+        title = "Paint - colorFilter&filterQuality",
+        allExpandFlow,
+        padding = 20.dp
+    ) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            val dogHorImage = ImageBitmap.imageResource(R.drawable.dog_hor)
+
+            Column {
                 SubtitleText(text = "None", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -387,8 +384,7 @@ private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "黑白", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -413,8 +409,7 @@ private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "反转负片", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -438,11 +433,8 @@ private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "filterQuality：None", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -468,8 +460,7 @@ private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "filterQuality：Medium", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -495,8 +486,7 @@ private fun PaintColorFilterSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "filterQuality：High", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     val scale = min(
@@ -532,16 +522,21 @@ private fun PaintColorFilterSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintIsAntiAliasSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "Paint - isAntiAlias", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "Default：true", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -558,8 +553,7 @@ private fun PaintIsAntiAliasSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "false", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -587,9 +581,11 @@ private fun PaintIsAntiAliasSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
-    val desc = """
+    val desc = remember {
+        """
         stops: List<Float>。用于定义每个颜色的结束位置，取值大于 0f 小于等于 1f
         tileMode：定义当无法完整填充形状时（可以定义填充的起始和结束位置），剩下未填充部分如何处理
             1. Clamp：用最后的颜色填充剩下部分
@@ -597,6 +593,7 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
             3. Mirror：反向重复第一个颜色到最后一个颜色填充剩下部分
             4. Decal：用透明颜色填充剩下部分。API 31 以上才支持 
     """.trimIndent()
+    }
     val colors = MyThemeColors3.current
     ExpandableItem3(
         title = "Paint - shader | brush：linearGradient",
@@ -604,12 +601,16 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = desc
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "linearGradient", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -620,34 +621,35 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - stops", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         brush = Brush.linearGradient(
-                            colorStops = arrayOf(0.3f to colors.primary, 1f to colors.tertiary)
+                            colorStops = arrayOf(
+                                0.3f to colors.primary,
+                                1f to colors.tertiary
+                            )
                         )
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - stops", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         brush = Brush.linearGradient(
-                            colorStops = arrayOf(0.6f to colors.primary, 1f to colors.tertiary)
+                            colorStops = arrayOf(
+                                0.6f to colors.primary,
+                                1f to colors.tertiary
+                            )
                         )
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - tileMode: Clamp", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -660,8 +662,7 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - tileMode: Repeated", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -674,8 +675,7 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - tileMode: Mirror", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -687,11 +687,8 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "linearGradient - tileMode: Decal", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -704,8 +701,7 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "horizontalGradient", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -716,8 +712,7 @@ private fun PaintShaderLinearGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "verticalGradient", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -738,6 +733,7 @@ private fun PaintShaderLinearGradientSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -746,12 +742,16 @@ private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
         allExpandFlow,
         padding = 20.dp,
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "radialGradient", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -762,20 +762,21 @@ private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radialGradient - stops", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         brush = Brush.radialGradient(
-                            colorStops = arrayOf(0.3f to colors.primary, 1f to colors.tertiary),
+                            colorStops = arrayOf(
+                                0.3f to colors.primary,
+                                1f to colors.tertiary
+                            ),
                         )
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radialGradient - tileMode: Clamp", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -787,11 +788,8 @@ private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radialGradient - tileMode: Repeated", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -804,8 +802,7 @@ private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radialGradient - tileMode: Mirror", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -818,8 +815,7 @@ private fun PaintShaderRadialGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "radialGradient - tileMode: Decal", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -842,6 +838,7 @@ private fun PaintShaderRadialGradientSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintShaderSweepGradientSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -850,24 +847,31 @@ private fun PaintShaderSweepGradientSample(allExpandFlow: Flow<Boolean>) {
         allExpandFlow,
         padding = 20.dp,
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "sweepGradient", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         brush = Brush.sweepGradient(
-                            colors = listOf(colors.primary, colors.tertiary, colors.primary),
+                            colors = listOf(
+                                colors.primary,
+                                colors.tertiary,
+                                colors.primary
+                            ),
                         )
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "sweepGradient - stops", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
@@ -882,13 +886,16 @@ private fun PaintShaderSweepGradientSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "sweepGradient - center", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawCircle(
                         brush = Brush.sweepGradient(
-                            colors = listOf(colors.primary, colors.tertiary, colors.primary),
+                            colors = listOf(
+                                colors.primary,
+                                colors.tertiary,
+                                colors.primary
+                            ),
                             center = Offset(size.width / 3, size.height / 3)
                         )
                     )
@@ -905,6 +912,7 @@ private fun PaintShaderSweepGradientSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
@@ -913,23 +921,27 @@ private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
         allExpandFlow,
         padding = 20.dp,
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        val context = LocalContext.current
-        val dividerPx = with(LocalDensity.current) { 20.dp.toPx() }
-        val imageHor = remember {
-            val dogDrawable =
-                ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)!!
-            val imageWidthPx: Int =
-                ((context.resources.displayMetrics.widthPixels - dividerPx * 2) / 3f * 0.6f).roundToInt()
-            val imageHeightPx: Int =
-                (dogDrawable.intrinsicHeight * (imageWidthPx.toFloat() / dogDrawable.intrinsicWidth)).roundToInt()
-            dogDrawable.toBitmap(imageWidthPx, imageHeightPx).asImageBitmap()
-        }
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            val context = LocalContext.current
+            val dividerPx = with(LocalDensity.current) { 20.dp.toPx() }
+            val imageHor = remember {
+                val dogDrawable =
+                    ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)!!
+                val imageWidthPx: Int =
+                    ((context.resources.displayMetrics.widthPixels - dividerPx * 2) / 3f * 0.6f).roundToInt()
+                val imageHeightPx: Int =
+                    (dogDrawable.intrinsicHeight * (imageWidthPx.toFloat() / dogDrawable.intrinsicWidth)).roundToInt()
+                dogDrawable.toBitmap(imageWidthPx, imageHeightPx).asImageBitmap()
+            }
+            Column {
                 SubtitleText(text = "ImageShader - tileMode: Clamp", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -944,8 +956,7 @@ private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "ImageShader - tileMode: Repeated", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -960,8 +971,7 @@ private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "ImageShader - tileMode: Mirror", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -975,11 +985,8 @@ private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "ImageShader - tileMode: Decal", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     drawIntoCanvas {
@@ -993,16 +1000,6 @@ private fun PaintShaderImageSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-
-            }
         }
     }
 }
@@ -1014,51 +1011,61 @@ private fun PaintShaderImageSamplePreview() {
 }
 
 
-@OptIn(ExperimentalTextApi::class)
+@OptIn(ExperimentalTextApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
-    val desc = """
-        cap：设置线条首尾的样式：
-            StrokeCap.BUTT：无
-            StrokeCap.SQUARE：方形
-            StrokeCap.ROUND： 半圆形
-        注意： StrokeCap.ROUND、StrokeCap.SQUARE 会在线长度的基础上首尾添加一个通过 setStrokeWidth 设置的宽度。因此 ROUND 和 SQUARE 样式的线条明显长一点
-    """.trimIndent()
+    val desc = remember {
+        """
+            cap：设置线条首尾的样式：
+                StrokeCap.BUTT：无
+                StrokeCap.SQUARE：方形
+                StrokeCap.ROUND： 半圆形
+            注意： StrokeCap.ROUND、StrokeCap.SQUARE 会在线长度的基础上首尾添加一个通过 setStrokeWidth 设置的宽度。因此 ROUND 和 SQUARE 样式的线条明显长一点
+        """.trimIndent()
+    }
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "Paint - stroke", allExpandFlow, padding = 20.dp, desc = desc) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "strokeWidth - 10.dp", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(
                         color = colors.tertiary,
                         topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
-                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
+                        size = Size(
+                            size.width - 10.dp.toPx() * 2,
+                            size.height - 10.dp.toPx() * 2
+                        ),
                         style = Stroke(width = 9.dp.toPx())
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "strokeWidth - 3.dp", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(
                         color = colors.tertiary,
                         topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
-                        size = Size(size.width - 10.dp.toPx() * 2, size.height - 10.dp.toPx() * 2),
+                        size = Size(
+                            size.width - 10.dp.toPx() * 2,
+                            size.height - 10.dp.toPx() * 2
+                        ),
                         style = Stroke(width = 3.dp.toPx())
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
             val textMeasurer = rememberTextMeasurer()
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "cap", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     val padding = 10.dp.toPx()
@@ -1095,23 +1102,20 @@ private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
                     }
                 }
             }
-        }
 
-        val padding = 20.dp.toPx()
-        val getPath: (size: Size) -> Path = { size ->
-            Path().apply {
-                moveTo(padding, padding)
-                lineTo(size.width - padding, padding)
-                lineTo(size.width - padding, size.height / 2)
-                lineTo(padding, size.height / 2)
-                lineTo(padding, size.height - padding)
-                lineTo(size.width - padding, size.height - padding)
+            val padding = 20.dp.toPx()
+            val getPath: (size: Size) -> Path = { size ->
+                Path().apply {
+                    moveTo(padding, padding)
+                    lineTo(size.width - padding, padding)
+                    lineTo(size.width - padding, size.height / 2)
+                    lineTo(padding, size.height / 2)
+                    lineTo(padding, size.height - padding)
+                    lineTo(size.width - padding, size.height - padding)
+                }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "strokeJoin - Miter", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1122,8 +1126,7 @@ private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "strokeJoin - Round", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1134,8 +1137,7 @@ private fun PaintStrokeSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "strokeJoin - Bevel", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1156,15 +1158,18 @@ private fun PaintStrokeSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
-    val desc = """
-        pathEffect 用于在绘制路径时给路径添加特效，有以下几种实现
-        1. cornerPathEffect：拐角处绘制成圆角
-        2. dashPathEffect：虚线效果
-        3. stampedPathEffect：用一个个小印章形状代替虚线效果中的实线部分绘制路径
-        4. chainPathEffect：将两个 PathEffect 先后应用于路径上 
-    """.trimIndent()
+    val desc = remember {
+        """
+            pathEffect 用于在绘制路径时给路径添加特效，有以下几种实现
+            1. cornerPathEffect：拐角处绘制成圆角
+            2. dashPathEffect：虚线效果
+            3. stampedPathEffect：用一个个小印章形状代替虚线效果中的实线部分绘制路径
+            4. chainPathEffect：将两个 PathEffect 先后应用于路径上 
+        """.trimIndent()
+    }
     val colors = MyThemeColors3.current
     ExpandableItem3(
         title = "Paint - stroke - pathEffect",
@@ -1172,25 +1177,28 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
         padding = 20.dp,
         desc = desc
     ) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
 
-        val padding = 20.dp.toPx()
-        val getPath: (size: Size) -> Path = { size ->
-            Path().apply {
-                moveTo(padding, padding)
-                lineTo(size.width - padding, padding)
-                lineTo(size.width - padding, size.height / 2)
-                lineTo(padding, size.height / 2)
-                lineTo(padding, size.height - padding)
-                lineTo(size.width - padding, size.height - padding)
+            val padding = 20.dp.toPx()
+            val getPath: (size: Size) -> Path = { size ->
+                Path().apply {
+                    moveTo(padding, padding)
+                    lineTo(size.width - padding, padding)
+                    lineTo(size.width - padding, size.height / 2)
+                    lineTo(padding, size.height / 2)
+                    lineTo(padding, size.height - padding)
+                    lineTo(size.width - padding, size.height - padding)
+                }
             }
-        }
-
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "corner", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1204,8 +1212,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "dash", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1221,8 +1228,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "dash - phase", line = 1)
                 val infiniteTransition = rememberInfiniteTransition()
                 val initialValue = infiniteTransition.animateFloat(
@@ -1251,11 +1257,8 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "stamped - style: Morph", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     val strokeSize = 10.dp.toPx()
@@ -1275,8 +1278,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "stamped - style: Rotate", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     val strokeSize = 10.dp.toPx()
@@ -1296,8 +1298,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "stamped - style: Translate", line = 3)
                 Canvas(modifier = smallCanvasModifier) {
                     val strokeSize = 10.dp.toPx()
@@ -1316,11 +1317,8 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "stamped - phase", line = 2)
                 val infiniteTransition = rememberInfiniteTransition()
                 val initialValue = infiniteTransition.animateFloat(
@@ -1353,8 +1351,7 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "chain", line = 2)
                 Canvas(modifier = smallCanvasModifier) {
                     drawPath(
@@ -1372,11 +1369,6 @@ private fun PaintStrokePathEffectSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-
-            }
         }
     }
 }
@@ -1388,33 +1380,32 @@ private fun PaintStrokePathEffectSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PaintStyleSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyThemeColors3.current
     ExpandableItem3(title = "Paint - style", allExpandFlow, padding = 20.dp) {
-        val smallCanvasModifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .border(1.dp, colors.primaryTranslucency)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            val smallCanvasModifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(1.dp, colors.primaryTranslucency)
+            Column {
                 SubtitleText(text = "Fill", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary, style = Fill)
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 SubtitleText(text = "Stroke", line = 1)
                 Canvas(modifier = smallCanvasModifier) {
                     drawRect(color = colors.tertiary, style = Stroke(3.dp.toPx()))
                 }
-            }
-
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-
             }
         }
     }

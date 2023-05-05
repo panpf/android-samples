@@ -4,11 +4,17 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,19 +37,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.ui.base.ContentScaleItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
+import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.inversionOfNegativeColorFilter
 import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrastAndBrightness
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -56,9 +62,7 @@ class ImageFragment : Material3ComposeAppBarFragment() {
     @Composable
     override fun DrawContent() {
         ExpandableLayout { allExpandFlow ->
-            ImageResourceSample(allExpandFlow)
-            ImageVectorSample(allExpandFlow)
-            ImageBitmapSample(allExpandFlow)
+            ImageSample(allExpandFlow)
             ImageAlignmentSample(allExpandFlow)
             ImageContentScaleSample(allExpandFlow)
             ImageAlphaSample(allExpandFlow)
@@ -71,65 +75,64 @@ class ImageFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ImageResourceSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Image（Resource）", allExpandFlow, padding = 20.dp) {
-        Image(
-            painter = painterResource(id = R.drawable.dog_hor),
-            contentDescription = "",
-            modifier = Modifier.size(200.dp),
-        )
+private fun ImageSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "Image", allExpandFlow, padding = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Resource")
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Vector")
+                Image(
+                    imageVector = Icons.Filled.Call,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Bitmap")
+                val context = LocalContext.current
+                val imageBitmap = remember {
+                    ResourcesCompat.getDrawable(context.resources, R.drawable.dog_ver, null)
+                        .let { it as BitmapDrawable }.bitmap.asImageBitmap()
+                }
+                Image(
+                    bitmap = imageBitmap,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                )
+            }
+        }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ImageResourceSamplePreview() {
-    ImageResourceSample(remember { MutableStateFlow(true) })
+private fun ImageSamplePreview() {
+    ImageSample(remember { MutableStateFlow(true) })
 }
 
 
-@Composable
-private fun ImageVectorSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "Image（Vector）", allExpandFlow, padding = 20.dp) {
-        Image(
-            imageVector = Icons.Filled.Call,
-            contentDescription = "",
-            modifier = Modifier.size(200.dp),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ImageVectorSamplePreview() {
-    ImageVectorSample(remember { MutableStateFlow(true) })
-}
-
-
-@Composable
-private fun ImageBitmapSample(allExpandFlow: Flow<Boolean>) {
-    val context = LocalContext.current
-    val imageBitmap = remember {
-        ResourcesCompat.getDrawable(context.resources, R.drawable.dog_hor, null)
-            .let { it as BitmapDrawable }.bitmap.asImageBitmap()
-    }
-    ExpandableItem3(title = "Image（Bitmap）", allExpandFlow, padding = 20.dp) {
-        Image(
-            bitmap = imageBitmap,
-            contentDescription = "",
-            modifier = Modifier.size(200.dp),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
-@Composable
-private fun ImageBitmapSamplePreview() {
-    ImageBitmapSample(remember { MutableStateFlow(true) })
-}
-
-
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
@@ -137,7 +140,11 @@ private fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
         PhotoItem(horPhoto, "横向图片 - 小", false)
     }
     ExpandableItem3(title = "Image（alignment）", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             listOf(
                 Alignment.TopStart to "TopStart",
                 Alignment.TopCenter to "TopCenter",
@@ -149,24 +156,26 @@ private fun ImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 Alignment.BottomCenter to "BottomCenter",
                 Alignment.BottomEnd to "BottomEnd",
             ).forEach { alignment ->
-                Column {
-                    Text(
-                        text = alignment.second,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    val viewSize = 110.dp
+                BoxWithConstraints {
+                    val viewSize = maxWidth
                     val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
                     val bitmap = horSmall.getBitmap(context, viewSizePx.toInt())
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(viewSize)
-                            .background(MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
-                        contentScale = ContentScale.None,
-                        alignment = alignment.first,
-                    )
+                    Column {
+                        Text(
+                            text = alignment.second,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Image(
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(viewSize)
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(2.dp),
+                            contentScale = ContentScale.None,
+                            alignment = alignment.first,
+                        )
+                    }
                 }
             }
         }
@@ -180,52 +189,57 @@ private fun ImageAlignmentSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    val items = remember {
+    val scales = remember {
+        listOf(
+            ContentScale.Fit to "Fit",
+            ContentScale.FillBounds to "FillBounds",
+            ContentScale.FillWidth to "FillWidth",
+            ContentScale.FillHeight to "FillHeight",
+            ContentScale.Crop to "Crop",
+            ContentScale.Inside to "Inside",
+            ContentScale.None to "None",
+        )
+    }
+    val images = remember {
         val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
         val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
         val verBig = PhotoItem(verPhoto, "纵向图片 - 大", true)
         val verSmall = PhotoItem(verPhoto, "纵向图片 - 小", false)
-        listOf(
-            ContentScaleItem(ContentScale.Fit, "Fit", listOf(horBig, verBig)),
-            ContentScaleItem(ContentScale.FillBounds, "FillBounds", listOf(horBig, verBig)),
-            ContentScaleItem(ContentScale.FillWidth, "FillWidth", listOf(horBig, verBig)),
-            ContentScaleItem(ContentScale.FillHeight, "FillHeight", listOf(horBig, verBig)),
-            ContentScaleItem(ContentScale.Crop, "Crop", listOf(horBig, verBig)),
-            ContentScaleItem(
-                ContentScale.Inside,
-                "Inside",
-                listOf(horBig, verBig, horSmall, verSmall)
-            ),
-            ContentScaleItem(ContentScale.None, "None", listOf(horBig, verBig, horSmall, verSmall)),
-        )
+        listOf(horBig, verBig, horSmall, verSmall)
     }
     ExpandableItem3(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
-        Column {
-            items.forEachIndexed { index, items ->
-                if (index != 0) {
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                Row {
-                    Text(
-                        text = items.name,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .padding(top = 18.dp),
-                    )
-                    Spacer(modifier = Modifier.size(10.dp))
-                    FlowRow(mainAxisSpacing = 10.dp, crossAxisSpacing = 10.dp) {
-                        items.sampleResList.forEach { photoItem ->
+        scales.forEachIndexed { index, scale ->
+            if (index != 0) {
+                Spacer(modifier = Modifier.size(20.dp))
+            }
+            Row(Modifier.fillMaxWidth()) {
+                Text(
+                    text = scale.second,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(top = 18.dp),
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                VerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    images.forEach { photoItem ->
+                        BoxWithConstraints {
+                            val viewSize = maxWidth
+                            val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                            val bitmap = photoItem.getBitmap(context, viewSizePx.toInt())
                             Column {
                                 Text(
                                     text = photoItem.name,
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
                                 )
-                                val viewSize = 110.dp
-                                val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
-                                val bitmap = photoItem.getBitmap(context, viewSizePx.toInt())
                                 Image(
                                     bitmap = bitmap.asImageBitmap(),
                                     contentDescription = "",
@@ -233,7 +247,7 @@ private fun ImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                                         .size(viewSize)
                                         .background(MaterialTheme.colorScheme.primaryContainer)
                                         .padding(2.dp),
-                                    contentScale = items.contentScale,
+                                    contentScale = scale.first,
                                 )
                             }
                         }
@@ -251,15 +265,51 @@ private fun ImageContentScaleSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageAlphaSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（alpha）", allExpandFlow, padding = 20.dp) {
-        Image(
-            painter = painterResource(id = R.drawable.dog_hor),
-            contentDescription = "",
-            modifier = Modifier.size(200.dp),
-            alpha = 0.5f
-        )
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "1f")
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    alpha = 1f
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "0.7f")
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    alpha = 0.7f
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "0.3f")
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    alpha = 0.3f
+                )
+            }
+        }
     }
 }
 
@@ -270,40 +320,53 @@ private fun ImageAlphaSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageClipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（shape）", allExpandFlow, padding = 20.dp) {
-        Row {
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Crop,
-            )
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "RoundedCorner", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
-            Spacer(modifier = Modifier.size(10.dp))
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "Circle", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop,
-            )
-
-            Spacer(modifier = Modifier.size(10.dp))
-
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(SquashedOval()),
-                contentScale = ContentScale.Crop,
-            )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "SquashedOval", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .clip(SquashedOval()),
+                    contentScale = ContentScale.Crop,
+                )
+            }
         }
     }
 }
@@ -315,42 +378,55 @@ private fun ImageClipSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageBorderSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（border）", allExpandFlow, padding = 20.dp) {
-        Row {
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primary),
-                contentScale = ContentScale.Crop,
-            )
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "Default", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .border(2.dp, MaterialTheme.colorScheme.primary),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
-            Spacer(modifier = Modifier.size(10.dp))
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "RoundedCorner", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp))
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp))
-                    .clip(RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Crop,
-            )
-
-            Spacer(modifier = Modifier.size(10.dp))
-
-            Image(
-                painter = painterResource(id = R.drawable.dog_hor),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .border(2.dp, rainbowColorsBrush, CircleShape)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop,
-            )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SubtitleText(text = "Circle + brush", line = 2)
+                Image(
+                    painter = painterResource(id = R.drawable.dog_hor),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .border(2.dp, rainbowColorsBrush, CircleShape)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop,
+                )
+            }
         }
     }
 }
@@ -362,36 +438,47 @@ private fun ImageBorderSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（colorFilter）", allExpandFlow, padding = 20.dp) {
-        Row {
-            Column {
-                Text(text = "黑白", Modifier.align(Alignment.CenterHorizontally))
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "黑白")
                 Image(
                     painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                     colorFilter = blackWhiteColorFilter
                 )
             }
-            Spacer(modifier = Modifier.size(10.dp))
-            Column {
-                Text(text = "反转负片", Modifier.align(Alignment.CenterHorizontally))
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "反转负片")
                 Image(
                     painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                     colorFilter = inversionOfNegativeColorFilter
                 )
             }
-            Spacer(modifier = Modifier.size(10.dp))
-            Column {
-                Text(text = "亮度对比度", Modifier.align(Alignment.CenterHorizontally))
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "亮度对比度")
                 Image(
                     painter = painterResource(id = R.drawable.dog_hor),
                     contentDescription = "",
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                     colorFilter = newColorFilterByContrastAndBrightness()
                 )
             }
@@ -406,37 +493,42 @@ private fun ImageColorFilterSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ImageBlurSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Image（blur）", allExpandFlow, padding = 20.dp) {
-        Column {
-            Text(text = "仅支持 Android 12 以上版本")
-            Spacer(modifier = Modifier.size(10.dp))
-            Row {
-                Image(
-                    painter = painterResource(id = R.drawable.dog_hor),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(100.dp)
-                        .blur(
-                            radius = 5.dp,
-                            edgeTreatment = BlurredEdgeTreatment.Rectangle
-                        ),
-                )
-                Spacer(modifier = Modifier.size(10.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.dog_hor),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(100.dp)
-                        .blur(
-                            radius = 5.dp,
-                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-                        ),
-                )
-            }
+        Text(text = "仅支持 Android 12 以上版本")
+        Spacer(modifier = Modifier.size(10.dp))
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.dog_hor),
+                contentScale = ContentScale.Crop,
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .blur(
+                        radius = 5.dp,
+                        edgeTreatment = BlurredEdgeTreatment.Rectangle
+                    ),
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.dog_hor),
+                contentScale = ContentScale.Crop,
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .blur(
+                        radius = 5.dp,
+                        edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                    ),
+            )
         }
     }
 }

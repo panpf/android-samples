@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.HorizontalTag
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -60,11 +59,7 @@ private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp)
         ) {
             items.take(4).forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+                HorizontalTag(text = it)
             }
         }
 
@@ -76,11 +71,7 @@ private fun FlowRowSample(allExpandFlow: Flow<Boolean>) {
                 .padding(2.dp)
         ) {
             items.forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+                HorizontalTag(text = it)
             }
         }
     }
@@ -112,11 +103,7 @@ private fun FlowRowMainAxisSizeSample(allExpandFlow: Flow<Boolean>) {
                     mainAxisSize = sizeMode
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                        HorizontalTag(text = it)
                     }
                 }
             }
@@ -133,6 +120,7 @@ private fun FlowRowMainAxisSizeSamplePreview() {
 
 @Composable
 private fun FlowRowMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
+    val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "赛博朋克", "音乐", "科技")
     ExpandableItem3(title = "FlowRow（mainAxisAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
@@ -154,23 +142,8 @@ private fun FlowRowMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .padding(2.dp),
                     mainAxisAlignment = alignment
                 ) {
-                    listOf(
-                        "数码",
-                        "汽车",
-                        "摄影",
-                        "舞蹈",
-                        "二次元",
-                        "音乐",
-                        "科技",
-                        "健身",
-                        "游戏",
-                        "文学"
-                    ).forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                    items.forEach {
+                        HorizontalTag(text = it)
                     }
                 }
             }
@@ -191,6 +164,21 @@ private fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
     }
     ExpandableItem3(title = "FlowRow（mainAxisSpacing）", allExpandFlow, padding = 20.dp) {
+        Text(text = "0.dp")
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            mainAxisSpacing = 0.dp
+        ) {
+            items.forEach {
+                HorizontalTag(text = it)
+            }
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "10.dp")
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -199,11 +187,7 @@ private fun FlowRowMainAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
             mainAxisSpacing = 10.dp
         ) {
             items.forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+                HorizontalTag(text = it)
             }
         }
     }
@@ -238,11 +222,7 @@ private fun FlowRowCrossAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     crossAxisAlignment = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                        HorizontalTag(text = it)
                     }
                 }
             }
@@ -263,19 +243,30 @@ private fun FlowRowCrossAxisSpacingSample(allExpandFlow: Flow<Boolean>) {
         listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
     }
     ExpandableItem3(title = "FlowRow（crossAxisSpacing）", allExpandFlow, padding = 20.dp) {
+        Text(text = "0.dp")
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                 .padding(2.dp),
-            crossAxisSpacing = 16.dp
+            crossAxisSpacing = 0.dp
         ) {
             items.forEach {
-                ElevatedAssistChip(
-                    onClick = { },
-                    shape = RoundedCornerShape(50),
-                    label = { Text(text = it) }
-                )
+                HorizontalTag(text = it)
+            }
+        }
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "10.dp")
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                .padding(2.dp),
+            crossAxisSpacing = 10.dp
+        ) {
+            items.forEach {
+                HorizontalTag(text = it)
             }
         }
     }
@@ -291,7 +282,7 @@ private fun FlowRowCrossAxisSpacingSamplePreview() {
 @Composable
 private fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val items = remember {
-        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏")
     }
     ExpandableItem3(title = "FlowRow（lastLineMainAxisAlignment）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -315,11 +306,7 @@ private fun FlowRowLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>)
                     lastLineMainAxisAlignment = alignment
                 ) {
                     items.forEach {
-                        ElevatedAssistChip(
-                            onClick = { },
-                            shape = RoundedCornerShape(50),
-                            label = { Text(text = it) }
-                        )
+                        HorizontalTag(text = it)
                     }
                 }
             }
