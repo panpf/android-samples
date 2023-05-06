@@ -99,9 +99,9 @@ private fun FlowColumnVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Top to "Top",
                 Arrangement.Center to "Center",
                 Arrangement.Bottom to "Bottom",
-                Arrangement.SpaceBetween to "SpaceBetween",
-                Arrangement.SpaceAround to "SpaceAround",
-                Arrangement.SpaceEvenly to "SpaceEvenly",
+                Arrangement.SpaceBetween to "Space\nBetween",
+                Arrangement.SpaceAround to "Space\nAround",
+                Arrangement.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = name)

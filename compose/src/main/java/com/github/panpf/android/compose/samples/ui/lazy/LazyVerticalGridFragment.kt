@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -51,7 +50,6 @@ import com.github.panpf.android.compose.samples.ui.base.CenteredText
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
-import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,22 +89,21 @@ class LazyVerticalGridFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun LazyVerticalGridSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyVerticalGrid", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -122,7 +119,7 @@ private fun LazyVerticalGridSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridColumnsFixedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（columns - Fixed）",
         allExpandFlow,
@@ -138,8 +135,7 @@ private fun LazyVerticalGridColumnsFixedSample(allExpandFlow: Flow<Boolean>) {
                 columns = GridCells.Fixed(columns),
                 modifier = Modifier
                     .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp)
+                    .background(colorScheme.primaryContainer)
                     .align(Alignment.CenterHorizontally)
             ) {
                 items(count = 50) { index ->
@@ -147,7 +143,7 @@ private fun LazyVerticalGridColumnsFixedSample(allExpandFlow: Flow<Boolean>) {
                         text = index.plus(1).toString(),
                         modifier = Modifier
                             .height(40.dp)
-                            .background(colors[index % colors.size])
+                            .border(width = 1.dp, color = colorScheme.tertiary)
                     )
                 }
             }
@@ -164,7 +160,7 @@ private fun LazyVerticalGridColumnsFixedSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridColumnsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
         title = "LazyVerticalGrid（columns - Adaptive）",
@@ -176,8 +172,7 @@ private fun LazyVerticalGridColumnsAdaptiveSample(allExpandFlow: Flow<Boolean>) 
             modifier = Modifier
                 .width(gridHeight.value)
                 .height(360.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
                 .align(Alignment.CenterHorizontally)
         ) {
             items(count = 50) { index ->
@@ -185,7 +180,7 @@ private fun LazyVerticalGridColumnsAdaptiveSample(allExpandFlow: Flow<Boolean>) 
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -226,7 +221,7 @@ private fun LazyVerticalGridColumnsAdaptiveSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（contentPadding）",
         allExpandFlow,
@@ -239,8 +234,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(140.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(20.dp)
         ) {
             items(count = 50) { index ->
@@ -248,7 +242,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -261,8 +255,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(140.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
         ) {
             items(count = 50) { index ->
@@ -270,7 +263,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -283,8 +276,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(140.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(
                 start = 10.dp,
                 top = 20.dp,
@@ -297,7 +289,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -310,8 +302,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(140.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -321,7 +312,7 @@ private fun LazyVerticalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -337,7 +328,7 @@ private fun LazyVerticalGridContentPaddingSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（reverseLayout）",
         allExpandFlow,
@@ -348,8 +339,7 @@ private fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             reverseLayout = true
         ) {
             items(count = 50) { index ->
@@ -357,7 +347,7 @@ private fun LazyVerticalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -373,7 +363,7 @@ private fun LazyVerticalGridReverseLayoutSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（verticalArrangement）",
         allExpandFlow,
@@ -395,8 +385,7 @@ private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolea
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
+                            .background(colorScheme.primaryContainer),
                         verticalArrangement = arrangement,
                     ) {
                         items(count = 7) { index ->
@@ -404,7 +393,7 @@ private fun LazyVerticalGridVerticalArrangementSample(allExpandFlow: Flow<Boolea
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
                                     .requiredSize(40.dp)
-                                    .background(colors[index % colors.size])
+                                    .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
                     }
@@ -423,7 +412,7 @@ private fun LazyVerticalGridVerticalArrangementSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（horizontalArrangement）",
         allExpandFlow,
@@ -445,8 +434,7 @@ private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Bool
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
+                            .background(colorScheme.primaryContainer),
                         horizontalArrangement = arrangement
                     ) {
                         items(count = 7) { index ->
@@ -454,7 +442,7 @@ private fun LazyVerticalGridHorizontalArrangementSample(allExpandFlow: Flow<Bool
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
                                     .requiredSize(40.dp)
-                                    .background(colors[index % colors.size])
+                                    .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
                     }
@@ -473,7 +461,7 @@ private fun LazyVerticalGridHorizontalArrangementSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（ItemSpaced）",
         allExpandFlow,
@@ -497,8 +485,7 @@ private fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
+                            .background(colorScheme.primaryContainer),
                         verticalArrangement = Arrangement.spacedBy(verticalSpacing),
                         horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
                     ) {
@@ -507,7 +494,7 @@ private fun LazyVerticalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
                                     .height(40.dp)
-                                    .background(colors[index % colors.size])
+                                    .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
                     }
@@ -526,7 +513,7 @@ private fun LazyVerticalGridItemSpacedSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyVerticalGrid（userScrollEnabled = false）",
         allExpandFlow,
@@ -537,8 +524,7 @@ private fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             userScrollEnabled = false
         ) {
             items(count = 50) { index ->
@@ -546,7 +532,7 @@ private fun LazyVerticalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -562,7 +548,7 @@ private fun LazyVerticalGridUserScrollEnabledSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState(4)
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
@@ -577,8 +563,7 @@ private fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boole
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             state = lazyListState
         ) {
             items(count = 50) { index ->
@@ -586,7 +571,7 @@ private fun LazyVerticalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boole
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -603,7 +588,7 @@ private fun LazyVerticalGridUserVisibleItemIndexSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState(3)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
     ExpandableItem3(
@@ -616,8 +601,7 @@ private fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             state = lazyListState
         ) {
             items(count = 50) { index ->
@@ -625,7 +609,7 @@ private fun LazyVerticalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>)
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -642,7 +626,7 @@ private fun LazyVerticalGridScrollInProgressSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState(3)
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
@@ -671,8 +655,7 @@ private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolea
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             state = lazyListState
         ) {
             items(count = 50) { index ->
@@ -680,7 +663,7 @@ private fun LazyVerticalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolea
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -713,7 +696,7 @@ private fun LazyVerticalGridAnimateScrollToItemSamplePreview() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val items = remember { mutableStateOf((1..50).map { it.toString() }) }
     ExpandableItem3(
         title = "LazyVerticalGrid（animateItemPlacement）",
@@ -726,19 +709,17 @@ private fun LazyVerticalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boole
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             itemsIndexed(
                 items = items.value,
                 key = { _, item -> item }
-            ) { index, item ->
+            ) { _, item ->
                 CenteredText(
                     text = item,
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                         .animateItemPlacement()
                         .clickable {
                             items.value = items.value
@@ -763,7 +744,7 @@ private fun LazyVerticalGridAnimateItemPlacementSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
     ExpandableItem3(title = "LazyVerticalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
@@ -773,15 +754,14 @@ private fun LazyVerticalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -828,7 +808,7 @@ private fun LazyVerticalGridLayoutInfoSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val items = buildList<Any> {
         repeat(49) {
             add((it + 1).toString())
@@ -847,8 +827,7 @@ private fun LazyVerticalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             itemsIndexed(
                 items = items,
@@ -859,14 +838,14 @@ private fun LazyVerticalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
                         else -> 2
                     }
                 }
-            ) { index, item ->
+            ) { _, item ->
                 when (item) {
                     is String -> {
                         CenteredText(
                             text = item,
                             modifier = Modifier
                                 .aspectRatio(1f)
-                                .background(colors[index % colors.size])
+                                .border(width = 1.dp, color = colorScheme.tertiary)
                         )
                     }
 
@@ -896,15 +875,14 @@ private fun LazyVerticalGridContentTypeSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyVerticalGrid（span）", allExpandFlow, padding = 20.dp) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(
                 count = 50,
@@ -926,7 +904,7 @@ private fun LazyVerticalGridSpanSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .height(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -942,7 +920,7 @@ private fun LazyVerticalGridSpanSamplePreview() {
 
 @Composable
 private fun LazyVerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyVerticalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
         Text(text = "size(40.dp)")
         Spacer(modifier = Modifier.size(10.dp))
@@ -950,15 +928,14 @@ private fun LazyVerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
             columns = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .size(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -970,15 +947,14 @@ private fun LazyVerticalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
             columns = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .requiredSize(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }

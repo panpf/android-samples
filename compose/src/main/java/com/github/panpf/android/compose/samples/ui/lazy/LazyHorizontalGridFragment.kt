@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -51,7 +50,6 @@ import com.github.panpf.android.compose.samples.ui.base.CenteredText
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
-import com.github.panpf.android.compose.samples.ui.base.MyColor
 import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,22 +89,21 @@ class LazyHorizontalGridFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun LazyHorizontalGridSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyHorizontalGrid", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -122,7 +119,7 @@ private fun LazyHorizontalGridSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（rows - Fixed）",
         allExpandFlow,
@@ -138,15 +135,14 @@ private fun LazyHorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
                 rows = GridCells.Fixed(rows),
                 modifier = Modifier
                     .height(120.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp)
+                    .background(colorScheme.primaryContainer)
             ) {
                 items(count = 50) { index ->
                     CenteredText(
                         text = index.plus(1).toString(),
                         modifier = Modifier
                             .width(40.dp)
-                            .background(colors[index % colors.size])
+                            .border(width = 1.dp, color = colorScheme.tertiary)
                     )
                 }
             }
@@ -163,7 +159,7 @@ private fun LazyHorizontalGridRowsFixedSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val gridHeight = remember { mutableStateOf(200.dp) }
     ExpandableItem3(
         title = "LazyHorizontalGrid（rows - Adaptive）",
@@ -186,15 +182,14 @@ private fun LazyHorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(gridHeight.value)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -219,7 +214,7 @@ private fun LazyHorizontalGridRowsAdaptiveSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（contentPadding）",
         allExpandFlow,
@@ -232,8 +227,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(20.dp)
         ) {
             items(count = 50) { index ->
@@ -241,7 +235,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -254,8 +248,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
         ) {
             items(count = 50) { index ->
@@ -263,7 +256,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -276,8 +269,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(
                 start = 10.dp,
                 top = 20.dp,
@@ -290,7 +282,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -303,8 +295,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
             modifier = Modifier
                 .fillMaxWidth()
                 .height(110.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -314,7 +305,7 @@ private fun LazyHorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>)
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -330,7 +321,7 @@ private fun LazyHorizontalGridContentPaddingSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（reverseLayout）",
         allExpandFlow,
@@ -341,8 +332,7 @@ private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) 
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             reverseLayout = true
         ) {
             items(count = 50) { index ->
@@ -350,7 +340,7 @@ private fun LazyHorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) 
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -366,7 +356,7 @@ private fun LazyHorizontalGridReverseLayoutSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（horizontalArrangement）",
         allExpandFlow,
@@ -388,8 +378,7 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(160.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
+                            .background(colorScheme.primaryContainer),
                         horizontalArrangement = arrangement,
                     ) {
                         items(count = 9) { index ->
@@ -397,7 +386,7 @@ private fun LazyHorizontalGridHorizontalArrangementSample(allExpandFlow: Flow<Bo
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
                                     .requiredSize(30.dp)
-                                    .background(colors[index % colors.size])
+                                    .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
                     }
@@ -416,7 +405,7 @@ private fun LazyHorizontalGridHorizontalArrangementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（verticalArrangement）",
         allExpandFlow,
@@ -438,8 +427,7 @@ private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Bool
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                            .padding(2.dp),
+                            .background(colorScheme.primaryContainer),
                         verticalArrangement = arrangement,
                     ) {
                         items(count = 9) { index ->
@@ -447,7 +435,7 @@ private fun LazyHorizontalGridVerticalArrangementSample(allExpandFlow: Flow<Bool
                                 text = index.plus(1).toString(),
                                 modifier = Modifier
                                     .requiredSize(30.dp)
-                                    .background(colors[index % colors.size])
+                                    .border(width = 1.dp, color = colorScheme.tertiary)
                             )
                         }
                     }
@@ -466,7 +454,7 @@ private fun LazyHorizontalGridVerticalArrangementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（ItemSpaced）",
         allExpandFlow,
@@ -491,8 +479,7 @@ private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp),
+                    .background(colorScheme.primaryContainer),
                 horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
                 verticalArrangement = Arrangement.spacedBy(verticalSpacing),
             ) {
@@ -501,7 +488,7 @@ private fun LazyHorizontalGridItemSpacedSample(allExpandFlow: Flow<Boolean>) {
                         text = index.plus(1).toString(),
                         modifier = Modifier
                             .width(40.dp)
-                            .background(colors[index % colors.size])
+                            .border(width = 1.dp, color = colorScheme.tertiary)
                     )
                 }
             }
@@ -518,7 +505,7 @@ private fun LazyHorizontalGridItemSpacedSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(
         title = "LazyHorizontalGrid（userScrollEnabled = false）",
         allExpandFlow,
@@ -529,8 +516,7 @@ private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolea
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             userScrollEnabled = false
         ) {
             items(count = 50) { index ->
@@ -538,7 +524,7 @@ private fun LazyHorizontalGridUserScrollEnabledSample(allExpandFlow: Flow<Boolea
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -554,7 +540,7 @@ private fun LazyHorizontalGridUserScrollEnabledSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState(3)
     val itemIndexState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val offsetState =
@@ -569,8 +555,7 @@ private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boo
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             state = lazyListState
         ) {
             items(count = 50) { index ->
@@ -578,7 +563,7 @@ private fun LazyHorizontalGridUserVisibleItemIndexSample(allExpandFlow: Flow<Boo
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -595,7 +580,7 @@ private fun LazyHorizontalGridUserVisibleItemIndexSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState(1)
     val scrollInProgressState = remember { derivedStateOf { lazyListState.isScrollInProgress } }
     ExpandableItem3(
@@ -608,8 +593,7 @@ private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
             state = lazyListState
         ) {
             items(count = 50) { index ->
@@ -617,7 +601,7 @@ private fun LazyHorizontalGridScrollInProgressSample(allExpandFlow: Flow<Boolean
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -634,7 +618,7 @@ private fun LazyHorizontalGridScrollInProgressSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyListState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
@@ -664,8 +648,7 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
                 modifier = Modifier
                     .weight(1f)
                     .height(200.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                    .padding(2.dp),
+                    .background(colorScheme.primaryContainer),
                 state = lazyListState
             ) {
                 items(count = 50) { index ->
@@ -673,7 +656,7 @@ private fun LazyHorizontalGridAnimateScrollToItemSample(allExpandFlow: Flow<Bool
                         text = index.plus(1).toString(),
                         modifier = Modifier
                             .width(40.dp)
-                            .background(colors[index % colors.size])
+                            .border(width = 1.dp, color = colorScheme.tertiary)
                     )
                 }
             }
@@ -707,7 +690,7 @@ private fun LazyHorizontalGridAnimateScrollToItemSamplePreview() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val items = remember { mutableStateOf((1..50).map { it.toString() }) }
     ExpandableItem3(
         title = "LazyHorizontalGrid（animateItemPlacement）",
@@ -720,18 +703,17 @@ private fun LazyHorizontalGridAnimateItemPlacementSample(allExpandFlow: Flow<Boo
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             itemsIndexed(
                 items = items.value,
                 key = { _, item -> item }
-            ) { index, item ->
+            ) { _, item ->
                 CenteredText(
                     text = item,
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                         .animateItemPlacement()
                         .clickable {
                             items.value = items.value
@@ -756,7 +738,7 @@ private fun LazyHorizontalGridAnimateItemPlacementSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val lazyGridState = rememberLazyGridState()
     val layoutInfoState = remember { derivedStateOf { lazyGridState.layoutInfo } }
     ExpandableItem3(title = "LazyHorizontalGrid（layoutInfo）", allExpandFlow, padding = 20.dp) {
@@ -766,15 +748,14 @@ private fun LazyHorizontalGridLayoutInfoSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(count = 50) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -821,7 +802,7 @@ private fun LazyHorizontalGridLayoutInfoSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     val items = buildList<Any> {
         repeat(49) {
             add((it + 1).toString())
@@ -840,8 +821,7 @@ private fun LazyHorizontalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             itemsIndexed(
                 items = items,
@@ -852,14 +832,14 @@ private fun LazyHorizontalGridContentTypeSample(allExpandFlow: Flow<Boolean>) {
                         else -> 2
                     }
                 }
-            ) { index, item ->
+            ) { _, item ->
                 when (item) {
                     is String -> {
                         CenteredText(
                             text = item,
                             modifier = Modifier
                                 .aspectRatio(1f)
-                                .background(colors[index % colors.size])
+                                .border(width = 1.dp, color = colorScheme.tertiary)
                         )
                     }
 
@@ -892,15 +872,14 @@ private fun LazyHorizontalGridContentTypeSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyHorizontalGrid（span）", allExpandFlow, padding = 20.dp) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(3),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp)
+                .background(colorScheme.primaryContainer)
         ) {
             items(
                 count = 50,
@@ -922,7 +901,7 @@ private fun LazyHorizontalGridSpanSample(allExpandFlow: Flow<Boolean>) {
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .width(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -938,7 +917,7 @@ private fun LazyHorizontalGridSpanSamplePreview() {
 
 @Composable
 private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
-    val colors = MyColor.halfRainbows
+    val colorScheme = MaterialTheme.colorScheme
     ExpandableItem3(title = "LazyHorizontalGrid（ItemSize）", allExpandFlow, padding = 20.dp) {
         Text(text = "size(40.dp)")
         Spacer(modifier = Modifier.size(10.dp))
@@ -946,15 +925,14 @@ private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
             rows = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
         ) {
             items(count = 7) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .size(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }
@@ -966,15 +944,14 @@ private fun LazyHorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
             rows = GridCells.Fixed(3),
             modifier = Modifier
                 .size(240.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
-                .padding(2.dp),
+                .background(colorScheme.primaryContainer),
         ) {
             items(count = 7) { index ->
                 CenteredText(
                     text = index.plus(1).toString(),
                     modifier = Modifier
                         .requiredSize(40.dp)
-                        .background(colors[index % colors.size])
+                        .border(width = 1.dp, color = colorScheme.tertiary)
                 )
             }
         }

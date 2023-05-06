@@ -93,7 +93,6 @@ fun HorizontalGridSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .width(40.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
-                        .padding(10.dp)
                 )
             }
         }
@@ -111,7 +110,6 @@ fun HorizontalGridSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .width(40.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
-                        .padding(10.dp)
                 )
             }
         }
@@ -149,7 +147,6 @@ fun HorizontalGridRowsFixedSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier
                                 .width(40.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
-                                .padding(10.dp)
                         )
                     }
                 }
@@ -192,7 +189,6 @@ fun HorizontalGridRowsAdaptiveSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier
                                 .width(40.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
-                                .padding(10.dp)
                         )
                     }
                 }
@@ -263,7 +259,6 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -284,7 +279,6 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -310,7 +304,6 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -333,7 +326,6 @@ fun HorizontalGridContentPaddingSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -525,7 +517,6 @@ fun HorizontalGridReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier
                                 .width(40.dp)
                                 .border(width = 1.dp, color = colorScheme.tertiary)
-                                .padding(10.dp)
                         )
                     }
                 }
@@ -566,7 +557,6 @@ fun HorizontalGridNotNeatItemSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier
                                 .width(itemWidths[index % itemWidths.size])
                                 .border(width = 1.dp, color = colorScheme.tertiary)
-                                .padding(10.dp)
                         )
                     }
                 }
@@ -612,7 +602,6 @@ fun HorizontalGridSizeWrapSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -638,7 +627,6 @@ fun HorizontalGridSizeWrapSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -665,7 +653,6 @@ fun HorizontalGridSizeWrapSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -712,7 +699,6 @@ fun HorizontalGridSizeFixedSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -740,7 +726,6 @@ fun HorizontalGridSizeFixedSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -769,7 +754,6 @@ fun HorizontalGridSizeFixedSample(allExpandFlow: Flow<Boolean>) {
                         modifier = Modifier
                             .width(40.dp)
                             .border(width = 1.dp, color = colorScheme.tertiary)
-                            .padding(10.dp)
                     )
                 }
             }
@@ -804,7 +788,6 @@ fun HorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .size(40.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
-                        .padding(10.dp)
                 )
             }
         }
@@ -824,7 +807,6 @@ fun HorizontalGridItemSizeSample(allExpandFlow: Flow<Boolean>) {
                     modifier = Modifier
                         .requiredSize(40.dp)
                         .border(width = 1.dp, color = colorScheme.tertiary)
-                        .padding(10.dp)
                 )
             }
         }

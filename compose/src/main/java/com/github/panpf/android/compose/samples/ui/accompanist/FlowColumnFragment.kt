@@ -145,9 +145,9 @@ private fun FlowColumnMainAxisAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 FlowMainAxisAlignment.Start to "Start",
                 FlowMainAxisAlignment.Center to "Center",
                 FlowMainAxisAlignment.End to "End",
-                FlowMainAxisAlignment.SpaceBetween to "SpaceBetween",
-                FlowMainAxisAlignment.SpaceAround to "SpaceAround",
-                FlowMainAxisAlignment.SpaceEvenly to "SpaceEvenly",
+                FlowMainAxisAlignment.SpaceBetween to "Space\nBetween",
+                FlowMainAxisAlignment.SpaceAround to "Space\nAround",
+                FlowMainAxisAlignment.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = name)
@@ -329,9 +329,9 @@ private fun FlowColumnLastLineMainAxisAlignmentSample(allExpandFlow: Flow<Boolea
                 FlowMainAxisAlignment.Start to "Start",
                 FlowMainAxisAlignment.Center to "Center",
                 FlowMainAxisAlignment.End to "End",
-                FlowMainAxisAlignment.SpaceBetween to "SpaceBetween",
-                FlowMainAxisAlignment.SpaceAround to "SpaceAround",
-                FlowMainAxisAlignment.SpaceEvenly to "SpaceEvenly",
+                FlowMainAxisAlignment.SpaceBetween to "Space\nBetween",
+                FlowMainAxisAlignment.SpaceAround to "Space\nAround",
+                FlowMainAxisAlignment.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = name)
