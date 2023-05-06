@@ -1,9 +1,11 @@
 package com.github.panpf.android.compose.samples.ui.material3
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -34,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import com.github.panpf.tools4a.toast.ktx.showShortToast
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -60,15 +62,16 @@ class ChipsFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "AssistChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -164,15 +167,16 @@ private fun AssistChipSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ElevatedAssistChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "ElevatedAssistChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -289,15 +293,15 @@ private fun ElevatedAssistChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "FilterChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -329,7 +333,10 @@ private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
                 FilterChip(
                     selected = selectedState.value,
                     onClick = { selectedState.value = !selectedState.value },
-                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    border = FilterChipDefaults.filterChipBorder(
+                        borderWidth = 1.dp,
+                        borderColor = Color.Red
+                    ),
                     label = { Text(text = tag) },
                 )
             }
@@ -435,15 +442,15 @@ private fun FilterChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ElevatedFilterChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -475,7 +482,10 @@ private fun ElevatedFilterChipSample(allExpandFlow: Flow<Boolean>) {
                 ElevatedFilterChip(
                     selected = selectedState.value,
                     onClick = { selectedState.value = !selectedState.value },
-                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    border = FilterChipDefaults.filterChipBorder(
+                        borderWidth = 1.dp,
+                        borderColor = Color.Red
+                    ),
                     label = { Text(text = tag) },
                 )
             }
@@ -587,15 +597,15 @@ private fun ElevatedFilterChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun InputChipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "InputChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -627,7 +637,10 @@ private fun InputChipSample(allExpandFlow: Flow<Boolean>) {
                 InputChip(
                     selected = selectedState.value,
                     onClick = { selectedState.value = !selectedState.value },
-                    border = FilterChipDefaults.filterChipBorder(borderWidth = 1.dp, borderColor = Color.Red),
+                    border = FilterChipDefaults.filterChipBorder(
+                        borderWidth = 1.dp,
+                        borderColor = Color.Red
+                    ),
                     label = { Text(text = tag) },
                 )
             }
@@ -762,15 +775,16 @@ private fun InputChipSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "SuggestionChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -851,15 +865,16 @@ private fun SuggestionChipSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ElevatedSuggestionChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem3(title = "ElevatedSuggestionChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")

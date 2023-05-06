@@ -1,10 +1,12 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Chip
 import androidx.compose.material.ChipDefaults
@@ -27,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import com.github.panpf.tools4a.toast.ktx.showShortToast
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -48,16 +50,16 @@ class ChipsFragment : MaterialComposeAppBarFragment() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun ChipSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem(title = "Chip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -129,15 +131,15 @@ private fun ChipSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun FilterChipSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "FilterChip", allExpandFlow, padding = 20.dp) {
         val tag = "射击"
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")

@@ -1,11 +1,14 @@
 package com.github.panpf.android.compose.samples.ui.material
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -26,7 +29,8 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.base.SubtitleText
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -47,37 +51,42 @@ class ProgressIndicatorsFragment : MaterialComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CircularProgressIndicatorSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "CircularProgressIndicator", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             Column {
-                Text(text = "Default")
+                SubtitleText(text = "Default", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator()
             }
             Column {
-                Text(text = "color")
+                SubtitleText(text = "color", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator(color = Color.Red)
             }
             Column {
-                Text(text = "backgroundColor")
+                SubtitleText(text = "backgroundColor", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator(backgroundColor = Color.Yellow)
             }
             Column {
-                Text(text = "size")
+                SubtitleText(text = "size", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator(modifier = Modifier.size(50.dp))
             }
             Column {
-                Text(text = "strokeWidth")
+                SubtitleText(text = "strokeWidth", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator(modifier = Modifier.size(50.dp), strokeWidth = 10.dp)
             }
             Column {
-                Text(text = "strokeCap")
+                SubtitleText(text = "strokeCap", line = 2)
                 Spacer(modifier = Modifier.size(10.dp))
                 CircularProgressIndicator(
                     modifier = Modifier.size(50.dp),

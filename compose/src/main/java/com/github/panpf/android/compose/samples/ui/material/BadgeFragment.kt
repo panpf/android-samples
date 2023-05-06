@@ -1,10 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Badge
@@ -20,12 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 
-class BadgesFragment : MaterialComposeAppBarFragment() {
+class BadgeFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Badges - Material"
+        return "Badge - Material"
     }
 
     @Composable
@@ -35,15 +38,17 @@ class BadgesFragment : MaterialComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun BadgeSample() {
-    FlowRow(
+    VerticalGrid(
+        columns = GridCells.Fixed(3),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        contentPadding = PaddingValues(20.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(20.dp),
-        mainAxisSpacing = 20.dp,
-        crossAxisSpacing = 20.dp,
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
     ) {
         Column {
             Text(text = "Default")

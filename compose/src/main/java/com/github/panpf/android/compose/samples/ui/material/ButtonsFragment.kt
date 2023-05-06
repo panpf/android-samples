@@ -1,12 +1,13 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -33,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import com.github.panpf.tools4a.toast.ktx.showShortToast
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -59,14 +60,15 @@ class ButtonsFragment : MaterialComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("Button", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Text")
@@ -191,14 +193,15 @@ private fun ButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun OutlinedButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("OutlinedButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Text")
@@ -323,14 +326,15 @@ private fun OutlinedButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TextButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("TextButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -426,14 +430,15 @@ private fun TextButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun IconButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("IconButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -470,13 +475,14 @@ private fun IconButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun IconToggleButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("IconToggleButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -521,14 +527,15 @@ private fun IconToggleButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun FloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
     ExpandableItem("FloatingActionButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -595,13 +602,14 @@ private fun FloatingActionButtonSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ExtendedFloatingActionButtonSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem("ExtendedFloatingActionButton", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp), mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp
+        VerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")

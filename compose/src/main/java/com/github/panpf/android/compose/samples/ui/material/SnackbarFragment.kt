@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.tools4a.toast.ktx.showShortToast
 
-class SnackbarsFragment : MaterialComposeAppBarFragment() {
+class SnackbarFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Snackbars - Material"
+        return "Snackbar - Material"
     }
 
     @Composable

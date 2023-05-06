@@ -1,10 +1,15 @@
 package com.github.panpf.android.compose.samples.ui.layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -15,7 +20,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -35,20 +40,27 @@ class SpacerFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SpacerSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Spacer", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             Column {
                 Text(text = "no Spacer")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }
@@ -57,13 +69,15 @@ private fun SpacerSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "size - 10.dp")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Spacer(modifier = Modifier.size(10.dp))
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }
@@ -72,13 +86,15 @@ private fun SpacerSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "size - 20.dp")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }
@@ -93,21 +109,28 @@ private fun SpacerSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Spacer - Color", allExpandFlow, padding = 20.dp) {
-        FlowRow(mainAxisSpacing = 20.dp, crossAxisSpacing = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             Column {
                 Text(text = "no color")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Spacer(modifier = Modifier.size(10.dp))
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }
@@ -116,7 +139,8 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "color - yellow")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Spacer(
@@ -126,7 +150,8 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                 )
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }
@@ -135,7 +160,8 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                 Text(text = "color - green")
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfBlue)
                 )
                 Spacer(
@@ -145,7 +171,8 @@ private fun SpacerColorSample(allExpandFlow: Flow<Boolean>) {
                 )
                 Box(
                     modifier = Modifier
-                        .size(100.dp, 50.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
                         .background(MyColor.HalfMagenta)
                 )
             }

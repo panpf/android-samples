@@ -1,14 +1,16 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomDrawer
 import androidx.compose.material.BottomDrawerValue
@@ -38,6 +40,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -196,15 +199,19 @@ private fun ModalDrawerSamplePreview() {
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
     val drawerState = rememberBottomDrawerState(initialValue = BottomDrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
     ExpandableItem(title = "BottomDrawer", allExpandFlow, padding = 20.dp) {
-        Row(Modifier.fillMaxWidth()) {
-            Column(Modifier.weight(1f)) {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Column {
                 Text(text = "Default")
                 Spacer(modifier = Modifier.size(10.dp))
                 Box(
@@ -253,8 +260,7 @@ private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(Modifier.weight(1f)) {
+            Column {
                 Text(text = "drawerShape")
                 Spacer(modifier = Modifier.size(10.dp))
                 Box(
@@ -304,8 +310,7 @@ private fun BottomDrawerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column(Modifier.weight(1f)) {
+            Column {
                 Text(text = "colors")
                 Spacer(modifier = Modifier.size(10.dp))
                 Box(

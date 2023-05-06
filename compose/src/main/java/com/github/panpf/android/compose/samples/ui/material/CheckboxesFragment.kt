@@ -1,11 +1,14 @@
 package com.github.panpf.android.compose.samples.ui.material
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Divider
@@ -23,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
-import com.google.accompanist.flowlayout.FlowRow
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -45,14 +48,15 @@ class CheckboxesFragment : MaterialComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CheckboxSample(allExpandFlow: Flow<Boolean>) {
     val checked = remember { mutableStateOf(false) }
     ExpandableItem(title = "Checkbox", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -144,13 +148,14 @@ private fun CheckboxGroupSamplePreview() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TriStateCheckboxSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem(title = "TriStateCheckbox", allExpandFlow, padding = 20.dp) {
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            mainAxisSpacing = 20.dp,
-            crossAxisSpacing = 20.dp,
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Column {
                 Text(text = "Default")
@@ -240,6 +245,7 @@ private fun TriStateCheckboxGroupSample(allExpandFlow: Flow<Boolean>) {
                                     }
                                 }
                                 .toSet()
+
                             ToggleableState.On -> emptySet()
                         }
                     }
@@ -257,6 +263,7 @@ private fun TriStateCheckboxGroupSample(allExpandFlow: Flow<Boolean>) {
                                     }
                                 }
                                 .toSet()
+
                             ToggleableState.On -> emptySet()
                         }
                     },

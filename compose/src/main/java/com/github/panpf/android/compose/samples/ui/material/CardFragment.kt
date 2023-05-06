@@ -25,12 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.ui.base.MaterialComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.github.panpf.android.compose.samples.ui.base.SubtitleText
 import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 
-class CardsFragment : MaterialComposeAppBarFragment() {
+class CardFragment : MaterialComposeAppBarFragment() {
 
     override fun getTitle(): String {
-        return "Cards - Material"
+        return "Card - Material"
     }
 
     @Composable
@@ -48,16 +49,18 @@ private fun CardSample() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(20.dp),
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         Column {
-            Text(text = "Default")
+            SubtitleText(text = "Default", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(text = "This is a card", modifier = Modifier.align(Alignment.Center))
                 }
@@ -65,7 +68,7 @@ private fun CardSample() {
         }
 
         Column {
-            Text(text = "shape")
+            SubtitleText(text = "shape", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
             Card(
                 modifier = Modifier
@@ -80,7 +83,7 @@ private fun CardSample() {
         }
 
         Column {
-            Text(text = "backgroundColor")
+            SubtitleText(text = "backgroundColor", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
             Card(
                 modifier = Modifier
@@ -95,7 +98,7 @@ private fun CardSample() {
         }
 
         Column {
-            Text(text = "contentColor")
+            SubtitleText(text = "contentColor", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
             Card(
                 modifier = Modifier
@@ -110,7 +113,7 @@ private fun CardSample() {
         }
 
         Column {
-            Text(text = "elevation")
+            SubtitleText(text = "elevation", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
             Card(
                 modifier = Modifier
@@ -125,7 +128,7 @@ private fun CardSample() {
         }
 
         Column {
-            Text(text = "border")
+            SubtitleText(text = "border", line = 2)
             Spacer(modifier = Modifier.size(10.dp))
             Card(
                 modifier = Modifier

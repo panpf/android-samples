@@ -19,12 +19,12 @@ class Material3Fragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val links = remember {
             listOf(
-                Link("Badges", R.id.action_global_material3BadgesFragment),
+                Link("Badge", R.id.action_global_material3BadgeFragment),
                 Link("BottomAppBar", R.id.action_global_material3BottomAppBarFragment),
                 Link("BottomSheets（Planned）"),  // todo Planned https://m3.material.io/components/bottom-sheets/overview
                 Link("Buttons", R.id.action_global_material3ButtonsFragment),
                 Link("Cards", R.id.action_global_material3CardsFragment),
-                Link("Checkbox", R.id.action_global_material3CheckboxFragment),
+                Link("Checkboxes", R.id.action_global_material3CheckboxesFragment),
                 Link("Chips", R.id.action_global_material3ChipsFragment),
                 Link("DatePickers（Planned）"),  // todo Planned https://m3.material.io/components/date-pickers/overview
                 Link("Dialogs", R.id.action_global_material3DialogsFragment),

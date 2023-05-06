@@ -3,8 +3,10 @@ package com.github.panpf.android.compose.samples.ui.material3
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
@@ -42,6 +45,7 @@ import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.MyColor
+import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -62,6 +66,7 @@ class NavigationRailFragment : Material3ComposeAppBarFragment() {
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
     val selectedIndex = remember { mutableStateOf(0) }
@@ -74,7 +79,11 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
         )
     }
     ExpandableItem3(title = "NavigationRail", allExpandFlow, padding = 20.dp) {
-        Row {
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             Column {
                 Text(text = "Default")
                 Spacer(modifier = Modifier.size(10.dp))
@@ -100,7 +109,6 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
             Column {
                 Text(text = "colors")
                 Spacer(modifier = Modifier.size(10.dp))
@@ -136,7 +144,6 @@ private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
             Column {
                 Text(text = "header")
                 Spacer(modifier = Modifier.size(10.dp))

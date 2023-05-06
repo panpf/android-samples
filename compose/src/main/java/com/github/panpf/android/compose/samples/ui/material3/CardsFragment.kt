@@ -55,7 +55,7 @@ private fun CardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "Card", allExpandFlow, padding = 20.dp) {
         VerticalGrid(
             modifier = Modifier.fillMaxWidth(),
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
@@ -155,7 +155,7 @@ private fun ElevatedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "ElevatedCard", allExpandFlow, padding = 20.dp) {
         VerticalGrid(
             modifier = Modifier.fillMaxWidth(),
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
@@ -240,7 +240,7 @@ private fun OutlinedCardSample(allExpandFlow: Flow<Boolean>) {
     ExpandableItem3(title = "OutlinedCard", allExpandFlow, padding = 20.dp) {
         VerticalGrid(
             modifier = Modifier.fillMaxWidth(),
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
