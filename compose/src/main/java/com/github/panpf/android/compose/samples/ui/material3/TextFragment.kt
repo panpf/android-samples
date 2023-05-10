@@ -89,7 +89,7 @@ class TextFragment : Material3ComposeAppBarFragment() {
             TextAnnotatedStringSample(allExpandFlow)
             TextClickableAnnotatedStringSample(allExpandFlow)
             TextSelectableSample(allExpandFlow)
-            // todo emoji
+            TextEmojiSample(allExpandFlow)
         }
     }
 }
@@ -697,4 +697,37 @@ private fun TextSelectableSample(allExpandFlow: Flow<Boolean>) {
 @Composable
 private fun TextSelectableSamplePreview() {
     TextSelectableSample(MutableStateFlow(true))
+}
+
+
+@Composable
+private fun TextEmojiSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3("Text（Emoji）", allExpandFlow, padding = 20.dp) {
+        MyTextContainer {
+            SelectionContainer {
+                Text(
+                    text = """                    |😀😃😄😁😆😅😂🤣😊😇🙂🙃😉😌😍😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩😏😒😞😔😟😕🙁☹️😣😖😫😩🥺😢😭😤😠😡🤬🤯😳🥵🥶😱😨😰😥😓🤗🤔🤭🤫🤥😶😐😑😬🙄😯😦😧😮😲😴🤤😪😵🤐🥴🤢🤮🤧😷🤒🤕🤑🤠😈👿👹👺🤡💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽🙀😿😾
+                     |14.0：🫠, 🫱🏼‍🫲🏿, 🫰🏽
+                     |13.1：😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
+                     |13.0：🥲, 🥷🏿, 🐻‍❄️
+                     |12.1：🧑🏻‍🦰, 🧑🏿‍🦯, 👩🏻‍🤝‍👩🏼
+                     |12.0：🦩, 🦻🏿, 👩🏼‍🤝‍👩🏻
+                    """.trimMargin(),
+//                    style = TextStyle(
+//                        platformStyle = PlatformTextStyle(
+//                            emojiSupportMatch = EmojiSupportMatch.Default
+//                        )/* ... */
+//                    )
+                )
+            }
+        }
+        // todo 自定义 emoji
+        // todo 禁用 emoji
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun TextEmojiSamplePreview() {
+    TextEmojiSample(MutableStateFlow(true))
 }
