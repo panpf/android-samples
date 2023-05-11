@@ -121,7 +121,7 @@ private fun Modifier.createZoomModifier(
                 }
             )
         }
-        .centroid {
+        .pointerInputCentroid {
             centroidState.value = it
         }
 //        .pointerInput(Unit) {
@@ -149,8 +149,6 @@ private fun Modifier.createZoomModifier(
                 coroutineScope.launch {
                     state.transform(
                         zoomChange = zoomChange,
-                        panChange = panChange,
-                        rotationChange = rotationChange,
                         touchCentroid = centroidState.value
                     )
                 }

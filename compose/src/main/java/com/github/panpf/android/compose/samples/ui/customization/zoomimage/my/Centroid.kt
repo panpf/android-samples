@@ -12,7 +12,7 @@ import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.debugInspectorInfo
 
-fun Modifier.centroid(
+fun Modifier.pointerInputCentroid(
     onGesture: (centroid: Offset) -> Unit,
 ) = composed(
     factory = {

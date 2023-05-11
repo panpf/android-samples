@@ -500,22 +500,35 @@ class MyZoomState(
         }
     }
 
-    internal suspend fun transform(
-        zoomChange: Float,
-        panChange: Offset,
-        rotationChange: Float,
-        touchCentroid: Offset,   // todo 尚未利用
-    ) {
+    internal suspend fun transform(zoomChange: Float, touchCentroid: Offset) {
+        val currentScale = scale
+        val newScale =
+            (currentScale * zoomChange).coerceIn(minimumValue = minScale, maximumValue = maxScale)
+        val addCentroidOffset = Offset(
+            x = (newScale - currentScale) * touchCentroid.x * -1,
+            y = (newScale - currentScale) * touchCentroid.y * -1
+        )
+        val newTranslation = Offset(
+            x = _translationX.value + addCentroidOffset.x,
+            y = _translationY.value + addCentroidOffset.y
+        )
         if (debugMode) {
             Log.d(
                 "MyZoomState",
-                "transform. zoomChange=$zoomChange, panChange=$panChange, rotationChange=$rotationChange, touchCentroid=$touchCentroid"
+                "transform. zoomChange=$zoomChange, " +
+                        "touchCentroid=$touchCentroid, " +
+                        "newScale=$newScale, " +
+                        "addCentroidOffset=$addCentroidOffset, " +
+                        "newTranslation=$newTranslation"
             )
         }
-        snapScaleToByRelativelyCentroid(
-            scale * zoomChange,
-            relativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
-        )
+        coroutineScope {
+            _scale.snapTo(newScale)
+            updateTranslationBounds("snapScaleTo")
+            _translationX.snapTo(targetValue = newTranslation.x)
+            _translationY.snapTo(targetValue = newTranslation.y)
+            resetTransformInfos()
+        }
     }
 
 //    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {

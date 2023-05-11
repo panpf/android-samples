@@ -36,7 +36,7 @@ class OnPinchToZoomGestureHandler : OnPinchGestureHandler {
 //        )
         Log.d(
             "BirdlyZoomable",
-            "OnPinchToZoomGesture. newScale=$newScale, centroid=$centroid, addPanOffset=$addPanOffset, addCentroidOffset=$addCentroidOffset, newOffset=$newOffset"
+            "OnPinchToZoomGesture. oldScale=${zoomState.scale}, oldOffset=${zoomState.offset}. gestureZoom=$gestureZoom, pan=$pan, centroid=$centroid. newScale=$newScale, addPanOffset=$addPanOffset, addCentroidOffset=$addCentroidOffset, newOffset=$newOffset"
         )
         onZoomUpdated(zoomState.copy(scale = newScale, offset = newOffset))
     }
