@@ -78,10 +78,10 @@ private fun Modifier.createZoomModifier(
 //    val transformableEnabledState = remember { mutableStateOf(false) }
     Modifier
         .onSizeChanged {
-            state.spaceSize = it.toSize()
-            state.contentSize = it.toSize()
-            state.coreSize = painter.intrinsicSize
-            state.coreScale = contentScale
+            state.containerSize = it.toSize()
+            state.contentSize = it.toSize() // todo 删除
+            state.coreSize = painter.intrinsicSize  // todo 改为 state.contentSize = painter.intrinsicSize
+            state.coreScale = contentScale  // todo 改为 state.contentScale = contentScale
         }
         .pointerInput(scaleAnimationConfig) {
             detectTapGestures(onDoubleTap = { offset ->

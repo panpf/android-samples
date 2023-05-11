@@ -38,12 +38,12 @@ class MyZoomState(
 
     val transformOrigin = TransformOrigin(0f, 0f)
 
-    var spaceSize: Size = Size.Unspecified
+    var containerSize: Size = Size.Unspecified
         internal set(value) {
             val changed = value != field
             field = value
             if (changed) {
-                updateTranslationBounds("spaceSizeChanged")
+                updateTranslationBounds("containerSizeChanged")
                 resetFixedInfos()
                 resetTransformInfos()
             }
@@ -133,14 +133,14 @@ class MyZoomState(
         newScale: Float,
         relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
     ) {
-        val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
+        val containerSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val currentScale = scale
         val finalRelativelyCentroid = if (newScale < currentScale)
             RelativelyCentroid(0.5f, 0.5f) else relativelyCentroid
         val scaleTranslation = computeContentScaleTranslation(
             currentScale = currentScale,
-            spaceSize = spaceSize,
+            containerSize = containerSize,
             contentSize = contentSize,
             translation = translation,
             newScale = newScale,
@@ -173,7 +173,7 @@ class MyZoomState(
             )
         }
         val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
-            spaceSize = spaceSize,
+            containerSize = containerSize,
             contentSize = contentSize,
             scale = scale,
             translation = translation,
@@ -195,7 +195,7 @@ class MyZoomState(
         animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
-        val spaceSize = contentSize.takeIf { it.isSpecified } ?: return
+        val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val currentScale = scale
         val finalRelativelyCentroid = if (newScale < currentScale)
@@ -204,7 +204,7 @@ class MyZoomState(
             updateTranslationBounds("animateScaleToScaling", newScale)
             val scaleTranslation = computeContentScaleTranslation(
                 currentScale = currentScale,
-                spaceSize = spaceSize,
+                containerSize = containerSize,
                 contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
@@ -275,7 +275,7 @@ class MyZoomState(
         } else {
             val translation = computeContentScaleTranslation(
                 currentScale = currentScale,
-                spaceSize = spaceSize,
+                containerSize = containerSize,
                 contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
@@ -360,7 +360,7 @@ class MyZoomState(
             )
         }
         val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
-            spaceSize = spaceSize,
+            containerSize = containerSize,
             contentSize = contentSize,
             scale = scale,
             translation = translation,
@@ -597,13 +597,13 @@ class MyZoomState(
     private fun updateTranslationBounds(caller: String, newScale: Float? = null) {
         // todo 使用 coreSize
         val newScale = newScale ?: scale
-        val bounds = computeTranslationBoundsWithTopLeftScale(spaceSize, contentSize, newScale)
+        val bounds = computeTranslationBoundsWithTopLeftScale(containerSize, contentSize, newScale)
         _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
         _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         if (debugMode) {
             Log.d(
                 "MyZoomState",
-                "updateTranslationBounds. $caller. bounds=$bounds, spaceSize=$spaceSize, contentSize=${contentSize}, scale=$newScale"
+                "updateTranslationBounds. $caller. bounds=$bounds, containerSize=$containerSize, contentSize=${contentSize}, scale=$newScale"
             )
         }
     }
@@ -618,7 +618,7 @@ class MyZoomState(
 
     private fun resetTransformInfos() {
         scaledContentVisibleCenter = computeScaledContentVisibleCenter(
-            spaceSize = spaceSize,
+            containerSize = containerSize,
             contentSize = contentSize,
             scale = scale,
             translation = translation
@@ -626,7 +626,7 @@ class MyZoomState(
         contentVisibleCenter = scaledContentVisibleCenter / scale
 
         scaledContentVisibleRect = computeScaledContentVisibleRectWithTopLeftScale(
-            spaceSize = spaceSize,
+            containerSize = containerSize,
             contentSize = contentSize,
             scale = scale,
             translation = translation
