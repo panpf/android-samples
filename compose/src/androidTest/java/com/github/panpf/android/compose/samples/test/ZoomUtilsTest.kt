@@ -4,9 +4,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeRelativelyCentroidOfContentByTouchPosition
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeScaledContentVisibleCenter
-import com.github.panpf.android.compose.samples.ui.image.zoom.com.github.panpf.sketch.zoom.compose.computeTranslationBoundsWithTopLeftScale
+import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeRelativelyCentroidOfContentByTouchPosition
+import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeScaledContentVisibleCenter
+import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeTranslationBoundsWithTopLeftScale
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
