@@ -30,7 +30,7 @@ fun MyZoomVisibleRectImage(
                     drawContent()
                     val drawSize = size
                     val coreSize = painter.intrinsicSize
-                    val coreVisibleRect = state.coreVisibleRect
+                    val coreVisibleRect = state.contentVisibleRect
                     val drawScaleWithCore = drawSize.width / coreSize.width
                     val drawVisibleRect = coreVisibleRect.scale(drawScaleWithCore)
                     drawRect(

@@ -184,11 +184,13 @@ private fun MyZoomImageSample() {
         Column(Modifier.padding(10.dp)) {
             Text(
                 text = """
-                    scale: ${myZoomState.scale}
+                    containerSize: ${myZoomState.containerSize}
+                    contentSize: ${myZoomState.contentSize}
+                    contentOfContainerRect: ${myZoomState.contentOfContainerRect.toShortString()}
+                    scale: ${myZoomState.scale}, ${if (myZoomState.zooming) "zooming" else ""}
                     translation: ${myZoomState.translation.toShortString()}
-                    visibleRect: ${myZoomState.contentVisibleRect.toShortString()}
-                    visibleCenter: ${myZoomState.contentVisibleCenter.toShortString()}
-                    coreVisibleRect: ${myZoomState.coreVisibleRect.toShortString()}
+                    visibleRect: ${myZoomState.visibleRect.toShortString()}
+                    contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                 """.trimIndent(),
                 color = Color.White,
                 fontSize = 13.sp,

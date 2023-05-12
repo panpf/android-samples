@@ -13,11 +13,12 @@ import kotlin.math.absoluteValue
 /**
  * 计算以左上角为缩放中心时位移的边界
  */
-internal fun computeTranslationBoundsWithTopLeftScale(
+internal fun computeTranslationBounds(
     containerSize: Size,
     contentSize: Size,
     scale: Float
 ): Rect {
+    // based on the top left zoom
     if (containerSize.isUnspecified || contentSize.isUnspecified) {
         return Rect(left = 0f, top = 0f, right = 0f, bottom = 0f)
     }
@@ -32,68 +33,66 @@ internal fun computeTranslationBoundsWithTopLeftScale(
     )
 }
 
-/**
- * 计算 content 当前可见的中心坐标，不会超过 content 的范围
- */
-internal fun computeScaledContentVisibleCenter(
+internal fun computeScaleTranslation(
     containerSize: Size,
-    contentSize: Size,
+    translation: Offset,
+    currentScale: Float,
+    newScale: Float,
+    relativelyCentroid: RelativelyCentroid
+): Offset {
+    if (containerSize.isUnspecified) {
+        return Offset.Zero
+    }
+    val newScaledContainerSize = containerSize.times(newScale)
+    val newScaledContentScaleCenter = Offset(
+        x = newScaledContainerSize.width * relativelyCentroid.x,
+        y = newScaledContainerSize.height * relativelyCentroid.y
+    )
+    val scaledContentVisibleCenter =
+        computeScaledVisibleCenter(containerSize, currentScale, translation)
+    return scaledContentVisibleCenter - newScaledContentScaleCenter
+}
+
+/**
+ * 计算当前可见的中心坐标
+ */
+internal fun computeScaledVisibleCenter(
+    containerSize: Size,
     scale: Float,
     translation: Offset
 ): Offset {
-    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+    if (containerSize.isUnspecified) {
         return Offset.Zero
     }
-    val scaledContentSize = contentSize.times(scale)
+    val scaledContainerSize = containerSize.times(scale)
 
     val translationX = translation.x
     val x = if (translationX > 0) {
         (containerSize.width / 2) - translationX
     } else {
         translationX.absoluteValue + (containerSize.width / 2)
-    }.coerceIn(0f..scaledContentSize.width)
+    }.coerceIn(0f..scaledContainerSize.width)
 
     val translationY = translation.y
     val y = if (translationY > 0) {
         (containerSize.height / 2) - translationY
     } else {
         translationY.absoluteValue + (containerSize.height / 2)
-    }.coerceIn(0f..scaledContentSize.height)
+    }.coerceIn(0f..scaledContainerSize.height)
 
     return Offset(x = x, y = y)
 }
 
-internal fun computeContentScaleTranslation(
+internal fun computeScaledVisibleRect(
     containerSize: Size,
-    contentSize: Size,
-    translation: Offset,
-    currentScale: Float,
-    newScale: Float,
-    relativelyCentroid: RelativelyCentroid
-): Offset {
-    if (containerSize.isUnspecified || contentSize.isUnspecified) {
-        return Offset.Zero
-    }
-    val newScaledContentSize = contentSize.times(newScale)
-    val newScaledContentScaleCenter = Offset(
-        x = newScaledContentSize.width * relativelyCentroid.x,
-        y = newScaledContentSize.height * relativelyCentroid.y
-    )
-    val scaledContentVisibleCenter =
-        computeScaledContentVisibleCenter(containerSize, contentSize, currentScale, translation)
-    return scaledContentVisibleCenter - newScaledContentScaleCenter
-}
-
-internal fun computeScaledContentVisibleRectWithTopLeftScale(
-    containerSize: Size,
-    contentSize: Size,
     scale: Float,
     translation: Offset,
 ): Rect {
-    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+    // based on the top left zoom
+    if (containerSize.isUnspecified) {
         return Rect.Zero
     }
-    val scaledContentSize = contentSize.times(scale)
+    val scaledContainerSize = containerSize.times(scale)
     val translationX = translation.x
     val translationY = translation.y
     val left: Float
@@ -117,8 +116,110 @@ internal fun computeScaledContentVisibleRectWithTopLeftScale(
     return Rect(
         left = left.coerceAtLeast(0f),
         top = top.coerceAtLeast(0f),
-        right = right.coerceAtMost(scaledContentSize.width),
-        bottom = bottom.coerceAtMost(scaledContentSize.height)
+        right = right.coerceAtMost(scaledContainerSize.width),
+        bottom = bottom.coerceAtMost(scaledContainerSize.height)
+    )
+}
+
+fun computeScaleFactor(
+    containerSize: Size,
+    contentSize: Size,
+    contentScale: ContentScale = ContentScale.Fit
+): ScaleFactor {
+    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+        return ScaleFactor(scaleX = 1f, scaleY = 1f)
+    }
+    require(contentScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    return contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+}
+
+fun computeScaledContentSize(
+    containerSize: Size,
+    contentSize: Size,
+    contentScale: ContentScale = ContentScale.Fit
+): Size {
+    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+        return Size.Zero
+    }
+    require(contentScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    val scaleFactor =
+        contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+    return contentSize.times(scaleFactor)
+}
+
+fun computeContentOfContainerRect(
+    containerSize: Size,
+    contentSize: Size,
+    contentScale: ContentScale = ContentScale.Fit
+): Rect {
+    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+        return Rect.Zero
+    }
+    require(contentScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+    val scaleFactor =
+        contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+    val scaledContentSize = contentSize.times(scaleFactor)
+    val left = (containerSize.width - scaledContentSize.width) / 2
+    val top = (containerSize.height - scaledContentSize.height) / 2
+    return Rect(
+        left = left,
+        top = top,
+        right = left + scaledContentSize.width,
+        bottom = top + scaledContentSize.height
+    )
+}
+
+fun computeScaledContentVisibleRect(
+    containerSize: Size,
+    visibleRectOfContent: Rect,
+    contentSize: Size,
+    contentScale: ContentScale = ContentScale.Fit,
+): Rect {
+    if (containerSize.isUnspecified || contentSize.isUnspecified) {
+        return Rect.Zero
+    }
+    val contentRectOfContainer = computeContentOfContainerRect(
+        containerSize = containerSize,
+        contentSize = contentSize,
+        contentScale = contentScale
+    )
+    return if (
+        visibleRectOfContent.left >= contentRectOfContainer.right ||
+        visibleRectOfContent.top >= contentRectOfContainer.bottom ||
+        visibleRectOfContent.bottom <= contentRectOfContainer.top ||
+        visibleRectOfContent.right <= contentRectOfContainer.left
+    ) {
+        Rect(0f, 0f, 0f, 0f)
+    } else {
+        val left = (visibleRectOfContent.left - contentRectOfContainer.left).coerceAtLeast(0f)
+        val top = (visibleRectOfContent.top - contentRectOfContainer.top).coerceAtLeast(0f)
+        val right = (visibleRectOfContent.right - contentRectOfContainer.left).coerceAtLeast(0f)
+            .coerceAtMost(contentRectOfContainer.width)
+        val bottom = (visibleRectOfContent.bottom - contentRectOfContainer.top).coerceAtLeast(0f)
+            .coerceAtMost(contentRectOfContainer.height)
+        Rect(left, top, right, bottom)
+    }
+}
+
+/**
+ * 将用户的触摸点转换为 container 上的百分比重心
+ */
+fun computeRelativelyCentroidOfContainerByTouchPosition(
+    containerSize: Size,
+    scale: Float,
+    translation: Offset,
+    touchPosition: Offset
+): RelativelyCentroid {
+    if (containerSize.isUnspecified) {
+        return RelativelyCentroid.Zero
+    }
+    val touchPositionOfContent = Offset(
+        x = touchPosition.x - translation.x,
+        y = touchPosition.y - translation.y,
+    )
+    return RelativelyCentroid(
+        x = ((touchPositionOfContent.x / scale) / containerSize.width).coerceIn(0f, 1f),
+        y = ((touchPositionOfContent.y / scale) / containerSize.height).coerceIn(0f, 1f),
     )
 }
 
@@ -153,104 +254,3 @@ fun Offset.toShortString(): String =
     toString().replace(if (isSpecified) "Offset" else "Offset.", "")
 
 fun Rect.toShortString() = toString().replace("Rect.fromLTRB", "")
-
-fun computeScaleFactor(
-    contentSize: Size,
-    coreSize: Size,
-    coreScale: ContentScale = ContentScale.Fit
-): ScaleFactor {
-    if (contentSize.isUnspecified || coreSize.isUnspecified) {
-        return ScaleFactor(scaleX = 1f, scaleY = 1f)
-    }
-    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
-    return coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
-}
-
-fun computeScaledCoreSize(
-    contentSize: Size,
-    coreSize: Size,
-    coreScale: ContentScale = ContentScale.Fit
-): Size {
-    if (contentSize.isUnspecified || coreSize.isUnspecified) {
-        return Size.Zero
-    }
-    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
-    val scaleFactor = coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
-    return coreSize.times(scaleFactor)
-}
-
-fun computeScaledCoreRectOfContent(
-    contentSize: Size,
-    coreSize: Size,
-    coreScale: ContentScale = ContentScale.Fit
-): Rect {
-    if (contentSize.isUnspecified || coreSize.isUnspecified) {
-        return Rect.Zero
-    }
-    require(coreScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
-    val scaleFactor = coreScale.computeScaleFactor(srcSize = coreSize, dstSize = contentSize)
-    val scaledCoreSize = coreSize.times(scaleFactor)
-    val left = (contentSize.width - scaledCoreSize.width) / 2
-    val top = (contentSize.height - scaledCoreSize.height) / 2
-    return Rect(
-        left = left,
-        top = top,
-        right = left + scaledCoreSize.width,
-        bottom = top + scaledCoreSize.height
-    )
-}
-
-fun computeScaledCoreVisibleRect(
-    contentSize: Size,
-    visibleRectOfContent: Rect,
-    coreSize: Size,
-    coreScale: ContentScale = ContentScale.Fit,
-): Rect {
-    if (contentSize.isUnspecified || coreSize.isUnspecified) {
-        return Rect.Zero
-    }
-    val coreRectOfContent = computeScaledCoreRectOfContent(
-        contentSize = contentSize,
-        coreSize = coreSize,
-        coreScale = coreScale
-    )
-    return if (
-        visibleRectOfContent.left >= coreRectOfContent.right ||
-        visibleRectOfContent.top >= coreRectOfContent.bottom ||
-        visibleRectOfContent.bottom <= coreRectOfContent.top ||
-        visibleRectOfContent.right <= coreRectOfContent.left
-    ) {
-        Rect(0f, 0f, 0f, 0f)
-    } else {
-        val left = (visibleRectOfContent.left - coreRectOfContent.left).coerceAtLeast(0f)
-        val top = (visibleRectOfContent.top - coreRectOfContent.top).coerceAtLeast(0f)
-        val right = (visibleRectOfContent.right - coreRectOfContent.left).coerceAtLeast(0f)
-            .coerceAtMost(coreRectOfContent.width)
-        val bottom = (visibleRectOfContent.bottom - coreRectOfContent.top).coerceAtLeast(0f)
-            .coerceAtMost(coreRectOfContent.height)
-        Rect(left, top, right, bottom)
-    }
-}
-
-/**
- * 将用户的触摸点转换为 content 上的百分比重心
- */
-fun computeRelativelyCentroidOfContentByTouchPosition(
-    containerSize: Size,
-    contentSize: Size,
-    scale: Float,
-    translation: Offset,
-    touchPosition: Offset
-): RelativelyCentroid {
-    if (containerSize.isUnspecified || contentSize.isUnspecified) {
-        return RelativelyCentroid.Zero
-    }
-    val touchPositionOfContent = Offset(
-        x = touchPosition.x - translation.x,
-        y = touchPosition.y - translation.y,
-    )
-    return RelativelyCentroid(
-        x = ((touchPositionOfContent.x / scale) / contentSize.width).coerceIn(0f, 1f),
-        y = ((touchPositionOfContent.y / scale) / contentSize.height).coerceIn(0f, 1f),
-    )
-}

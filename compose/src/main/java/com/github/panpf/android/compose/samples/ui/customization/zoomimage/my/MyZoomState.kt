@@ -58,29 +58,16 @@ class MyZoomState(
                 resetTransformInfos()
             }
         }
-    var coreSize: Size = Size.Unspecified
+    var contentScale: ContentScale = ContentScale.Fit
         internal set(value) {
             val changed = value != field
             field = value
             if (changed) {
-                updateTranslationBounds("coreSizeChanged")
+                updateTranslationBounds("contentScaleChanged")
                 resetFixedInfos()
                 resetTransformInfos()
             }
         }
-    var coreScale: ContentScale = ContentScale.Fit
-        internal set(value) {
-            val changed = value != field
-            field = value
-            if (changed) {
-                updateTranslationBounds("coreScaleChanged")
-                resetFixedInfos()
-                resetTransformInfos()
-            }
-        }
-
-    val zooming: Boolean
-        get() = scale > minScale
 
     /**
      * The current scale value for [MyZoomImage]
@@ -107,22 +94,15 @@ class MyZoomState(
     val translation: Offset
         get() = Offset(_translationX.value, _translationY.value)
 
+    val zooming: Boolean
+        get() = scale > minScale
 
-    var scaledContentVisibleCenter: Offset = Offset.Zero
-        private set
-    var contentVisibleCenter: Offset = Offset.Zero
-        private set
 
-    var scaledContentVisibleRect: Rect = Rect.Zero
+    var visibleRect: Rect = Rect.Zero
         private set
     var contentVisibleRect: Rect = Rect.Zero
         private set
-
-    var coreRectOfContent: Rect = Rect.Zero
-        private set
-    var scaledCoreVisibleRect: Rect = Rect.Zero
-        private set
-    var coreVisibleRect: Rect = Rect.Zero
+    var contentOfContainerRect: Rect = Rect.Zero
         private set
 
     init {
@@ -133,15 +113,13 @@ class MyZoomState(
         newScale: Float,
         relativelyCentroid: RelativelyCentroid = RelativelyCentroid(0.5f, 0.5f)
     ) {
-        val containerSize = contentSize.takeIf { it.isSpecified } ?: return
-        val contentSize = contentSize.takeIf { it.isSpecified } ?: return
+        val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val currentScale = scale
         val finalRelativelyCentroid = if (newScale < currentScale)
             RelativelyCentroid(0.5f, 0.5f) else relativelyCentroid
-        val scaleTranslation = computeContentScaleTranslation(
+        val scaleTranslation = computeScaleTranslation(
             currentScale = currentScale,
             containerSize = containerSize,
-            contentSize = contentSize,
             translation = translation,
             newScale = newScale,
             relativelyCentroid = finalRelativelyCentroid
@@ -172,9 +150,8 @@ class MyZoomState(
                 "snapScaleToByTouchPosition. $currentScale -> $newScale, touchPosition=$touchPosition"
             )
         }
-        val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
+        val relativelyCentroid = computeRelativelyCentroidOfContainerByTouchPosition(
             containerSize = containerSize,
-            contentSize = contentSize,
             scale = scale,
             translation = translation,
             touchPosition = touchPosition
@@ -196,16 +173,14 @@ class MyZoomState(
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
-        val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val currentScale = scale
         val finalRelativelyCentroid = if (newScale < currentScale)
             RelativelyCentroid(0.5f, 0.5f) else relativelyCentroid
         if (newScale > currentScale) {
             updateTranslationBounds("animateScaleToScaling", newScale)
-            val scaleTranslation = computeContentScaleTranslation(
+            val scaleTranslation = computeScaleTranslation(
                 currentScale = currentScale,
                 containerSize = containerSize,
-                contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
                 relativelyCentroid = finalRelativelyCentroid
@@ -273,10 +248,9 @@ class MyZoomState(
                 }
             }
         } else {
-            val translation = computeContentScaleTranslation(
+            val translation = computeScaleTranslation(
                 currentScale = currentScale,
                 containerSize = containerSize,
-                contentSize = contentSize,
                 translation = translation,
                 newScale = newScale,
                 relativelyCentroid = finalRelativelyCentroid
@@ -359,9 +333,8 @@ class MyZoomState(
                 "animateScaleToByTouchPosition. $currentScale -> $newScale, touchPosition=$touchPosition"
             )
         }
-        val relativelyCentroid = computeRelativelyCentroidOfContentByTouchPosition(
+        val relativelyCentroid = computeRelativelyCentroidOfContainerByTouchPosition(
             containerSize = containerSize,
-            contentSize = contentSize,
             scale = scale,
             translation = translation,
             touchPosition = touchPosition
@@ -595,62 +568,48 @@ class MyZoomState(
         "MyZoomState(minScale=$minScale, maxScale=$maxScale, scale=$scale, translation=$translation"
 
     private fun updateTranslationBounds(caller: String, newScale: Float? = null) {
-        // todo 使用 coreSize
-        val newScale = newScale ?: scale
-        val bounds = computeTranslationBoundsWithTopLeftScale(containerSize, contentSize, newScale)
+        val finalScale = newScale ?: scale
+        val contentSize = containerSize // todo 使用 contentSize
+        val bounds = computeTranslationBounds(containerSize, containerSize, finalScale)
         _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
         _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         if (debugMode) {
             Log.d(
                 "MyZoomState",
-                "updateTranslationBounds. $caller. bounds=$bounds, containerSize=$containerSize, contentSize=${contentSize}, scale=$newScale"
+                "updateTranslationBounds. $caller. bounds=$bounds, containerSize=$containerSize, contentSize=${contentSize}, scale=$finalScale"
             )
         }
     }
 
     private fun resetFixedInfos() {
-        coreRectOfContent = computeScaledCoreRectOfContent(
+        contentOfContainerRect = computeContentOfContainerRect(
+            containerSize = containerSize,
             contentSize = contentSize,
-            coreSize = coreSize,
-            coreScale = coreScale
+            contentScale = contentScale
         )
     }
 
     private fun resetTransformInfos() {
-        scaledContentVisibleCenter = computeScaledContentVisibleCenter(
+        val scaledVisibleRect = computeScaledVisibleRect(
             containerSize = containerSize,
-            contentSize = contentSize,
             scale = scale,
             translation = translation
         )
-        contentVisibleCenter = scaledContentVisibleCenter / scale
+        val scale = scale
+        visibleRect = scaledVisibleRect.restoreScale(scale)
 
-        scaledContentVisibleRect = computeScaledContentVisibleRectWithTopLeftScale(
+        val scaledContentVisibleRect = computeScaledContentVisibleRect(
+            containerSize = containerSize,
+            visibleRectOfContent = visibleRect,
+            contentSize = contentSize,
+            contentScale = contentScale,
+        )
+        val contentScaleFactor = computeScaleFactor(
             containerSize = containerSize,
             contentSize = contentSize,
-            scale = scale,
-            translation = translation
+            contentScale = contentScale
         )
-        contentVisibleRect = scaledContentVisibleRect.restoreScale(scale)
-
-        scaledCoreVisibleRect = computeScaledCoreVisibleRect(
-            contentSize = contentSize,
-            visibleRectOfContent = contentVisibleRect,
-            coreSize = coreSize,
-            coreScale = coreScale,
-        )
-
-        val coreScaleFactor = computeScaleFactor(
-            contentSize = contentSize,
-            coreSize = coreSize,
-            coreScale = coreScale
-        )
-        coreVisibleRect = computeScaledCoreVisibleRect(
-            contentSize = contentSize,
-            visibleRectOfContent = contentVisibleRect,
-            coreSize = coreSize,
-            coreScale = coreScale,
-        ).restoreScale(coreScaleFactor)
+        contentVisibleRect = scaledContentVisibleRect.restoreScale(contentScaleFactor)
     }
 
     companion object {
