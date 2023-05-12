@@ -3,6 +3,7 @@ package com.github.panpf.android.compose.samples.test
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.ContentScale
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.RelativelyCentroid
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeRelativelyCentroidOfContainerByTouchPosition
@@ -16,80 +17,92 @@ import org.junit.runner.RunWith
 class ZoomUtilsTest {
 
     @Test
-    fun testComputeTranslationBoundsWithTopLeftScale() {
-        val unspecifiedSize = Size.Unspecified
-        val containerSize = Size(1080f, 1920f)
-        val contentSize = Size(1080f, 1920f)
-        val realContentSize = Size(1080f, 720f)
-
+    fun testComputeTranslationBounds() {
+        var containerSize = Size(1080f, 1920f)
+        var contentSize = Size(1080f, 1920f)
+        var contentScale = ContentScale.Fit
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$contentSize, scale=0.5f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=0.5f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, contentSize, scale = 0.5f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 0.5f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$contentSize, scale=1f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=1f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, contentSize, scale = 1f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 1f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$contentSize, scale=2f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=2f",
             Rect(-1080f, -1920f, 0f, 0f),
-            computeTranslationBounds(containerSize, contentSize, scale = 2f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 2f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$contentSize, scale=3f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=3f",
             Rect(-2160f, -3840f, 0f, 0f),
-            computeTranslationBounds(containerSize, contentSize, scale = 3f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 3f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$contentSize, scale=4f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=4f",
             Rect(-3240f, -5760f, 0f, 0f),
-            computeTranslationBounds(containerSize, contentSize, scale = 4f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 4f)
         )
 
-        /* realContentSize */
+        /* contentSize small */ // todo contentSize
+        containerSize = Size(1080f, 1920f)
+        contentSize = Size(1080f, 720f)
+        contentScale = ContentScale.Fit
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$realContentSize, scale=0.5f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=0.5f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, realContentSize, scale = 0.5f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 0.5f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$realContentSize, scale=1f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=1f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, realContentSize, scale = 1f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 1f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$realContentSize, scale=2f",
-            Rect(-1080f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, realContentSize, scale = 2f)
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=2f",
+            Rect(-1080f, -1920f, 0f, 0f),
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 2f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$realContentSize, scale=3f",
-            Rect(-2160f, -240f, 0f, 0f),
-            computeTranslationBounds(containerSize, realContentSize, scale = 3f)
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=3f",
+            Rect(-2160f, -3840f, 0f, 0f),
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 3f)
         )
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$realContentSize, scale=4f",
-            Rect(-3240f, -960f, 0f, 0f),
-            computeTranslationBounds(containerSize, realContentSize, scale = 4f)
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=4f",
+            Rect(-3240f, -5760f, 0f, 0f),
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 4f)
         )
+
+        // todo scale
 
         /* unspecifiedSize */
+        containerSize = Size.Unspecified
+        contentSize = Size(1080f, 1920f)
+        contentScale = ContentScale.Fit
         Assert.assertEquals(
-            "containerSize=$unspecifiedSize, contentSize=$contentSize, scale=2f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=2f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(unspecifiedSize, contentSize, scale = 2f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 2f)
         )
+        containerSize = Size(1080f, 1920f)
+        contentSize = Size.Unspecified
+        contentScale = ContentScale.Fit
         Assert.assertEquals(
-            "containerSize=$containerSize, contentSize=$unspecifiedSize, scale=2f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=2f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(containerSize, unspecifiedSize, scale = 2f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 2f)
         )
+        containerSize = Size.Unspecified
+        contentSize = Size.Unspecified
+        contentScale = ContentScale.Fit
         Assert.assertEquals(
-            "containerSize=$unspecifiedSize, contentSize=$unspecifiedSize, scale=2f",
+            "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=2f",
             Rect(0f, 0f, 0f, 0f),
-            computeTranslationBounds(unspecifiedSize, unspecifiedSize, scale = 2f)
+            computeTranslationBounds(containerSize, contentSize, contentScale, scale = 2f)
         )
     }
 

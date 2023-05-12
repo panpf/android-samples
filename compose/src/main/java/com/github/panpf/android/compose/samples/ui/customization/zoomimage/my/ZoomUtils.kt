@@ -10,27 +10,65 @@ import androidx.compose.ui.layout.ScaleFactor
 import androidx.compose.ui.layout.times
 import kotlin.math.absoluteValue
 
-/**
- * 计算以左上角为缩放中心时位移的边界
- */
 internal fun computeTranslationBounds(
     containerSize: Size,
     contentSize: Size,
+    contentScale: ContentScale,
     scale: Float
 ): Rect {
     // based on the top left zoom
-    if (containerSize.isUnspecified || contentSize.isUnspecified) {
-        return Rect(left = 0f, top = 0f, right = 0f, bottom = 0f)
+    if (scale <= 1.0f || containerSize.isUnspecified || contentSize.isUnspecified) {
+        return Rect.Zero
     }
-    val scaledContentSize = contentSize.times(scale)
-    return Rect(
-        left = if (scaledContentSize.width > containerSize.width)
-            -(scaledContentSize.width - containerSize.width) else 0f,
-        top = if (scaledContentSize.height > containerSize.height)
-            -(scaledContentSize.height - containerSize.height) else 0f,
+    val scaledContainerSize = containerSize.times(scale)
+    val defaultBounds = Rect(
+        left = if (scaledContainerSize.width > containerSize.width)
+            -(scaledContainerSize.width - containerSize.width) else 0f,
+        top = if (scaledContainerSize.height > containerSize.height)
+            -(scaledContainerSize.height - containerSize.height) else 0f,
         right = 0f,
         bottom = 0f
     )
+//    val scaleFactor =
+//        contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+//    val scaledContentSize = contentSize.times(scaleFactor)
+//    val scaledScaledContentSize = scaledContentSize.times(scale)
+//    val finalContentWidth = scaledScaledContentSize.width.coerceAtMost(scaledContainerSize.width)
+    when (contentScale) {
+        ContentScale.Crop -> {    // todo support
+            return defaultBounds
+        }
+
+        ContentScale.Fit -> {    // todo support
+            return defaultBounds
+//            return Rect(
+//                left = if (scaledContainerSize.width > containerSize.width)
+//                    -(scaledContainerSize.width - (containerSize.width - scaledContentSize.width) / 2) else 0f,
+//                top = if (scaledContainerSize.height > containerSize.height)
+//                    -(scaledContainerSize.height - (containerSize.height - scaledContentSize.height) / 2) else 0f,
+//                right = 0f,
+//                bottom = 0f
+//            )
+        }
+
+        ContentScale.FillHeight -> {    // todo support
+            return defaultBounds
+        }
+
+        ContentScale.FillWidth -> {    // todo support
+            return defaultBounds
+        }
+
+        ContentScale.Inside -> {    // todo support
+            return defaultBounds
+        }
+
+        ContentScale.FillBounds -> {    // todo support
+            return defaultBounds
+        }
+
+        else -> return defaultBounds
+    }
 }
 
 internal fun computeScaleTranslation(

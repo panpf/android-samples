@@ -36,6 +36,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -181,23 +182,30 @@ private fun MyZoomImageSample() {
             state = myZoomState,
         )
 
-        Column(Modifier.padding(10.dp)) {
+        Column {
+            val expandedState = remember { mutableStateOf(false) }
             Text(
                 text = """
+                    scale: ${myZoomState.scale}, ${if (myZoomState.zooming) "zooming" else ""}
+                    translation: ${myZoomState.translation.toShortString()}
+                    translationBounds: ${myZoomState.translationBounds.toShortString()}
+                    visibleRect: ${myZoomState.visibleRect.toShortString()}
+                    contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                     containerSize: ${myZoomState.containerSize}
                     contentSize: ${myZoomState.contentSize}
                     contentOfContainerRect: ${myZoomState.contentOfContainerRect.toShortString()}
-                    scale: ${myZoomState.scale}, ${if (myZoomState.zooming) "zooming" else ""}
-                    translation: ${myZoomState.translation.toShortString()}
-                    visibleRect: ${myZoomState.visibleRect.toShortString()}
-                    contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                 """.trimIndent(),
                 color = Color.White,
                 fontSize = 13.sp,
                 lineHeight = 16.sp,
                 style = LocalTextStyle.current.copy(
-                    shadow = Shadow(offset = Offset(4f, 4f), blurRadius = 2f),
-                )
+                    shadow = Shadow(offset = Offset(1f, 1f), blurRadius = 4f),
+                ),
+                maxLines = if (expandedState.value) Int.MAX_VALUE else 5,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .clickable { expandedState.value = !expandedState.value }
+                    .padding(10.dp)
             )
         }
 

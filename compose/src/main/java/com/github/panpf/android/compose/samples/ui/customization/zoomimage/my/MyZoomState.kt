@@ -104,6 +104,8 @@ class MyZoomState(
         private set
     var contentOfContainerRect: Rect = Rect.Zero
         private set
+    var translationBounds: Rect = Rect.Zero
+        private set
 
     init {
         require(minScale < maxScale) { "minScale must be < maxScale" }
@@ -569,8 +571,16 @@ class MyZoomState(
 
     private fun updateTranslationBounds(caller: String, newScale: Float? = null) {
         val finalScale = newScale ?: scale
-        val contentSize = containerSize // todo 使用 contentSize
-        val bounds = computeTranslationBounds(containerSize, containerSize, finalScale)
+        val containerSize = containerSize
+        val contentSize = contentSize
+        val contentScale = contentScale
+        val bounds = computeTranslationBounds(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            scale = finalScale
+        )
+        this.translationBounds = bounds
         _translationX.updateBounds(lowerBound = bounds.left, upperBound = bounds.right)
         _translationY.updateBounds(lowerBound = bounds.top, upperBound = bounds.bottom)
         if (debugMode) {
