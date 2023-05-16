@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.sketch.compose.AsyncImage
 import com.github.panpf.sketch.fetch.newAppIconUri
+import com.github.panpf.sketch.request.DisplayRequest
 
 class AsyncImageListSketchFragment : Material3ComposeAppBarFragment() {
 
@@ -55,7 +57,9 @@ private fun AppItem(app: App) {
         val (icon, name, versionName) = createRefs()
 
         AsyncImage(
-            imageUri = appIconUri,
+            request = DisplayRequest(LocalContext.current, appIconUri) {
+                placeholder(R.drawable.im_placeholder)
+            },
             contentDescription = "app icon",
             modifier = Modifier
                 .size(50.dp)
@@ -64,9 +68,7 @@ private fun AppItem(app: App) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                 }
-        ) {
-            placeholder(R.drawable.im_placeholder)
-        }
+        )
 
         Text(
             text = app.name,
