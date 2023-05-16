@@ -2,7 +2,9 @@ package com.github.panpf.android.compose.samples.ui.image
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -15,9 +17,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.panpf.android.compose.samples.R
@@ -93,7 +105,8 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                 )
             }
 
@@ -106,7 +119,8 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                 )
             }
 
@@ -119,7 +133,8 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                 )
             }
         }
@@ -137,8 +152,92 @@ private fun SketchAsyncImageSamplePreview() {
 @Composable
 private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    val photo = horPhoto
+    val horSmall = horPhoto
+    val verSmall = verPhoto
+    val horImageSelected = remember { mutableStateOf(true) }
+    val image = if (horImageSelected.value) horSmall else verSmall
+    val contentScaleMenuExpanded = remember { mutableStateOf(false) }
+    val selectedContentScaleIndex = remember { mutableStateOf(2) }
+    val contentScales = remember {
+        listOf(
+            ContentScale.Fit to "Fit",
+            ContentScale.Crop to "Crop",
+            ContentScale.Inside to "Inside",
+            ContentScale.FillWidth to "FillWidth",
+            ContentScale.FillHeight to "FillHeight",
+            ContentScale.FillBounds to "FillBounds",
+            ContentScale.None to "None",
+        )
+    }
+    val selectedContentScale = contentScales[selectedContentScaleIndex.value]
     ExpandableItem3(title = "SketchAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.clickable { horImageSelected.value = !horImageSelected.value },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = horImageSelected.value,
+                    onClick = { horImageSelected.value = !horImageSelected.value })
+                Text(text = "横图")
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Row(
+                modifier = Modifier.clickable { horImageSelected.value = !horImageSelected.value },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = !horImageSelected.value,
+                    onClick = { horImageSelected.value = !horImageSelected.value })
+                Text(text = "竖图")
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Box(modifier = Modifier.weight(1f)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                        },
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "ContentScale\n${selectedContentScale.second}",
+                        textAlign = TextAlign.End
+                    )
+                    val icon = if (contentScaleMenuExpanded.value) {
+                        Icons.Filled.KeyboardArrowUp
+                    } else {
+                        Icons.Filled.KeyboardArrowDown
+                    }
+                    Icon(imageVector = icon, contentDescription = "")
+                }
+                DropdownMenu(
+                    expanded = contentScaleMenuExpanded.value,
+                    onDismissRequest = {
+                        contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                    },
+                ) {
+                    contentScales.forEachIndexed { index, pair ->
+                        if (index > 0) {
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 14.dp)
+                            )
+                        }
+                        DropdownMenuItem(onClick = {
+                            selectedContentScaleIndex.value = index
+                            contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                        }) {
+                            Text(text = pair.second)
+                        }
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
         VerticalGrid(
             columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -151,21 +250,21 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 Alignment.CenterStart to "CenterStart",
                 Alignment.Center to "Center",
                 Alignment.CenterEnd to "CenterEnd",
-                Alignment.BottomStart to "BottomStart",
-                Alignment.BottomCenter to "BottomCenter",
-                Alignment.BottomEnd to "BottomEnd",
+                Alignment.BottomStart to "Bottom\nStart",
+                Alignment.BottomCenter to "Bottom\nCenter",
+                Alignment.BottomEnd to "Bottom\nEnd",
             ).forEach { alignment ->
                 BoxWithConstraints {
                     val viewSize = maxWidth
                     val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
-                    val targetSize = photo.calculateTargetSize(viewSizePx.toInt(), false)
+                    val targetSize = image.calculateTargetSize(viewSizePx.toInt(), false)
                     Column {
                         Text(
                             text = alignment.second,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         AsyncImage(
-                            request = DisplayRequest(context, newResourceUri(photo.resId)) {
+                            request = DisplayRequest(context, newResourceUri(image.resId)) {
                                 placeholder(R.drawable.im_placeholder)
                                 resize(
                                     targetSize.width.toInt(),
@@ -178,7 +277,7 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                                 .size(viewSize)
                                 .background(MaterialTheme.colorScheme.primaryContainer)
                                 .padding(2.dp),
-                            contentScale = ContentScale.None,
+                            contentScale = selectedContentScale.first,
                             alignment = alignment.first,
                         )
                     }
@@ -202,11 +301,11 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val scales = remember {
         listOf(
             ContentScale.Fit to "Fit",
-            ContentScale.FillBounds to "FillBounds",
-            ContentScale.FillWidth to "FillWidth",
-            ContentScale.FillHeight to "FillHeight",
             ContentScale.Crop to "Crop",
             ContentScale.Inside to "Inside",
+            ContentScale.FillWidth to "FillWidth",
+            ContentScale.FillHeight to "FillHeight",
+            ContentScale.FillBounds to "FillBounds",
             ContentScale.None to "None",
         )
     }
