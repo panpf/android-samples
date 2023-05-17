@@ -45,6 +45,7 @@ fun MyZoomImage(
                 state = state,
                 painter = painter,
                 contentScale = contentScale,
+                alignment = alignment,
                 scaleAnimationConfig = scaleAnimationConfig
             )
         ),
@@ -70,6 +71,7 @@ private fun Modifier.createZoomModifier(
     state: MyZoomState,
     painter: Painter,
     contentScale: ContentScale,
+    alignment: Alignment,
     scaleAnimationConfig: ScaleAnimationConfig = ScaleAnimationConfig()
 ): Modifier = composed {
     // todo compat viewpager
@@ -78,9 +80,12 @@ private fun Modifier.createZoomModifier(
 //    val transformableEnabledState = remember { mutableStateOf(false) }
     Modifier
         .onSizeChanged {
-            state.containerSize = it.toSize()
-            state.contentSize = painter.intrinsicSize
-            state.contentScale = contentScale
+            state.init(
+                containerSize = it.toSize(),
+                contentSize = painter.intrinsicSize,
+                contentScale = contentScale,
+                contentAlignment = alignment
+            )
         }
         .pointerInput(scaleAnimationConfig) {
             detectTapGestures(onDoubleTap = { offset ->
@@ -163,8 +168,8 @@ private fun Modifier.createZoomModifier(
         .graphicsLayer {
             scaleX = state.scale
             scaleY = state.scale
-            translationX = state.translationX
-            translationY = state.translationY
+            translationX = state.translation.x
+            translationY = state.translation.y
             transformOrigin = state.transformOrigin
         }
 //        .rotate(0f)// todo rotation

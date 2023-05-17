@@ -205,7 +205,7 @@ private fun MyZoomImageSample() {
                 text = """
                     scale: ${myZoomState.scale}, ${if (myZoomState.zooming) "zooming" else ""}
                     translation: ${myZoomState.translation.toShortString()}
-                    translationBounds: ${myZoomState.translationBounds.toShortString()}
+                    translationBounds: ${myZoomState.translationBounds?.toShortString()}
                     visibleRect: ${myZoomState.visibleRect.toShortString()}
                     contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                     containerSize: ${myZoomState.containerSize}
