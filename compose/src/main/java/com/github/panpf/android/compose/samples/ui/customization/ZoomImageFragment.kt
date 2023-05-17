@@ -169,6 +169,7 @@ private fun MyZoomImageSample() {
     val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(false) }
     val contentScaleState = remember { mutableStateOf(ContentScale.Fit) }
+    val alignmentState = remember { mutableStateOf(Alignment.Center) }
     val animationDurationMillisState = remember(slowerScaleAnimationState.value) {
         mutableStateOf(if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis)
     }
@@ -184,6 +185,7 @@ private fun MyZoomImageSample() {
             painter = painterResource(id = imageIdState.value),
             contentDescription = "",
             contentScale = contentScaleState.value,
+            alignment = alignmentState.value,
             modifier = Modifier.fillMaxSize(),
             state = myZoomState,
             scaleAnimationConfig = ScaleAnimationConfig(
@@ -273,6 +275,7 @@ private fun MyZoomImageSample() {
                 settingsDialogState = settingsDialogState,
                 horImageSelectedState = horImageSelectedState,
                 contentScaleState = contentScaleState,
+                alignmentState = alignmentState,
             ) {
                 settingsDialogState.value = false
             }
@@ -293,6 +296,7 @@ private fun SettingsDialog(
     settingsDialogState: MutableState<Boolean>,
     horImageSelectedState: MutableState<Boolean>,
     contentScaleState: MutableState<ContentScale>,
+    alignmentState: MutableState<Alignment>,
     onDismissRequest: () -> Unit
 ) {
     val contentScaleMenuExpanded = remember { mutableStateOf(false) }
@@ -307,11 +311,26 @@ private fun SettingsDialog(
             ContentScale.None,
         )
     }
+    val alignmentMenuExpanded = remember { mutableStateOf(false) }
+    val alignments = remember {
+        listOf(
+            Alignment.TopStart,
+            Alignment.TopCenter,
+            Alignment.TopEnd,
+            Alignment.CenterStart,
+            Alignment.Center,
+            Alignment.CenterEnd,
+            Alignment.BottomStart,
+            Alignment.BottomCenter,
+            Alignment.BottomEnd,
+        )
+    }
     Dialog(onDismissRequest) {
         Column(
             Modifier
                 .fillMaxWidth()
                 .background(Color.White, shape = RoundedCornerShape(20.dp))
+                .padding(vertical = 10.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -398,6 +417,43 @@ private fun SettingsDialog(
                     .fillMaxWidth()
                     .height(50.dp)
                     .clickable {
+                        alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                    }
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Alignment", modifier = Modifier.weight(1f))
+                Text(text = alignmentState.value.name)
+                DropdownMenu(
+                    expanded = alignmentMenuExpanded.value,
+                    onDismissRequest = {
+                        alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                    },
+                ) {
+                    alignments.forEachIndexed { index, alignment ->
+                        if (index > 0) {
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 14.dp)
+                            )
+                        }
+                        DropdownMenuItem(onClick = {
+                            alignmentState.value = alignment
+                            alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                            settingsDialogState.value = false
+                        }) {
+                            Text(text = alignment.name)
+                        }
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .clickable {
                         closeScaleAnimationState.value = !closeScaleAnimationState.value
                         settingsDialogState.value = false
                     }
@@ -445,13 +501,15 @@ private fun SettingsDialogPreview() {
     val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(true) }
     val horImageSelectedState = remember { mutableStateOf(true) }
-    val selectedContentScaleState = remember { mutableStateOf(ContentScale.Fit) }
+    val contentScaleState = remember { mutableStateOf(ContentScale.Fit) }
+    val alignmentState = remember { mutableStateOf(Alignment.Center) }
     SettingsDialog(
         closeScaleAnimationState = closeScaleAnimationState,
         slowerScaleAnimationState = slowerScaleAnimationState,
         settingsDialogState = settingsDialogState,
         horImageSelectedState = horImageSelectedState,
-        contentScaleState = selectedContentScaleState,
+        contentScaleState = contentScaleState,
+        alignmentState = alignmentState,
     ) {
         settingsDialogState.value = false
     }

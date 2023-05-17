@@ -124,6 +124,7 @@ class MyZoomState(
         animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
+        // todo newScaleCentroid 改成 newScaleContentCentroid，中心点只能是在 Content 里面
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale

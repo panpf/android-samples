@@ -196,9 +196,6 @@ fun computeContentOfContainerRect(
     contentAlignment: Alignment,
 ): Rect {
     if (containerSize.isUnspecified || contentSize.isUnspecified) return Rect.Zero
-//    if (contentScale == ContentScale.Crop || contentScale == ContentScale.FillBounds) {
-//        return Rect(0f, 0f, containerSize.width, containerSize.height)
-//    }
     val scaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
     val scaledContentSize = contentSize.times(scaleFactor)
@@ -326,13 +323,13 @@ fun computeScaleCentroidByTouchPosition(
     touchPosition: Offset
 ): Centroid {
     if (containerSize.isUnspecified) return Centroid.Zero
-    val touchPositionOfContent = Offset(
+    val touchPositionOfContainer = Offset(
         x = touchPosition.x - translation.x,
         y = touchPosition.y - translation.y,
     )
     return Centroid(
-        x = ((touchPositionOfContent.x / scale) / containerSize.width).coerceIn(0f, 1f),
-        y = ((touchPositionOfContent.y / scale) / containerSize.height).coerceIn(0f, 1f),
+        x = ((touchPositionOfContainer.x / scale) / containerSize.width).coerceIn(0f, 1f),
+        y = ((touchPositionOfContainer.y / scale) / containerSize.height).coerceIn(0f, 1f),
     )
 }
 
