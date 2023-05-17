@@ -11,15 +11,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -35,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
@@ -154,9 +161,14 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
 private fun MyZoomImageSample() {
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
-    val animateDoubleTapScaleState = remember { mutableStateOf(true) }
+    val horImageSelectedState = remember { mutableStateOf(true) }
+    val imageIdState = remember(horImageSelectedState.value) {
+        mutableStateOf(if (horImageSelectedState.value) R.drawable.dog_hor else R.drawable.dog_ver)
+    }
+    val closeScaleAnimationState = remember { mutableStateOf(false) }
     val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(false) }
+    val contentScaleState = remember { mutableStateOf(ContentScale.Fit) }
     val animationDurationMillisState = remember(slowerScaleAnimationState.value) {
         mutableStateOf(if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis)
     }
@@ -169,22 +181,22 @@ private fun MyZoomImageSample() {
             }
         }
         MyZoomImage(
-            painter = painterResource(id = R.drawable.dog_hor),
+            painter = painterResource(id = imageIdState.value),
             contentDescription = "",
+            contentScale = contentScaleState.value,
             modifier = Modifier.fillMaxSize(),
             state = myZoomState,
             scaleAnimationConfig = ScaleAnimationConfig(
-                animateDoubleTapScale = animateDoubleTapScaleState.value,
+                animateDoubleTapScale = !closeScaleAnimationState.value,
                 animationDurationMillis = animationDurationMillisState.value,
             ),
         )
 
         MyZoomVisibleRectImage(
-            painter = painterResource(id = R.drawable.dog_hor),
-            modifier = Modifier.align(Alignment.BottomStart),
+            painter = painterResource(id = imageIdState.value),
             state = myZoomState,
-            animateScaleState = animateDoubleTapScaleState,
-            animationDurationMillisState = animationDurationMillisState,
+            animateScale = !closeScaleAnimationState.value,
+            animationDurationMillis = animationDurationMillisState.value,
         )
 
         Column {
@@ -225,7 +237,7 @@ private fun MyZoomImageSample() {
                 onClick = {
                     coroutineScope.launch {
                         val newScale = myZoomState.nextScale()
-                        if (animateDoubleTapScaleState.value) {
+                        if (!closeScaleAnimationState.value) {
                             myZoomState.animateScaleTo(newScale = newScale)
                         } else {
                             myZoomState.snapScaleTo(newScale = newScale)
@@ -255,7 +267,13 @@ private fun MyZoomImageSample() {
         }
 
         if (settingsDialogState.value) {
-            SettingsDialog(animateDoubleTapScaleState, slowerScaleAnimationState) {
+            SettingsDialog(
+                closeScaleAnimationState = closeScaleAnimationState,
+                slowerScaleAnimationState = slowerScaleAnimationState,
+                settingsDialogState = settingsDialogState,
+                horImageSelectedState = horImageSelectedState,
+                contentScaleState = contentScaleState,
+            ) {
                 settingsDialogState.value = false
             }
         }
@@ -270,40 +288,139 @@ private fun MyZoomImageSamplePreview() {
 
 @Composable
 private fun SettingsDialog(
-    animateDoubleTapScaleState: MutableState<Boolean>,
+    closeScaleAnimationState: MutableState<Boolean>,
     slowerScaleAnimationState: MutableState<Boolean>,
+    settingsDialogState: MutableState<Boolean>,
+    horImageSelectedState: MutableState<Boolean>,
+    contentScaleState: MutableState<ContentScale>,
     onDismissRequest: () -> Unit
 ) {
+    val contentScaleMenuExpanded = remember { mutableStateOf(false) }
+    val contentScales = remember {
+        listOf(
+            ContentScale.Fit,
+            ContentScale.Crop,
+            ContentScale.Inside,
+            ContentScale.FillWidth,
+            ContentScale.FillHeight,
+            ContentScale.FillBounds,
+            ContentScale.None,
+        )
+    }
     Dialog(onDismissRequest) {
         Column(
             Modifier
                 .fillMaxWidth()
                 .background(Color.White, shape = RoundedCornerShape(20.dp))
-                .padding(vertical = 20.dp)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(50.dp)
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "图片", modifier = Modifier.weight(1f))
+                Row {
+                    Row(
+                        modifier = Modifier.clickable {
+                            horImageSelectedState.value = !horImageSelectedState.value
+                            settingsDialogState.value = false
+                        },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = horImageSelectedState.value,
+                            onClick = {
+                                horImageSelectedState.value = !horImageSelectedState.value
+                                settingsDialogState.value = false
+                            })
+                        Text(text = "横图")
+                    }
+                    Spacer(modifier = Modifier.size(20.dp))
+                    Row(
+                        modifier = Modifier.clickable {
+                            horImageSelectedState.value = !horImageSelectedState.value
+                            settingsDialogState.value = false
+                        },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = !horImageSelectedState.value,
+                            onClick = {
+                                horImageSelectedState.value = !horImageSelectedState.value
+                                settingsDialogState.value = false
+                            })
+                        Text(text = "竖图")
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
                     .clickable {
-                        animateDoubleTapScaleState.value = !animateDoubleTapScaleState.value
+                        contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
                     }
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "开启缩放动画", modifier = Modifier.weight(1f))
-                Checkbox(
-                    checked = animateDoubleTapScaleState.value,
-                    onCheckedChange = {
-                        animateDoubleTapScaleState.value = !animateDoubleTapScaleState.value
+                Text(text = "ContentScale", modifier = Modifier.weight(1f))
+                Text(text = contentScaleState.value.name)
+                DropdownMenu(
+                    expanded = contentScaleMenuExpanded.value,
+                    onDismissRequest = {
+                        contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                    },
+                ) {
+                    contentScales.forEachIndexed { index, contentScale ->
+                        if (index > 0) {
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 14.dp)
+                            )
+                        }
+                        DropdownMenuItem(onClick = {
+                            contentScaleState.value = contentScale
+                            contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                            settingsDialogState.value = false
+                        }) {
+                            Text(text = contentScale.name)
+                        }
                     }
-                )
+                }
             }
-            Spacer(modifier = Modifier.size(10.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(50.dp)
+                    .clickable {
+                        closeScaleAnimationState.value = !closeScaleAnimationState.value
+                        settingsDialogState.value = false
+                    }
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "关闭缩放动画", modifier = Modifier.weight(1f))
+                Checkbox(
+                    checked = closeScaleAnimationState.value,
+                    onCheckedChange = {
+                        closeScaleAnimationState.value = !closeScaleAnimationState.value
+                        settingsDialogState.value = false
+                    }
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
                     .clickable {
                         slowerScaleAnimationState.value = !slowerScaleAnimationState.value
+                        settingsDialogState.value = false
                     }
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -313,9 +430,29 @@ private fun SettingsDialog(
                     checked = slowerScaleAnimationState.value,
                     onCheckedChange = {
                         slowerScaleAnimationState.value = !slowerScaleAnimationState.value
+                        settingsDialogState.value = false
                     }
                 )
             }
         }
+    }
+}
+
+@Composable
+@Preview
+private fun SettingsDialogPreview() {
+    val closeScaleAnimationState = remember { mutableStateOf(false) }
+    val slowerScaleAnimationState = remember { mutableStateOf(false) }
+    val settingsDialogState = remember { mutableStateOf(true) }
+    val horImageSelectedState = remember { mutableStateOf(true) }
+    val selectedContentScaleState = remember { mutableStateOf(ContentScale.Fit) }
+    SettingsDialog(
+        closeScaleAnimationState = closeScaleAnimationState,
+        slowerScaleAnimationState = slowerScaleAnimationState,
+        settingsDialogState = settingsDialogState,
+        horImageSelectedState = horImageSelectedState,
+        contentScaleState = selectedContentScaleState,
+    ) {
+        settingsDialogState.value = false
     }
 }

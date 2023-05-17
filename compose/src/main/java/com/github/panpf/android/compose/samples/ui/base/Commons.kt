@@ -176,6 +176,11 @@ fun Dp.toPx(): Float {
     return with(LocalDensity.current) { this@toPx.toPx() }
 }
 
+@Composable
+fun Float.toDp(): Dp {
+    return with(LocalDensity.current) { this@toDp.toDp() }
+}
+
 fun computePentagramPath(size: Size): Path {
     val centerPoint = Offset(size.width / 2, size.height / 2)
     val radius = min(centerPoint.x, centerPoint.y)
