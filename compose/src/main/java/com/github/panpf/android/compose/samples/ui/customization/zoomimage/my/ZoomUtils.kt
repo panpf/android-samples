@@ -193,20 +193,73 @@ fun computeContentOfContainerRect(
     containerSize: Size,
     contentSize: Size,
     contentScale: ContentScale,
-    contentAlignment: Alignment,    // todo support
+    contentAlignment: Alignment,
 ): Rect {
     if (containerSize.isUnspecified || contentSize.isUnspecified) return Rect.Zero
-    require(contentScale == ContentScale.Fit)   // todo 暂时只支持 ContentScale.Fit
+//    if (contentScale == ContentScale.Crop || contentScale == ContentScale.FillBounds) {
+//        return Rect(0f, 0f, containerSize.width, containerSize.height)
+//    }
     val scaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
     val scaledContentSize = contentSize.times(scaleFactor)
-    val left = (containerSize.width - scaledContentSize.width) / 2
-    val top = (containerSize.height - scaledContentSize.height) / 2
+    val left: Float
+    val top: Float
+    when (contentAlignment) {
+        Alignment.TopStart -> {
+            left = 0f
+            top = 0f
+        }
+
+        Alignment.TopCenter -> {
+            left = (containerSize.width - scaledContentSize.width) / 2
+            top = 0f
+        }
+
+        Alignment.TopEnd -> {
+            left = containerSize.width - scaledContentSize.width
+            top = 0f
+        }
+
+        Alignment.CenterStart -> {
+            left = 0f
+            top = (containerSize.height - scaledContentSize.height) / 2
+        }
+
+        Alignment.Center -> {
+            left = (containerSize.width - scaledContentSize.width) / 2
+            top = (containerSize.height - scaledContentSize.height) / 2
+        }
+
+        Alignment.CenterEnd -> {
+            left = containerSize.width - scaledContentSize.width
+            top = (containerSize.height - scaledContentSize.height) / 2
+        }
+
+        Alignment.BottomStart -> {
+            left = 0f
+            top = containerSize.height - scaledContentSize.height
+        }
+
+        Alignment.BottomCenter -> {
+            left = (containerSize.width - scaledContentSize.width) / 2
+            top = containerSize.height - scaledContentSize.height
+        }
+
+        Alignment.BottomEnd -> {
+            left = containerSize.width - scaledContentSize.width
+            top = containerSize.height - scaledContentSize.height
+        }
+
+        else -> {
+            left = 0f
+            top = 0f
+        }
+    }
     return Rect(
-        left = left,
-        top = top,
-        right = left + scaledContentSize.width,
-        bottom = top + scaledContentSize.height
+        left = left.coerceAtLeast(0f),
+        top = top.coerceAtLeast(0f),
+        right = (left + scaledContentSize.width).coerceAtMost(containerSize.width),
+        bottom = (top + scaledContentSize.height).coerceAtMost(containerSize.height),
     )
 }
 
