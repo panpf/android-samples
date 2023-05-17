@@ -103,7 +103,9 @@ private fun Modifier.createZoomModifier(
         .pointerInput(Unit) {
             detectDragGestures(
                 onDragStart = {
-                    state.dragStart()
+                    coroutineScope.launch {
+                        state.dragStart()
+                    }
                 },
                 onDrag = { change, dragAmount ->
                     coroutineScope.launch {

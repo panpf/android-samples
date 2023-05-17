@@ -31,12 +31,11 @@ class MyZoomState(
     val debugMode: Boolean = false
 ) {
 
-    private val velocityTracker = VelocityTracker()
+    private val _scale = Animatable(initialScale)
     private val _translationX = Animatable(initialTranslateX)
     private val _translationY = Animatable(initialTranslateY)
-    private val _scale = Animatable(initialScale)
+    private val velocityTracker = VelocityTracker()
     // todo rotate
-    // todo 处理动画冲突，双击缩放中，手指滑动要先停止双击缩放动画，然后再开始滑动
 
     val transformOrigin = TransformOrigin(0f, 0f)
 
@@ -289,9 +288,10 @@ class MyZoomState(
         }
     }
 
-    internal fun dragStart() {
+    internal suspend fun dragStart() {
         logI { "drag. start. resetTracking" }
         velocityTracker.resetTracking()
+        stopAllAnimation("dragStart")
     }
 
     internal suspend fun drag(change: PointerInputChange, dragAmount: Offset) {
@@ -320,6 +320,7 @@ class MyZoomState(
     }
 
     internal suspend fun transform(zoomChange: Float, touchCentroid: Offset) {
+        stopAllAnimation("transform")
         val currentScale = scale
         val newScale =
             (currentScale * zoomChange).coerceIn(minimumValue = minScale, maximumValue = maxScale)
@@ -372,6 +373,17 @@ class MyZoomState(
 //        }
 //        return false
 //    }
+
+    private suspend fun stopAllAnimation(caller: String) {
+        if (_scale.isRunning) {
+            _scale.stop()
+            updateTranslationBounds(caller)
+        }
+        if (_translationX.isRunning || _translationY.isRunning) {
+            _translationX.stop()
+            _translationY.stop()
+        }
+    }
 
     private suspend fun fling(velocity: Velocity) = coroutineScope {
         logI { "fling. velocity=$velocity, translation=$translation" }
