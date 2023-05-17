@@ -161,7 +161,7 @@ private fun MyZoomImageSample() {
         val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
         val zoomIn = remember {
             derivedStateOf {
-                val nextScale = myZoomState.nextDoubleTapScale()
+                val nextScale = myZoomState.nextScale()
                 nextScale > myZoomState.minScale
             }
         }
@@ -180,6 +180,7 @@ private fun MyZoomImageSample() {
             painter = painterResource(id = R.drawable.dog_hor),
             modifier = Modifier.align(Alignment.BottomStart),
             state = myZoomState,
+            animateScaleState = animateDoubleTapScaleState,
         )
 
         Column {
@@ -219,10 +220,11 @@ private fun MyZoomImageSample() {
             IconButton(
                 onClick = {
                     coroutineScope.launch {
+                        val newScale = myZoomState.nextScale()
                         if (animateDoubleTapScaleState.value) {
-                            myZoomState.animateDoubleTapScaleByRelativelyCentroid()
+                            myZoomState.animateScaleTo(newScale = newScale)
                         } else {
-                            myZoomState.snapDoubleTapScaleByRelativelyCentroid()
+                            myZoomState.snapScaleTo(newScale = newScale)
                         }
                     }
                 }
