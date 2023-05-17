@@ -48,6 +48,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Precision
 import com.github.panpf.android.compose.samples.R
+import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3
 import com.github.panpf.android.compose.samples.ui.base.ExpandableLayout
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
@@ -161,19 +162,18 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val horImageSelected = remember { mutableStateOf(true) }
     val image = if (horImageSelected.value) horSmall else verSmall
     val contentScaleMenuExpanded = remember { mutableStateOf(false) }
-    val selectedContentScaleIndex = remember { mutableStateOf(2) }
+    val contentScaleState = remember { mutableStateOf(ContentScale.Inside) }
     val contentScales = remember {
         listOf(
-            ContentScale.Fit to "Fit",
-            ContentScale.Crop to "Crop",
-            ContentScale.Inside to "Inside",
-            ContentScale.FillWidth to "FillWidth",
-            ContentScale.FillHeight to "FillHeight",
-            ContentScale.FillBounds to "FillBounds",
-            ContentScale.None to "None",
+            ContentScale.Fit,
+            ContentScale.Crop,
+            ContentScale.Inside,
+            ContentScale.FillWidth,
+            ContentScale.FillHeight,
+            ContentScale.FillBounds,
+            ContentScale.None,
         )
     }
-    val selectedContentScale = contentScales[selectedContentScaleIndex.value]
     ExpandableItem3(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Row(
@@ -207,7 +207,7 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "ContentScale\n${selectedContentScale.second}",
+                        text = "ContentScale\n${contentScaleState.value.name}",
                         textAlign = TextAlign.End
                     )
                     val icon = if (contentScaleMenuExpanded.value) {
@@ -223,7 +223,7 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
                     },
                 ) {
-                    contentScales.forEachIndexed { index, pair ->
+                    contentScales.forEachIndexed { index, contentScale ->
                         if (index > 0) {
                             Divider(
                                 modifier = Modifier
@@ -232,10 +232,10 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             )
                         }
                         DropdownMenuItem(onClick = {
-                            selectedContentScaleIndex.value = index
+                            contentScaleState.value = contentScale
                             contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
                         }) {
-                            Text(text = pair.second)
+                            Text(text = contentScale.name)
                         }
                     }
                 }
@@ -279,7 +279,7 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                                 .size(110.dp)
                                 .background(MaterialTheme.colorScheme.primaryContainer)
                                 .padding(2.dp),
-                            contentScale = selectedContentScale.first,
+                            contentScale = contentScaleState.value,
                             alignment = alignment.first,
                         )
                     }
