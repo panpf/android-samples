@@ -157,6 +157,9 @@ private fun MyZoomImageSample() {
     val animateDoubleTapScaleState = remember { mutableStateOf(true) }
     val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(false) }
+    val animationDurationMillisState = remember(slowerScaleAnimationState.value) {
+        mutableStateOf(if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis)
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
         val zoomIn = remember {
@@ -172,7 +175,7 @@ private fun MyZoomImageSample() {
             state = myZoomState,
             scaleAnimationConfig = ScaleAnimationConfig(
                 animateDoubleTapScale = animateDoubleTapScaleState.value,
-                animationDurationMillis = if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis
+                animationDurationMillis = animationDurationMillisState.value,
             ),
         )
 
@@ -181,6 +184,7 @@ private fun MyZoomImageSample() {
             modifier = Modifier.align(Alignment.BottomStart),
             state = myZoomState,
             animateScaleState = animateDoubleTapScaleState,
+            animationDurationMillisState = animationDurationMillisState,
         )
 
         Column {

@@ -29,6 +29,7 @@ fun MyZoomVisibleRectImage(
     contentDescription: String? = null,
     state: MyZoomState,
     animateScaleState: State<Boolean>,
+    animationDurationMillisState: State<Int>,
 ) {
     val coroutineScope = rememberCoroutineScope()
     BoxWithConstraints(modifier = modifier.then(Modifier.fillMaxWidth(0.4f))) {
@@ -56,7 +57,7 @@ fun MyZoomVisibleRectImage(
                 .onSizeChanged {
                     imageNodeSizeState.value = it.toSize()
                 }
-                .pointerInput(Unit) {
+                .pointerInput(animateScaleState.value, animationDurationMillisState.value) {
                     detectTapGestures(
                         onTap = {
                             val imageNodeSize = imageNodeSizeState.value
@@ -68,7 +69,8 @@ fun MyZoomVisibleRectImage(
                                             newScaleCentroid = Centroid(
                                                 x = it.x / imageNodeSize.width,
                                                 y = it.y / imageNodeSize.height
-                                            )
+                                            ),
+                                            animationDurationMillis = animationDurationMillisState.value
                                         )
                                     } else {
                                         state.snapScaleTo(
