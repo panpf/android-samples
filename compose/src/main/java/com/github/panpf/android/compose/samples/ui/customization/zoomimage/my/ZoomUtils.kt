@@ -174,28 +174,31 @@ internal fun computeContainerVisibleRect(
     val translationY = translation.y
     val left: Float
     val right: Float
-    if (translationX > 0) {
+    if (translationX >= scaledContainerSize.width || translationX <= -scaledContainerSize.width) {
         left = 0f
-        right = containerSize.width - translationX
-    } else {
+        right = 0f
+    } else if (translationX > 0) {
+        left = 0f
+        right = (containerSize.width - translationX).coerceIn(0f..scaledContainerSize.width)
+    } else { // translationX < 0
         left = translationX.absoluteValue
-        right = translationX.absoluteValue + containerSize.width
+        right = (translationX.absoluteValue + containerSize.width)
+            .coerceAtMost(scaledContainerSize.width)
     }
     val top: Float
     val bottom: Float
-    if (translationY > 0) {
+    if (translationY >= scaledContainerSize.height || translationY <= -scaledContainerSize.height) {
         top = 0f
-        bottom = containerSize.height - translationY
-    } else {
+        bottom = 0f
+    } else if (translationY > 0) {
+        top = 0f
+        bottom = (containerSize.height - translationY).coerceAtMost(scaledContainerSize.height)
+    } else { // translationY < 0
         top = translationY.absoluteValue
-        bottom = translationY.absoluteValue + containerSize.height
+        bottom = (translationY.absoluteValue + containerSize.height)
+            .coerceAtMost(scaledContainerSize.height)
     }
-    val scaledVisibleRect = Rect(
-        left = left.coerceAtLeast(0f),
-        top = top.coerceAtLeast(0f),
-        right = right.coerceAtMost(scaledContainerSize.width),
-        bottom = bottom.coerceAtMost(scaledContainerSize.height)
-    )
+    val scaledVisibleRect = Rect(left = left, top = top, right = right, bottom = bottom)
     return scaledVisibleRect.restoreScale(scale)
 }
 
@@ -223,13 +226,14 @@ fun computeContentVisibleRect(
     ) {
         Rect(0f, 0f, 0f, 0f)
     } else {
-        val left = (containerVisibleRect.left - contentInContainerRect.left).coerceAtLeast(0f)
-        val top = (containerVisibleRect.top - contentInContainerRect.top).coerceAtLeast(0f)
-        val right = (containerVisibleRect.right - contentInContainerRect.left).coerceAtLeast(0f)
-            .coerceAtMost(contentInContainerRect.width)
-        val bottom = (containerVisibleRect.bottom - contentInContainerRect.top).coerceAtLeast(0f)
-            .coerceAtMost(contentInContainerRect.height)
-        Rect(left, top, right, bottom)
+        Rect(
+            left = (containerVisibleRect.left - contentInContainerRect.left).coerceAtLeast(0f),
+            top = (containerVisibleRect.top - contentInContainerRect.top).coerceAtLeast(0f),
+            right = (containerVisibleRect.right - contentInContainerRect.left)
+                .coerceIn(0f, contentInContainerRect.width),
+            bottom = (containerVisibleRect.bottom - contentInContainerRect.top)
+                .coerceIn(0f, contentInContainerRect.height)
+        )
     }
     val contentScaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)

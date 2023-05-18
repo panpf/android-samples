@@ -10,7 +10,9 @@ import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.tools.toShortString
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.Centroid
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeContainerCentroidByTouchPosition
+import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeContainerVisibleRect
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeContentInContainerRect
+import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeContentVisibleRect
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeScaleTargetTranslation
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.computeTranslationBounds
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.containerCentroidToContentCentroid
@@ -333,7 +335,7 @@ class ZoomUtilsTest {
         var containerSize = Size(1080f, 1920f)
         var contentSize = Size(1080f, 1920f)
         var contentScale = ContentScale.Fit
-        var contentAlignment = Alignment.Center
+        var contentAlignment = Alignment.Center // todo test
         Assert.assertEquals(
             "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, scale=0.5f",
             Rect(0f, 0f, 0f, 0f),
@@ -497,8 +499,206 @@ class ZoomUtilsTest {
         )
     }
 
-    // todo computeVisibleRect
-    // todo computeContentVisibleRect
+    @Test
+    fun testComputeContainerVisibleRect() {
+        val containerSize = Size(1000f, 2000f)
+
+        var scale = 1f
+        listOf(
+            Offset(0f, 0f) to Rect(0f, 0f, 1000f, 2000f),
+            Offset(250f, 500f) to Rect(0f, 0f, 750f, 1500f),
+            Offset(750f, 500f) to Rect(0f, 0f, 250f, 1500f),
+            Offset(250f, 1500f) to Rect(0f, 0f, 750f, 500f),
+            Offset(750f, 1500f) to Rect(0f, 0f, 250f, 500f),
+            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
+            Offset(-250f, -500f) to Rect(250f, 500f, 1000f, 2000f),
+            Offset(-750f, -500f) to Rect(750f, 500f, 1000f, 2000f),
+            Offset(-250f, -1500f) to Rect(250f, 1500f, 1000f, 2000f),
+            Offset(-750f, -1500f) to Rect(750f, 1500f, 1000f, 2000f),
+            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f),
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContainerVisibleRect(containerSize, scale, translation)
+            )
+        }
+
+        scale = 2f
+        listOf(
+            Offset(0f, 0f) to Rect(0f, 0f, 500f, 1000f),
+            Offset(250f, 500f) to Rect(0f, 0f, 375f, 750f),
+            Offset(750f, 500f) to Rect(0f, 0f, 125f, 750f),
+            Offset(250f, 1500f) to Rect(0f, 0f, 375f, 250f),
+            Offset(750f, 1500f) to Rect(0f, 0f, 125f, 250f),
+            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
+            Offset(-250f, -500f) to Rect(125f, 250f, 625f, 1250f),
+            Offset(-750f, -500f) to Rect(375f, 250f, 875f, 1250f),
+            Offset(-250f, -1500f) to Rect(125f, 750f, 625f, 1750f),
+            Offset(-750f, -1500f) to Rect(375f, 750f, 875f, 1750f),
+            Offset(-1000f, -2000f) to Rect(500f, 1000f, 1000f, 2000f),
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContainerVisibleRect(containerSize, scale, translation)
+            )
+        }
+    }
+
+    @Test
+    fun testComputeContentVisibleRect() {
+        val containerSize = Size(1000f, 2000f)
+        val contentSize = Size(800f, 1200f)
+
+        var contentScale = ContentScale.Fit
+        var contentAlignment = Alignment.Center
+        var scale = 1f
+        listOf(
+            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
+            Offset(250f, 500f) to Rect(0f, 0f, 600f, 1000f),
+            Offset(750f, 500f) to Rect(0f, 0f, 200f, 1000f),
+            Offset(250f, 1500f) to Rect(0f, 0f, 600f, 200f),
+            Offset(750f, 1500f) to Rect(0f, 0f, 200f, 200f),
+            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
+            Offset(-250f, -500f) to Rect(200f, 200f, 800f, 1200f),
+            Offset(-750f, -500f) to Rect(600f, 200f, 800f, 1200f),
+            Offset(-250f, -1500f) to Rect(200f, 1000f, 800f, 1200f),
+            Offset(-750f, -1500f) to Rect(600f, 1000f, 800f, 1200f),
+            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f),
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = translation
+                )
+            )
+        }
+
+        contentScale = ContentScale.Fit
+        contentAlignment = Alignment.Center
+        scale = 2f
+        listOf(
+            Offset(0.0f, 0.0f) to Rect(0.0f, 0.0f, 400.0f, 600.0f),
+            Offset(250.0f, 500.0f) to Rect(0.0f, 0.0f, 300.0f, 400.0f),
+            Offset(750.0f, 500.0f) to Rect(0.0f, 0.0f, 100.0f, 400.0f),
+            Offset(250.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(750.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(1000.0f, 2000.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(-250.0f, -500.0f) to Rect(100.0f, 0.0f, 500.0f, 800.0f),
+            Offset(-750.0f, -500.0f) to Rect(300.0f, 0.0f, 700.0f, 800.0f),
+            Offset(-250.0f, -1500.0f) to Rect(100.0f, 400.0f, 500.0f, 1200.0f),
+            Offset(-750.0f, -1500.0f) to Rect(300.0f, 400.0f, 700.0f, 1200.0f),
+            Offset(-1000.0f, -2000.0f) to Rect(400.0f, 600.0f, 800.0f, 1200.0f)
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = translation
+                )
+            )
+        }
+
+        contentScale = ContentScale.Inside
+        contentAlignment = Alignment.Center
+        scale = 1f
+        listOf(
+            Offset(0.0f, 0.0f) to Rect(0.0f, 0.0f, 800.0f, 1200.0f),
+            Offset(250.0f, 500.0f) to Rect(0.0f, 0.0f, 650.0f, 1100.0f),
+            Offset(750.0f, 500.0f) to Rect(0.0f, 0.0f, 150.0f, 1100.0f),
+            Offset(250.0f, 1500.0f) to Rect(0.0f, 0.0f, 650.0f, 100.0f),
+            Offset(750.0f, 1500.0f) to Rect(0.0f, 0.0f, 150.0f, 100.0f),
+            Offset(1000.0f, 2000.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(-250.0f, -500.0f) to Rect(150.0f, 100.0f, 800.0f, 1200.0f),
+            Offset(-750.0f, -500.0f) to Rect(650.0f, 100.0f, 800.0f, 1200.0f),
+            Offset(-250.0f, -1500.0f) to Rect(150.0f, 1100.0f, 800.0f, 1200.0f),
+            Offset(-750.0f, -1500.0f) to Rect(650.0f, 1100.0f, 800.0f, 1200.0f),
+            Offset(-1000.0f, -2000.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f)
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = translation
+                )
+            )
+        }
+
+        contentScale = ContentScale.Inside
+        contentAlignment = Alignment.Center
+        scale = 2f
+        listOf(
+            Offset(0.0f, 0.0f) to Rect(0.0f, 0.0f, 400.0f, 600.0f),
+            Offset(250.0f, 500.0f) to Rect(0.0f, 0.0f, 275.0f, 350.0f),
+            Offset(750.0f, 500.0f) to Rect(0.0f, 0.0f, 25.0f, 350.0f),
+            Offset(250.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(750.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(1000.0f, 2000.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(-250.0f, -500.0f) to Rect(25.0f, 0.0f, 525.0f, 850.0f),
+            Offset(-750.0f, -500.0f) to Rect(275.0f, 0.0f, 775.0f, 850.0f),
+            Offset(-250.0f, -1500.0f) to Rect(25.0f, 350.0f, 525.0f, 1200.0f),
+            Offset(-750.0f, -1500.0f) to Rect(275.0f, 350.0f, 775.0f, 1200.0f),
+            Offset(-1000.0f, -2000.0f) to Rect(400.0f, 600.0f, 800.0f, 1200.0f)
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = translation
+                )
+            )
+        }
+//        listOf(
+//            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
+//            Offset(250f, 500f) to Rect(0f, 0f, 600f, 1000f),
+//            Offset(750f, 500f) to Rect(0f, 0f, 200f, 1000f),
+//            Offset(250f, 1500f) to Rect(0f, 0f, 600f, 200f),
+//            Offset(750f, 1500f) to Rect(0f, 0f, 200f, 200f),
+//            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
+//            Offset(-250f, -500f) to Rect(200f, 200f, 800f, 1200f),
+//            Offset(-750f, -500f) to Rect(600f, 200f, 800f, 1200f),
+//            Offset(-250f, -1500f) to Rect(200f, 1000f, 800f, 1200f),
+//            Offset(-750f, -1500f) to Rect(600f, 1000f, 800f, 1200f),
+//            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f),
+//        ).map { (translation, expectedVisibleRect) ->
+//            translation to computeContentVisibleRect(
+//                containerSize = containerSize,
+//                contentSize = contentSize,
+//                contentScale = contentScale,
+//                contentAlignment = contentAlignment,
+//                scale = scale,
+//                translation = translation
+//            )
+//        }.apply {
+//            val message = this.joinToString(separator = ", \n") {(translation, visibleRect) ->
+//                "Offset(${translation.x}f, ${translation.y}f) to Rect(${visibleRect.left}f, ${visibleRect.top}f, ${visibleRect.right}f, ${visibleRect.bottom}f)"
+//            }
+//            Assert.fail(message)
+//        }
+    }
+
 
     @Test
     fun testComputeContainerCentroidByTouchPosition() {
