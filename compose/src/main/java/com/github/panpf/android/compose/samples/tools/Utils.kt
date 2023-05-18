@@ -10,12 +10,12 @@ import com.github.panpf.tools4j.math.ktx.format
 
 fun Size.toShortString(): String = "(${width}x$height)"
 
-fun Offset.toShortString(): String = "(${x.format("", 2)}x${y.format("", 2)})"
+fun Offset.toShortString(): String = "(${x.format("", 1)}x${y.format("", 1)})"
 
 fun Rect.toShortString(): String =
-    "(${left.format("", 2)},${top.format("", 2)},${right.format("", 2)},${bottom.format("", 2)})"
+    "(${left.format("", 1)},${top.format("", 1)},${right.format("", 1)},${bottom.format("", 1)})"
 
-fun Centroid.toShortString(): String = "(${x.format("", 2)}x${y.format("", 2)})"
+fun Centroid.toShortString(): String = "(${x.format("", 1)}x${y.format("", 1)})"
 
 val ContentScale.name: String
     get() = when (this) {

@@ -208,10 +208,10 @@ private fun MyZoomImageSample() {
                     scale: ${myZoomState.scale}, ${if (myZoomState.zooming) "zooming" else ""}
                     translation: ${myZoomState.translation.toShortString()}
                     translationBounds: ${myZoomState.translationBounds?.toShortString()}
-                    visibleRect: ${myZoomState.visibleRect.toShortString()}
                     contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
-                    containerSize: ${myZoomState.containerSize}
+                    containerVisibleRect: ${myZoomState.containerVisibleRect.toShortString()}
                     contentSize: ${myZoomState.contentSize}
+                    containerSize: ${myZoomState.containerSize}
                     contentInContainerRect: ${myZoomState.contentInContainerRect.toShortString()}
                 """.trimIndent(),
                 color = Color.White,

@@ -497,9 +497,7 @@ class ZoomUtilsTest {
         )
     }
 
-    // todo computeScaledVisibleRect
     // todo computeVisibleRect
-    // todo computeScaledContentVisibleRect
     // todo computeContentVisibleRect
 
     @Test

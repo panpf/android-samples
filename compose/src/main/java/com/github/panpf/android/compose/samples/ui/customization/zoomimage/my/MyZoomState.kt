@@ -69,8 +69,8 @@ class MyZoomState(
 
     val zooming: Boolean by derivedStateOf { scale > minScale }
 
-    val visibleRect: Rect by derivedStateOf {
-        computeVisibleRect(containerSize, scale, translation)
+    val containerVisibleRect: Rect by derivedStateOf {
+        computeContainerVisibleRect(containerSize, scale, translation)
     }
 
     val contentVisibleRect: Rect by derivedStateOf {
