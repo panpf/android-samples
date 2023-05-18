@@ -124,6 +124,7 @@ class MyZoomState(
         animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
+        stopAllAnimation("animateScaleTo")
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -203,6 +204,7 @@ class MyZoomState(
         animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
+        stopAllAnimation("animateScaleTo")
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -239,6 +241,7 @@ class MyZoomState(
         newScale: Float,
         newScaleContentCentroid: Centroid = Centroid(0.5f, 0.5f)
     ) {
+        stopAllAnimation("snapScaleTo")
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -288,6 +291,7 @@ class MyZoomState(
      * Instantly sets scale of [MyZoomImage] to given [newScale]
      */
     suspend fun snapScaleTo(newScale: Float, touchPosition: Offset) {
+        stopAllAnimation("snapScaleTo")
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -328,9 +332,9 @@ class MyZoomState(
     }
 
     internal suspend fun dragStart() {
+        stopAllAnimation("dragStart")
         logI { "drag. start. resetTracking" }
         velocityTracker.resetTracking()
-        stopAllAnimation("dragStart")
     }
 
     internal suspend fun drag(change: PointerInputChange, dragAmount: Offset) {
