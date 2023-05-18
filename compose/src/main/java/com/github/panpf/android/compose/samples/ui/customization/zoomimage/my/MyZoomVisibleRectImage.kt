@@ -77,7 +77,7 @@ fun MyZoomVisibleRectImage(
                                     if (animateScale) {
                                         state.animateScaleTo(
                                             newScale = state.maxScale,
-                                            newScaleCentroid = Centroid(
+                                            newScaleContentCentroid = Centroid(
                                                 x = it.x / imageNodeSize.width,
                                                 y = it.y / imageNodeSize.height
                                             ),
@@ -86,7 +86,7 @@ fun MyZoomVisibleRectImage(
                                     } else {
                                         state.snapScaleTo(
                                             newScale = state.maxScale,
-                                            newScaleCentroid = Centroid(
+                                            newScaleContentCentroid = Centroid(
                                                 x = it.x / imageNodeSize.width,
                                                 y = it.y / imageNodeSize.height
                                             )

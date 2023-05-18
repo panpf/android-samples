@@ -6,15 +6,16 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.Centroid
+import com.github.panpf.tools4j.math.ktx.format
 
 fun Size.toShortString(): String = "(${width}x$height)"
 
-fun Offset.toShortString(): String = "(${x.toInt()}x${y.toInt()})"
+fun Offset.toShortString(): String = "(${x.format("", 2)}x${y.format("", 2)})"
 
 fun Rect.toShortString(): String =
-    "(${left.toInt()},${top.toInt()},${right.toInt()},${bottom.toInt()})"
+    "(${left.format("", 2)},${top.format("", 2)},${right.format("", 2)},${bottom.format("", 2)})"
 
-fun Centroid.toShortString(): String = "(${x.toInt()}x${y.toInt()})"
+fun Centroid.toShortString(): String = "(${x.format("", 2)}x${y.format("", 2)})"
 
 val ContentScale.name: String
     get() = when (this) {

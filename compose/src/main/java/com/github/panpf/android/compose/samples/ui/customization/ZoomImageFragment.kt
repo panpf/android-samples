@@ -50,6 +50,7 @@ import androidx.compose.ui.window.Dialog
 import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.name
+import com.github.panpf.android.compose.samples.tools.toShortString
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
@@ -58,7 +59,6 @@ import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.My
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.MyZoomVisibleRectImage
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.ScaleAnimationConfig
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.rememberMyZoomState
-import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.toShortString
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.photo.ExperimentalPhotoApi
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.photo.PhotoBox
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.tlaster.TlasterZoomable
@@ -212,7 +212,7 @@ private fun MyZoomImageSample() {
                     contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                     containerSize: ${myZoomState.containerSize}
                     contentSize: ${myZoomState.contentSize}
-                    contentOfContainerRect: ${myZoomState.contentOfContainerRect.toShortString()}
+                    contentInContainerRect: ${myZoomState.contentInContainerRect.toShortString()}
                 """.trimIndent(),
                 color = Color.White,
                 fontSize = 13.sp,

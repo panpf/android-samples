@@ -84,8 +84,8 @@ class MyZoomState(
         )
     }
 
-    val contentOfContainerRect: Rect by derivedStateOf {
-        computeContentOfContainerRect(
+    val contentInContainerRect: Rect by derivedStateOf {
+        computeContentInContainerRect(
             containerSize = containerSize,
             contentSize = contentSize,
             contentScale = contentScale,
@@ -119,12 +119,11 @@ class MyZoomState(
      */
     suspend fun animateScaleTo(
         newScale: Float,
-        newScaleCentroid: Centroid = Centroid(0.5f, 0.5f),
+        newScaleContentCentroid: Centroid = Centroid(0.5f, 0.5f),
         animationDurationMillis: Int = ScaleAnimationConfig.DefaultDurationMillis,
         animationEasing: Easing = ScaleAnimationConfig.DefaultEasing,
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
-        // todo newScaleCentroid 改成 newScaleContentCentroid，中心点只能是在 Content 里面
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -143,10 +142,17 @@ class MyZoomState(
             contentAlignment = contentAlignment,
             scale = newScale
         )
+        val containerCentroid = contentCentroidToContainerCentroid(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            contentAlignment = contentAlignment,
+            contentCentroid = newScaleContentCentroid
+        )
         val targetTranslation = computeScaleTargetTranslation(
             containerSize = containerSize,
             scale = newScale,
-            centroid = newScaleCentroid
+            containerCentroid = containerCentroid
         ).let {
             it.copy(
                 x = it.x.coerceIn(futureTranslationBounds.left, futureTranslationBounds.right),
@@ -155,7 +161,7 @@ class MyZoomState(
         }
         logI {
             """animateScaleTo. size: containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}
-                scale: $currentScale -> $newScale, centroid=${newScaleCentroid.toShortString()} 
+                scale: $currentScale -> $newScale, contentCentroid=${newScaleContentCentroid.toShortString()}, containerCentroid=${containerCentroid.toShortString()}
                 translation: ${currentTranslation.toShortString()} -> ${targetTranslation.toShortString()}, bounds=${futureTranslationBounds.toShortString()}
             """.trimIndent()
         }
@@ -198,18 +204,28 @@ class MyZoomState(
         initialVelocity: Float = ScaleAnimationConfig.DefaultInitialVelocity,
     ) {
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
+        val contentSize = contentSize.takeIf { it.isSpecified } ?: return
+        val contentScale = contentScale
+        val contentAlignment = contentAlignment
         val currentScale = scale
         val currentTranslation = translation
-        val newScaleCentroid = computeScaleCentroidByTouchPosition(
+        val containerCentroid = computeContainerCentroidByTouchPosition(
             containerSize = containerSize,
             scale = currentScale,
             translation = currentTranslation,
             touchPosition = touchPosition
         )
-        logI { "animateScaleTo. newScale=$newScale, touchPosition=${touchPosition.toShortString()}, newScaleCentroid=${newScaleCentroid.toShortString()}" }
+        val contentCentroid = containerCentroidToContentCentroid(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            contentAlignment = contentAlignment,
+            containerCentroid = containerCentroid
+        )
+        logI { "animateScaleTo. newScale=$newScale, touchPosition=${touchPosition.toShortString()}, containerCentroid=${containerCentroid.toShortString()}, contentCentroid=${contentCentroid.toShortString()}" }
         animateScaleTo(
             newScale = newScale,
-            newScaleCentroid = newScaleCentroid,
+            newScaleContentCentroid = contentCentroid,
             animationDurationMillis = animationDurationMillis,
             animationEasing = animationEasing,
             initialVelocity = initialVelocity,
@@ -219,7 +235,10 @@ class MyZoomState(
     /**
      * Instantly sets scale of [MyZoomImage] to given [newScale]
      */
-    suspend fun snapScaleTo(newScale: Float, newScaleCentroid: Centroid = Centroid(0.5f, 0.5f)) {
+    suspend fun snapScaleTo(
+        newScale: Float,
+        newScaleContentCentroid: Centroid = Centroid(0.5f, 0.5f)
+    ) {
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
         val contentSize = contentSize.takeIf { it.isSpecified } ?: return
         val contentScale = contentScale
@@ -234,10 +253,17 @@ class MyZoomState(
             contentAlignment = contentAlignment,
             scale = newScale
         )
+        val containerCentroid = contentCentroidToContainerCentroid(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            contentAlignment = contentAlignment,
+            contentCentroid = newScaleContentCentroid
+        )
         val targetTranslation = computeScaleTargetTranslation(
             containerSize = containerSize,
             scale = newScale,
-            centroid = newScaleCentroid
+            containerCentroid = containerCentroid
         ).let {
             it.copy(
                 x = it.x.coerceIn(futureTranslationBounds.left, futureTranslationBounds.right),
@@ -246,7 +272,7 @@ class MyZoomState(
         }
         logI {
             """snapScaleTo. size: containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()} 
-                scale: $currentScale -> $newScale, centroid=${newScaleCentroid.toShortString()}
+                 scale: $currentScale -> $newScale, contentCentroid=${newScaleContentCentroid.toShortString()}, containerCentroid=${containerCentroid.toShortString()}
                 translation: ${currentTranslation.toShortString()} -> ${targetTranslation.toShortString()}, bounds=${futureTranslationBounds.toShortString()}
             """.trimIndent()
         }
@@ -263,18 +289,28 @@ class MyZoomState(
      */
     suspend fun snapScaleTo(newScale: Float, touchPosition: Offset) {
         val containerSize = containerSize.takeIf { it.isSpecified } ?: return
+        val contentSize = contentSize.takeIf { it.isSpecified } ?: return
+        val contentScale = contentScale
+        val contentAlignment = contentAlignment
         val currentScale = scale
         val currentTranslation = translation
-        val newScaleCentroid = computeScaleCentroidByTouchPosition(
+        val containerCentroid = computeContainerCentroidByTouchPosition(
             containerSize = containerSize,
             scale = currentScale,
             translation = currentTranslation,
             touchPosition = touchPosition
         )
-        logI { "snapScaleTo. newScale=$newScale, touchPosition=${touchPosition.toShortString()}, newScaleCentroid=${newScaleCentroid.toShortString()}" }
+        val contentCentroid = containerCentroidToContentCentroid(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            contentAlignment = contentAlignment,
+            containerCentroid = containerCentroid
+        )
+        logI { "snapScaleTo. newScale=$newScale, touchPosition=${touchPosition.toShortString()}, contentCentroid=${contentCentroid.toShortString()}" }
         snapScaleTo(
             newScale = newScale,
-            newScaleCentroid = newScaleCentroid
+            newScaleContentCentroid = contentCentroid
         )
     }
 
