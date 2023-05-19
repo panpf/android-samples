@@ -42,3 +42,18 @@ val Alignment.name: String
         Alignment.BottomEnd -> "BottomEnd"
         else -> "Unknown"
     }
+
+val Alignment.isStart: Boolean
+    get() = this == Alignment.TopStart || this == Alignment.CenterStart || this == Alignment.BottomStart
+val Alignment.isHorizontalCenter: Boolean
+    get() = this == Alignment.TopCenter || this == Alignment.Center || this == Alignment.BottomCenter
+val Alignment.isCenter: Boolean
+    get() = this == Alignment.Center
+val Alignment.isEnd: Boolean
+    get() = this == Alignment.TopEnd || this == Alignment.CenterEnd || this == Alignment.BottomEnd
+val Alignment.isTop: Boolean
+    get() = this == Alignment.TopStart || this == Alignment.TopCenter || this == Alignment.TopEnd
+val Alignment.isVerticalCenter: Boolean
+    get() = this == Alignment.CenterStart || this == Alignment.Center || this == Alignment.CenterEnd
+val Alignment.isBottom: Boolean
+    get() = this == Alignment.BottomStart || this == Alignment.BottomCenter || this == Alignment.BottomEnd

@@ -8,6 +8,10 @@ import androidx.compose.ui.geometry.isUnspecified
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.ScaleFactor
 import androidx.compose.ui.layout.times
+import com.github.panpf.android.compose.samples.tools.isHorizontalCenter
+import com.github.panpf.android.compose.samples.tools.isStart
+import com.github.panpf.android.compose.samples.tools.isTop
+import com.github.panpf.android.compose.samples.tools.isVerticalCenter
 import kotlin.math.absoluteValue
 
 fun computeContentInContainerRect(
@@ -17,9 +21,9 @@ fun computeContentInContainerRect(
     contentAlignment: Alignment,
 ): Rect {
     if (containerSize.isUnspecified || contentSize.isUnspecified) return Rect.Zero
-    val scaleFactor =
+    val contentScaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
-    val scaledContentSize = contentSize.times(scaleFactor)
+    val contentScaledContentSize = contentSize.times(contentScaleFactor)
     val left: Float
     val top: Float
     when (contentAlignment) {
@@ -29,43 +33,43 @@ fun computeContentInContainerRect(
         }
 
         Alignment.TopCenter -> {
-            left = (containerSize.width - scaledContentSize.width) / 2
+            left = (containerSize.width - contentScaledContentSize.width) / 2
             top = 0f
         }
 
         Alignment.TopEnd -> {
-            left = containerSize.width - scaledContentSize.width
+            left = containerSize.width - contentScaledContentSize.width
             top = 0f
         }
 
         Alignment.CenterStart -> {
             left = 0f
-            top = (containerSize.height - scaledContentSize.height) / 2
+            top = (containerSize.height - contentScaledContentSize.height) / 2
         }
 
         Alignment.Center -> {
-            left = (containerSize.width - scaledContentSize.width) / 2
-            top = (containerSize.height - scaledContentSize.height) / 2
+            left = (containerSize.width - contentScaledContentSize.width) / 2
+            top = (containerSize.height - contentScaledContentSize.height) / 2
         }
 
         Alignment.CenterEnd -> {
-            left = containerSize.width - scaledContentSize.width
-            top = (containerSize.height - scaledContentSize.height) / 2
+            left = containerSize.width - contentScaledContentSize.width
+            top = (containerSize.height - contentScaledContentSize.height) / 2
         }
 
         Alignment.BottomStart -> {
             left = 0f
-            top = containerSize.height - scaledContentSize.height
+            top = containerSize.height - contentScaledContentSize.height
         }
 
         Alignment.BottomCenter -> {
-            left = (containerSize.width - scaledContentSize.width) / 2
-            top = containerSize.height - scaledContentSize.height
+            left = (containerSize.width - contentScaledContentSize.width) / 2
+            top = containerSize.height - contentScaledContentSize.height
         }
 
         Alignment.BottomEnd -> {
-            left = containerSize.width - scaledContentSize.width
-            top = containerSize.height - scaledContentSize.height
+            left = containerSize.width - contentScaledContentSize.width
+            top = containerSize.height - contentScaledContentSize.height
         }
 
         else -> {
@@ -76,9 +80,57 @@ fun computeContentInContainerRect(
     return Rect(
         left = left.coerceAtLeast(0f),
         top = top.coerceAtLeast(0f),
-        right = (left + scaledContentSize.width).coerceAtMost(containerSize.width),
-        bottom = (top + scaledContentSize.height).coerceAtMost(containerSize.height),
+        right = (left + contentScaledContentSize.width).coerceAtMost(containerSize.width),
+        bottom = (top + contentScaledContentSize.height).coerceAtMost(containerSize.height),
     )
+}
+
+fun computeContentInContainerVisibleRect(
+    containerSize: Size,
+    contentSize: Size,
+    contentScale: ContentScale,
+    contentAlignment: Alignment,
+): Rect {
+    val contentScaleFactor =
+        contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+    val contentScaledContentSize = contentSize.times(contentScaleFactor)
+
+    val left: Float
+    val right: Float
+    val horizontalSpace = (contentScaledContentSize.width - containerSize.width) / 2
+    if (contentScaledContentSize.width <= containerSize.width) {
+        left = 0f
+        right = contentScaledContentSize.width
+    } else if (contentAlignment.isStart) {
+        left = 0f
+        right = containerSize.width
+    } else if (contentAlignment.isHorizontalCenter) {
+        left = horizontalSpace
+        right = horizontalSpace + containerSize.width
+    } else {   // contentAlignment.isEnd
+        left = contentScaledContentSize.width - containerSize.width
+        right = contentScaledContentSize.width
+    }
+
+    val top: Float
+    val bottom: Float
+    val verticalSpace = (contentScaledContentSize.height - containerSize.height) / 2
+    if (contentScaledContentSize.height <= containerSize.height) {
+        top = 0f
+        bottom = contentScaledContentSize.height
+    } else if (contentAlignment.isTop) {
+        top = 0f
+        bottom = containerSize.height
+    } else if (contentAlignment.isVerticalCenter) {
+        top = verticalSpace
+        bottom = verticalSpace + containerSize.height
+    } else {   // contentAlignment.isBottom
+        top = contentScaledContentSize.height - containerSize.height
+        bottom = contentScaledContentSize.height
+    }
+
+    return Rect(left = left, top = top, right = right, bottom = bottom)
+        .restoreScale(contentScaleFactor)
 }
 
 internal fun computeScaleTargetTranslation(
@@ -114,44 +166,31 @@ internal fun computeTranslationBounds(
         contentScale = contentScale,
         contentAlignment = contentAlignment
     ).scale(scale)
+
     val horizontalBounds = if (scaledContentInContainerRect.width > containerSize.width) {
         ((scaledContentInContainerRect.right - containerSize.width) * -1)..(scaledContentInContainerRect.left * -1)
-    } else {
-        when (contentAlignment) {
-            Alignment.TopStart, Alignment.CenterStart, Alignment.BottomStart -> {
-                0f..0f
-            }
-
-            Alignment.TopCenter, Alignment.Center, Alignment.BottomCenter -> {
-                val horizontalSpace = (scaledContainerSize.width - containerSize.width) / 2 * -1
-                horizontalSpace..horizontalSpace
-            }
-
-            else -> {   // Alignment.TopEnd, Alignment.CenterEnd, Alignment.BottomEnd
-                val horizontalSpace = (scaledContainerSize.width - containerSize.width) * -1
-                horizontalSpace..horizontalSpace
-            }
-        }
+    } else if (contentAlignment.isStart) {
+        0f..0f
+    } else if (contentAlignment.isHorizontalCenter) {
+        val horizontalSpace = (scaledContainerSize.width - containerSize.width) / 2 * -1
+        horizontalSpace..horizontalSpace
+    } else {   // contentAlignment.isEnd
+        val horizontalSpace = (scaledContainerSize.width - containerSize.width) * -1
+        horizontalSpace..horizontalSpace
     }
+
     val verticalBounds = if (scaledContentInContainerRect.height > containerSize.height) {
         ((scaledContentInContainerRect.bottom - containerSize.height) * -1)..(scaledContentInContainerRect.top * -1)
-    } else {
-        when (contentAlignment) {
-            Alignment.TopStart, Alignment.TopCenter, Alignment.TopEnd -> {
-                0f..0f
-            }
-
-            Alignment.CenterStart, Alignment.Center, Alignment.CenterEnd -> {
-                val verticalSpace = (scaledContainerSize.height - containerSize.height) / 2 * -1
-                verticalSpace..verticalSpace
-            }
-
-            else -> {   // Alignment.BottomStart, Alignment.BottomCenter, Alignment.BottomEnd
-                val verticalSpace = (scaledContainerSize.height - containerSize.height) * -1
-                verticalSpace..verticalSpace
-            }
-        }
+    } else if (contentAlignment.isTop) {
+        0f..0f
+    } else if (contentAlignment.isVerticalCenter) {
+        val verticalSpace = (scaledContainerSize.height - containerSize.height) / 2 * -1
+        verticalSpace..verticalSpace
+    } else {   // contentAlignment.isBottom
+        val verticalSpace = (scaledContainerSize.height - containerSize.height) * -1
+        verticalSpace..verticalSpace
     }
+
     return Rect(
         left = horizontalBounds.start,
         top = verticalBounds.start,
@@ -211,33 +250,37 @@ fun computeContentVisibleRect(
     translation: Offset,
 ): Rect {
     if (containerSize.isUnspecified || contentSize.isUnspecified) return Rect.Zero
+    val containerVisibleRect = computeContainerVisibleRect(containerSize, scale, translation)
     val contentInContainerRect = computeContentInContainerRect(
         containerSize = containerSize,
         contentSize = contentSize,
         contentScale = contentScale,
         contentAlignment = contentAlignment,
     )
-    val containerVisibleRect = computeContainerVisibleRect(containerSize, scale, translation)
-    val scaledContentVisibleRect = if (
-        containerVisibleRect.left >= contentInContainerRect.right ||
-        containerVisibleRect.top >= contentInContainerRect.bottom ||
-        containerVisibleRect.bottom <= contentInContainerRect.top ||
-        containerVisibleRect.right <= contentInContainerRect.left
-    ) {
-        Rect(0f, 0f, 0f, 0f)
-    } else {
-        Rect(
+    if (containerVisibleRect.overlaps(contentInContainerRect)) {
+        val contentScaleFactor =
+            contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
+        val contentInContainerVisibleRect = computeContentInContainerVisibleRect(
+            containerSize = containerSize,
+            contentSize = contentSize,
+            contentScale = contentScale,
+            contentAlignment = contentAlignment,
+        )
+        return Rect(
             left = (containerVisibleRect.left - contentInContainerRect.left).coerceAtLeast(0f),
             top = (containerVisibleRect.top - contentInContainerRect.top).coerceAtLeast(0f),
             right = (containerVisibleRect.right - contentInContainerRect.left)
                 .coerceIn(0f, contentInContainerRect.width),
             bottom = (containerVisibleRect.bottom - contentInContainerRect.top)
                 .coerceIn(0f, contentInContainerRect.height)
-        )
+        ).restoreScale(contentScaleFactor)
+            .translate(
+                translateX = contentInContainerVisibleRect.left,
+                translateY = contentInContainerVisibleRect.top
+            )
+    } else {
+        return Rect(0f, 0f, 0f, 0f)
     }
-    val contentScaleFactor =
-        contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
-    return scaledContentVisibleRect.restoreScale(contentScaleFactor)
 }
 
 
@@ -272,14 +315,39 @@ fun containerCentroidToContentCentroid(
         contentScale = contentScale,
         contentAlignment = contentAlignment
     )
-    val contentSizeScaleFactor =
+    val contentInContainerVisibleRect = computeContentInContainerVisibleRect(
+        containerSize = containerSize,
+        contentSize = contentSize,
+        contentScale = contentScale,
+        contentAlignment = contentAlignment
+    )
+    val contentScaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
-    val scaledContentSize = contentSize.times(contentSizeScaleFactor)
+    val containerCentroidOffset = Offset(
+        x = containerSize.width * containerCentroid.x,
+        y = containerSize.height * containerCentroid.y
+    )
+    val contentScaledContentCentroidOffset = Offset(
+        x = containerCentroidOffset.x - contentInContainerRect.left,
+        y = containerCentroidOffset.y - contentInContainerRect.top,
+    )
+    val contentCentroidOffset = Offset(
+        x = contentScaledContentCentroidOffset.x / contentScaleFactor.scaleX,
+        y = contentScaledContentCentroidOffset.y / contentScaleFactor.scaleY,
+    ).let {
+        Offset(
+            x = it.x + contentInContainerVisibleRect.left,
+            y = it.y + contentInContainerVisibleRect.top
+        )
+    }.let {
+        Offset(
+            x = it.x.coerceIn(0f, contentSize.width),
+            y = it.y.coerceIn(0f, contentSize.height)
+        )
+    }
     return Centroid(
-        x = ((containerSize.width * containerCentroid.x) - contentInContainerRect.left)
-            .coerceIn(0f, scaledContentSize.width) / scaledContentSize.width,
-        y = ((containerSize.height * containerCentroid.y) - contentInContainerRect.top)
-            .coerceIn(0f, scaledContentSize.height) / scaledContentSize.height
+        x = contentCentroidOffset.x / contentSize.width,
+        y = contentCentroidOffset.y / contentSize.height
     )
 }
 
@@ -297,14 +365,39 @@ internal fun contentCentroidToContainerCentroid(
         contentScale = contentScale,
         contentAlignment = contentAlignment
     )
-    val contentSizeScaleFactor =
+    val contentInContainerVisibleRect = computeContentInContainerVisibleRect(
+        containerSize = containerSize,
+        contentSize = contentSize,
+        contentScale = contentScale,
+        contentAlignment = contentAlignment
+    )
+    val contentScaleFactor =
         contentScale.computeScaleFactor(srcSize = contentSize, dstSize = containerSize)
-    val scaledContentSize = contentSize.times(contentSizeScaleFactor)
+    val contentCentroidOffset = Offset(
+        x = contentSize.width * contentCentroid.x,
+        y = contentSize.height * contentCentroid.y,
+    ).let {
+        Offset(
+            x = it.x - contentInContainerVisibleRect.left,
+            y = it.y - contentInContainerVisibleRect.top,
+        )
+    }
+    val contentScaledContentCentroidOffset = Offset(
+        x = contentCentroidOffset.x * contentScaleFactor.scaleX,
+        y = contentCentroidOffset.y * contentScaleFactor.scaleY,
+    )
+    val containerCentroidOffset = Offset(
+        x = contentInContainerRect.left + contentScaledContentCentroidOffset.x,
+        y = contentInContainerRect.top + contentScaledContentCentroidOffset.y,
+    ).let {
+        Offset(
+            x = it.x.coerceIn(0f, containerSize.width),
+            y = it.y.coerceIn(0f, containerSize.height),
+        )
+    }
     return Centroid(
-        x = (contentInContainerRect.left + (scaledContentSize.width * contentCentroid.x))
-            .coerceIn(0f, containerSize.width) / containerSize.width,
-        y = (contentInContainerRect.top + (scaledContentSize.height * contentCentroid.y))
-            .coerceIn(0f, containerSize.height) / containerSize.height
+        x = containerCentroidOffset.x / containerSize.width,
+        y = containerCentroidOffset.y / containerSize.height
     )
 }
 

@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +24,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -32,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,11 +40,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.github.panpf.android.compose.samples.BuildConfig
@@ -52,8 +56,13 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.tools.toShortString
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.base.PhotoItem
+import com.github.panpf.android.compose.samples.ui.base.TitleRadioButton
+import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.pagerTabIndicatorOffset3
 import com.github.panpf.android.compose.samples.ui.base.theme.MyThemeColors3
+import com.github.panpf.android.compose.samples.ui.base.toPx
+import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.birdly.birdlyZoomable
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.MyZoomImage
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.my.MyZoomVisibleRectImage
@@ -162,8 +171,19 @@ private fun MyZoomImageSample() {
     val coroutineScope = rememberCoroutineScope()
     val colors = MyThemeColors3.current
     val horImageSelectedState = remember { mutableStateOf(true) }
-    val imageIdState = remember(horImageSelectedState.value) {
-        mutableStateOf(if (horImageSelectedState.value) R.drawable.dog_hor else R.drawable.dog_ver)
+    val smallImageSelectedState = remember { mutableStateOf(true) }
+    val horSmall = remember { PhotoItem(horPhoto, "横向图片 - 小", false) }
+    val verSmall = remember { PhotoItem(verPhoto, "竖向图片 - 小", false) }
+    val horBig = remember { PhotoItem(horPhoto, "横向图片 - 大", true) }
+    val verBig = remember { PhotoItem(verPhoto, "竖向图片 - 大", true) }
+    val image by remember {
+        derivedStateOf {
+            if (horImageSelectedState.value) {
+                if (smallImageSelectedState.value) horSmall else horBig
+            } else {
+                if (smallImageSelectedState.value) verSmall else verBig
+            }
+        }
     }
     val closeScaleAnimationState = remember { mutableStateOf(false) }
     val slowerScaleAnimationState = remember { mutableStateOf(false) }
@@ -173,7 +193,7 @@ private fun MyZoomImageSample() {
     val animationDurationMillisState = remember(slowerScaleAnimationState.value) {
         mutableStateOf(if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis)
     }
-    Box(modifier = Modifier.fillMaxSize()) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
         val zoomIn = remember {
             derivedStateOf {
@@ -181,8 +201,13 @@ private fun MyZoomImageSample() {
                 nextScale > myZoomState.minScale
             }
         }
+        val context = LocalContext.current
+        val viewSize = min(maxWidth, maxHeight).toPx().toInt()
+        val painter = remember(viewSize, image) {
+            image.getBitmap(context, viewSize).asImageBitmap().let { BitmapPainter(it) }
+        }
         MyZoomImage(
-            painter = painterResource(id = imageIdState.value),
+            painter = painter,
             contentDescription = "",
             contentScale = contentScaleState.value,
             alignment = alignmentState.value,
@@ -195,7 +220,7 @@ private fun MyZoomImageSample() {
         )
 
         MyZoomVisibleRectImage(
-            painter = painterResource(id = imageIdState.value),
+            painter = painter,
             state = myZoomState,
             animateScale = !closeScaleAnimationState.value,
             animationDurationMillis = animationDurationMillisState.value,
@@ -270,12 +295,13 @@ private fun MyZoomImageSample() {
 
         if (settingsDialogState.value) {
             SettingsDialog(
-                closeScaleAnimationState = closeScaleAnimationState,
-                slowerScaleAnimationState = slowerScaleAnimationState,
                 settingsDialogState = settingsDialogState,
                 horImageSelectedState = horImageSelectedState,
+                smallImageSelectedState = smallImageSelectedState,
                 contentScaleState = contentScaleState,
                 alignmentState = alignmentState,
+                closeScaleAnimationState = closeScaleAnimationState,
+                slowerScaleAnimationState = slowerScaleAnimationState,
             ) {
                 settingsDialogState.value = false
             }
@@ -291,12 +317,13 @@ private fun MyZoomImageSamplePreview() {
 
 @Composable
 private fun SettingsDialog(
-    closeScaleAnimationState: MutableState<Boolean>,
-    slowerScaleAnimationState: MutableState<Boolean>,
     settingsDialogState: MutableState<Boolean>,
     horImageSelectedState: MutableState<Boolean>,
+    smallImageSelectedState: MutableState<Boolean>,
     contentScaleState: MutableState<ContentScale>,
     alignmentState: MutableState<Alignment>,
+    closeScaleAnimationState: MutableState<Boolean>,
+    slowerScaleAnimationState: MutableState<Boolean>,
     onDismissRequest: () -> Unit
 ) {
     val contentScaleMenuExpanded = remember { mutableStateOf(false) }
@@ -339,40 +366,51 @@ private fun SettingsDialog(
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "图片", modifier = Modifier.weight(1f))
-                Row {
-                    Row(
-                        modifier = Modifier.clickable {
-                            horImageSelectedState.value = !horImageSelectedState.value
-                            settingsDialogState.value = false
-                        },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = horImageSelectedState.value,
-                            onClick = {
-                                horImageSelectedState.value = !horImageSelectedState.value
-                                settingsDialogState.value = false
-                            })
-                        Text(text = "横图")
-                    }
-                    Spacer(modifier = Modifier.size(20.dp))
-                    Row(
-                        modifier = Modifier.clickable {
-                            horImageSelectedState.value = !horImageSelectedState.value
-                            settingsDialogState.value = false
-                        },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = !horImageSelectedState.value,
-                            onClick = {
-                                horImageSelectedState.value = !horImageSelectedState.value
-                                settingsDialogState.value = false
-                            })
-                        Text(text = "竖图")
-                    }
-                }
+                Text(text = "图片比例", modifier = Modifier.weight(1f))
+                TitleRadioButton(
+                    selected = horImageSelectedState.value,
+                    title = "横图",
+                    onClick = {
+                        horImageSelectedState.value = true
+                        settingsDialogState.value = false
+                    },
+                )
+                Spacer(modifier = Modifier.size(20.dp))
+                TitleRadioButton(
+                    selected = !horImageSelectedState.value,
+                    title = "竖图",
+                    onClick = {
+                        horImageSelectedState.value = false
+                        settingsDialogState.value = false
+                    },
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "图片大小", modifier = Modifier.weight(1f))
+                TitleRadioButton(
+                    selected = smallImageSelectedState.value,
+                    title = "小图",
+                    onClick = {
+                        smallImageSelectedState.value = true
+                        settingsDialogState.value = false
+                    },
+                )
+                Spacer(modifier = Modifier.size(20.dp))
+                TitleRadioButton(
+                    selected = !smallImageSelectedState.value,
+                    title = "大图",
+                    onClick = {
+                        smallImageSelectedState.value = false
+                        settingsDialogState.value = false
+                    },
+                )
             }
 
             Row(
@@ -463,10 +501,7 @@ private fun SettingsDialog(
                 Text(text = "关闭缩放动画", modifier = Modifier.weight(1f))
                 Checkbox(
                     checked = closeScaleAnimationState.value,
-                    onCheckedChange = {
-                        closeScaleAnimationState.value = !closeScaleAnimationState.value
-                        settingsDialogState.value = false
-                    }
+                    onCheckedChange = null
                 )
             }
 
@@ -484,10 +519,7 @@ private fun SettingsDialog(
                 Text(text = "更慢的缩放动画", modifier = Modifier.weight(1f))
                 Checkbox(
                     checked = slowerScaleAnimationState.value,
-                    onCheckedChange = {
-                        slowerScaleAnimationState.value = !slowerScaleAnimationState.value
-                        settingsDialogState.value = false
-                    }
+                    onCheckedChange = null
                 )
             }
         }
@@ -497,19 +529,21 @@ private fun SettingsDialog(
 @Composable
 @Preview
 private fun SettingsDialogPreview() {
-    val closeScaleAnimationState = remember { mutableStateOf(false) }
-    val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val settingsDialogState = remember { mutableStateOf(true) }
     val horImageSelectedState = remember { mutableStateOf(true) }
+    val smallImageSelectedState = remember { mutableStateOf(true) }
+    val closeScaleAnimationState = remember { mutableStateOf(false) }
+    val slowerScaleAnimationState = remember { mutableStateOf(false) }
     val contentScaleState = remember { mutableStateOf(ContentScale.Fit) }
     val alignmentState = remember { mutableStateOf(Alignment.Center) }
     SettingsDialog(
-        closeScaleAnimationState = closeScaleAnimationState,
-        slowerScaleAnimationState = slowerScaleAnimationState,
         settingsDialogState = settingsDialogState,
         horImageSelectedState = horImageSelectedState,
+        smallImageSelectedState = smallImageSelectedState,
         contentScaleState = contentScaleState,
         alignmentState = alignmentState,
+        closeScaleAnimationState = closeScaleAnimationState,
+        slowerScaleAnimationState = slowerScaleAnimationState,
     ) {
         settingsDialogState.value = false
     }

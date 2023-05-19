@@ -295,6 +295,8 @@ class ZoomUtilsTest {
         }
     }
 
+    // todo computeContentInContainerVisibleRect
+
     @Test
     fun testComputeScaleTargetTranslation() {
         val containerSize = Size(1000f, 2000f)
@@ -670,6 +672,40 @@ class ZoomUtilsTest {
                 )
             )
         }
+
+//        val containerSize = Size(1000f, 2000f)
+//        val contentSize = Size(800f, 1200f)
+//        val scaledContentSize = Size(1000f, 1500f)
+        // todo test crop, FillWidth, FillHeight, None
+        contentScale = ContentScale.Crop
+        contentAlignment = Alignment.Center
+        scale = 1f
+        listOf(
+            Offset(0.0f, 0.0f) to Rect(0.0f, 0.0f, 800.0f, 1200.0f),
+            Offset(250.0f, 500.0f) to Rect(0.0f, 0.0f, 275.0f, 350.0f),
+            Offset(750.0f, 500.0f) to Rect(0.0f, 0.0f, 25.0f, 350.0f),
+            Offset(250.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(750.0f, 1500.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(1000.0f, 2000.0f) to Rect(0.0f, 0.0f, 0.0f, 0.0f),
+            Offset(-250.0f, -500.0f) to Rect(25.0f, 0.0f, 525.0f, 850.0f),
+            Offset(-750.0f, -500.0f) to Rect(275.0f, 0.0f, 775.0f, 850.0f),
+            Offset(-250.0f, -1500.0f) to Rect(25.0f, 350.0f, 525.0f, 1200.0f),
+            Offset(-750.0f, -1500.0f) to Rect(275.0f, 350.0f, 775.0f, 1200.0f),
+            Offset(-1000.0f, -2000.0f) to Rect(400.0f, 600.0f, 800.0f, 1200.0f)
+        ).forEach { (translation, expectedVisibleRect) ->
+            Assert.assertEquals(
+                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
+                expectedVisibleRect,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = translation
+                )
+            )
+        }
 //        listOf(
 //            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
 //            Offset(250f, 500f) to Rect(0f, 0f, 600f, 1000f),
@@ -888,6 +924,8 @@ class ZoomUtilsTest {
                 restoredContainerCentroid
             )
         }
+
+        // todo test crop, FillWidth, FillHeight, None
     }
 
     @Test
@@ -919,5 +957,7 @@ class ZoomUtilsTest {
                 )
             )
         }
+
+        // todo test crop, FillWidth, FillHeight, None
     }
 }
