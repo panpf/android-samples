@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -28,9 +28,10 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,7 +42,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -55,6 +55,7 @@ import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFr
 import com.github.panpf.android.compose.samples.ui.base.PhotoItem
 import com.github.panpf.android.compose.samples.ui.base.SquashedOval
 import com.github.panpf.android.compose.samples.ui.base.SubtitleText
+import com.github.panpf.android.compose.samples.ui.base.TitleRadioButton
 import com.github.panpf.android.compose.samples.ui.base.blackWhiteColorFilter
 import com.github.panpf.android.compose.samples.ui.base.horPhoto
 import com.github.panpf.android.compose.samples.ui.base.httpPhotoUrl
@@ -157,10 +158,21 @@ private fun CoilAsyncImageSamplePreview() {
 @Composable
 private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    val horSmall = horPhoto
-    val verSmall = verPhoto
+    val horSmall = remember { PhotoItem(horPhoto, "横向图片 - 小", false) }
+    val verSmall = remember { PhotoItem(verPhoto, "竖向图片 - 小", false) }
+    val horBig = remember { PhotoItem(horPhoto, "横向图片 - 大", true) }
+    val verBig = remember { PhotoItem(verPhoto, "竖向图片 - 大", true) }
     val horImageSelected = remember { mutableStateOf(true) }
-    val image = if (horImageSelected.value) horSmall else verSmall
+    val smallImageSelected = remember { mutableStateOf(true) }
+    val image by remember {
+        derivedStateOf {
+            if (horImageSelected.value) {
+                if (smallImageSelected.value) horSmall else horBig
+            } else {
+                if (smallImageSelected.value) verSmall else verBig
+            }
+        }
+    }
     val contentScaleMenuExpanded = remember { mutableStateOf(false) }
     val contentScaleState = remember { mutableStateOf(ContentScale.Inside) }
     val contentScales = remember {
@@ -176,67 +188,79 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
     }
     ExpandableItem3(title = "CoilAsyncImage（alignment）", allExpandFlow, padding = 20.dp) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Row(
-                modifier = Modifier.clickable { horImageSelected.value = !horImageSelected.value },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = horImageSelected.value,
-                    onClick = { horImageSelected.value = !horImageSelected.value })
-                Text(text = "横图")
-            }
+            Text(text = "图片比例", modifier = Modifier.weight(1f))
+            TitleRadioButton(
+                selected = horImageSelected.value,
+                title = "横图",
+                onClick = {
+                    horImageSelected.value = true
+                },
+            )
             Spacer(modifier = Modifier.size(20.dp))
-            Row(
-                modifier = Modifier.clickable { horImageSelected.value = !horImageSelected.value },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = !horImageSelected.value,
-                    onClick = { horImageSelected.value = !horImageSelected.value })
-                Text(text = "竖图")
-            }
+            TitleRadioButton(
+                selected = !horImageSelected.value,
+                title = "竖图",
+                onClick = {
+                    horImageSelected.value = false
+                },
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "图片大小", modifier = Modifier.weight(1f))
+            TitleRadioButton(
+                selected = smallImageSelected.value,
+                title = "小图",
+                onClick = {
+                    smallImageSelected.value = true
+                },
+            )
             Spacer(modifier = Modifier.size(20.dp))
-            Box(modifier = Modifier.weight(1f)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
-                        },
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "ContentScale\n${contentScaleState.value.name}",
-                        textAlign = TextAlign.End
-                    )
-                    val icon = if (contentScaleMenuExpanded.value) {
-                        Icons.Filled.KeyboardArrowUp
-                    } else {
-                        Icons.Filled.KeyboardArrowDown
-                    }
-                    Icon(imageVector = icon, contentDescription = "")
-                }
-                DropdownMenu(
-                    expanded = contentScaleMenuExpanded.value,
-                    onDismissRequest = {
+            TitleRadioButton(
+                selected = !smallImageSelected.value,
+                title = "大图",
+                onClick = {
+                    smallImageSelected.value = false
+                },
+            )
+        }
+        Row {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .clickable {
                         contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
                     },
-                ) {
-                    contentScales.forEachIndexed { index, contentScale ->
-                        if (index > 0) {
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 14.dp)
-                            )
-                        }
-                        DropdownMenuItem(onClick = {
-                            contentScaleState.value = contentScale
-                            contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
-                        }) {
-                            Text(text = contentScale.name)
-                        }
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(text = "ContentScale", Modifier.weight(1f))
+                Spacer(modifier = Modifier.size(20.dp))
+                Text(text = contentScaleState.value.name)
+                Icon(
+                    imageVector = if (contentScaleMenuExpanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                    contentDescription = ""
+                )
+            }
+            DropdownMenu(
+                expanded = contentScaleMenuExpanded.value,
+                onDismissRequest = {
+                    contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                },
+            ) {
+                contentScales.forEachIndexed { index, contentScale ->
+                    if (index > 0) {
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp)
+                        )
+                    }
+                    DropdownMenuItem(onClick = {
+                        contentScaleState.value = contentScale
+                        contentScaleMenuExpanded.value = !contentScaleMenuExpanded.value
+                    }) {
+                        Text(text = contentScale.name)
                     }
                 }
             }
@@ -261,7 +285,7 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                 BoxWithConstraints {
                     val viewSize = maxWidth
                     val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
-                    val targetSize = image.calculateTargetSize(viewSizePx.toInt(), false)
+                    val targetSize = image.calculateTargetSize(viewSizePx.toInt())
                     Column {
                         Text(
                             text = alignment.second,
@@ -269,7 +293,7 @@ private fun CoilAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         )
                         AsyncImage(
                             model = ImageRequest.Builder(context)
-                                .data(context.newCoilResourceUri(image.resId))
+                                .data(context.newCoilResourceUri(image.photo.resId))
                                 .placeholder(R.drawable.im_placeholder)
                                 .size(targetSize.width.toInt(), targetSize.height.toInt())
                                 .precision(Precision.EXACT)
@@ -300,70 +324,154 @@ private fun CoilAsyncImageAlignmentSamplePreview() {
 @Composable
 private fun CoilAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
     val context = LocalContext.current
-    val scales = remember {
+    val horSmall = remember { PhotoItem(horPhoto, "横向图片 - 小", false) }
+    val verSmall = remember { PhotoItem(verPhoto, "竖向图片 - 小", false) }
+    val horBig = remember { PhotoItem(horPhoto, "横向图片 - 大", true) }
+    val verBig = remember { PhotoItem(verPhoto, "竖向图片 - 大", true) }
+    val horImageSelected = remember { mutableStateOf(true) }
+    val smallImageSelected = remember { mutableStateOf(true) }
+    val image by remember {
+        derivedStateOf {
+            if (horImageSelected.value) {
+                if (smallImageSelected.value) horSmall else horBig
+            } else {
+                if (smallImageSelected.value) verSmall else verBig
+            }
+        }
+    }
+    val alignmentMenuExpanded = remember { mutableStateOf(false) }
+    val alignmentState = remember { mutableStateOf(Alignment.Center) }
+    val alignmentList = remember {
         listOf(
-            ContentScale.Fit to "Fit",
-            ContentScale.Crop to "Crop",
-            ContentScale.Inside to "Inside",
-            ContentScale.FillWidth to "FillWidth",
-            ContentScale.FillHeight to "FillHeight",
-            ContentScale.FillBounds to "FillBounds",
-            ContentScale.None to "None",
+            Alignment.TopStart,
+            Alignment.TopCenter,
+            Alignment.TopEnd,
+            Alignment.CenterStart,
+            Alignment.Center,
+            Alignment.CenterEnd,
+            Alignment.BottomStart,
+            Alignment.BottomCenter,
+            Alignment.BottomEnd,
         )
     }
-    val images = remember {
-        val horBig = PhotoItem(horPhoto, "横向图片 - 大", true)
-        val horSmall = PhotoItem(horPhoto, "横向图片 - 小", false)
-        val verBig = PhotoItem(verPhoto, "纵向图片 - 大", true)
-        val verSmall = PhotoItem(verPhoto, "纵向图片 - 小", false)
-        listOf(horBig, verBig, horSmall, verSmall)
-    }
-    ExpandableItem3(title = "CoilAsyncImage（contentScale）", allExpandFlow, padding = 20.dp) {
-        scales.forEachIndexed { index, scale ->
-            if (index != 0) {
-                Spacer(modifier = Modifier.size(10.dp))
-            }
-            Row {
-                Text(
-                    text = scale.second,
-                    modifier = Modifier
-                        .size(80.dp)
-                        .padding(top = 18.dp),
+    ExpandableItem3(title = "Image（contentScale）", allExpandFlow, padding = 20.dp) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "图片比例", modifier = Modifier.weight(1f))
+            TitleRadioButton(
+                selected = horImageSelected.value,
+                title = "横图",
+                onClick = {
+                    horImageSelected.value = true
+                },
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+            TitleRadioButton(
+                selected = !horImageSelected.value,
+                title = "竖图",
+                onClick = {
+                    horImageSelected.value = false
+                },
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "图片大小", modifier = Modifier.weight(1f))
+            TitleRadioButton(
+                selected = smallImageSelected.value,
+                title = "小图",
+                onClick = {
+                    smallImageSelected.value = true
+                },
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+            TitleRadioButton(
+                selected = !smallImageSelected.value,
+                title = "大图",
+                onClick = {
+                    smallImageSelected.value = false
+                },
+            )
+        }
+        Row {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .clickable {
+                        alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                    },
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(text = "Alignment", Modifier.weight(1f))
+                Spacer(modifier = Modifier.size(20.dp))
+                Text(text = alignmentState.value.name)
+                Icon(
+                    imageVector = if (alignmentMenuExpanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                    contentDescription = ""
                 )
-                Spacer(modifier = Modifier.size(10.dp))
-                VerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    images.forEach { photoItem ->
-                        BoxWithConstraints {
-                            val viewSize = maxWidth
-                            val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
-                            val targetSize = photoItem.photo
-                                .calculateTargetSize(viewSizePx.toInt(), photoItem.big)
-                            Column {
-                                Text(
-                                    text = photoItem.name,
-                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                )
-                                AsyncImage(
-                                    model = ImageRequest.Builder(context)
-                                        .data(context.newCoilResourceUri(photoItem.photo.resId))
-                                        .placeholder(R.drawable.im_placeholder)
-                                        .size(targetSize.width.toInt(), targetSize.height.toInt())
-                                        .precision(Precision.EXACT)
-                                        .build(),
-                                    contentDescription = "",
-                                    modifier = Modifier
-                                        .size(viewSize)
-                                        .background(MaterialTheme.colorScheme.primaryContainer)
-                                        .padding(2.dp),
-                                    contentScale = scale.first,
-                                )
-                            }
-                        }
+            }
+            DropdownMenu(
+                expanded = alignmentMenuExpanded.value,
+                onDismissRequest = {
+                    alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                },
+            ) {
+                alignmentList.forEachIndexed { index, alignment ->
+                    if (index > 0) {
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp)
+                        )
+                    }
+                    DropdownMenuItem(onClick = {
+                        alignmentState.value = alignment
+                        alignmentMenuExpanded.value = !alignmentMenuExpanded.value
+                    }) {
+                        Text(text = alignment.name)
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
+        VerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            listOf(
+                ContentScale.None,
+                ContentScale.Inside,
+                ContentScale.Fit,
+                ContentScale.FillWidth,
+                ContentScale.FillHeight,
+                ContentScale.FillBounds,
+                ContentScale.Crop,
+            ).forEach { contentScale ->
+                BoxWithConstraints {
+                    val viewSize = maxWidth
+                    val viewSizePx = with(LocalDensity.current) { viewSize.toPx() }
+                    val targetSize = image.calculateTargetSize(viewSizePx.toInt())
+                    Column {
+                        Text(
+                            text = contentScale.name,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        AsyncImage(
+                            model = ImageRequest.Builder(context)
+                                .data(context.newCoilResourceUri(image.photo.resId))
+                                .placeholder(R.drawable.im_placeholder)
+                                .size(targetSize.width.toInt(), targetSize.height.toInt())
+                                .precision(Precision.EXACT)
+                                .build(),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(viewSize)
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(2.dp),
+                            contentScale = contentScale,
+                            alignment = alignmentState.value,
+                        )
                     }
                 }
             }

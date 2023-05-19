@@ -133,11 +133,11 @@ data class Photo(@DrawableRes val resId: Int, val aspectRatio: Float) {
 
     fun calculateTargetSize(viewSize: Int, toBig: Boolean): Size {
         return if (aspectRatio >= 1f) {
-            val targetWidth = if (toBig) viewSize * 1.5f else viewSize / 2f
+            val targetWidth = if (toBig) viewSize * 3f else viewSize / 2f
             val targetHeight = (targetWidth / aspectRatio)
             Size(targetWidth, targetHeight)
         } else {
-            val targetHeight = if (toBig) viewSize * 1.5f else viewSize / 2f
+            val targetHeight = if (toBig) viewSize * 3f else viewSize / 2f
             val targetWidth = (targetHeight * aspectRatio)
             Size(targetWidth, targetHeight)
         }
@@ -154,6 +154,10 @@ data class PhotoItem(val photo: Photo, val name: String, val big: Boolean) {
     private var cacheBitmap: Bitmap? = null
     private var cacheViewSize: Int? = null
 
+    fun calculateTargetSize(viewSize: Int): Size {
+        return photo.calculateTargetSize(viewSize, big)
+    }
+
     fun getBitmap(context: Context, viewSize: Int): Bitmap {
         if (viewSize != cacheViewSize) {
             cacheBitmap = null
@@ -167,6 +171,7 @@ data class PhotoItem(val photo: Photo, val name: String, val big: Boolean) {
             .let { it as BitmapDrawable }.bitmap
         return bitmap.scale(targetSize.width.toInt(), targetSize.height.toInt()).apply {
             this@PhotoItem.cacheBitmap = this
+            this@PhotoItem.cacheViewSize = viewSize
         }
     }
 }
