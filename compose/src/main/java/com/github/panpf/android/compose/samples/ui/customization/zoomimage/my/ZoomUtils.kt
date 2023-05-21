@@ -139,13 +139,20 @@ internal fun computeScaleTargetTranslation(
     containerCentroid: Centroid
 ): Offset {
     if (containerSize.isUnspecified || containerCentroid.isUnspecified) return Offset.Zero
-    val newScaledContainerSize = containerSize.times(scale)
-    return Offset(
-        x = (((newScaledContainerSize.width * containerCentroid.x) - (containerSize.width / 2)) * -1)
-            .coerceIn(-newScaledContainerSize.width, 0f),
-        y = (((newScaledContainerSize.height * containerCentroid.y) - (containerSize.height / 2)) * -1)
-            .coerceIn(-newScaledContainerSize.height, 0f)
+    val scaledContainerSize = containerSize.times(scale)
+    val scaledContainerOffset = Offset(
+        x = scaledContainerSize.width * containerCentroid.x,
+        y = scaledContainerSize.height * containerCentroid.y,
     )
+    return Offset(
+        x = scaledContainerOffset.x - (containerSize.width / 2),
+        y = scaledContainerOffset.y - (containerSize.height / 2),
+    ).run {
+        Offset(
+            x = (x * -1).coerceIn(-scaledContainerSize.width, 0f),
+            y = (y * -1).coerceIn(-scaledContainerSize.height, 0f)
+        )
+    }
 }
 
 internal fun computeTranslationBounds(
@@ -237,8 +244,8 @@ internal fun computeContainerVisibleRect(
         bottom = (translationY.absoluteValue + containerSize.height)
             .coerceAtMost(scaledContainerSize.height)
     }
-    val scaledVisibleRect = Rect(left = left, top = top, right = right, bottom = bottom)
-    return scaledVisibleRect.restoreScale(scale)
+    return Rect(left = left, top = top, right = right, bottom = bottom)
+        .restoreScale(scale)
 }
 
 fun computeContentVisibleRect(

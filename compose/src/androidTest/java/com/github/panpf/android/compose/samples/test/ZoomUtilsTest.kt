@@ -49,6 +49,55 @@ class ZoomUtilsTest {
         return this
     }
 
+    data class Item2(
+        val contentScale: ContentScale,
+        val contentAlignment: Alignment,
+        val expected: Centroid
+    ) {
+        fun getMessage(
+            containerSize: Size,
+            contentSize: Size,
+            containerCentroid: Centroid
+        ): String {
+            return "Item2(containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, contentAlignment=${contentAlignment.name}, containerCentroid=${containerCentroid.toShortString()})"
+        }
+    }
+
+    private fun List<Item2>.printlnExpectedMessage2(computeExpected: (Item2) -> Centroid): List<Item2> {
+        this.map {
+            val expected = computeExpected(it)
+            "Item2(ContentScale.${it.contentScale.name}, Alignment.${it.contentAlignment.name}, Centroid(${expected.run { "${x}f,${y}f" }}))"
+        }.apply {
+            Assert.fail(joinToString(separator = ", \n", postfix = ","))
+        }
+        return this
+    }
+
+    data class Item3(
+        val translation: Offset,
+        val expected: Rect
+    ) {
+        fun getMessage(
+            containerSize: Size,
+            contentSize: Size,
+            contentScale: ContentScale,
+            contentAlignment: Alignment,
+            scale: Float
+        ): String {
+            return "Item3(containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, contentAlignment=${contentAlignment.name}, scale=$scale, translation=${translation.toShortString()})"
+        }
+    }
+
+    private fun List<Item3>.printlnExpectedMessage3(computeExpected: (Item3) -> Rect): List<Item3> {
+        this.map {
+            val visibleRect = computeExpected(it)
+            "Offset(${it.translation.x}f, ${it.translation.y}f) to Rect(${visibleRect.left}f, ${visibleRect.top}f, ${visibleRect.right}f, ${visibleRect.bottom}f)"
+        }.apply {
+            Assert.fail(joinToString(separator = ", \n"))
+        }
+        return this
+    }
+
     @Test
     fun testComputeContentInContainerRect() {
         val containerSize = Size(1000f, 1000f)
@@ -801,69 +850,69 @@ class ZoomUtilsTest {
         var contentSize = Size(800f, 400f)
         var scale = 1f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -891,69 +940,69 @@ class ZoomUtilsTest {
         contentSize = Size(400f, 800f)
         scale = 1f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -981,69 +1030,69 @@ class ZoomUtilsTest {
         contentSize = Size(1600f, 1200f)
         scale = 1f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1071,69 +1120,69 @@ class ZoomUtilsTest {
         contentSize = Size(1200f, 1600f)
         scale = 1f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f,0.0f,0.0f,0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f,0.0f,0.0f,0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(0.0f, 0.0f, 0.0f, 0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1161,69 +1210,185 @@ class ZoomUtilsTest {
         contentSize = Size(800f, 400f)
         scale = 2f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(-600.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(-800.0f,0.0f,-200.0f,0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f,0.0f,-400.0f,0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(-600.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(-800.0f,-500.0f,-200.0f,-500.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f,-500.0f,-400.0f,-500.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(-600.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(-800.0f,-1000.0f,-200.0f,-1000.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-400.0f,-1000.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(-600.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-800.0f,0.0f,-200.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f,0.0f,-400.0f,0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(-600.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(-800.0f,-500.0f,-200.0f,-500.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(-1000.0f,-500.0f,-400.0f,-500.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(-600.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(-800.0f,-1000.0f,-200.0f,-1000.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-400.0f,-1000.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f,0.0f,-0.0f,0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(-1000.0f,-500.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-1000.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(-600.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(-800.0f, 0.0f, -200.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f, 0.0f, -400.0f, 0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(-600.0f, -500.0f, -0.0f, -500.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(-800.0f, -500.0f, -200.0f, -500.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f, -500.0f, -400.0f, -500.0f)),
+            Item(
+                ContentScale.None,
+                Alignment.BottomStart,
+                Rect(-600.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.None,
+                Alignment.BottomCenter,
+                Rect(-800.0f, -1000.0f, -200.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.None,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -400.0f, -1000.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(-600.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-800.0f, 0.0f, -200.0f, 0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f, 0.0f, -400.0f, 0.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.CenterStart,
+                Rect(-600.0f, -500.0f, -0.0f, -500.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.Center, Rect(-800.0f, -500.0f, -200.0f, -500.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -500.0f, -400.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomStart,
+                Rect(-600.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomCenter,
+                Rect(-800.0f, -1000.0f, -200.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -400.0f, -1000.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-1000.0f, -500.0f, -0.0f, -500.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(-1000.0f, -500.0f, -0.0f, -500.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f, -500.0f, -0.0f, -500.0f)),
+            Item(
+                ContentScale.Fit,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.Fit,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f, 0.0f, -0.0f, 0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -500.0f, -0.0f, -500.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f, -500.0f, -0.0f, -500.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -500.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -1000.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1251,69 +1416,173 @@ class ZoomUtilsTest {
         contentSize = Size(400f, 800f)
         scale = 2f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f,-600.0f,0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(-500.0f,-600.0f,-500.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f,-600.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f,-800.0f,0.0f,-200.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(-500.0f,-800.0f,-500.0f,-200.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f,-800.0f,-1000.0f,-200.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f,-1000.0f,0.0f,-400.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(-500.0f,-1000.0f,-500.0f,-400.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-400.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f,-600.0f,0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-500.0f,-600.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f,-600.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f,-800.0f,0.0f,-200.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(-500.0f,-800.0f,-500.0f,-200.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(-1000.0f,-800.0f,-1000.0f,-200.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f,-1000.0f,0.0f,-400.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(-500.0f,-1000.0f,-500.0f,-400.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-400.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f,-1000.0f,0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(-500.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-1000.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(0.0f, -600.0f, 0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(-500.0f, -600.0f, -500.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f, -600.0f, -1000.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(0.0f, -800.0f, 0.0f, -200.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(-500.0f, -800.0f, -500.0f, -200.0f)),
+            Item(
+                ContentScale.None,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -800.0f, -1000.0f, -200.0f)
+            ),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(0.0f, -1000.0f, 0.0f, -400.0f)),
+            Item(
+                ContentScale.None,
+                Alignment.BottomCenter,
+                Rect(-500.0f, -1000.0f, -500.0f, -400.0f)
+            ),
+            Item(
+                ContentScale.None,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -1000.0f, -400.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(0.0f, -600.0f, 0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-500.0f, -600.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f, -600.0f, -1000.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(0.0f, -800.0f, 0.0f, -200.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(-500.0f, -800.0f, -500.0f, -200.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -800.0f, -1000.0f, -200.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(0.0f, -1000.0f, 0.0f, -400.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomCenter,
+                Rect(-500.0f, -1000.0f, -500.0f, -400.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -1000.0f, -400.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-500.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(-500.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-500.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopCenter,
+                Rect(-500.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopEnd,
+                Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.Center,
+                Rect(-500.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(0.0f, -1000.0f, 0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomCenter,
+                Rect(-500.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -1000.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1341,69 +1610,169 @@ class ZoomUtilsTest {
         contentSize = Size(1600f, 1200f)
         scale = 2f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f,-500.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(-1000.0f,-750.0f,-0.0f,-250.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-500.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -750.0f, -0.0f, -250.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.Center, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)),
+            Item(
+                ContentScale.Fit,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)),
+            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -500.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f, -500.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -750.0f, -0.0f, -250.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f, -750.0f, -0.0f, -250.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -750.0f, -0.0f, -250.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -500.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillHeight, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1431,69 +1800,173 @@ class ZoomUtilsTest {
         contentSize = Size(1200f, 1600f)
         scale = 2f
         listOf(
-            Item(ContentScale.None, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.Center, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Inside, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.Center, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillWidth, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.Center, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomStart, Rect(-500.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomCenter, Rect(-750.0f,-1000.0f,-250.0f,-0.0f)),
-            Item(ContentScale.FillHeight, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-500.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.FillBounds, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
-            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f,-1000.0f,-0.0f,-0.0f)),
+            Item(ContentScale.None, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.None, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopCenter, Rect(-750.0f, -1000.0f, -250.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.CenterStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Inside, Alignment.Center, Rect(-750.0f, -1000.0f, -250.0f, -0.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(ContentScale.Inside, Alignment.BottomStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomCenter,
+                Rect(-750.0f, -1000.0f, -250.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.Inside,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(ContentScale.Fit, Alignment.TopStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopCenter, Rect(-750.0f, -1000.0f, -250.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.Center, Rect(-750.0f, -1000.0f, -250.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomStart, Rect(-500.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomCenter, Rect(-750.0f, -1000.0f, -250.0f, -0.0f)),
+            Item(ContentScale.Fit, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillWidth, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillWidth,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopStart,
+                Rect(-500.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopCenter,
+                Rect(-750.0f, -1000.0f, -250.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.TopEnd,
+                Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterStart,
+                Rect(-500.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.Center,
+                Rect(-750.0f, -1000.0f, -250.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomStart,
+                Rect(-500.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomCenter,
+                Rect(-750.0f, -1000.0f, -250.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillHeight,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -500.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.TopCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.FillBounds, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.CenterEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomStart,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomCenter,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(
+                ContentScale.FillBounds,
+                Alignment.BottomEnd,
+                Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)
+            ),
+            Item(ContentScale.Crop, Alignment.TopStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.TopEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.Center, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.CenterEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomStart, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomCenter, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
+            Item(ContentScale.Crop, Alignment.BottomEnd, Rect(-1000.0f, -1000.0f, -0.0f, -0.0f)),
 //        ).printlnExpectedMessage(
 //            computeExpected =  {
 //                computeTranslationBounds(
@@ -1568,189 +2041,349 @@ class ZoomUtilsTest {
 
     @Test
     fun testComputeContentVisibleRect() {
-        val containerSize = Size(1000f, 2000f)
-        val contentSize = Size(800f, 1200f)
-
+        var containerSize = Size(1000f, 2000f)
+        var contentSize = Size(800f, 1200f)
         var contentScale = ContentScale.Fit
         var contentAlignment = Alignment.Center
         var scale = 1f
         listOf(
-            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
-            Offset(250f, 500f) to Rect(0f, 0f, 600f, 1000f),
-            Offset(750f, 500f) to Rect(0f, 0f, 200f, 1000f),
-            Offset(250f, 1500f) to Rect(0f, 0f, 600f, 200f),
-            Offset(750f, 1500f) to Rect(0f, 0f, 200f, 200f),
-            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-            Offset(-250f, -500f) to Rect(200f, 200f, 800f, 1200f),
-            Offset(-750f, -500f) to Rect(600f, 200f, 800f, 1200f),
-            Offset(-250f, -1500f) to Rect(200f, 1000f, 800f, 1200f),
-            Offset(-750f, -1500f) to Rect(600f, 1000f, 800f, 1200f),
-            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f),
-        ).forEach { (translation, expectedVisibleRect) ->
+            Item3(Offset(0f, 0f), Rect(0f, 0f, 800f, 1200f)),
+            Item3(Offset(250f, 500f), Rect(0f, 0f, 600f, 1000f)),
+            Item3(Offset(750f, 500f), Rect(0f, 0f, 200f, 1000f)),
+            Item3(Offset(250f, 1500f), Rect(0f, 0f, 600f, 200f)),
+            Item3(Offset(750f, 1500f), Rect(0f, 0f, 200f, 200f)),
+            Item3(Offset(1000f, 2000f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(-250f, -500f), Rect(200f, 200f, 800f, 1200f)),
+            Item3(Offset(-750f, -500f), Rect(600f, 200f, 800f, 1200f)),
+            Item3(Offset(-250f, -1500f), Rect(200f, 1000f, 800f, 1200f)),
+            Item3(Offset(-750f, -1500f), Rect(600f, 1000f, 800f, 1200f)),
+            Item3(Offset(-1000f, -2000f), Rect(0f, 0f, 0f, 0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
-                expectedVisibleRect,
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
                 computeContentVisibleRect(
                     containerSize = containerSize,
                     contentSize = contentSize,
                     contentScale = contentScale,
                     contentAlignment = contentAlignment,
                     scale = scale,
-                    translation = translation
+                    translation = it.translation
                 )
             )
         }
 
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(800f, 1200f)
         contentScale = ContentScale.Fit
         contentAlignment = Alignment.Center
         scale = 2f
         listOf(
-            Offset(0f, 0f) to Rect(0f, 0f, 400f, 600f),
-            Offset(250f, 500f) to Rect(0f, 0f, 300f, 400f),
-            Offset(750f, 500f) to Rect(0f, 0f, 100f, 400f),
-            Offset(250f, 1500f) to Rect(0f, 0f, 0f, 0f),
-            Offset(750f, 1500f) to Rect(0f, 0f, 0f, 0f),
-            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-            Offset(-250f, -500f) to Rect(100f, 0f, 500f, 800f),
-            Offset(-750f, -500f) to Rect(300f, 0f, 700f, 800f),
-            Offset(-250f, -1500f) to Rect(100f, 400f, 500f, 1200f),
-            Offset(-750f, -1500f) to Rect(300f, 400f, 700f, 1200f),
-            Offset(-1000f, -2000f) to Rect(400f, 600f, 800f, 1200f)
-        ).forEach { (translation, expectedVisibleRect) ->
+            Item3(Offset(0f, 0f), Rect(0f, 0f, 400f, 600f)),
+            Item3(Offset(250f, 500f), Rect(0f, 0f, 300f, 400f)),
+            Item3(Offset(750f, 500f), Rect(0f, 0f, 100f, 400f)),
+            Item3(Offset(250f, 1500f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(750f, 1500f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(1000f, 2000f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(-250f, -500f), Rect(100f, 0f, 500f, 800f)),
+            Item3(Offset(-750f, -500f), Rect(300f, 0f, 700f, 800f)),
+            Item3(Offset(-250f, -1500f), Rect(100f, 400f, 500f, 1200f)),
+            Item3(Offset(-750f, -1500f), Rect(300f, 400f, 700f, 1200f)),
+            Item3(Offset(-1000f, -2000f), Rect(400f, 600f, 800f, 1200f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
-                expectedVisibleRect,
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
                 computeContentVisibleRect(
                     containerSize = containerSize,
                     contentSize = contentSize,
                     contentScale = contentScale,
                     contentAlignment = contentAlignment,
                     scale = scale,
-                    translation = translation
+                    translation = it.translation
                 )
             )
         }
 
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(800f, 1200f)
         contentScale = ContentScale.Inside
         contentAlignment = Alignment.Center
         scale = 1f
         listOf(
-            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
-            Offset(250f, 500f) to Rect(0f, 0f, 650f, 1100f),
-            Offset(750f, 500f) to Rect(0f, 0f, 150f, 1100f),
-            Offset(250f, 1500f) to Rect(0f, 0f, 650f, 100f),
-            Offset(750f, 1500f) to Rect(0f, 0f, 150f, 100f),
-            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-            Offset(-250f, -500f) to Rect(150f, 100f, 800f, 1200f),
-            Offset(-750f, -500f) to Rect(650f, 100f, 800f, 1200f),
-            Offset(-250f, -1500f) to Rect(150f, 1100f, 800f, 1200f),
-            Offset(-750f, -1500f) to Rect(650f, 1100f, 800f, 1200f),
-            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f)
-        ).forEach { (translation, expectedVisibleRect) ->
+            Item3(Offset(0f, 0f), Rect(0f, 0f, 800f, 1200f)),
+            Item3(Offset(250f, 500f), Rect(0f, 0f, 650f, 1100f)),
+            Item3(Offset(750f, 500f), Rect(0f, 0f, 150f, 1100f)),
+            Item3(Offset(250f, 1500f), Rect(0f, 0f, 650f, 100f)),
+            Item3(Offset(750f, 1500f), Rect(0f, 0f, 150f, 100f)),
+            Item3(Offset(1000f, 2000f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(-250f, -500f), Rect(150f, 100f, 800f, 1200f)),
+            Item3(Offset(-750f, -500f), Rect(650f, 100f, 800f, 1200f)),
+            Item3(Offset(-250f, -1500f), Rect(150f, 1100f, 800f, 1200f)),
+            Item3(Offset(-750f, -1500f), Rect(650f, 1100f, 800f, 1200f)),
+            Item3(Offset(-1000f, -2000f), Rect(0f, 0f, 0f, 0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
-                expectedVisibleRect,
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
                 computeContentVisibleRect(
                     containerSize = containerSize,
                     contentSize = contentSize,
                     contentScale = contentScale,
                     contentAlignment = contentAlignment,
                     scale = scale,
-                    translation = translation
+                    translation = it.translation
                 )
             )
         }
 
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(800f, 1200f)
         contentScale = ContentScale.Inside
         contentAlignment = Alignment.Center
         scale = 2f
         listOf(
-            Offset(0f, 0f) to Rect(0f, 0f, 400f, 600f),
-            Offset(250f, 500f) to Rect(0f, 0f, 275f, 350f),
-            Offset(750f, 500f) to Rect(0f, 0f, 25f, 350f),
-            Offset(250f, 1500f) to Rect(0f, 0f, 0f, 0f),
-            Offset(750f, 1500f) to Rect(0f, 0f, 0f, 0f),
-            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-            Offset(-250f, -500f) to Rect(25f, 0f, 525f, 850f),
-            Offset(-750f, -500f) to Rect(275f, 0f, 775f, 850f),
-            Offset(-250f, -1500f) to Rect(25f, 350f, 525f, 1200f),
-            Offset(-750f, -1500f) to Rect(275f, 350f, 775f, 1200f),
-            Offset(-1000f, -2000f) to Rect(400f, 600f, 800f, 1200f)
-        ).forEach { (translation, expectedVisibleRect) ->
+            Item3(Offset(0f, 0f), Rect(0f, 0f, 400f, 600f)),
+            Item3(Offset(250f, 500f), Rect(0f, 0f, 275f, 350f)),
+            Item3(Offset(750f, 500f), Rect(0f, 0f, 25f, 350f)),
+            Item3(Offset(250f, 1500f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(750f, 1500f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(1000f, 2000f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(-250f, -500f), Rect(25f, 0f, 525f, 850f)),
+            Item3(Offset(-750f, -500f), Rect(275f, 0f, 775f, 850f)),
+            Item3(Offset(-250f, -1500f), Rect(25f, 350f, 525f, 1200f)),
+            Item3(Offset(-750f, -1500f), Rect(275f, 350f, 775f, 1200f)),
+            Item3(Offset(-1000f, -2000f), Rect(400f, 600f, 800f, 1200f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=$containerSize, contentSize=$contentSize, contentScale=$contentScale, contentAlignment=$contentAlignment, scale=$scale, translation=$translation",
-                expectedVisibleRect,
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
                 computeContentVisibleRect(
                     containerSize = containerSize,
                     contentSize = contentSize,
                     contentScale = contentScale,
                     contentAlignment = contentAlignment,
                     scale = scale,
-                    translation = translation
+                    translation = it.translation
                 )
             )
         }
 
-//        val containerSize = Size(1000f, 2000f)
-//        val contentSize = Size(800f, 1200f)
-//        val scaledContentSize = Size(1000f, 1500f)
-        // todo test crop, FillWidth, FillHeight, None
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(800f, 1200f)
         contentScale = ContentScale.Crop
         contentAlignment = Alignment.Center
         scale = 1f
         listOf(
-            Offset(0f, 0f) to Rect(99.99998f, 0f, 700f, 1200f),
-            Offset(250f, 500f) to Rect(99.99998f, 0f, 550f, 900f),
-            Offset(750f, 500f) to Rect(99.99998f, 0f, 249.99997f, 900f),
-            Offset(250f, 1500f) to Rect(99.99998f, 0f, 550f, 300f),
-            Offset(750f, 1500f) to Rect(99.99998f, 0f, 249.99997f, 300f),
-            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-            Offset(-250f, -500f) to Rect(249.99997f, 300f, 700f, 1200f),
-            Offset(-750f, -500f) to Rect(550f, 300f, 700f, 1200f),
-            Offset(-250f, -1500f) to Rect(249.99997f, 900f, 700f, 1200f),
-            Offset(-750f, -1500f) to Rect(550f, 900f, 700f, 1200f),
-            Offset(-1000f, -2000f) to Rect(0f, 0f, 0f, 0f)
-        ).forEach { (translation, expectedVisibleRect) ->
+            Item3(Offset(0f, 0f), Rect(99.99998f, 0f, 700f, 1200f)),
+            Item3(Offset(250f, 500f), Rect(99.99998f, 0f, 550f, 900f)),
+            Item3(Offset(750f, 500f), Rect(99.99998f, 0f, 249.99997f, 900f)),
+            Item3(Offset(250f, 1500f), Rect(99.99998f, 0f, 550f, 300f)),
+            Item3(Offset(750f, 1500f), Rect(99.99998f, 0f, 249.99997f, 300f)),
+            Item3(Offset(1000f, 2000f), Rect(0f, 0f, 0f, 0f)),
+            Item3(Offset(-250f, -500f), Rect(249.99997f, 300f, 700f, 1200f)),
+            Item3(Offset(-750f, -500f), Rect(550f, 300f, 700f, 1200f)),
+            Item3(Offset(-250f, -1500f), Rect(249.99997f, 900f, 700f, 1200f)),
+            Item3(Offset(-750f, -1500f), Rect(550f, 900f, 700f, 1200f)),
+            Item3(Offset(-1000f, -2000f), Rect(0f, 0f, 0f, 0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=$containerSize, contentSize=$contentSize, contentScale=${contentScale.name}, contentAlignment=${contentAlignment.name}, scale=$scale, translation=$translation",
-                expectedVisibleRect,
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
                 computeContentVisibleRect(
                     containerSize = containerSize,
                     contentSize = contentSize,
                     contentScale = contentScale,
                     contentAlignment = contentAlignment,
                     scale = scale,
-                    translation = translation
+                    translation = it.translation
                 )
             )
         }
-//        listOf(
-//            Offset(0f, 0f) to Rect(0f, 0f, 800f, 1200f),
-//            Offset(250f, 500f) to Rect(0f, 0f, 275f, 350f),
-//            Offset(750f, 500f) to Rect(0f, 0f, 25f, 350f),
-//            Offset(250f, 1500f) to Rect(0f, 0f, 0f, 0f),
-//            Offset(750f, 1500f) to Rect(0f, 0f, 0f, 0f),
-//            Offset(1000f, 2000f) to Rect(0f, 0f, 0f, 0f),
-//            Offset(-250f, -500f) to Rect(25f, 0f, 525f, 850f),
-//            Offset(-750f, -500f) to Rect(275f, 0f, 775f, 850f),
-//            Offset(-250f, -1500f) to Rect(25f, 350f, 525f, 1200f),
-//            Offset(-750f, -1500f) to Rect(275f, 350f, 775f, 1200f),
-//            Offset(-1000f, -2000f) to Rect(400f, 600f, 800f, 1200f)
-//        ).map { (translation, expectedVisibleRect) ->
-//            translation to computeContentVisibleRect(
-//                containerSize = containerSize,
-//                contentSize = contentSize,
-//                contentScale = contentScale,
-//                contentAlignment = contentAlignment,
-//                scale = scale,
-//                translation = translation
-//            )
-//        }.apply {
-//            val message = this.joinToString(separator = ", \n") {(translation, visibleRect) ->
-//                "Offset(${translation.x}f, ${translation.y}f) to Rect(${visibleRect.left}f, ${visibleRect.top}f, ${visibleRect.right}f, ${visibleRect.bottom}f)"
+
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(800f, 1200f)
+        contentScale = ContentScale.Crop
+        contentAlignment = Alignment.Center
+        scale = 2f
+        listOf(
+            Item3(Offset(0.0f, 0.0f), Rect(99.99998f, 0.0f, 399.99997f, 600.0f)),
+            Item3(Offset(250.0f, 500.0f), Rect(99.99998f, 0.0f, 324.99997f, 450.0f)),
+            Item3(Offset(750.0f, 500.0f), Rect(99.99998f, 0.0f, 174.99997f, 450.0f)),
+            Item3(Offset(250.0f, 1500.0f), Rect(99.99998f, 0.0f, 324.99997f, 150.0f)),
+            Item3(Offset(750.0f, 1500.0f), Rect(99.99998f, 0.0f, 174.99997f, 150.0f)),
+            Item3(Offset(1000.0f, 2000.0f), Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item3(Offset(-250.0f, -500.0f), Rect(174.99997f, 150.0f, 474.99997f, 750.0f)),
+            Item3(Offset(-750.0f, -500.0f), Rect(324.99997f, 150.0f, 625.0f, 750.0f)),
+            Item3(Offset(-250.0f, -1500.0f), Rect(174.99997f, 450.0f, 474.99997f, 1050.0f)),
+            Item3(Offset(-750.0f, -1500.0f), Rect(324.99997f, 450.0f, 625.0f, 1050.0f)),
+            Item3(Offset(-1000.0f, -2000.0f), Rect(399.99997f, 600.0f, 700.0f, 1200.0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
 //            }
-//            Assert.fail(message)
-//        }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = it.translation
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(containerSize.width * 1.5f, containerSize.height * 1.3f)
+        contentScale = ContentScale.None
+        contentAlignment = Alignment.Center
+        scale = 1f
+        listOf(
+            Item3(Offset(0.0f, 0.0f), Rect(250.0f, 300.0f, 1250.0f, 2300.0f)),
+            Item3(Offset(250.0f, 500.0f), Rect(250.0f, 300.0f, 1000.0f, 1800.0f)),
+            Item3(Offset(750.0f, 500.0f), Rect(250.0f, 300.0f, 500.0f, 1800.0f)),
+            Item3(Offset(250.0f, 1500.0f), Rect(250.0f, 300.0f, 1000.0f, 800.0f)),
+            Item3(Offset(750.0f, 1500.0f), Rect(250.0f, 300.0f, 500.0f, 800.0f)),
+            Item3(Offset(1000.0f, 2000.0f), Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item3(Offset(-250.0f, -500.0f), Rect(500.0f, 800.0f, 1250.0f, 2300.0f)),
+            Item3(Offset(-750.0f, -500.0f), Rect(1000.0f, 800.0f, 1250.0f, 2300.0f)),
+            Item3(Offset(-250.0f, -1500.0f), Rect(500.0f, 1800.0f, 1250.0f, 2300.0f)),
+            Item3(Offset(-750.0f, -1500.0f), Rect(1000.0f, 1800.0f, 1250.0f, 2300.0f)),
+            Item3(Offset(-1000.0f, -2000.0f), Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = it.translation
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 2000f)
+        contentSize = Size(containerSize.width * 1.5f, containerSize.height * 1.3f)
+        contentScale = ContentScale.None
+        contentAlignment = Alignment.Center
+        scale = 2f
+        listOf(
+            Item3(Offset(0.0f, 0.0f), Rect(250.0f, 300.0f, 750.0f, 1300.0f)),
+            Item3(Offset(250.0f, 500.0f), Rect(250.0f, 300.0f, 625.0f, 1050.0f)),
+            Item3(Offset(750.0f, 500.0f), Rect(250.0f, 300.0f, 375.0f, 1050.0f)),
+            Item3(Offset(250.0f, 1500.0f), Rect(250.0f, 300.0f, 625.0f, 550.0f)),
+            Item3(Offset(750.0f, 1500.0f), Rect(250.0f, 300.0f, 375.0f, 550.0f)),
+            Item3(Offset(1000.0f, 2000.0f), Rect(0.0f, 0.0f, 0.0f, 0.0f)),
+            Item3(Offset(-250.0f, -500.0f), Rect(375.0f, 550.0f, 875.0f, 1550.0f)),
+            Item3(Offset(-750.0f, -500.0f), Rect(625.0f, 550.0f, 1125.0f, 1550.0f)),
+            Item3(Offset(-250.0f, -1500.0f), Rect(375.0f, 1050.0f, 875.0f, 2050.0f)),
+            Item3(Offset(-750.0f, -1500.0f), Rect(625.0f, 1050.0f, 1125.0f, 2050.0f)),
+            Item3(Offset(-1000.0f, -2000.0f), Rect(750.0f, 1300.0f, 1250.0f, 2300.0f)),
+//        ).printlnExpectedMessage3(
+//            computeExpected = {
+//                computeContentVisibleRect(
+//                    containerSize = containerSize,
+//                    contentSize = contentSize,
+//                    contentScale = contentScale,
+//                    contentAlignment = contentAlignment,
+//                    scale = scale,
+//                    translation = it.translation
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, contentScale, contentAlignment, scale),
+                it.expected,
+                computeContentVisibleRect(
+                    containerSize = containerSize,
+                    contentSize = contentSize,
+                    contentScale = contentScale,
+                    contentAlignment = contentAlignment,
+                    scale = scale,
+                    translation = it.translation
+                )
+            )
+        }
     }
 
 
@@ -1881,101 +2514,735 @@ class ZoomUtilsTest {
 
     @Test
     fun testContainerCentroidToContentCentroid() {
-        val containerSize = Size(1000f, 2000f)
-        val contentSize = Size(800f, 200f)
-        var contentScale: ContentScale = ContentScale.None
-        val containerCentroid = Centroid(0.5f, 0.5f)
+        var containerSize = Size(1000f, 1000f)
+        var contentSize = Size(800f, 200f)
+        var containerCentroid = Centroid(0.5f, 0.5f)
         listOf(
-            Alignment.TopStart to Centroid(0.625f, 1f),
-            Alignment.TopCenter to Centroid(0.5f, 1f),
-            Alignment.TopEnd to Centroid(0.375f, 1f),
-            Alignment.CenterStart to Centroid(0.625f, 0.5f),
-            Alignment.Center to Centroid(0.5f, 0.5f),
-            Alignment.CenterEnd to Centroid(0.375f, 0.5f),
-            Alignment.BottomStart to Centroid(0.625f, 0f),
-            Alignment.BottomCenter to Centroid(0.5f, 0f),
-            Alignment.BottomEnd to Centroid(0.375f, 0f)
-        ).forEach { (alignment, expected) ->
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.625f,1.0f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.375f,1.0f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.625f,0.0f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.375f,0.0f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.625f,1.0f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.375f,1.0f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.625f,0.0f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.375f,0.0f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.875f,0.5f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                containerCentroidToContentCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, alignment=${alignment.name}, containerCentroid=${containerCentroid.toShortString()}",
-                expected,
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
                 containerCentroidToContentCentroid(
                     containerSize,
                     contentSize,
-                    contentScale,
-                    alignment,
+                    it.contentScale,
+                    it.contentAlignment,
                     containerCentroid
                 )
             )
         }
 
-        contentScale = ContentScale.Fit
-        val alignment = Alignment.Center
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(200f, 800f)
+        containerCentroid = Centroid(0.5f, 0.5f)
         listOf(
-            Centroid(0.2f, 0.2f) to (Centroid(0.2f, 0f) to Centroid(0.2f, 0.4375f)),
-            Centroid(0.55f, 0.55f) to (Centroid(0.55f, 0.9f) to Centroid(0.55f, 0.55f)),
-            Centroid(0.8f, 0.8f) to (Centroid(0.8f, 1f) to Centroid(0.8f, 0.5625f)),
-        ).forEach { (containerCentroid, pair) ->
-            val contentCentroid = containerCentroidToContentCentroid(
-                containerSize,
-                contentSize,
-                contentScale,
-                alignment,
-                containerCentroid
-            )
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(1.0f,0.625f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.0f,0.625f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(1.0f,0.375f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.0f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(1.0f,0.625f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.0f,0.625f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(1.0f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.0f,0.375f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.5f,0.875f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                containerCentroidToContentCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
             Assert.assertEquals(
-                "containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, alignment=${alignment.name}, containerCentroid=${containerCentroid.toShortString()}",
-                pair.first,
-                contentCentroid
-            )
-
-            val restoredContainerCentroid = contentCentroidToContainerCentroid(
-                containerSize,
-                contentSize,
-                contentScale,
-                alignment,
-                contentCentroid
-            )
-            Assert.assertEquals(
-                "containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, alignment=${alignment.name}, containerCentroid=${containerCentroid.toShortString()}",
-                pair.second,
-                restoredContainerCentroid
-            )
-        }
-
-        // todo test crop, FillWidth, FillHeight, None
-    }
-
-    @Test
-    fun testContentCentroidToContainerCentroid() {
-        val containerSize = Size(1000f, 2000f)
-        val contentSize = Size(800f, 200f)
-        val contentCentroid = Centroid(0.5f, 0.5f)
-        val contentScale: ContentScale = ContentScale.None
-        listOf(
-            Alignment.TopStart to Centroid(0.4f, 0.05f),
-            Alignment.TopCenter to Centroid(0.5f, 0.05f),
-            Alignment.TopEnd to Centroid(0.6f, 0.05f),
-            Alignment.CenterStart to Centroid(0.4f, 0.5f),
-            Alignment.Center to Centroid(0.5f, 0.5f),
-            Alignment.CenterEnd to Centroid(0.6f, 0.5f),
-            Alignment.BottomStart to Centroid(0.4f, 0.95f),
-            Alignment.BottomCenter to Centroid(0.5f, 0.95f),
-            Alignment.BottomEnd to Centroid(0.6f, 0.95f)
-        ).forEach { (alignment, expected) ->
-            Assert.assertEquals(
-                "containerSize=${containerSize.toShortString()}, contentSize=${contentSize.toShortString()}, contentScale=${contentScale.name}, alignment=${alignment.name}, contentCentroid=${contentCentroid.toShortString()}",
-                expected,
-                contentCentroidToContainerCentroid(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                containerCentroidToContentCentroid(
                     containerSize,
                     contentSize,
-                    contentScale,
-                    alignment,
-                    contentCentroid
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
                 )
             )
         }
 
-        // todo test crop, FillWidth, FillHeight, None
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(1600f, 1200f)
+        containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.3125f,0.41666666f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.41666666f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.6875f,0.41666666f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.3125f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.6875f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.3125f,0.5833333f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.5833333f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.6875f,0.5833333f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.6666667f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.33333334f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.62499994f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.62499994f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.62499994f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.62499994f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.62499994f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.49999997f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.62499994f,0.5f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                containerCentroidToContentCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                containerCentroidToContentCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(1200f, 1600f)
+        containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.41666666f,0.3125f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.3125f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.5833333f,0.3125f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.41666666f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.5833333f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.41666666f,0.6875f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.6875f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.5833333f,0.6875f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.62499994f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.62499994f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.62499994f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.6666667f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.33333334f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.5f,0.49999997f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.5f,0.62499994f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.62499994f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.5f,0.62499994f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                containerCentroidToContentCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                containerCentroidToContentCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
+    }
+
+    @Test
+    fun testContentCentroidToContainerCentroid() {
+        var containerSize = Size(1000f, 1000f)
+        var contentSize = Size(800f, 200f)
+        var containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.4f,0.1f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.1f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.6f,0.1f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.4f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.6f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.4f,0.9f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.9f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.6f,0.9f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.4f,0.1f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.1f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.6f,0.1f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.4f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.6f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.4f,0.9f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.9f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.6f,0.9f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.125f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.875f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.0f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(1.0f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.0f,0.5f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                contentCentroidToContainerCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                contentCentroidToContainerCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(200f, 800f)
+        containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.1f,0.4f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.4f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.9f,0.4f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.1f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.9f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.1f,0.6f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.6f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.9f,0.6f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.1f,0.4f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.4f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.9f,0.4f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.1f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.9f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.1f,0.6f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.6f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.9f,0.6f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.125f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.875f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.5f,1.0f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.0f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.5f,0.0f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                contentCentroidToContainerCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                contentCentroidToContainerCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(1600f, 1200f)
+        containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.8f,0.6f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.6f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.2f,0.6f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.8f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.2f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.8f,0.4f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.4f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.2f,0.4f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.375f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.625f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.3333334f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.3333334f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.3333334f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.3333334f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.3333334f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.6666666f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.50000006f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.3333334f,0.5f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                contentCentroidToContainerCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                contentCentroidToContainerCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
+
+        containerSize = Size(1000f, 1000f)
+        contentSize = Size(1200f, 1600f)
+        containerCentroid = Centroid(0.5f, 0.5f)
+        listOf(
+            Item2(ContentScale.None, Alignment.TopStart, Centroid(0.6f,0.8f)),
+            Item2(ContentScale.None, Alignment.TopCenter, Centroid(0.5f,0.8f)),
+            Item2(ContentScale.None, Alignment.TopEnd, Centroid(0.4f,0.8f)),
+            Item2(ContentScale.None, Alignment.CenterStart, Centroid(0.6f,0.5f)),
+            Item2(ContentScale.None, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.None, Alignment.CenterEnd, Centroid(0.4f,0.5f)),
+            Item2(ContentScale.None, Alignment.BottomStart, Centroid(0.6f,0.2f)),
+            Item2(ContentScale.None, Alignment.BottomCenter, Centroid(0.5f,0.2f)),
+            Item2(ContentScale.None, Alignment.BottomEnd, Centroid(0.4f,0.2f)),
+            Item2(ContentScale.Inside, Alignment.TopStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.TopEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.CenterEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Inside, Alignment.BottomEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.TopEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.CenterEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Fit, Alignment.BottomEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.FillWidth, Alignment.TopStart, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.FillWidth, Alignment.TopCenter, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.FillWidth, Alignment.TopEnd, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterStart, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.FillWidth, Alignment.Center, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.FillWidth, Alignment.CenterEnd, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomStart, Centroid(0.5f,0.3333334f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomCenter, Centroid(0.5f,0.3333334f)),
+            Item2(ContentScale.FillWidth, Alignment.BottomEnd, Centroid(0.5f,0.3333334f)),
+            Item2(ContentScale.FillHeight, Alignment.TopStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.TopEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.CenterEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomStart, Centroid(0.375f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillHeight, Alignment.BottomEnd, Centroid(0.625f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.TopEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.Center, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.CenterEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomStart, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomCenter, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.FillBounds, Alignment.BottomEnd, Centroid(0.5f,0.5f)),
+            Item2(ContentScale.Crop, Alignment.TopStart, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.Crop, Alignment.TopCenter, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.Crop, Alignment.TopEnd, Centroid(0.5f,0.6666666f)),
+            Item2(ContentScale.Crop, Alignment.CenterStart, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.Crop, Alignment.Center, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.Crop, Alignment.CenterEnd, Centroid(0.5f,0.50000006f)),
+            Item2(ContentScale.Crop, Alignment.BottomStart, Centroid(0.5f,0.3333334f)),
+            Item2(ContentScale.Crop, Alignment.BottomCenter, Centroid(0.5f,0.3333334f)),
+            Item2(ContentScale.Crop, Alignment.BottomEnd, Centroid(0.5f,0.3333334f)),
+//        ).printlnExpectedMessage2(
+//            computeExpected = {
+//                contentCentroidToContainerCentroid(
+//                    containerSize,
+//                    contentSize,
+//                    it.contentScale,
+//                    it.contentAlignment,
+//                    containerCentroid
+//                )
+//            }
+        ).forEach {
+            Assert.assertEquals(
+                it.getMessage(containerSize, contentSize, containerCentroid),
+                it.expected,
+                contentCentroidToContainerCentroid(
+                    containerSize,
+                    contentSize,
+                    it.contentScale,
+                    it.contentAlignment,
+                    containerCentroid
+                )
+            )
+        }
     }
 }
