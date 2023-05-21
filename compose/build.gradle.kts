@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.panpf.tools4k)
     implementation(libs.panpf.sketch3)
     implementation(libs.panpf.sketch3.extensions)
+    implementation("me.saket.telephoto:zoomable-image-coil:0.3.0")
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
 

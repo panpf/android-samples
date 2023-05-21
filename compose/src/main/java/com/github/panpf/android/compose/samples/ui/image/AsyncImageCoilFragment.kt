@@ -805,10 +805,10 @@ private fun CoilAsyncImageBlurSamplePreview() {
     CoilAsyncImageBlurSample(remember { MutableStateFlow(true) })
 }
 
-private fun Context.newCoilResourceUri(@DrawableRes id: Int): Uri {
+fun Context.newCoilResourceUri(@DrawableRes id: Int): Uri {
     return Uri.parse("android.resource://${packageName}/${id}")
 }
 
-private fun newCoilAssetUri(@Suppress("SameParameterValue") path: String): Uri {
+fun newCoilAssetUri(@Suppress("SameParameterValue") path: String): Uri {
     return Uri.parse("file://filled/android_asset/$path")
 }

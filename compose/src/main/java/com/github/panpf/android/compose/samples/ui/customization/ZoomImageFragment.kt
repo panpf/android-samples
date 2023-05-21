@@ -24,6 +24,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -51,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.request.ImageRequest
 import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.name
@@ -72,7 +74,12 @@ import com.github.panpf.android.compose.samples.ui.customization.zoomimage.photo
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.photo.PhotoBox
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.tlaster.TlasterZoomable
 import com.github.panpf.android.compose.samples.ui.customization.zoomimage.tlaster.rememberTlasterZoomableState
+import com.github.panpf.android.compose.samples.ui.image.newCoilResourceUri
 import kotlinx.coroutines.launch
+import me.saket.telephoto.zoomable.ZoomSpec
+import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
+import me.saket.telephoto.zoomable.rememberZoomableImageState
+import me.saket.telephoto.zoomable.rememberZoomableState
 
 class ZoomImageFragment : Material3ComposeAppBarFragment() {
 
@@ -80,90 +87,120 @@ class ZoomImageFragment : Material3ComposeAppBarFragment() {
         return "ZoomImage"
     }
 
-    @OptIn(ExperimentalPhotoApi::class, ExperimentalFoundationApi::class)
     @Composable
     override fun DrawContent() {
-        val pagerState = rememberPagerState()
-        val coroutineScope = rememberCoroutineScope()
-        val items = listOf("My", "Tlaster", "Birdly", "Photo")
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black)
-        ) {
-            HorizontalPager(
-                pageCount = items.size,
-                state = pagerState,
-                userScrollEnabled = false,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) { index ->
-                when (index) {
-                    0 -> {
-                        MyZoomImageSample()
-                    }
+        ZoomImageSample()
+    }
+}
 
-                    1 -> {
-                        TlasterZoomable(
-                            state = rememberTlasterZoomableState(),
-                            modifier = Modifier.fillMaxSize(),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.dog_hor),
-                                contentDescription = "",
-                                modifier = Modifier.fillMaxSize(),
-                            )
+@Composable
+@OptIn(ExperimentalPhotoApi::class, ExperimentalFoundationApi::class)
+private fun ZoomImageSample() {
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+    val items = listOf("My", "Telephoto", "Birdly", "Photo", "Tlaster")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        ) {
+            items.forEachIndexed { index, item ->
+                Tab(
+                    selected = index == pagerState.currentPage,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.scrollToPage(index)
                         }
                     }
+                ) {
+                    Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
+                }
+            }
+        }
+        HorizontalPager(
+            pageCount = items.size,
+            state = pagerState,
+            userScrollEnabled = false,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) { index ->
+            when (index) {
+                0 -> {
+                    MyZoomImageSample()
+                }
 
-                    2 -> {
+                1 -> {
+                    val context = LocalContext.current
+                    ZoomableAsyncImage(
+                        model = ImageRequest.Builder(context)
+                            .data(context.newCoilResourceUri(R.drawable.dog_hor))
+                            .placeholder(R.drawable.im_placeholder)
+                            .build(), contentDescription = "",
+                        modifier = Modifier.fillMaxSize(),
+                        state = rememberZoomableImageState(
+                            rememberZoomableState(
+                                zoomSpec = ZoomSpec(maxZoomFactor = 8f)
+                            )
+                        )
+                    )
+                }
+
+                2 -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.dog_hor),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .birdlyZoomable(),
+                    )
+                }
+
+                3 -> {
+                    PhotoBox(
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.dog_hor),
                             contentDescription = "",
                             modifier = Modifier
                                 .fillMaxSize()
-                                .birdlyZoomable(),
                         )
                     }
+                }
 
-                    3 -> {
-                        PhotoBox(
-                            modifier = Modifier.fillMaxSize(),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.dog_hor),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
-                        }
-                    }
-                }
-            }
-            TabRow(
-                selectedTabIndex = pagerState.currentPage,
-                indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset3(pagerState, tabPositions),
-                    )
-                }
-            ) {
-                items.forEachIndexed { index, item ->
-                    Tab(
-                        selected = index == pagerState.currentPage,
-                        onClick = {
-                            coroutineScope.launch {
-                                pagerState.scrollToPage(index)
-                            }
-                        }
+                4 -> {
+                    TlasterZoomable(
+                        state = rememberTlasterZoomableState(),
+                        modifier = Modifier.fillMaxSize(),
                     ) {
-                        Text(text = item, modifier = Modifier.padding(vertical = 10.dp))
+                        Image(
+                            painter = painterResource(id = R.drawable.dog_hor),
+                            contentDescription = "",
+                            modifier = Modifier.fillMaxSize(),
+                        )
                     }
                 }
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ZoomImageSamplePreview() {
+    ZoomImageSample()
 }
 
 @Composable
