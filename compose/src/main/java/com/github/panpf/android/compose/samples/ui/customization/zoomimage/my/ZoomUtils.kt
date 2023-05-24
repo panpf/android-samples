@@ -408,6 +408,38 @@ internal fun contentCentroidToContainerCentroid(
     )
 }
 
+
+/* ******************************************* Other ***************************************** */
+
+fun computeScrollEdge(contentSize: Size, contentVisibleRect: Rect, horizontal: Boolean): Edge {
+    if (contentSize.isUnspecified || contentVisibleRect.isEmpty) return Edge.BOTH
+    if (horizontal) {
+        return if (contentVisibleRect.left <= 0f && contentVisibleRect.right >= contentSize.width) {
+            Edge.BOTH
+        } else if (contentVisibleRect.left > 0f && contentVisibleRect.right < contentSize.width) {
+            Edge.NONE
+        } else if (contentVisibleRect.left <= 0f) {
+            Edge.START
+        } else {
+            // contentVisibleRect.right >= contentSize.width
+            Edge.END
+        }
+    } else {
+        // vertical
+        return if (contentVisibleRect.top <= 0f && contentVisibleRect.bottom >= contentSize.height) {
+            Edge.BOTH
+        } else if (contentVisibleRect.top > 0f && contentVisibleRect.bottom < contentSize.height) {
+            Edge.NONE
+        } else if (contentVisibleRect.top <= 0f) {
+            Edge.START
+        } else {
+            // contentVisibleRect.bottom >= contentSize.height
+            Edge.END
+        }
+    }
+}
+
+
 /* ******************************************* Tool ***************************************** */
 
 fun Rect.scale(scale: Float): Rect {

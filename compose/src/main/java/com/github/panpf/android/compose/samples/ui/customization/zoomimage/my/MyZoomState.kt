@@ -95,6 +95,14 @@ class MyZoomState(
 
     val translationBounds: Rect? by _translationBounds
 
+    val horizontalScrollEdge: Edge by derivedStateOf {
+        computeScrollEdge(contentSize, contentVisibleRect, horizontal = true)
+    }
+
+    val verticalScrollEdge: Edge by derivedStateOf {
+        computeScrollEdge(contentSize, contentVisibleRect, horizontal = false)
+    }
+
     init {
         require(minScale < maxScale) { "minScale must be < maxScale" }
     }
@@ -382,38 +390,6 @@ class MyZoomState(
             _translationY.snapTo(targetValue = targetTranslation.y)
         }
     }
-
-//    internal fun isHorizontalDragFinish(dragDistance: Offset): Boolean {
-//        val lowerBounds = _translationX.lowerBound ?: return false
-//        val upperBounds = _translationX.upperBound ?: return false
-//        if (lowerBounds == 0f && upperBounds == 0f) return true
-//
-//        val newPosition = _translationX.value + dragDistance.x
-//        if (newPosition <= lowerBounds) {
-//            return true
-//        }
-//
-//        if (newPosition >= upperBounds) {
-//            return true
-//        }
-//        return false
-//    }
-//
-//    internal fun isVerticalDragFinish(dragDistance: Offset): Boolean {
-//        val lowerBounds = _translationY.lowerBound ?: return false
-//        val upperBounds = _translationY.upperBound ?: return false
-//        if (lowerBounds == 0f && upperBounds == 0f) return true
-//
-//        val newPosition = _translationY.value + dragDistance.y
-//        if (newPosition <= lowerBounds) {
-//            return true
-//        }
-//
-//        if (newPosition >= upperBounds) {
-//            return true
-//        }
-//        return false
-//    }
 
     private suspend fun stopAllAnimation(caller: String) {
         if (_scale.isRunning) {

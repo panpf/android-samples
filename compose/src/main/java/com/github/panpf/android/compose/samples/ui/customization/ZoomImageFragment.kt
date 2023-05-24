@@ -131,7 +131,7 @@ private fun ZoomImageSample() {
         HorizontalPager(
             pageCount = items.size,
             state = pagerState,
-            userScrollEnabled = false,
+            userScrollEnabled = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -272,6 +272,7 @@ private fun MyZoomImageSample() {
                     translationBounds: ${myZoomState.translationBounds?.toShortString()}
                     contentVisibleRect: ${myZoomState.contentVisibleRect.toShortString()}
                     containerVisibleRect: ${myZoomState.containerVisibleRect.toShortString()}
+                    scrollEdge: horizontal=${myZoomState.horizontalScrollEdge}, vertical=${myZoomState.verticalScrollEdge}
                     contentSize: ${myZoomState.contentSize}
                     containerSize: ${myZoomState.containerSize}
                     contentInContainerRect: ${myZoomState.contentInContainerRect.toShortString()}
@@ -282,7 +283,7 @@ private fun MyZoomImageSample() {
                 style = LocalTextStyle.current.copy(
                     shadow = Shadow(offset = Offset(1f, 1f), blurRadius = 4f),
                 ),
-                maxLines = if (expandedState.value) Int.MAX_VALUE else 5,
+                maxLines = if (expandedState.value) Int.MAX_VALUE else 6,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .clickable { expandedState.value = !expandedState.value }
