@@ -43,7 +43,7 @@ google-material = "1.6.1"
 
 # panpf
 panpf-assemblyadapter4 = "4.1.0"
-panpf-sketch3 = "3.2.0"
+panpf-sketch3 = "3.2.1-rc01"
 panpf-tools4a = "1.0.0"
 panpf-tools4j = "1.0.0"
 panpf-tools4k = "1.0.0"
