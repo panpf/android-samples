@@ -6,14 +6,15 @@ plugins {
 
 android {
     namespace = "com.github.panpf.android.compose.samples"
-    compileSdk = libs.versions.app.compileSdk.get().toInt()
+    compileSdk = property("compileSdk").toString().toInt()
 
     defaultConfig {
         applicationId = "com.github.panpf.android.compose.samples"
-        minSdk = libs.versions.app.minSdk.compose.get().toInt()
-        targetSdk = libs.versions.app.targetSdk.get().toInt()
-        versionCode = libs.versions.app.versionCode.get().toInt()
-        versionName = libs.versions.app.versionName.get()
+
+        minSdk = property("minSdk24").toString().toInt()
+        targetSdk = property("targetSdk").toString().toInt()
+        versionCode = property("versionCode").toString().toInt()
+        versionName = property("versionName").toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

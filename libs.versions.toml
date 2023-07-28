@@ -1,13 +1,5 @@
 [versions]
 
-# app
-app-compileSdk = "33"
-app-minSdk = "16"
-app-minSdk-compose = "24"
-app-targetSdk = "33"
-app-versionCode = "1"
-app-versionName = "1.0"
-
 # kotlin
 kotlin = "1.8.20"
 kotlinx-coroutines = "1.6.4"
