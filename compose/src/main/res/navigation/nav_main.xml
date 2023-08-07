@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/modifierFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.ModifierFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.modifier.ModifierFragment" />
     <action
         android:id="@+id/action_global_modifierFragment"
         app:destination="@id/modifierFragment"
@@ -192,7 +192,7 @@
 
     <fragment
         android:id="@+id/layoutFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.LayoutFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.layout.LayoutFragment" />
     <action
         android:id="@+id/action_global_layoutFragment"
         app:destination="@id/layoutFragment"
@@ -283,7 +283,7 @@
 
     <fragment
         android:id="@+id/windowFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.WindowFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.window.WindowFragment" />
     <action
         android:id="@+id/action_global_windowFragment"
         app:destination="@id/windowFragment"
@@ -319,7 +319,7 @@
 
     <fragment
         android:id="@+id/imagesFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.ImagesFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.image.ImagesFragment" />
     <action
         android:id="@+id/action_global_imagesFragment"
         app:destination="@id/imagesFragment"
@@ -399,7 +399,7 @@
 
     <fragment
         android:id="@+id/lazyFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.LazyFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.lazy.LazyFragment" />
     <action
         android:id="@+id/action_global_lazyFragment"
         app:destination="@id/lazyFragment"
@@ -479,7 +479,7 @@
 
     <fragment
         android:id="@+id/materialFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.MaterialFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.material.MaterialFragment" />
     <action
         android:id="@+id/action_global_materialFragment"
         app:destination="@id/materialFragment"
@@ -801,7 +801,7 @@
 
     <fragment
         android:id="@+id/material3Fragment"
-        android:name="com.github.panpf.android.compose.samples.ui.Material3Fragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.material3.Material3Fragment" />
     <action
         android:id="@+id/action_global_material3Fragment"
         app:destination="@id/material3Fragment"
@@ -1090,7 +1090,7 @@
 
     <fragment
         android:id="@+id/accompanistFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.AccompanistFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.accompanist.AccompanistFragment" />
     <action
         android:id="@+id/action_global_accompanistFragment"
         app:destination="@id/accompanistFragment"
@@ -1148,7 +1148,7 @@
 
     <fragment
         android:id="@+id/animationsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.AnimationsFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.animation.AnimationsFragment" />
     <action
         android:id="@+id/action_global_animationsFragment"
         app:destination="@id/animationsFragment"
@@ -1261,7 +1261,7 @@
 
     <fragment
         android:id="@+id/gesturesFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.GesturesFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.gestures.GesturesFragment" />
     <action
         android:id="@+id/action_global_gesturesFragment"
         app:destination="@id/gesturesFragment"
@@ -1349,7 +1349,7 @@
 
     <fragment
         android:id="@+id/graphicsFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.GraphicsFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.graphics.GraphicsFragment" />
     <action
         android:id="@+id/action_global_graphicsFragment"
         app:destination="@id/graphicsFragment"
@@ -1418,7 +1418,7 @@
 
     <fragment
         android:id="@+id/pagerFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.PagerFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.pager.PagerFragment" />
     <action
         android:id="@+id/action_global_pagerFragment"
         app:destination="@id/pagerFragment"
@@ -1454,7 +1454,7 @@
 
     <fragment
         android:id="@+id/customizationFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.CustomizationFragment" />
+        android:name="com.github.panpf.android.compose.samples.ui.customization.CustomizationFragment" />
     <action
         android:id="@+id/action_global_customizationFragment"
         app:destination="@id/customizationFragment"

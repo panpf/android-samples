@@ -56,6 +56,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
     api(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.fragment)
@@ -68,7 +69,6 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.panpf.tools4a)
     implementation(libs.panpf.tools4j)
-    implementation(libs.panpf.tools4k)
     implementation(libs.panpf.tools4k)
     implementation(libs.panpf.sketch3)
     implementation(libs.panpf.sketch3.extensions)

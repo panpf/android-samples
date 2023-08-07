@@ -16,8 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.panpf.android.compose.samples.model.Link
-import com.github.panpf.android.compose.samples.model.LinkGroup
+import com.github.panpf.android.samples.model.Link
+import com.github.panpf.android.samples.model.LinkGroup
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme3
 
 @Composable

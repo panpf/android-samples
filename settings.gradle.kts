@@ -1,5 +1,7 @@
 rootProject.name = "android-samples"
+include(":common")
 include(":compose")
+include(":view")
 
 enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {

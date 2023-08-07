@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#6A55F8</color>
+    <color name="colorPrimaryVariant">#4535AF</color>
+    <color name="colorOnPrimary">@color/white</color>
+    <color name="colorSecondary">#CA48F6</color>
+    <color name="colorSecondaryVariant">#7A2A95</color>
+    <color name="colorOnSecondary">@color/white</color>
+    <color name="colorTertiary">#F8AE6B</color>
+    <color name="colorTertiaryTransparent">#BFF8AE6B</color>
+    <color name="colorTertiaryVariant">#8A613B</color>
+    <!--<color name="colorTertiary">#D10037</color>
+    <color name="colorTertiaryTransparent">#BFD10037</color>
+    <color name="colorTertiaryVariant">#6E0823</color>-->
+    <color name="colorOnTertiary">@color/white</color>
+    <color name="windowBackground">@color/white</color>
+    <color name="windowBackgroundDark">#171717</color>
+    <color name="windowVariant">#2C2C2C</color>
+
+    <color name="text_title">#000000</color>
+    <color name="text_body">#202020</color>
+    <color name="placeholder_bg">#393939</color>
+    <color name="placeholder_icon">#676767</color>
+</resources>
