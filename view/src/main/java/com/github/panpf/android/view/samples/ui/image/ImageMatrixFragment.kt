@@ -1,11 +1,29 @@
 package com.github.panpf.android.view.samples.ui.image
 
+import android.annotation.SuppressLint
+import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.scale
+import com.github.panpf.android.view.samples.R
 import com.github.panpf.android.view.samples.databinding.ImageMatrixFragmentBinding
 import com.github.panpf.android.view.samples.ui.base.ToolbarBindingFragment
+import com.github.panpf.android.view.samples.ui.util.getRotation
+import com.github.panpf.android.view.samples.ui.util.getScale
+import com.github.panpf.android.view.samples.ui.util.getTranslation
+import com.github.panpf.android.view.samples.util.toShortString
+import com.github.panpf.tools4k.lang.asOrThrow
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>() {
+
+    private val matrix = Matrix()
+    private val scaleStep = 0.2f
+    private val offsetStep = 50
+    private val rotateStep = 90
 
     override fun onViewCreated(
         toolbar: Toolbar,
@@ -14,5 +32,91 @@ class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>()
     ) {
         super.onViewCreated(toolbar, binding, savedInstanceState)
         toolbar.title = "Image Matrix"
+
+        binding.imageMatrixFragmentImageView.apply {
+        }
+
+        binding.imageMatrixFragmentHorizontalButton.setOnClickListener {
+            setImage(binding, true)
+        }
+
+        binding.imageMatrixFragmentVerticalButton.setOnClickListener {
+            setImage(binding, false)
+        }
+
+        binding.imageMatrixFragmentResetButton.setOnClickListener {
+            matrix.reset()
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentScalePlusButton.setOnClickListener {
+            matrix.postScale(1 + scaleStep, 1 + scaleStep)
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentScaleMinusButton.setOnClickListener {
+            matrix.postScale(1 - scaleStep, 1 - scaleStep)
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentOffsetUpButton.setOnClickListener {
+            matrix.postTranslate(0f, -offsetStep.toFloat())
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentOffsetDownButton.setOnClickListener {
+            matrix.postTranslate(0f, offsetStep.toFloat())
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentOffsetRightButton.setOnClickListener {
+            matrix.postTranslate(offsetStep.toFloat(), 0f)
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentOffsetLeftButton.setOnClickListener {
+            matrix.postTranslate(-offsetStep.toFloat(), 0f)
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentRotatePlusButton.setOnClickListener {
+            matrix.postRotate(rotateStep.toFloat())
+            updateMatrix(binding)
+        }
+
+        binding.imageMatrixFragmentRotateMinusButton.setOnClickListener {
+            matrix.postRotate(-rotateStep.toFloat())
+            updateMatrix(binding)
+        }
+
+        updateMatrix(binding)
+        setImage(binding, true)
+    }
+
+    private fun updateMatrix(binding: ImageMatrixFragmentBinding) {
+        val matrix = matrix
+        binding.imageMatrixFragmentImageView.imageMatrix = matrix
+        binding.imageMatrixFragmentScaleValueText.text = matrix.getScale().toShortString()
+        binding.imageMatrixFragmentOffsetValueText.text = matrix.getTranslation().toShortString()
+        binding.imageMatrixFragmentRotateValueText.text = matrix.getRotation().toString()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun setImage(binding: ImageMatrixFragmentBinding, hor: Boolean) {
+        val resources = requireContext().resources
+        val bitmap = ResourcesCompat.getDrawable(
+            resources,
+            if (hor) R.drawable.dog_hor else R.drawable.dog_ver,
+            null
+        )!!.asOrThrow<BitmapDrawable>().bitmap
+        val maxSize =
+            min(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels) / 4
+        val scale = min(maxSize / bitmap.width.toFloat(), maxSize / bitmap.height.toFloat())
+        val scaledBitmap = bitmap.scale(
+            (bitmap.width * scale).roundToInt(),
+            (bitmap.height * scale).roundToInt(),
+            true
+        )
+        binding.imageMatrixFragmentImageView.setImageBitmap(scaledBitmap)
     }
 }
