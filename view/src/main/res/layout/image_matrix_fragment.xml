@@ -4,41 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipChildren="false">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageMatrixFragment_imageView"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="6"
-            android:clipChildren="false"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageMatrixFragment_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="6"
-                android:background="@drawable/bg_image_matrix"
-                android:scaleType="matrix"
-                tools:srcCompat="@drawable/dog_hor" />
-        </LinearLayout>
-    </LinearLayout>
+            android:background="@drawable/bg_image_matrix"
+            android:scaleType="matrix"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintWidth_percent="0.6"
+            tools:srcCompat="@drawable/dog_hor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
