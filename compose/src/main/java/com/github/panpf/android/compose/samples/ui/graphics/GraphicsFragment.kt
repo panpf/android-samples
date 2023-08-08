@@ -14,5 +14,6 @@ class GraphicsFragment : BaseLinkListFragment() {
         Link("DrawScope - draw*", R.id.action_global_drawScopeDrawFragment),
         Link("DrawScope - transform", R.id.action_global_drawScopeTransformFragment),
         Link("Paint", R.id.action_global_paintFragment),
+        Link("graphicsLayer", R.id.action_global_graphicsLayerFragment),
     )
 }

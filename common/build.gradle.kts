@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.panpf.tools4a)
     implementation(libs.panpf.tools4j)
     implementation(libs.panpf.tools4k)
+    implementation(libs.panpf.sketch3)
     debugImplementation(libs.leakcanary)
 
     androidTestImplementation(libs.bundles.test)

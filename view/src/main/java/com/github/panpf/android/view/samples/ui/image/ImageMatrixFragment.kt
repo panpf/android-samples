@@ -2,11 +2,9 @@ package com.github.panpf.android.view.samples.ui.image
 
 import android.annotation.SuppressLint
 import android.graphics.Matrix
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.scale
+import com.github.panpf.android.samples.model.util.BitmapScaleTransformation
 import com.github.panpf.android.view.samples.R
 import com.github.panpf.android.view.samples.databinding.ImageMatrixFragmentBinding
 import com.github.panpf.android.view.samples.ui.base.ToolbarBindingFragment
@@ -14,9 +12,8 @@ import com.github.panpf.android.view.samples.ui.util.getRotation
 import com.github.panpf.android.view.samples.ui.util.getScale
 import com.github.panpf.android.view.samples.ui.util.getTranslation
 import com.github.panpf.android.view.samples.util.toShortString
-import com.github.panpf.tools4k.lang.asOrThrow
+import com.github.panpf.sketch.displayImage
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>() {
 
@@ -103,20 +100,11 @@ class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>()
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setImage(binding: ImageMatrixFragmentBinding, hor: Boolean) {
-        val resources = requireContext().resources
-        val bitmap = ResourcesCompat.getDrawable(
-            resources,
-            if (hor) R.drawable.dog_hor else R.drawable.dog_ver,
-            null
-        )!!.asOrThrow<BitmapDrawable>().bitmap
-        val maxSize =
-            min(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels) / 4
-        val scale = min(maxSize / bitmap.width.toFloat(), maxSize / bitmap.height.toFloat())
-        val scaledBitmap = bitmap.scale(
-            (bitmap.width * scale).roundToInt(),
-            (bitmap.height * scale).roundToInt(),
-            true
-        )
-        binding.imageMatrixFragmentImageView.setImageBitmap(scaledBitmap)
+        binding.imageMatrixFragmentImageView.displayImage(if (hor) R.drawable.dog_hor else R.drawable.dog_ver) {
+            val resources = requireContext().resources
+            val maxSize =
+                min(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels) / 4
+            addTransformations(BitmapScaleTransformation(maxSize))
+        }
     }
 }
