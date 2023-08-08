@@ -16,6 +16,10 @@ class ImagesFragment : BaseLinkListFragment() {
         Link("AsyncImage - Sketch", R.id.action_global_asyncImageSketchFragment),
         Link("AsyncImage - List - Coil", R.id.action_global_asyncImageListCoilFragment),
         Link("AsyncImage - List - Sketch", R.id.action_global_asyncImageListSketchFragment),
-        Link("ZoomImage", R.id.action_global_ZoomImageFragment),
+        Link(
+            "ZoomImage",
+            R.id.action_global_ZoomImageFragment,
+            minSdk = 24
+        ),   // 因为 telephoto ，把它独立成一个页面，单独限制它
     )
 }

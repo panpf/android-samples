@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.github.panpf.android.compose.samples"
 
-        minSdk = property("minSdk24").toString().toInt()
+        minSdk = property("minSdk21").toString().toInt()
         targetSdk = property("targetSdk").toString().toInt()
         versionCode = property("versionCode").toString().toInt()
         versionName = property("versionName").toString()
