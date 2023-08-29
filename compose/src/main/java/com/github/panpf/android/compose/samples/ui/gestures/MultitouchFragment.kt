@@ -1,6 +1,7 @@
 package com.github.panpf.android.compose.samples.ui.gestures
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -50,6 +53,7 @@ class MultitouchFragment : Material3ComposeAppBarFragment() {
         ExpandableLayout { allExpandFlow ->
             MultitouchPanningSample(allExpandFlow)
             DetectTransformGesturesSample(allExpandFlow)
+            OfficialDetectTransformGestures(allExpandFlow)
         }
     }
 }
@@ -223,6 +227,77 @@ private fun DetectTransformGesturesSample(allExpandFlow: Flow<Boolean>) {
 //                        rotationZ = angle
 //                        transformOrigin = TransformOrigin.Center
 //                    }
+            )
+        }
+    }
+}
+
+/**
+ * from https://github.com/androidx/androidx/blob/643b1cfdd7dfbc5ccce1ad951b6999df049678b3/compose/foundation/foundation/samples/src/main/java/androidx/compose/foundation/samples/TransformGestureSamples.kt
+ *
+ * Rotates the given offset around the origin by the given angle in degrees.
+ *
+ * A positive angle indicates a counterclockwise rotation around the right-handed 2D Cartesian
+ * coordinate system.
+ *
+ * See: [Rotation matrix](https://en.wikipedia.org/wiki/Rotation_matrix)
+ */
+@Composable
+private fun OfficialDetectTransformGestures(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(
+        title = "DetectTransformGestures（Official）",
+        allExpandFlow,
+        padding = 20.dp,
+    ) {
+        fun Offset.rotateBy(angle: Float): Offset {
+            val angleInRadians = angle * PI / 180
+            return Offset(
+                (x * cos(angleInRadians) - y * sin(angleInRadians)).toFloat(),
+                (x * sin(angleInRadians) + y * cos(angleInRadians)).toFloat()
+            )
+        }
+
+        var offset by remember { mutableStateOf(Offset.Zero) }
+        var zoom by remember { mutableStateOf(1f) }
+        var angle by remember { mutableStateOf(0f) }
+
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .border(width = 1.dp, color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                .pointerInput(Unit) {
+                    detectTransformGestures(
+                        onGesture = { centroid, pan, gestureZoom, gestureRotate ->
+                            val oldScale = zoom
+                            val newScale = zoom * gestureZoom
+
+                            // For natural zooming and rotating, the centroid of the gesture should
+                            // be the fixed point where zooming and rotating occurs.
+                            // We compute where the centroid was (in the pre-transformed coordinate
+                            // space), and then compute where it will be after this delta.
+                            // We then compute what the new offset should be to keep the centroid
+                            // visually stationary for rotating and zooming, and also apply the pan.
+                            offset = (offset + centroid / oldScale).rotateBy(gestureRotate) -
+                                    (centroid / newScale + pan / oldScale)
+                            zoom = newScale
+                            angle += gestureRotate
+                        }
+                    )
+                }
+        ) {
+            Box(
+                Modifier
+                    .graphicsLayer {
+                        translationX = -offset.x * zoom
+                        translationY = -offset.y * zoom
+                        scaleX = zoom
+                        scaleY = zoom
+                        rotationZ = angle
+                        transformOrigin = TransformOrigin(0f, 0f)
+                    }
+                    .size(100.dp)
+                    .background(Color.Blue)
             )
         }
     }
