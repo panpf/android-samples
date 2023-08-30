@@ -53,7 +53,6 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil.request.ImageRequest
-import com.github.panpf.android.compose.samples.BuildConfig
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.tools.toShortString
@@ -231,7 +230,7 @@ private fun MyZoomImageSample() {
         mutableStateOf(if (slowerScaleAnimationState.value) 3000 else ScaleAnimationConfig.DefaultDurationMillis)
     }
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val myZoomState = rememberMyZoomState(debugMode = BuildConfig.DEBUG)
+        val myZoomState = rememberMyZoomState(debugMode = true)
         val zoomIn = remember {
             derivedStateOf {
                 val nextScale = myZoomState.nextScale()

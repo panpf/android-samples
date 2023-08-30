@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.androidx.navigation.safeargs.kotlin)
 }
 
 android {
@@ -48,16 +48,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
     implementation(project(":common"))
-    api(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.appcompat)
@@ -72,7 +66,7 @@ dependencies {
     implementation(libs.panpf.tools4k)
     implementation(libs.panpf.sketch3)
     implementation(libs.panpf.sketch3.extensions)
-    implementation("me.saket.telephoto:zoomable-image-coil:0.3.0")
+    implementation(libs.panpf.zoomimage.compose.sketch)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
 

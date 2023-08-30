@@ -1,24 +1,8 @@
-buildscript {
-    repositories {
-        maven { setUrl("https://repo.huaweicloud.com/repository/maven/") }  // central, google, jcenter
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath(libs.android.plugin)
-        classpath(libs.androidx.navigation.safeargsgradle.plugin)
-        classpath(libs.kotlin.plugin)
-        classpath(libs.kotlin.serialization.plugin)
-    }
-}
-
-allprojects {
-    repositories {
-        maven { setUrl("https://repo.huaweicloud.com/repository/maven/") }  // central, google, jcenter
-        mavenCentral()
-        google()
-        mavenLocal()
-    }
+plugins {
+    alias(libs.plugins.com.android.application) apply false
+    alias(libs.plugins.com.android.library) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.androidx.navigation.safeargs.kotlin) apply false
 }
 
 tasks.register("clean", Delete::class) {
