@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.panpf.sketch3)
     implementation(libs.panpf.sketch3.extensions)
     implementation(libs.panpf.zoomimage.compose.sketch)
+    implementation(libs.panpf.zoomimage.compose.coil)
+    implementation(libs.panpf.zoomimage.compose.glide)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)
 

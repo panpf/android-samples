@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,6 +38,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.theme.MyTheme
@@ -52,9 +54,12 @@ abstract class MaterialComposeAppBarFragment : Fragment() {
     ): View {
         return ComposeView(inflater.context).apply {
             setContent {
-                MyTopAppBarScaffold(getTitle()) {
-                    DrawContent()
-                }
+                MyTopAppBarScaffold(
+                    title = getTitle(),
+                    subtitle = getSubtitle(),
+                    actions = { DrawActions() },
+                    content = { DrawContent() },
+                )
             }
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -67,13 +72,25 @@ abstract class MaterialComposeAppBarFragment : Fragment() {
         return requireContext().resources.getString(R.string.app_name)
     }
 
+    open fun getSubtitle(): String? = null
+
+    @Composable
+    open fun RowScope.DrawActions() {
+
+    }
+
     @Composable
     abstract fun DrawContent()
 }
 
 
 @Composable
-fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) {
+fun MyTopAppBarScaffold(
+    title: String? = null,
+    subtitle: String? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable () -> Unit,
+) {
     val context = LocalContext.current
     val statusBarHeight = remember {
         context.getStatusBarHeight().px2dp.dp
@@ -92,8 +109,17 @@ fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) 
                     if (title != null) {
                         TopAppBar(
                             title = {
-                                Text(text = title)
+                                Column {
+                                    Text(text = title)
+                                    if (subtitle != null) {
+                                        Text(
+                                            text = subtitle,
+                                            fontSize = 16.sp
+                                        )
+                                    }
+                                }
                             },
+                            actions = { actions() },
                             backgroundColor = colors.primary,
                             contentColor = colors.onPrimary
                         )
@@ -106,7 +132,7 @@ fun MyTopAppBarScaffold(title: String? = null, content: @Composable () -> Unit) 
                         content()
                     }
                 }
-                // 为何多次一举，不卸载 TopAppBar 前面？
+                // 为何多次一举，不写在 TopAppBar 前面？
                 // 因为 Material 版本的 TopAppBar 顶部有一条黑色的线，Column 排列的话无法隐藏这条线
                 // 只能这样将状态栏背景放在 TopAppBar 上面盖住那条线
                 Box(

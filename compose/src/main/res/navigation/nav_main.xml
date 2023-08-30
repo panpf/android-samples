@@ -351,17 +351,6 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/asyncImageListSketchFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageListSketchFragment" />
-    <action
-        android:id="@+id/action_global_asyncImageListSketchFragment"
-        app:destination="@id/asyncImageListSketchFragment"
-        app:enterAnim="@anim/nav_enter"
-        app:exitAnim="@anim/nav_exit"
-        app:popEnterAnim="@anim/nav_pop_enter"
-        app:popExitAnim="@anim/nav_pop_exit" />
-
-    <fragment
         android:id="@+id/asyncImageCoilFragment"
         android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageCoilFragment" />
     <action
@@ -373,22 +362,65 @@
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/asyncImageListCoilFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.image.AsyncImageListCoilFragment" />
+        android:id="@+id/zoomImageFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.ZoomImageFragment" >
+        <argument
+            android:name="zoomImageType"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
     <action
-        android:id="@+id/action_global_asyncImageListCoilFragment"
-        app:destination="@id/asyncImageListCoilFragment"
+        android:id="@+id/action_global_ZoomImageFragment"
+        app:destination="@id/zoomImageFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
 
     <fragment
-        android:id="@+id/zoomImageFragment"
-        android:name="com.github.panpf.android.compose.samples.ui.customization.ZoomImageFragment" />
+        android:id="@+id/photoAlbumComposeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.PhotoAlbumComposeFragment">
+        <argument
+            android:name="zoomImageType"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
     <action
-        android:id="@+id/action_global_ZoomImageFragment"
-        app:destination="@id/zoomImageFragment"
+        android:id="@+id/action_global_photoAlbumComposeFragment"
+        app:destination="@id/photoAlbumComposeFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <fragment
+        android:id="@+id/photoSlideshowComposeFragment"
+        android:name="com.github.panpf.android.compose.samples.ui.image.PhotoSlideshowComposeFragment">
+        <argument
+            android:name="zoomImageType"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="imageUris"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="position"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="startPosition"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="totalCount"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_photoSlideshowComposeFragment"
+        app:destination="@id/photoSlideshowComposeFragment"
         app:enterAnim="@anim/nav_enter"
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"

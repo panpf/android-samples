@@ -16,7 +16,9 @@ android {
             useSupportLibrary = true
         }
     }
-
+    buildFeatures{
+        buildConfig = true
+    }
     buildTypes {
         getByName("debug") {
             multiDexEnabled = true
@@ -46,6 +48,7 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.paging.common)
     implementation(libs.google.material)
     implementation(libs.panpf.tools4a)
     implementation(libs.panpf.tools4j)

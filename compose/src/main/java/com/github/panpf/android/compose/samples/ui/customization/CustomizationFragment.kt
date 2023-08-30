@@ -13,6 +13,5 @@ class CustomizationFragment : BaseLinkListFragment() {
     override fun buildLinkList(): List<Link> = listOf(
         Link("HorizontalGrid（Customization）", R.id.action_global_horizontalGridFragment),
         Link("VerticalGrid（Customization）", R.id.action_global_verticalGridFragment),
-        Link("ZoomImage", R.id.action_global_ZoomImageFragment),
     )
 }

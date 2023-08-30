@@ -38,6 +38,7 @@ panpf-sketch3 = "3.2.5"
 panpf-tools4a = "1.0.0"
 panpf-tools4j = "1.0.0"
 panpf-tools4k = "1.0.0"
+panpf-zoomimage = "1.0.0-alpha01"
 
 # other
 leakcanary = "2.9.1"
@@ -82,7 +83,6 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-navigation-safeargsgradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-compose" }
-androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
@@ -105,6 +105,9 @@ panpf-sketch3-compose = { module = "io.github.panpf.sketch3:sketch-compose", ver
 panpf-tools4j = { module = "io.github.panpf.tools4j:tools4j-ktx", version.ref = "panpf-tools4j" }
 panpf-tools4a = { module = "io.github.panpf.tools4a:tools4a-ktx", version.ref = "panpf-tools4a" }
 panpf-tools4k = { module = "io.github.panpf.tools4k:tools4k", version.ref = "panpf-tools4k" }
+panpf-zoomimage-compose-sketch = { module = "io.github.panpf.zoomimage:zoomimage-compose-sketch", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-compose-glide = { module = "io.github.panpf.zoomimage:zoomimage-compose-glide", version.ref = "panpf-zoomimage" }
 
 # other
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
