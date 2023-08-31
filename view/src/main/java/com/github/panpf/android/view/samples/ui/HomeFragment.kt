@@ -9,7 +9,7 @@ class HomeFragment : BaseLinkListFragment() {
     override fun buildData(): List<Any> {
         return listOf(
             Link(
-                title = "Image",
+                title = "Images",
                 nav = R.id.action_global_imagesFragment,
             ),
         )

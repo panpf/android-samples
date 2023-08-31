@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.tools
+package com.github.panpf.android.samples.utils
 
 import android.content.Context
 import android.net.Uri
@@ -9,7 +9,7 @@ import androidx.core.net.toUri
 import java.io.File
 
 
-internal fun sketchUri2CoilModel(context: Context, sketchImageUri: String): Any? {
+fun sketchUri2CoilModel(context: Context, sketchImageUri: String): Any? {
     return when {
         sketchImageUri.startsWith("asset://") -> {
             sketchImageUri.replace("asset://", "file://filled/android_asset/").toUri()

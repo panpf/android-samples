@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import coil.request.ImageRequest
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.tools.sketchUri2CoilModel
+import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.github.panpf.zoomimage.CoilZoomAsyncImage
 

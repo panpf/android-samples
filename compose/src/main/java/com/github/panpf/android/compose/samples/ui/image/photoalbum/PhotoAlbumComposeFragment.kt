@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoalbum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,8 +25,8 @@ import androidx.paging.LoadState.Loading
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.panpf.android.compose.samples.NavMainDirections
-import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.image.ZoomImageType
 import com.github.panpf.android.samples.photos.Photo
 import com.github.panpf.android.samples.photos.PhotoAlbumViewModel
 
@@ -53,7 +53,7 @@ class PhotoAlbumComposeFragment : Material3ComposeAppBarFragment() {
             onRefresh = { pagingItems.refresh() }
         )
         Box(modifier = Modifier.fillMaxSize()) {
-            val divider = Arrangement.spacedBy(dimensionResource(id = R.dimen.grid_divider))
+            val divider = Arrangement.spacedBy(dimensionResource(id = com.github.panpf.android.samples.common.R.dimen.grid_divider))
             LazyVerticalGrid(
                 columns = Fixed(3),
                 horizontalArrangement = divider,

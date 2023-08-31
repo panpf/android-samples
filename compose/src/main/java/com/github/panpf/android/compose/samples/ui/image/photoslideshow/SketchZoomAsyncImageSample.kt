@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

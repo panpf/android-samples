@@ -48,6 +48,8 @@ retrofit2-kotlinxSerializationConverter = "0.8.0"
 coil = "2.4.0"
 junit = "4.13.2"
 zoomable-image = "0.4.0"
+subsamplingscaleimageview = "3.10.0"
+photoview = "2.3.0"
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "android-plugin" }
@@ -108,6 +110,10 @@ panpf-tools4k = { module = "io.github.panpf.tools4k:tools4k", version.ref = "pan
 panpf-zoomimage-compose-sketch = { module = "io.github.panpf.zoomimage:zoomimage-compose-sketch", version.ref = "panpf-zoomimage" }
 panpf-zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil", version.ref = "panpf-zoomimage" }
 panpf-zoomimage-compose-glide = { module = "io.github.panpf.zoomimage:zoomimage-compose-glide", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-view-sketch = { module = "io.github.panpf.zoomimage:zoomimage-view-sketch", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-view-coil = { module = "io.github.panpf.zoomimage:zoomimage-view-coil", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-view-glide = { module = "io.github.panpf.zoomimage:zoomimage-view-glide", version.ref = "panpf-zoomimage" }
+panpf-zoomimage-view-picasso = { module = "io.github.panpf.zoomimage:zoomimage-view-picasso", version.ref = "panpf-zoomimage" }
 
 # other
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
@@ -119,6 +125,8 @@ coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 junit = { module = "junit:junit", version.ref = "junit" }
 zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil", version.ref = "zoomable-image" }
+subsamplingscaleimageview = { module = "com.davemorrissey.labs:subsampling-scale-image-view-androidx", version.ref = "subsamplingscaleimageview" }
+photoview = { module = "com.github.chrisbanes:PhotoView", version.ref = "photoview" }
 
 [bundles]
 

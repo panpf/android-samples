@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
-import com.github.panpf.android.compose.samples.tools.sketchUri2CoilModel
+import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
 @Composable

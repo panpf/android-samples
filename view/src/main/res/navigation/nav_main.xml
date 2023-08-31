@@ -29,4 +29,123 @@
         app:exitAnim="@anim/nav_exit"
         app:popEnterAnim="@anim/nav_pop_enter"
         app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/photoAlbumViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoalbum.PhotoAlbumViewFragment">
+        <argument
+            android:name="zoomViewType"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_photoAlbumViewFragment"
+        app:destination="@id/photoAlbumViewFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/photoSlideshowViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.PhotoSlideshowViewFragment">
+        <argument
+            android:name="zoomViewType"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="imageUris"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="position"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="startPosition"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="totalCount"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_photoSlideshowViewFragment"
+        app:destination="@id/photoSlideshowViewFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+    <fragment
+        android:id="@+id/zoomViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.ZoomViewFragment">
+        <argument
+            android:name="zoomViewType"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_zoomViewFragment"
+        app:destination="@id/zoomViewFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit" />
+
+
+    <fragment
+        android:id="@+id/sketchZoomImageViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.SketchZoomImageViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/coilZoomImageViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.CoilZoomImageViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/glideZoomImageViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.GlideZoomImageViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/picassoZoomImageViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.PicassoZoomImageViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/photoViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.PhotoViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/subsamplingViewFragment"
+        android:name="com.github.panpf.android.view.samples.ui.image.photoslideshow.SubsamplingViewFragment">
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

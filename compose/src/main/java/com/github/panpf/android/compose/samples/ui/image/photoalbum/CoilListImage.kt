@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoalbum
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.tools.sketchUri2CoilModel
+import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 
 @Composable
 fun CoilListImage(sketchImageUri: String, modifier: Modifier) {

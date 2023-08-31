@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.tools.sketchUri2GlideModel
+import com.github.panpf.android.samples.utils.sketchUri2GlideModel
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.github.panpf.zoomimage.GlideZoomAsyncImage
 import com.github.panpf.zoomimage.compose.glide.internal.ExperimentalGlideComposeApi

@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     repositories {
 //        maven { setUrl("https://repo.huaweicloud.com/repository/maven/") }
         mavenCentral()
-//        maven { setUrl("https://www.jitpack.io") }
+        maven { setUrl("https://www.jitpack.io") }
         google()
 //        maven { setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots") }
 //        mavenLocal()

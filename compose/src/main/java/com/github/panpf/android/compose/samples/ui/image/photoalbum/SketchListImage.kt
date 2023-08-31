@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoalbum
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

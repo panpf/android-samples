@@ -1,4 +1,4 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -31,6 +31,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
+import com.github.panpf.android.compose.samples.ui.image.ZoomImageType
 
 class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
 

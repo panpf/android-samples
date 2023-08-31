@@ -8,6 +8,8 @@
     <uses-sdk tools:overrideLibrary="
         coil.singleton,
         coil.base,
+        com.github.panpf.zoomimage.core.coil,
+        com.github.panpf.zoomimage.view.coil,
     " />
 
     <application

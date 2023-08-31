@@ -1,11 +1,11 @@
-package com.github.panpf.android.compose.samples.ui.image
+package com.github.panpf.android.compose.samples.ui.image.photoalbum
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.android.compose.samples.tools.sketchUri2GlideModel
+import com.github.panpf.android.samples.utils.sketchUri2GlideModel
 import com.github.panpf.zoomimage.compose.glide.internal.ExperimentalGlideComposeApi
 import com.github.panpf.zoomimage.compose.glide.internal.GlideImage
 

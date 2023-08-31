@@ -10,7 +10,6 @@ import com.github.panpf.android.compose.samples.tools.CoilAppIconUriFetcher
 import com.github.panpf.sketch.Sketch
 import com.github.panpf.sketch.SketchFactory
 import com.github.panpf.sketch.cache.internal.LruMemoryCache
-import com.github.panpf.sketch.decode.AppIconBitmapDecoder
 import com.github.panpf.sketch.fetch.AppIconUriFetcher
 import com.github.panpf.sketch.util.Logger
 
@@ -26,7 +25,6 @@ class MyApplication : Application(), SketchFactory, ImageLoaderFactory {
             .memoryCache(LruMemoryCache(memoryCacheMaxSize.div(2)))
             .components {
                 addFetcher(AppIconUriFetcher.Factory())
-                addBitmapDecoder(AppIconBitmapDecoder.Factory())
             }
             .logger(Logger(Logger.Level.DEBUG))
             .build()
