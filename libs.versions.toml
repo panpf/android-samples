@@ -38,7 +38,7 @@ panpf-sketch3 = "3.2.5"
 panpf-tools4a = "1.0.0"
 panpf-tools4j = "1.0.0"
 panpf-tools4k = "1.0.0"
-panpf-zoomimage = "1.0.0-alpha01"
+panpf-zoomimage = "1.0.0-alpha02"
 
 # other
 leakcanary = "2.9.1"
