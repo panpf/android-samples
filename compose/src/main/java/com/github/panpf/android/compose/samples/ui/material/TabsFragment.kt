@@ -121,7 +121,9 @@ private fun TabRowSamplePreview() {
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState() {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "TabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -147,7 +149,6 @@ private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->
@@ -241,7 +242,9 @@ private fun ScrollableTabRowSamplePreview() {
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState() {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "ScrollableTabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -267,7 +270,6 @@ private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->

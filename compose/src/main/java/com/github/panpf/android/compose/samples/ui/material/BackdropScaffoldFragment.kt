@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -86,7 +87,9 @@ private fun BackdropScaffoldSample() {
         },
         backLayerContent = {
             HorizontalPager(
-                pageCount = colors.size,
+                state = rememberPagerState {
+                    colors.size
+                },
                 modifier = Modifier.fillMaxSize(),
             ) { index ->
                 Box(    // todo 优化不使用大色块，观感不好

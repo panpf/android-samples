@@ -24,6 +24,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -127,7 +128,7 @@ private fun NavigationBarSamplePreview() {
 @Composable
 private fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = remember { mutableIntStateOf(0) }
     val items = remember {
         listOf(
             "首页" to Icons.Filled.Home,
@@ -136,7 +137,9 @@ private fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
             "设置" to Icons.Filled.Settings,
         )
     }
-    val pagerState = rememberPagerState(selectedIndex.value)
+    val pagerState = rememberPagerState(selectedIndex.value) {
+        items.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             selectedIndex.value = it
@@ -147,7 +150,6 @@ private fun NavigationBarPagerSample(allExpandFlow: Flow<Boolean>) {
         Column(modifier = Modifier.fillMaxWidth()) {
             HorizontalPager(
                 state = pagerState,
-                pageCount = items.size,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)

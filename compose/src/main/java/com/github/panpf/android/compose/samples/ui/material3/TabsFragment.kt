@@ -18,6 +18,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -55,7 +56,7 @@ class TabsFragment : Material3ComposeAppBarFragment() {
 
 @Composable
 private fun TabRowSample(allExpandFlow: Flow<Boolean>) {
-    val selectedTabIndex = remember { mutableStateOf(0) }
+    val selectedTabIndex = remember { mutableIntStateOf(0) }
     val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
     ExpandableItem(title = "TabRow", allExpandFlow, padding = 20.dp) {
         Text(text = "Default")
@@ -120,7 +121,9 @@ private fun TabRowSamplePreview() {
 private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState() {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "TabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -146,7 +149,6 @@ private fun TabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->
@@ -240,7 +242,9 @@ private fun ScrollableTabRowSamplePreview() {
 private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身") }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState() {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem(title = "ScrollableTabRow（Pager）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -266,7 +270,6 @@ private fun ScrollableTabRowPagerSample(allExpandFlow: Flow<Boolean>) {
                 }
             }
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->

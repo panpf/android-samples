@@ -48,6 +48,7 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -279,9 +280,11 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
     val snackbarHostState = remember { SnackbarHostState() }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val coroutineScope = rememberCoroutineScope()
-    val menuSelectedIndex = remember { mutableStateOf(0) }
-    val navigationSelectedIndex = remember { mutableStateOf(0) }
-    val pagerState = rememberPagerState(navigationSelectedIndex.value)
+    val menuSelectedIndex = remember { mutableIntStateOf(0) }
+    val navigationSelectedIndex = remember { mutableIntStateOf(0) }
+    val pagerState = rememberPagerState(navigationSelectedIndex.value) {
+        pagerItems.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             navigationSelectedIndex.value = it
@@ -375,7 +378,6 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
             content = { innerPadding ->
                 HorizontalPager(
                     state = pagerState,
-                    pageCount = pagerItems.size,
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = innerPadding
                 ) { index ->

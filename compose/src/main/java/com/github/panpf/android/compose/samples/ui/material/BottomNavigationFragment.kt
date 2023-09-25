@@ -141,7 +141,9 @@ private fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
             "设置" to Icons.Filled.Settings,
         )
     }
-    val pagerState = rememberPagerState(selectedIndex.value)
+    val pagerState = rememberPagerState(selectedIndex.value) {
+        items.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             selectedIndex.value = it
@@ -152,7 +154,6 @@ private fun BottomNavigationPagerSample(allExpandFlow: Flow<Boolean>) {
         Column(modifier = Modifier.fillMaxWidth()) {
             HorizontalPager(
                 state = pagerState,
-                pageCount = items.size,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)

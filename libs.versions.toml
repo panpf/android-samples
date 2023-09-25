@@ -1,28 +1,26 @@
 [versions]
 
 # kotlin
-kotlin = "1.8.22"
+kotlin = "1.9.10"
 kotlinx-coroutines = "1.7.3"
 kotlinx-serialization-json = "1.3.3"
 
 # android
 android-plugin = "8.1.1"
-androidx-activity = "1.7.0"
+androidx-activity = "1.7.2"
 androidx-appcompat = "1.6.1"
-androidx-compose = "1.4.3"
-androidx-compose-compiler = "1.4.8"
-androidx-compose-material3 = "1.1.0"
+androidx-compose = "1.5.1"
+androidx-compose-compiler = "1.5.3"
+androidx-compose-material3 = "1.1.2"
 androidx-constraintlayout = "2.1.4"
 androidx-constraintlayout-compose = "1.0.1"
-androidx-core = "1.10.1"
-androidx-emoji2 = "1.3.0"
-androidx-fragment = "1.5.6"
-androidx-lifecycle = "2.6.1"
+androidx-emoji2 = "1.4.0"
+androidx-fragment = "1.6.1"
+androidx-lifecycle = "2.6.2"
 androidx-multidex = "2.0.1"
-androidx-navigation = "2.5.3"
-androidx-paging = "3.2.0-rc01"
-androidx-paging-compose = "3.2.0-rc01"
-androidx-recyclerview = "1.3.0"
+androidx-navigation = "2.7.2"
+androidx-paging = "3.2.1"
+androidx-recyclerview = "1.3.1"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-test-runner = "1.5.2"
 androidx-test-rules = "1.5.0"
@@ -38,7 +36,7 @@ panpf-sketch3 = "3.2.5"
 panpf-tools4a = "1.0.0"
 panpf-tools4j = "1.0.0"
 panpf-tools4k = "1.0.0"
-panpf-zoomimage = "1.0.0-alpha02"
+panpf-zoomimage = "1.0.0-beta01"
 
 # other
 leakcanary = "2.9.1"
@@ -72,7 +70,6 @@ androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-mani
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "androidx-compose" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidx-constraintlayout-compose" }
-androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-emoji2 = { module = "androidx.emoji2:emoji2-bundled", version.ref = "androidx-emoji2" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
@@ -84,7 +81,7 @@ androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", ver
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-safeargsgradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-compose" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }

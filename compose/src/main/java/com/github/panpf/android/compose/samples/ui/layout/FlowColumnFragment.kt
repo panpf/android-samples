@@ -40,7 +40,8 @@ class FlowColumnFragment : Material3ComposeAppBarFragment() {
             FlowColumnSample(allExpandFlow)
             FlowColumnVerticalArrangementSample(allExpandFlow)
             FlowColumnVerticalSpacedSample(allExpandFlow)
-            FlowColumnHorizontalAlignmentSample(allExpandFlow)
+            FlowColumnHorizontalArrangementSample(allExpandFlow)
+            FlowColumnHorizontalSpacedSample(allExpandFlow)
             FlowColumnMaxItemsInEachRowSample(allExpandFlow)
         }
     }
@@ -175,17 +176,20 @@ private fun FlowColumnVerticalSpacedSamplePreview() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun FlowColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowColumn（horizontalAlignment）", allExpandFlow, padding = 20.dp) {
+private fun FlowColumnHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowColumn（horizontalArrangement）", allExpandFlow, padding = 20.dp) {
         VerticalGrid(
             columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             listOf(
-                Alignment.Start to "Start",
-                Alignment.CenterHorizontally to "Center",
-                Alignment.End to "End",
+                Arrangement.Start to "Start",
+                Arrangement.Center to "Center",
+                Arrangement.End to "End",
+                Arrangement.SpaceBetween to "Space\nBetween",
+                Arrangement.SpaceAround to "Space\nAround",
+                Arrangement.SpaceEvenly to "Space\nEvenly",
             ).forEach { (alignment, name) ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -198,7 +202,7 @@ private fun FlowColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        horizontalAlignment = alignment
+                        horizontalArrangement = alignment
                     ) {
                         listOf("数码", "汽车", "摄影").forEach {
                             HorizontalTag(text = it)
@@ -212,8 +216,48 @@ private fun FlowColumnHorizontalAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun FlowColumnHorizontalAlignmentSamplePreview() {
-    FlowColumnHorizontalAlignmentSample(remember { MutableStateFlow(true) })
+private fun FlowColumnHorizontalArrangementSamplePreview() {
+    FlowColumnHorizontalArrangementSample(remember { MutableStateFlow(true) })
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun FlowColumnHorizontalSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember { listOf("数码", "汽车", "摄影", "舞蹈", "音乐", "科技", "漫画", "功夫") }
+    ExpandableItem3(title = "FlowColumn（HorizontalSpaced）", allExpandFlow, padding = 20.dp) {
+        VerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            listOf(
+                0 to "0.dp",
+                10 to "10.dp",
+            ).forEach { (spacing, name) ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = name)
+                    FlowColumn(
+                        modifier = Modifier
+                            .height(200.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                            .padding(2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(spacing.dp),
+                    ) {
+                        items.forEach {
+                            HorizontalTag(text = it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun FlowColumnHorizontalSpacedSamplePreview() {
+    FlowColumnHorizontalSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

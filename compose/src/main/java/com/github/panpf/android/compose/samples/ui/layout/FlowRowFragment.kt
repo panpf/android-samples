@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +36,8 @@ class FlowRowFragment : Material3ComposeAppBarFragment() {
             FlowRowSample(allExpandFlow)
             FlowRowHorizontalArrangementSample(allExpandFlow)
             FlowRowHorizontalSpacedSample(allExpandFlow)
-            FlowRowVerticalAlignmentSample(allExpandFlow)
+            FlowRowVerticalArrangementSample(allExpandFlow)
+            FlowRowVerticalSpacedSample(allExpandFlow)
             FlowRowMaxItemsInEachRowSample(allExpandFlow)
         }
     }
@@ -95,9 +95,9 @@ private fun FlowRowHorizontalArrangementSample(allExpandFlow: Flow<Boolean>) {
                 Arrangement.Start to "Start",
                 Arrangement.Center to "Center",
                 Arrangement.End to "End",
-                Arrangement.SpaceBetween to "SpaceBetween",
-                Arrangement.SpaceAround to "SpaceAround",
-                Arrangement.SpaceEvenly to "SpaceEvenly",
+                Arrangement.SpaceBetween to "Space\nBetween",
+                Arrangement.SpaceAround to "Space\nAround",
+                Arrangement.SpaceEvenly to "Space\nEvenly",
             ).forEachIndexed { index, (alignment, name) ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(10.dp))
@@ -167,13 +167,16 @@ private fun FlowRowHorizontalSpacedSamplePreview() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun FlowRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
-    ExpandableItem3(title = "FlowRow（verticalAlignment）", allExpandFlow, padding = 20.dp) {
+private fun FlowRowVerticalArrangementSample(allExpandFlow: Flow<Boolean>) {
+    ExpandableItem3(title = "FlowRow（verticalArrangement）", allExpandFlow, padding = 20.dp) {
         Column {
             listOf(
-                Alignment.Top to "Start",
-                Alignment.CenterVertically to "Center",
-                Alignment.Bottom to "End",
+                Arrangement.Top to "Start",
+                Arrangement.Center to "Center",
+                Arrangement.Bottom to "End",
+                Arrangement.SpaceBetween to "Space\nBetween",
+                Arrangement.SpaceAround to "Space\nAround",
+                Arrangement.SpaceEvenly to "Space\nEvenly",
             ).forEachIndexed { index, (alignment, name) ->
                 if (index > 0) {
                     Spacer(modifier = Modifier.size(10.dp))
@@ -185,7 +188,7 @@ private fun FlowRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
                         .height(80.dp)
                         .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                         .padding(2.dp),
-                    verticalAlignment = alignment
+                    verticalArrangement = alignment
                 ) {
                     listOf("数码", "汽车", "摄影", "舞蹈").forEach {
                         HorizontalTag(text = it)
@@ -198,8 +201,46 @@ private fun FlowRowVerticalAlignmentSample(allExpandFlow: Flow<Boolean>) {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun FlowRowVerticalAlignmentSamplePreview() {
-    FlowRowVerticalAlignmentSample(remember { MutableStateFlow(true) })
+private fun FlowRowVerticalArrangementSamplePreview() {
+    FlowRowVerticalArrangementSample(remember { MutableStateFlow(true) })
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun FlowRowVerticalSpacedSample(allExpandFlow: Flow<Boolean>) {
+    val items = remember {
+        listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身", "游戏", "文学")
+    }
+    ExpandableItem3(title = "FlowRow（VerticalSpaced）", allExpandFlow, padding = 20.dp) {
+        Column {
+            listOf(
+                0 to "0.dp",
+                10 to "10.dp",
+            ).forEachIndexed { index, (spacing, name) ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                Text(text = name)
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
+                        .padding(2.dp),
+                    verticalArrangement = Arrangement.spacedBy(spacing.dp)
+                ) {
+                    items.forEach {
+                        HorizontalTag(text = it)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+private fun FlowRowVerticalSpacedSamplePreview() {
+    FlowRowVerticalSpacedSample(remember { MutableStateFlow(true) })
 }
 
 

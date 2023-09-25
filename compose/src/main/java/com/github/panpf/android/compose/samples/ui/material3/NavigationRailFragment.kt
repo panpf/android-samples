@@ -29,6 +29,7 @@ import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -69,7 +70,7 @@ class NavigationRailFragment : Material3ComposeAppBarFragment() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun NavigationRailSample(allExpandFlow: Flow<Boolean>) {
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = remember { mutableIntStateOf(0) }
     val items = remember {
         listOf(
             "首页" to Icons.Filled.Home,
@@ -201,7 +202,9 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
             "设置" to Icons.Filled.Settings,
         )
     }
-    val pagerState = rememberPagerState(selectedIndex.value)
+    val pagerState = rememberPagerState(selectedIndex.value) {
+        items.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             selectedIndex.value = it
@@ -233,7 +236,6 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
             }
             VerticalPager(
                 state = pagerState,
-                pageCount = items.size,
                 modifier = Modifier
                     .fillMaxSize()
             ) { index ->

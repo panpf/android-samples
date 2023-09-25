@@ -64,11 +64,12 @@ class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
     override fun DrawContent() {
         val horizontalLayout by viewModel.horizontalLayout.collectAsState(initial = true)
         val imageUrlList = remember { args.imageUris.split(",") }
-        val pagerState = rememberPagerState(initialPage = args.position - args.startPosition)
+        val pagerState = rememberPagerState(initialPage = args.position - args.startPosition) {
+            imageUrlList.size
+        }
         Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
             if (horizontalLayout) {
                 HorizontalPager(
-                    pageCount = imageUrlList.size,
                     state = pagerState,
                     beyondBoundsPageCount = 0,
                     modifier = Modifier.fillMaxSize()
@@ -77,7 +78,6 @@ class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
                 }
             } else {
                 VerticalPager(
-                    pageCount = imageUrlList.size,
                     state = pagerState,
                     beyondBoundsPageCount = 0,
                     modifier = Modifier.fillMaxSize()

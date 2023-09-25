@@ -90,7 +90,9 @@ private fun VerticalPagerSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager", allExpandFlow, padding = 20.dp) {
         VerticalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .width(200.dp)
                 .height(300.dp)
@@ -127,7 +129,9 @@ private fun VerticalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "VerticalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .width(200.dp)
                 .height(300.dp)
@@ -168,7 +172,9 @@ private fun VerticalPagerPageSpacingSample(allExpandFlow: Flow<Boolean>) {
     val pageSpacingStep = 5.dp
     ExpandableItem3(title = "VerticalPager（pageSpacing）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .width(200.dp)
                 .height(300.dp)
@@ -244,7 +250,9 @@ private fun VerticalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val contentPaddingStep = 5.dp
     ExpandableItem3(title = "VerticalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
         VerticalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .width(200.dp)
                 .height(300.dp)
@@ -328,7 +336,9 @@ private fun VerticalPagerPageSizeSample(allExpandFlow: Flow<Boolean>) {
                 Column {
                     Text(text = "$pageSize")
                     VerticalPager(
-                        pageCount = items.size,
+                        state = rememberPagerState {
+                            items.size
+                        },
                         modifier = Modifier
                             .width(100.dp)
                             .height(300.dp)
@@ -386,7 +396,9 @@ private fun VerticalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean
                 Column {
                     Text(text = "$beyondBoundsPageCount")
                     VerticalPager(
-                        pageCount = items.size,
+                        state = rememberPagerState {
+                            items.size
+                        },
                         modifier = Modifier
                             .width(100.dp)
                             .height(200.dp)
@@ -455,7 +467,9 @@ private fun VerticalPagerHorizontalAlignmentHorSample(allExpandFlow: Flow<Boolea
                     Spacer(modifier = Modifier.size(10.dp))
                     Text(text = it.second, modifier = Modifier.height(46.dp))
                     VerticalPager(
-                        pageCount = items.size,
+                        state = rememberPagerState {
+                            items.size
+                        },
                         modifier = Modifier
                             .width(100.dp)
                             .height(200.dp)
@@ -495,7 +509,9 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(title = "VerticalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
         Row {
@@ -523,7 +539,6 @@ private fun VerticalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
                 VerticalPager(
-                    pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -603,7 +618,9 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(title = "VerticalPager（animateScrollToPage）", allExpandFlow, padding = 20.dp) {
         Row {
@@ -631,7 +648,6 @@ private fun VerticalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean>)
                     )
                 }
                 VerticalPager(
-                    pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -711,12 +727,13 @@ private fun VerticalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val scrollInProgressState = remember { derivedStateOf { pagerState.isScrollInProgress } }
     ExpandableItem3(title = "VerticalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
             VerticalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .width(160.dp)
@@ -754,14 +771,15 @@ private fun VerticalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val currentPageState = remember { derivedStateOf { pagerState.currentPage } }
     val currentPageOffsetFractionState =
         remember { derivedStateOf { pagerState.currentPageOffsetFraction } }
     ExpandableItem3(title = "VerticalPager（currentPage）", allExpandFlow, padding = 20.dp) {
         Column {
             VerticalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .width(160.dp)
@@ -800,11 +818,12 @@ private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     ExpandableItem3(title = "VerticalPager（Indicator）", allExpandFlow, padding = 20.dp) {
         Box {
             VerticalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .width(160.dp)

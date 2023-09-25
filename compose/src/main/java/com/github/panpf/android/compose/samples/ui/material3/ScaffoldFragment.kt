@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -66,8 +67,10 @@ private fun ScaffoldSample() {
     }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-    val navigationSelectedIndex = remember { mutableStateOf(0) }
-    val pagerState = rememberPagerState(navigationSelectedIndex.value)
+    val navigationSelectedIndex = remember { mutableIntStateOf(0) }
+    val pagerState = rememberPagerState(navigationSelectedIndex.value) {
+        pagerItems.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             navigationSelectedIndex.value = it
@@ -84,7 +87,6 @@ private fun ScaffoldSample() {
         content = { innerPadding ->
             HorizontalPager(
                 state = pagerState,
-                pageCount = pagerItems.size,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = innerPadding
             ) { index ->

@@ -96,7 +96,9 @@ private fun HorizontalPagerSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager", allExpandFlow, padding = 20.dp) {
         HorizontalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -132,7 +134,9 @@ private fun HorizontalPagerReverseLayoutSample(allExpandFlow: Flow<Boolean>) {
         .mapIndexed { index, string -> "${index + 1}. $string" }
     ExpandableItem3(title = "HorizontalPager（reverseLayout）", allExpandFlow, padding = 20.dp) {
         HorizontalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -172,7 +176,9 @@ private fun HorizontalPagerPageSpacingSample(allExpandFlow: Flow<Boolean>) {
     val pageSpacingStep = 5.dp
     ExpandableItem3(title = "HorizontalPager（pageSpacing）", allExpandFlow, padding = 20.dp) {
         HorizontalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -247,7 +253,9 @@ private fun HorizontalPagerContentPaddingSample(allExpandFlow: Flow<Boolean>) {
     val contentPaddingStep = 5.dp
     ExpandableItem3(title = "HorizontalPager（contentPadding）", allExpandFlow, padding = 20.dp) {
         HorizontalPager(
-            pageCount = items.size,
+            state = rememberPagerState {
+                items.size
+            },
             modifier = Modifier
                 .height(200.dp)
                 .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -328,7 +336,9 @@ private fun HorizontalPagerPageSizeSample(allExpandFlow: Flow<Boolean>) {
             }
             Text(text = "$pageSize")
             HorizontalPager(
-                pageCount = items.size,
+                state = rememberPagerState {
+                    items.size
+                },
                 modifier = Modifier
                     .height(100.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -381,7 +391,9 @@ private fun HorizontalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boole
             }
             Text(text = "$beyondBoundsPageCount")
             HorizontalPager(
-                pageCount = items.size,
+                state = rememberPagerState {
+                    items.size
+                },
                 modifier = Modifier
                     .height(100.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
@@ -445,7 +457,9 @@ private fun HorizontalPagerVerticalAlignmentSample(allExpandFlow: Flow<Boolean>)
                     Spacer(modifier = Modifier.size(10.dp))
                     Text(text = it.second)
                     HorizontalPager(
-                        pageCount = items.size,
+                        state = rememberPagerState {
+                            items.size
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
@@ -485,7 +499,9 @@ private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState() {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(title = "HorizontalPager（scrollToPage）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -509,7 +525,6 @@ private fun HorizontalPagerScrollToPageSample(allExpandFlow: Flow<Boolean>) {
                     )
                 }
                 HorizontalPager(
-                    pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -585,7 +600,9 @@ private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(){
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(
         title = "HorizontalPager（animateScrollToPage）",
@@ -613,7 +630,6 @@ private fun HorizontalPagerAnimateScrollToPageSample(allExpandFlow: Flow<Boolean
                     )
                 }
                 HorizontalPager(
-                    pageCount = items.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -689,12 +705,13 @@ private fun HorizontalPagerScrollInProgressSample(allExpandFlow: Flow<Boolean>) 
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val scrollInProgressState = remember { derivedStateOf { pagerState.isScrollInProgress } }
     ExpandableItem3(title = "HorizontalPager（isScrollInProgress）", allExpandFlow, padding = 20.dp) {
         Column {
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
@@ -731,14 +748,15 @@ private fun HorizontalPagerCurrentPageSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val currentPageState = remember { derivedStateOf { pagerState.currentPage } }
     val currentPageOffsetFractionState =
         remember { derivedStateOf { pagerState.currentPageOffsetFraction } }
     ExpandableItem3(title = "HorizontalPager（currentPage）", allExpandFlow, padding = 20.dp) {
         Column {
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
@@ -776,11 +794,12 @@ private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState{
+        items.size
+    }
     ExpandableItem3(title = "HorizontalPager（Indicator）", allExpandFlow, padding = 20.dp) {
         Box {
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier
                     .height(200.dp)
@@ -849,7 +868,9 @@ private fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState{
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(title = "HorizontalPager（TabRow）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -876,7 +897,6 @@ private fun HorizontalPagerTabRowSample(allExpandFlow: Flow<Boolean>) {
             }
             Spacer(modifier = Modifier.size(2.dp))
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->
@@ -909,7 +929,9 @@ private fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) 
     val colors = MyColor.halfRainbows
     val items = listOf("数码", "汽车", "摄影", "舞蹈", "二次元", "音乐", "科技", "健身")
         .mapIndexed { index, string -> "${index + 1}. $string" }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val coroutineScope = rememberCoroutineScope()
     ExpandableItem3(title = "HorizontalPager（ScrollableTabRow）", allExpandFlow, padding = 20.dp) {
         Column {
@@ -936,7 +958,6 @@ private fun HorizontalPagerScrollableTabRowSample(allExpandFlow: Flow<Boolean>) 
             }
             Spacer(modifier = Modifier.size(2.dp))
             HorizontalPager(
-                pageCount = items.size,
                 state = pagerState,
                 modifier = Modifier.height(200.dp)
             ) { index ->

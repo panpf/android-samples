@@ -3,7 +3,7 @@ package com.github.panpf.android.view.samples.ui.util
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 
-class MyKeyEqualsDiffItemCallback<DATA : Any?>(
+class MyKeyEqualsDiffItemCallback<DATA : Any>(
     val getKey: (DATA) -> Any?
 ) : DiffUtil.ItemCallback<DATA>() {
 

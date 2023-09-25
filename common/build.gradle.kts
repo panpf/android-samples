@@ -44,7 +44,6 @@ android {
 dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)

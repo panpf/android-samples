@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.bundles.androidx.lifecycle.compose)

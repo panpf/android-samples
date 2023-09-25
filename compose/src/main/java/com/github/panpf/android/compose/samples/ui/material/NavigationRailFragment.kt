@@ -194,7 +194,9 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
             "设置" to Icons.Filled.Settings,
         )
     }
-    val pagerState = rememberPagerState(selectedIndex.value)
+    val pagerState = rememberPagerState(selectedIndex.value) {
+        items.size
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
             selectedIndex.value = it
@@ -226,7 +228,6 @@ private fun NavigationRailPagerSample(allExpandFlow: Flow<Boolean>) {
             }
             VerticalPager(
                 state = pagerState,
-                pageCount = items.size,
                 modifier = Modifier
                     .fillMaxSize()
             ) { index ->
