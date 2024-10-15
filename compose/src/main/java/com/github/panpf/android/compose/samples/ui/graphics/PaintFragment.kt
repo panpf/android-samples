@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.withSaveLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.imageResource
@@ -195,21 +197,28 @@ private fun PaintBlendModeShapeSample(allExpandFlow: Flow<Boolean>) {
                 Column {
                     SubtitleText(text = blendMode?.toString() ?: "Default", line = 1)
                     Canvas(modifier = smallCanvasModifier) {
-                        drawCircle(
-                            color = colors.primary,
-                            radius = size.minDimension / 4.0f,
-                            center = Offset(size.minDimension / 4.0f, size.minDimension / 4.0f)
-                        )
-                        val rectSize = size / 2f
-                        drawRect(
-                            color = colors.tertiary,
-                            topLeft = Offset(
-                                x = (size.width - rectSize.width) / 2f,
-                                y = (size.height - rectSize.height) / 2f
-                            ),
-                            size = rectSize,
-                            blendMode = blendMode ?: DrawScope.DefaultBlendMode
-                        )
+                        drawIntoCanvas {
+                            it.withSaveLayer(
+                                bounds = Rect(0f, 0f, size.width, size.height),
+                                paint = Paint()
+                            ) {
+                                drawCircle(
+                                    color = colors.primary,
+                                    radius = size.minDimension / 4.0f,
+                                    center = Offset(size.minDimension / 4.0f, size.minDimension / 4.0f)
+                                )
+                                val rectSize = size / 2f
+                                drawRect(
+                                    color = colors.tertiary,
+                                    topLeft = Offset(
+                                        x = (size.width - rectSize.width) / 2f,
+                                        y = (size.height - rectSize.height) / 2f
+                                    ),
+                                    size = rectSize,
+                                    blendMode = blendMode ?: DrawScope.DefaultBlendMode
+                                )
+                            }
+                        }
                     }
                 }
             }
