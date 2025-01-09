@@ -6,17 +6,16 @@ import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.core.net.toUri
-import java.io.File
 
 
 fun sketchUri2CoilModel(context: Context, sketchImageUri: String): Any? {
     return when {
-        sketchImageUri.startsWith("asset://") -> {
-            sketchImageUri.replace("asset://", "file://filled/android_asset/").toUri()
+        sketchImageUri.startsWith("file://") -> {
+            sketchImageUri.toUri()
         }
 
-        sketchImageUri.startsWith("file://") -> {
-            File(sketchImageUri.substring("file://".length))
+        sketchImageUri.startsWith("asset://") -> {
+            sketchImageUri.replace("asset://", "file://filled/android_asset/").toUri()
         }
 
         sketchImageUri.startsWith("android.resource://") -> {

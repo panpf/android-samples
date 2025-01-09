@@ -18,24 +18,28 @@ package com.github.panpf.android.view.samples.ui.image.photoalbum
 
 import android.widget.ImageView
 import com.github.panpf.android.view.samples.R
-import com.github.panpf.sketch.displayImage
-import com.github.panpf.sketch.resize.LongImageClipPrecisionDecider
+import com.github.panpf.sketch.loadImage
+import com.github.panpf.sketch.resize.LongImagePrecisionDecider
 import com.github.panpf.sketch.resize.LongImageScaleDecider
 import com.github.panpf.sketch.resize.Precision
-import com.github.panpf.sketch.stateimage.IconStateImage
-import com.github.panpf.sketch.stateimage.ResColor
+import com.github.panpf.sketch.state.IconDrawableStateImage
 
 class SketchPhotoGridItemFactory : BasePhotoGridItemFactory() {
 
     override fun displayImage(imageView: ImageView, sketchImageUri: String) {
-        imageView.displayImage(sketchImageUri) {
-            val bgColor = ResColor(R.color.placeholder_bg)
-            placeholder(IconStateImage(R.drawable.ic_image_outline, bgColor))
-            error(IconStateImage(R.drawable.ic_error, bgColor))
+        imageView.loadImage(sketchImageUri) {
+            val bgColor = R.color.placeholder_bg
+            placeholder(
+                IconDrawableStateImage(
+                    icon = R.drawable.ic_image_outline,
+                    background = bgColor
+                )
+            )
+            error(IconDrawableStateImage(icon = R.drawable.ic_error, background = bgColor))
             crossfade()
-            resizeApplyToDrawable()
-            resizePrecision(LongImageClipPrecisionDecider(Precision.SAME_ASPECT_RATIO))
-            resizeScale(LongImageScaleDecider())
+            resizeOnDraw()
+            precision(LongImagePrecisionDecider(Precision.SAME_ASPECT_RATIO))
+            scale(LongImageScaleDecider())
         }
     }
 }

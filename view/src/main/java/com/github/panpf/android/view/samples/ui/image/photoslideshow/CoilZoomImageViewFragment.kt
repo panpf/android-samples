@@ -19,7 +19,8 @@ package com.github.panpf.android.view.samples.ui.image.photoslideshow
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import coil.load
+import coil3.load
+import coil3.request.crossfade
 import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 import com.github.panpf.android.view.samples.databinding.CoilZoomImageViewFragmentBinding
 import com.github.panpf.android.view.samples.ui.base.BindingFragment
@@ -35,8 +36,7 @@ class CoilZoomImageViewFragment : BindingFragment<CoilZoomImageViewFragmentBindi
     ) {
         val model = sketchUri2CoilModel(requireContext(), args.imageUri)
         binding.coilZoomImageViewImage.load(model) {
-            lifecycle(viewLifecycleOwner.lifecycle)
-            precision(coil.size.Precision.INEXACT)
+            precision(coil3.size.Precision.INEXACT)
             crossfade(true)
         }
     }

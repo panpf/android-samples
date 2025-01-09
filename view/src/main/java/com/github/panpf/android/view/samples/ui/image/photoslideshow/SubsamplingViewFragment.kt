@@ -27,10 +27,9 @@ import com.github.panpf.android.view.samples.databinding.SubsamplingViewFragment
 import com.github.panpf.android.view.samples.ui.base.BindingFragment
 import com.github.panpf.assemblyadapter.pager.FragmentItemFactory
 import com.github.panpf.sketch.request.Depth.NETWORK
-import com.github.panpf.sketch.request.DownloadData
-import com.github.panpf.sketch.request.DownloadRequest
-import com.github.panpf.sketch.request.DownloadResult
+import com.github.panpf.sketch.request.ImageRequest
 import com.github.panpf.sketch.sketch
+import com.github.panpf.sketch.util.DownloadData
 import kotlinx.coroutines.launch
 
 class SubsamplingViewFragment : BindingFragment<SubsamplingViewFragmentBinding>() {
@@ -70,15 +69,14 @@ class SubsamplingViewFragment : BindingFragment<SubsamplingViewFragmentBinding>(
             }
 
             sketchImageUri.startsWith("http://") || sketchImageUri.startsWith("https://") -> {
-                val request = DownloadRequest(requireContext(), args.imageUri) {
-                    lifecycle(viewLifecycleOwner.lifecycle)
+                val request = ImageRequest(requireContext(), args.imageUri) {
                     depth(NETWORK)
                 }
-                val result = requireContext().sketch.execute(request)
-                if (result is DownloadResult.Success) {
-                    val data = result.data.data
-                    if (data is DownloadData.DiskCacheData) {
-                        ImageSource.uri(data.snapshot.file.toUri())
+                val result = requireContext().sketch.executeDownload(request)
+                if (result.isSuccess) {
+                    val data = result.getOrNull()
+                    if (data is DownloadData.Cache) {
+                        ImageSource.uri(data.path.toFile().toUri())
                     } else {
                         Log.e(
                             "ZoomImageViewFragment",
@@ -87,7 +85,7 @@ class SubsamplingViewFragment : BindingFragment<SubsamplingViewFragmentBinding>(
                         null
                     }
                 } else {
-                    val errorMessage = (result as DownloadResult.Error).throwable.toString()
+                    val errorMessage = result.exceptionOrNull().toString()
                     Log.e(
                         "ZoomImageViewFragment",
                         "newImageSource failed, image download failed: $errorMessage. uri: '$sketchImageUri'"

@@ -58,10 +58,11 @@ import com.github.panpf.android.compose.samples.ui.base.newColorFilterByContrast
 import com.github.panpf.android.compose.samples.ui.base.rainbowColorsBrush
 import com.github.panpf.android.compose.samples.ui.base.verPhoto
 import com.github.panpf.android.compose.samples.ui.customization.grid.VerticalGrid
-import com.github.panpf.sketch.compose.AsyncImage
+import com.github.panpf.sketch.AsyncImage
 import com.github.panpf.sketch.fetch.newAssetUri
 import com.github.panpf.sketch.fetch.newResourceUri
-import com.github.panpf.sketch.request.DisplayRequest
+import com.github.panpf.sketch.request.ImageRequest
+import com.github.panpf.sketch.request.placeholder
 import com.github.panpf.sketch.resize.Precision
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -101,7 +102,7 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Resource")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -115,7 +116,7 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Asset")
                 AsyncImage(
-                    request = DisplayRequest(context, newAssetUri("dog.jpg")) {
+                    request = ImageRequest(context, newAssetUri("dog.jpg")) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -129,7 +130,7 @@ private fun SketchAsyncImageSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Http")
                 AsyncImage(
-                    request = DisplayRequest(context, httpPhotoUrl) {
+                    request = ImageRequest(context, httpPhotoUrl) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -288,7 +289,7 @@ private fun SketchAsyncImageAlignmentSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         AsyncImage(
-                            request = DisplayRequest(context, newResourceUri(image.photo.resId)) {
+                            request = ImageRequest(context, newResourceUri(image.photo.resId)) {
                                 placeholder(R.drawable.im_placeholder)
                                 resize(
                                     targetSize.width.toInt(),
@@ -456,7 +457,7 @@ private fun SketchAsyncImageContentScaleSample(allExpandFlow: Flow<Boolean>) {
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         AsyncImage(
-                            request = DisplayRequest(
+                            request = ImageRequest(
                                 context,
                                 newResourceUri(image.photo.resId)
                             ) {
@@ -502,7 +503,7 @@ private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "1f")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -516,7 +517,7 @@ private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "0.7f")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -530,7 +531,7 @@ private fun SketchAsyncImageAlphaSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "0.3f")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -564,7 +565,7 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "RoundedCorner", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -579,7 +580,7 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "Circle", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -594,7 +595,7 @@ private fun SketchAsyncImageClipSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "SquashedOval", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -629,7 +630,7 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "Default", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -644,7 +645,7 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "RoundedCorner", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -660,7 +661,7 @@ private fun SketchAsyncImageBorderSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 SubtitleText(text = "Circle + brush", line = 2)
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -696,7 +697,7 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "黑白")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -710,7 +711,7 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "反转负片")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -724,7 +725,7 @@ private fun SketchAsyncImageColorFilterSample(allExpandFlow: Flow<Boolean>) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "亮度对比度")
                 AsyncImage(
-                    request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                    request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                         placeholder(R.drawable.im_placeholder)
                     },
                     contentDescription = "",
@@ -758,7 +759,7 @@ private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             AsyncImage(
-                request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                     placeholder(R.drawable.im_placeholder)
                 },
                 contentScale = ContentScale.Crop,
@@ -772,7 +773,7 @@ private fun SketchAsyncImageBlurSample(allExpandFlow: Flow<Boolean>) {
             )
 
             AsyncImage(
-                request = DisplayRequest(context, newResourceUri(R.drawable.dog_hor)) {
+                request = ImageRequest(context, newResourceUri(R.drawable.dog_hor)) {
                     placeholder(R.drawable.im_placeholder)
                 },
                 contentScale = ContentScale.Crop,

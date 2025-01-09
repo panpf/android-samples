@@ -38,9 +38,9 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.toShortString
 import com.github.panpf.android.compose.samples.ui.base.Material3ComposeAppBarFragment
 import com.github.panpf.android.samples.model.util.BitmapScaleTransformation
-import com.github.panpf.sketch.compose.rememberAsyncImagePainter
 import com.github.panpf.sketch.fetch.newResourceUri
-import com.github.panpf.sketch.request.DisplayRequest
+import com.github.panpf.sketch.rememberAsyncImagePainter
+import com.github.panpf.sketch.request.ImageRequest
 import kotlin.math.min
 
 class GraphicsLayerFragment : Material3ComposeAppBarFragment() {
@@ -66,7 +66,7 @@ private fun GraphicsLayerSample() {
         }
     }
     val context = LocalContext.current
-    val painter = rememberAsyncImagePainter(request = DisplayRequest(context, imageUri) {
+    val painter = rememberAsyncImagePainter(request = ImageRequest(context, imageUri) {
         val resources = context.resources
         val maxSize =
             min(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels) / 4

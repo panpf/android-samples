@@ -404,7 +404,7 @@ private fun VerticalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boolean
                             .height(200.dp)
                             .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                             .padding(2.dp),
-                        beyondBoundsPageCount = beyondBoundsPageCount,
+                        beyondViewportPageCount = beyondBoundsPageCount,
                     ) { index ->
                         val loadingState = remember { mutableStateOf(true) }
                         if (loadingState.value) {
@@ -812,7 +812,7 @@ private fun VerticalPagerCurrentPageSamplePreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun VerticalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows

@@ -7,13 +7,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.sketch.fetch.newResourceUri
-import com.github.panpf.sketch.request.DisplayRequest
+import com.github.panpf.sketch.request.ImageRequest
 import com.github.panpf.zoomimage.SketchZoomAsyncImage
 
 @Composable
 fun SketchZoomAsyncImageSample(sketchImageUri: String) {
     SketchZoomAsyncImage(
-        request = DisplayRequest(LocalContext.current, sketchImageUri) {
+        request = ImageRequest(LocalContext.current, sketchImageUri) {
             crossfade()
         },
         contentDescription = "view image",

@@ -17,7 +17,9 @@
 package com.github.panpf.android.view.samples.ui.image.photoalbum
 
 import android.widget.ImageView
-import coil.load
+import coil3.load
+import coil3.request.error
+import coil3.request.placeholder
 import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 import com.github.panpf.android.view.samples.R
 
@@ -27,7 +29,7 @@ class CoilPhotoGridItemFactory : BasePhotoGridItemFactory() {
         imageView.load(sketchUri2CoilModel(imageView.context, sketchImageUri)) {
             placeholder(R.drawable.im_placeholder)
             error(R.drawable.im_error)
-            crossfade(true)
+//            crossfade(true)
         }
     }
 }

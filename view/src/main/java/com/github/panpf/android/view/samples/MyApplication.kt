@@ -1,40 +1,38 @@
 package com.github.panpf.android.view.samples
 
+import coil3.PlatformContext as CoilSketchPlatformContext
+import com.github.panpf.sketch.PlatformContext as SketchPlatformContext
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.util.DebugLogger
-import com.github.panpf.android.view.samples.tools.CoilAppIconUriFetcher
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.util.DebugLogger
+import com.github.panpf.android.samples.utils.CoilAppIconUriFetcher
+import com.github.panpf.sketch.SingletonSketch
 import com.github.panpf.sketch.Sketch
-import com.github.panpf.sketch.SketchFactory
 import com.github.panpf.sketch.cache.internal.LruMemoryCache
-import com.github.panpf.sketch.fetch.AppIconUriFetcher
 import com.github.panpf.sketch.util.Logger
 
-class MyApplication : Application(), SketchFactory, ImageLoaderFactory {
+class MyApplication : Application(), SingletonSketch.Factory, SingletonImageLoader.Factory {
 
     private val memoryCacheMaxSize: Long by lazy {
         getSystemService(Context.ACTIVITY_SERVICE).let { it as ActivityManager }
             .memoryClass.times(1024 * 1024).times(0.4f).toLong()
     }
 
-    override fun createSketch(): Sketch {
+    override fun createSketch(context: SketchPlatformContext): Sketch {
         return Sketch.Builder(this)
             .memoryCache(LruMemoryCache(memoryCacheMaxSize.div(2)))
-            .components {
-                addFetcher(AppIconUriFetcher.Factory())
-            }
-            .logger(Logger(Logger.Level.DEBUG))
+            .logger(level = Logger.Level.Debug)
             .build()
     }
 
-    override fun newImageLoader(): ImageLoader {
+    override fun newImageLoader(context: CoilSketchPlatformContext): ImageLoader {
         return ImageLoader.Builder(this)
             .memoryCache(
-                coil.memory.MemoryCache.Builder(this)
-                    .maxSizeBytes(memoryCacheMaxSize.div(2).toInt())
+                coil3.memory.MemoryCache.Builder()
+                    .maxSizeBytes(memoryCacheMaxSize.div(2))
                     .build()
             ).components {
                 add(CoilAppIconUriFetcher.Factory(this@MyApplication))

@@ -12,7 +12,7 @@ import com.github.panpf.android.view.samples.ui.util.getRotation
 import com.github.panpf.android.view.samples.ui.util.getScale
 import com.github.panpf.android.view.samples.ui.util.getTranslation
 import com.github.panpf.android.view.samples.util.toShortString
-import com.github.panpf.sketch.displayImage
+import com.github.panpf.sketch.loadImage
 import kotlin.math.min
 
 class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>() {
@@ -100,7 +100,7 @@ class ImageMatrixFragment : ToolbarBindingFragment<ImageMatrixFragmentBinding>()
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setImage(binding: ImageMatrixFragmentBinding, hor: Boolean) {
-        binding.imageMatrixFragmentImageView.displayImage(if (hor) R.drawable.dog_hor else R.drawable.dog_ver) {
+        binding.imageMatrixFragmentImageView.loadImage(if (hor) R.drawable.dog_hor else R.drawable.dog_ver) {
             val resources = requireContext().resources
             val maxSize =
                 min(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels) / 4

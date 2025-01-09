@@ -22,7 +22,7 @@ import androidx.navigation.fragment.navArgs
 import com.github.panpf.android.view.samples.databinding.PhotoViewFragmentBinding
 import com.github.panpf.android.view.samples.ui.base.BindingFragment
 import com.github.panpf.assemblyadapter.pager.FragmentItemFactory
-import com.github.panpf.sketch.displayImage
+import com.github.panpf.sketch.loadImage
 
 class PhotoViewFragment : BindingFragment<PhotoViewFragmentBinding>() {
 
@@ -32,8 +32,7 @@ class PhotoViewFragment : BindingFragment<PhotoViewFragmentBinding>() {
         binding: PhotoViewFragmentBinding,
         savedInstanceState: Bundle?
     ) {
-        binding.photoView.displayImage(args.imageUri) {
-            lifecycle(viewLifecycleOwner.lifecycle)
+        binding.photoView.loadImage(args.imageUri) {
             crossfade()
         }
     }

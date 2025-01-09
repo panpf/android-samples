@@ -9,7 +9,7 @@ import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.samples.utils.sketchUri2GlideModel
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.github.panpf.zoomimage.GlideZoomAsyncImage
-import com.github.panpf.zoomimage.compose.glide.internal.ExperimentalGlideComposeApi
+import com.github.panpf.zoomimage.compose.glide.ExperimentalGlideComposeApi
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

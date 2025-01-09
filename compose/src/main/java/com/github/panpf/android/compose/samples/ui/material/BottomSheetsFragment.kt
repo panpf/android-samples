@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.material
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FabPosition
@@ -258,8 +256,6 @@ private fun ModalBottomSheetLayoutSheetShapeSampleSheetPreview() {
     ModalBottomSheetLayoutSheetShapeSample(remember { MutableStateFlow(true) })
 }
 
-
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows
@@ -282,12 +278,12 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
     val coroutineScope = rememberCoroutineScope()
     val menuSelectedIndex = remember { mutableIntStateOf(0) }
     val navigationSelectedIndex = remember { mutableIntStateOf(0) }
-    val pagerState = rememberPagerState(navigationSelectedIndex.value) {
+    val pagerState = rememberPagerState(navigationSelectedIndex.intValue) {
         pagerItems.size
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect {
-            navigationSelectedIndex.value = it
+            navigationSelectedIndex.intValue = it
         }
     }
     ExpandableItem(title = "BottomSheetScaffold", allExpandFlow, padding = 20.dp) {
@@ -301,7 +297,7 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
                         IconButton(
                             onClick = {
                                 coroutineScope.launch {
-                                    bottomSheetScaffoldState.drawerState.open()
+                                    bottomSheetScaffoldState.bottomSheetState.expand()
                                 }
                             }
                         ) {
@@ -310,34 +306,35 @@ private fun BottomSheetScaffoldSample(allExpandFlow: Flow<Boolean>) {
                     }
                 )
             },
-            drawerContent = {
-                Column(
-                    modifier = Modifier
-                        .padding(20.dp)
-                ) {
-                    menuItems.forEachIndexed { index, pair ->
-                        if (index > 0) {
-                            Divider(modifier = Modifier.fillMaxWidth())
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    menuSelectedIndex.value = index
-                                    coroutineScope.launch {
-                                        bottomSheetScaffoldState.drawerState.close()
-                                    }
-                                }
-                                .padding(20.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(imageVector = pair.second, contentDescription = pair.first)
-                            Spacer(modifier = Modifier.size(16.dp))
-                            Text(text = pair.first)
-                        }
-                    }
-                }
-            },
+            // TODO
+//            content = {
+//                Column(
+//                    modifier = Modifier
+//                        .padding(20.dp)
+//                ) {
+//                    menuItems.forEachIndexed { index, pair ->
+//                        if (index > 0) {
+//                            Divider(modifier = Modifier.fillMaxWidth())
+//                        }
+//                        Row(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .clickable {
+//                                    menuSelectedIndex.value = index
+//                                    coroutineScope.launch {
+//                                        bottomSheetScaffoldState.bottomSheetState.expand()
+//                                    }
+//                                }
+//                                .padding(20.dp),
+//                            verticalAlignment = Alignment.CenterVertically
+//                        ) {
+//                            Icon(imageVector = pair.second, contentDescription = pair.first)
+//                            Spacer(modifier = Modifier.size(16.dp))
+//                            Text(text = pair.first)
+//                        }
+//                    }
+//                }
+//            },
             sheetContent = {
                 Box(
                     modifier = Modifier

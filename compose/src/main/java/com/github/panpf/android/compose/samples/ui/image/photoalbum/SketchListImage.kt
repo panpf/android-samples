@@ -5,28 +5,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import com.github.panpf.android.compose.samples.R
-import com.github.panpf.sketch.compose.AsyncImage
-import com.github.panpf.sketch.request.DisplayRequest
-import com.github.panpf.sketch.resize.LongImageClipPrecisionDecider
+import com.github.panpf.sketch.AsyncImage
+import com.github.panpf.sketch.request.ImageRequest
+import com.github.panpf.sketch.resize.LongImagePrecisionDecider
 import com.github.panpf.sketch.resize.LongImageScaleDecider
 import com.github.panpf.sketch.resize.Precision.SAME_ASPECT_RATIO
-import com.github.panpf.sketch.stateimage.IconStateImage
-import com.github.panpf.sketch.stateimage.ResColor
+import com.github.panpf.sketch.state.IconDrawableStateImage
 
 @Composable
 fun SketchListImage(sketchImageUri: String, modifier: Modifier) {
     AsyncImage(
-        request = DisplayRequest(LocalContext.current, sketchImageUri) {
+        request = ImageRequest(LocalContext.current, sketchImageUri) {
             placeholder(
-                IconStateImage(R.drawable.ic_image_outline, ResColor(R.color.placeholder_bg))
+                IconDrawableStateImage(
+                    icon = R.drawable.ic_image_outline,
+                    background = R.color.placeholder_bg
+                )
             )
             error(
-                IconStateImage(R.drawable.ic_error, ResColor(R.color.placeholder_bg))
+                IconDrawableStateImage(
+                    icon = R.drawable.ic_error,
+                    background = R.color.placeholder_bg
+                )
             )
             crossfade()
-            resizeApplyToDrawable()
-            resizePrecision(LongImageClipPrecisionDecider(SAME_ASPECT_RATIO))
-            resizeScale(LongImageScaleDecider())
+            resizeOnDraw()
+            precision(LongImagePrecisionDecider(SAME_ASPECT_RATIO))
+            scale(LongImageScaleDecider())
         },
         modifier = modifier,
         contentScale = ContentScale.Crop,

@@ -1,18 +1,18 @@
-package com.github.panpf.android.view.samples.tools
+package com.github.panpf.android.samples.utils
 
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
-import coil.ImageLoader
-import coil.decode.DataSource
-import coil.fetch.DrawableResult
-import coil.fetch.FetchResult
-import coil.fetch.Fetcher
-import coil.request.Options
+import coil3.ImageLoader
+import coil3.asImage
+import coil3.decode.DataSource
+import coil3.fetch.FetchResult
+import coil3.fetch.Fetcher
+import coil3.fetch.ImageFetchResult
+import coil3.request.Options
 import com.github.panpf.sketch.fetch.AppIconUriFetcher
 import com.github.panpf.sketch.request.UriInvalidException
-import com.github.panpf.sketch.util.ifOrNull
 
 class CoilAppIconUriFetcher(
     val context: Context,
@@ -20,7 +20,7 @@ class CoilAppIconUriFetcher(
     val versionCode: Int,
 ) : Fetcher {
 
-    override suspend fun fetch(): FetchResult {
+    override suspend fun fetch(): FetchResult? {
         val packageManager = context.packageManager
         val packageInfo: PackageInfo = try {
             packageManager.getPackageInfo(packageName, 0)
@@ -33,7 +33,7 @@ class CoilAppIconUriFetcher(
         }
         val iconDrawable = packageInfo.applicationInfo.loadIcon(packageManager)
             ?: throw Exception("loadIcon return null '$packageName'")
-        return DrawableResult(drawable = iconDrawable, isSampled = false, DataSource.DISK)
+        return ImageFetchResult(image = iconDrawable.asImage(), isSampled = false, DataSource.DISK)
     }
 
     class Factory(val context: Context) : Fetcher.Factory<Uri> {

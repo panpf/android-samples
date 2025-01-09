@@ -9,6 +9,8 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -518,6 +520,8 @@ private fun ScrollNestedScrollChildNestedScrollDispatcherSample(allExpandFlow: F
         padding = 20.dp,
         desc = desc,
     ) {
+        val interaction = MutableInteractionSource()
+        interaction.collectIsPressedAsState()
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth()

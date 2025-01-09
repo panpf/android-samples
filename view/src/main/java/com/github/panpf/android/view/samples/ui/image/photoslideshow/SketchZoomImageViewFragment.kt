@@ -22,7 +22,7 @@ import androidx.navigation.fragment.navArgs
 import com.github.panpf.android.view.samples.databinding.SketchZoomImageViewFragmentBinding
 import com.github.panpf.android.view.samples.ui.base.BindingFragment
 import com.github.panpf.assemblyadapter.pager.FragmentItemFactory
-import com.github.panpf.sketch.displayImage
+import com.github.panpf.sketch.loadImage
 
 class SketchZoomImageViewFragment : BindingFragment<SketchZoomImageViewFragmentBinding>() {
 
@@ -32,8 +32,7 @@ class SketchZoomImageViewFragment : BindingFragment<SketchZoomImageViewFragmentB
         binding: SketchZoomImageViewFragmentBinding,
         savedInstanceState: Bundle?
     ) {
-        binding.sketchZoomImageViewImage.displayImage(args.imageUri) {
-            lifecycle(viewLifecycleOwner.lifecycle)
+        binding.sketchZoomImageViewImage.loadImage(args.imageUri) {
             crossfade()
         }
     }

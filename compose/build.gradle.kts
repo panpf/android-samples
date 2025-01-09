@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.org.jetbrains.kotlin.compose)
     alias(libs.plugins.androidx.navigation.safeargs.kotlin)
 }
 
@@ -11,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.github.panpf.android.compose.samples"
 
-        minSdk = property("minSdk21").toString().toInt()
+        minSdk = property("minSdk").toString().toInt()
         targetSdk = property("targetSdk").toString().toInt()
         versionCode = property("versionCode").toString().toInt()
         versionName = property("versionName").toString()
@@ -45,9 +46,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
 }
 
 dependencies {
@@ -63,10 +61,10 @@ dependencies {
     implementation(libs.panpf.tools4a)
     implementation(libs.panpf.tools4j)
     implementation(libs.panpf.tools4k)
-    implementation(libs.panpf.sketch3)
-    implementation(libs.panpf.sketch3.extensions)
-    implementation(libs.panpf.zoomimage.compose.sketch)
-    implementation(libs.panpf.zoomimage.compose.coil)
+    implementation(libs.panpf.sketch4.compose)
+    implementation(libs.panpf.sketch4.extensions.compose)
+    implementation(libs.panpf.zoomimage.compose.sketch4)
+    implementation(libs.panpf.zoomimage.compose.coil3)
     implementation(libs.panpf.zoomimage.compose.glide)
     debugImplementation(libs.leakcanary)
     debugImplementation(libs.bundles.androidx.compose.debug)

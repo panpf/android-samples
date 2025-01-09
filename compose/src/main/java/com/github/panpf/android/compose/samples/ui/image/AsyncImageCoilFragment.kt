@@ -44,9 +44,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Precision
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.placeholder
+import coil3.size.Precision
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.compose.samples.tools.name
 import com.github.panpf.android.compose.samples.ui.base.ExpandableItem3

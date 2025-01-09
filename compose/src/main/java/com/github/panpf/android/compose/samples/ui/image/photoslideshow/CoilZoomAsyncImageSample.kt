@@ -6,11 +6,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.samples.utils.sketchUri2CoilModel
 import com.github.panpf.sketch.fetch.newResourceUri
 import com.github.panpf.zoomimage.CoilZoomAsyncImage
+import com.github.panpf.zoomimage.rememberCoilZoomState
+import com.github.panpf.zoomimage.util.Logger
 
 @Composable
 fun CoilZoomAsyncImageSample(sketchImageUri: String) {
@@ -24,6 +27,7 @@ fun CoilZoomAsyncImageSample(sketchImageUri: String) {
         }.build(),
         contentDescription = "view image",
         modifier = Modifier.fillMaxSize(),
+        zoomState = rememberCoilZoomState(logLevel = Logger.Level.Debug)
     )
 }
 

@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.github.panpf.android.compose.samples.R
 import com.github.panpf.android.samples.utils.sketchUri2GlideModel
-import com.github.panpf.zoomimage.compose.glide.internal.ExperimentalGlideComposeApi
-import com.github.panpf.zoomimage.compose.glide.internal.GlideImage
+import com.github.panpf.zoomimage.compose.glide.ExperimentalGlideComposeApi
+import com.github.panpf.zoomimage.compose.glide.GlideImage
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

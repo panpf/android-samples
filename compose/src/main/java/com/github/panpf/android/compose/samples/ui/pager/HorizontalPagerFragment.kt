@@ -398,7 +398,7 @@ private fun HorizontalPagerBeyondBoundsPageCountSample(allExpandFlow: Flow<Boole
                     .height(100.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primaryContainer)
                     .padding(2.dp),
-                beyondBoundsPageCount = beyondBoundsPageCount,
+                beyondViewportPageCount = beyondBoundsPageCount,
             ) { index ->
                 val loadingState = remember { mutableStateOf(true) }
                 if (loadingState.value) {
@@ -788,7 +788,7 @@ private fun HorizontalPagerCurrentPageSamplePreview() {
 }
 
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun HorizontalPagerIndicatorSample(allExpandFlow: Flow<Boolean>) {
     val colors = MyColor.halfRainbows

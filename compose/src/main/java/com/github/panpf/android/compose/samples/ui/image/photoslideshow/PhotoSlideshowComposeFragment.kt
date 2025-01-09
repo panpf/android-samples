@@ -1,6 +1,5 @@
 package com.github.panpf.android.compose.samples.ui.image.photoslideshow
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -59,7 +58,6 @@ class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
          }
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     override fun DrawContent() {
         val horizontalLayout by viewModel.horizontalLayout.collectAsState(initial = true)
@@ -71,7 +69,7 @@ class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
             if (horizontalLayout) {
                 HorizontalPager(
                     state = pagerState,
-                    beyondBoundsPageCount = 0,
+                    beyondViewportPageCount = 0,
                     modifier = Modifier.fillMaxSize()
                 ) { index ->
                     zoomImageType.drawContent(imageUrlList[index])
@@ -79,7 +77,7 @@ class PhotoSlideshowComposeFragment : Material3ComposeAppBarFragment() {
             } else {
                 VerticalPager(
                     state = pagerState,
-                    beyondBoundsPageCount = 0,
+                    beyondViewportPageCount = 0,
                     modifier = Modifier.fillMaxSize()
                 ) { index ->
                     zoomImageType.drawContent(imageUrlList[index])
